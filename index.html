@@ -1352,7 +1352,7 @@ body.modal-on{overflow:hidden}
 
 <div class="wrap results" id="tab-regras" role="tabpanel" aria-labelledby="tb-regras" hidden>
   <section id="adms">
-    <div class="sec-head"><p class="kicker">Administradoras</p><h2>Quem pediu autorização à SUSEP</h2><p>Projetos que pediram análise prioritária até 03/08/2026. A SUSEP divulgou só os nomes. Quando sair CNPJ ou andamento de algum, ele aparece aqui.</p></div>
+    <div class="sec-head"><p class="kicker">Administradoras</p><h2>Quem pediu autorização à SUSEP</h2><p>Projetos que pediram análise prioritária até 03/08/2026. A SUSEP divulgou só os nomes. Quando uma delas abre a empresa ou tem andamento na SUSEP, aparece aqui (CNPJ conferido na base da Receita Federal de 09/2026).</p></div>
     <div class="tiles">
       <div class="tile"><span class="tl">Projetos na fila</span><span class="tv" id="admTot">64</span><span class="td">lista oficial da SUSEP</span></div>
       <div class="tile tone-bad"><span class="tl">Autorizadas</span><span class="tv">0</span><span class="td"><b>nenhuma</b> até 30/09/2026</span></div>
@@ -2586,7 +2586,7 @@ $('leadCopy').addEventListener('click', () => copiar($('leadMsg'), $('leadCopyMs
 /* ======================= ADMINISTRADORAS NA FILA ======================= */
 // Lista oficial da SUSEP (notícia de 06/08/2026, alterada em 12/08/2026).
 // Para quando houver novidade: {n:'NOME', cnpj:'00.000.000/0000-00', and:'Autorização prévia em dd/mm/aaaa', fonte:'https://...'}
-const ADMS = ['4COVER','A3','AD','ALIANÇA','ASPLEN MUTUAL','ASSISTANCE','ATLAS','AUGERE','BB','CBAA','CDC ADMINISTRADORA','CENTRO MUTUAL','COELHO MIRANDA','CONFIA +','DELPHOS','EDX','ELO','EMINENT','FAST','FBS','FCP','FORTIS','G6+','GARANT BRASIL','GGO','GMR','GROWTH OPERADORA','I3 CORP','ILUMIVUS','INTEGRIS','JV','LEGACY','MAVI','MONGERAL AEGON','MULT GESTORA','MUTUAL','MUTUAL BRASIL','MUTUALIZA','MUTUALLE','NEXA','NEXOS','NEXUS','NOBRE','NORD MUTUAL','ÓRION','ORIZON','PPM TOTAL','PRAKAR','PRIME','PRÓTON','RR','SEMPRE','SIRIUS','SUL MUTUAL','TAI','TAURUS','TPV','ÚNICA','UZZI','VALORE','VANGARD','VENTURE','VÉRTICE','ZYRAQ']
+const ADMS = [{n:'4COVER', cnpj:'66.843.211/0001-02', and:'Empresa aberta em 12/05/2026 · São Paulo/SP'},'A3','AD','ALIANÇA','ASPLEN MUTUAL','ASSISTANCE','ATLAS','AUGERE','BB','CBAA','CDC ADMINISTRADORA','CENTRO MUTUAL','COELHO MIRANDA','CONFIA +','DELPHOS','EDX','ELO','EMINENT','FAST','FBS','FCP','FORTIS','G6+','GARANT BRASIL','GGO','GMR','GROWTH OPERADORA','I3 CORP','ILUMIVUS','INTEGRIS','JV','LEGACY','MAVI','MONGERAL AEGON','MULT GESTORA','MUTUAL','MUTUAL BRASIL','MUTUALIZA','MUTUALLE','NEXA','NEXOS','NEXUS','NOBRE','NORD MUTUAL','ÓRION','ORIZON','PPM TOTAL','PRAKAR','PRIME','PRÓTON','RR','SEMPRE','SIRIUS','SUL MUTUAL','TAI','TAURUS','TPV','ÚNICA','UZZI',{n:'VALORE', cnpj:'67.948.459/0001-92', and:'Empresa aberta em 07/07/2026 · Nova Lima/MG'},'VANGARD','VENTURE','VÉRTICE','ZYRAQ']
   .map(x => typeof x === 'string' ? {n:x} : x);
 const semAcento = t => t.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
 function renderAdms(){
