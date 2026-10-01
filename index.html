@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="Ferramenta gratuita oferecida pela GestiHub para associações de proteção veicular: diagnóstico, qualidade da carteira, boleto certo, rateio do mês, prazos dos eventos, provisões e plano de 18 meses para a regra da SUSEP (LC 213/2025 e Res. CNSP 491/2026).">
+<meta name="description" content="Ferramenta gratuita oferecida pela GestiHub para associações de proteção veicular: diagnóstico, qualidade da carteira, boleto certo, rateio e provisões explicados e plano de 18 meses para a regra da SUSEP (LC 213/2025 e Res. CNSP 491/2026).">
 <style>body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
 <title>Raio-X SUSEP da Associação</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -600,7 +600,7 @@ h1,h2,h3{letter-spacing:-.01em;font-weight:600}
   .mtop .rx{width:32px;height:32px;font-size:13px;border-radius:8px}
   .mtop b{flex:1;font:600 16px var(--f-display)}
   .tabs{position:fixed;left:0;right:0;bottom:0;top:auto;z-index:30;background:var(--side);border:0;box-shadow:0 -6px 18px -10px rgba(0,0,0,.6);padding-bottom:env(safe-area-inset-bottom,0px)}
-  .tabs-in{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));padding:0;gap:0;max-width:none;margin:0;overflow:visible}
+  .tabs-in{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));padding:0;gap:0;max-width:none;margin:0;overflow:visible}
   .tabs button{flex-direction:column;justify-content:center;gap:3px;padding:9px 1px 8px;border:0;border-radius:0;font-size:10.5px;overflow:hidden;font-weight:600;color:var(--side-muted);min-width:0}
   .tabs button:hover{border:0;color:#FFFFFF}
   .tabs button[aria-selected="true"]{color:#39D0B8;border:0}
@@ -765,6 +765,33 @@ h1,h2,h3{letter-spacing:-.01em;font-weight:600}
 .ajuda-x:hover{background:rgba(255,255,255,.28)}
 body.modal-on{overflow:hidden}
 
+/* ===== aba rateio e provisões ===== */
+.ent-duo{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:16px}
+.ent-card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:22px;display:grid;gap:10px;align-content:start;box-shadow:var(--shadow)}
+.ent-card h3{font-size:1.25rem;line-height:1.3}
+.ent-card a{font-weight:700;text-decoration:none}
+.ent-tag{justify-self:start;align-self:start;font:700 .75rem var(--f-display);letter-spacing:.1em;text-transform:uppercase;color:var(--accent);background:var(--accent-soft);border-radius:999px;padding:3px 10px}
+.ent-q{margin-top:16px;background:var(--sunk);border-radius:12px;padding:14px 18px;font-size:1rem}
+.ent-parts{display:grid;gap:12px}
+.ent-parts>div{display:grid;grid-template-columns:14px minmax(0,1fr);gap:4px 10px;align-items:baseline}
+.ent-parts .sw{width:12px;height:12px;border-radius:3px;display:inline-block}
+.ent-parts p{grid-column:2;color:var(--muted);font-size:.95rem}
+.ent-steps,.ent-todo{margin:0;padding-left:1.4em;display:grid;gap:10px}
+.ent-steps li::marker,.ent-todo li::marker{font-weight:700;color:var(--accent)}
+.ent-todo{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:18px 18px 18px 2.6em;box-shadow:var(--shadow)}
+.ent-rules{margin:0;padding:0;list-style:none;display:grid}
+.ent-rules li{padding:9px 0;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:12px}
+.ent-rules li:first-child{border-top:0}
+.ent-rules span{flex:none;font-size:.8rem;font-weight:700;color:var(--accent);white-space:nowrap}
+#ent-rateio,#ent-prov{scroll-margin-top:16px}
+/* ===== administradoras: só nomes ===== */
+.admchips{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,170px),1fr));gap:8px}
+.admchip{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:10px 12px;display:grid;gap:2px;min-width:0}
+.admchip b{font-size:.95rem;overflow-wrap:anywhere}
+.admchip span{font-size:.8rem;color:var(--muted)}
+.admchip .and{color:var(--accent);font-weight:700}
+.admchip.tem{border-color:var(--accent)}
+
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
 </head>
@@ -780,8 +807,7 @@ body.modal-on{overflow:hidden}
   <button type="button" role="tab" id="tb-resultado" data-tab="resultado" aria-controls="tab-resultado"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19v-7M10 19V5M16 19v-4M22 21H2"/></svg><span class="tl-long">Resultado</span><span class="tl-short">Resultado</span><span class="tscore" id="tabScore">–</span></button>
   <button type="button" role="tab" id="tb-boleto" data-tab="boleto" aria-controls="tab-boleto"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2h12v20l-3-2-3 2-3-2-3 2V2z"/><path d="M9 7h6M9 11h6M9 15h4"/></svg><span class="tl-long">Boleto e simulações</span><span class="tl-short">Boleto</span></button>
   <button type="button" role="tab" id="tb-plano" data-tab="plano" aria-controls="tab-plano"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg><span class="tl-long">Plano de 18 meses</span><span class="tl-short">Plano</span></button>
-  <button type="button" role="tab" id="tb-rateiomes" data-tab="rateiomes" aria-controls="tab-rateiomes"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M8 6h8M8 11h2M14 11h2M8 15h2M14 15h2M8 19h2M14 19h2"/></svg><span class="tl-long">Rateio do mês</span><span class="tl-short">Rateio</span></button>
-  <button type="button" role="tab" id="tb-eventos" data-tab="eventos" aria-controls="tab-eventos"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span class="tl-long">Prazos dos eventos</span><span class="tl-short">Eventos</span></button>
+  <button type="button" role="tab" id="tb-entenda" data-tab="entenda" aria-controls="tab-entenda"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M8 6h8M8 11h2M14 11h2M8 15h2M14 15h2M8 19h2M14 19h2"/></svg><span class="tl-long">Rateio e provisões</span><span class="tl-short">Rateio</span></button>
   <button type="button" role="tab" id="tb-regras" data-tab="regras" aria-controls="tab-regras"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 21h18M5 21V10l7-6 7 6v11"/><path d="M10 21v-6h4v6"/></svg><span class="tl-long">Administradoras e regras</span><span class="tl-short">Regras</span></button>
 </div></nav>
   <div class="side-foot">
@@ -1208,61 +1234,109 @@ body.modal-on{overflow:hidden}
       <div class="copyrow"><button type="button" class="btn" id="tplCopy">Copiar texto</button><span class="ok-msg" id="tplMsg" aria-live="polite"></span></div>
     </div>
   </section>
-  <div class="nexttab"><a class="btn" href="#rateiomes">Próximo: Rateio do mês →</a></div>
+  <div class="nexttab"><a class="btn" href="#entenda">Próximo: Rateio e provisões →</a></div>
 </div>
 
-<div class="wrap results" id="tab-rateiomes" role="tabpanel" aria-labelledby="tb-rateiomes" hidden>
+<div class="wrap results" id="tab-entenda" role="tabpanel" aria-labelledby="tb-entenda" hidden>
   <section>
-    <div class="sec-head"><p class="kicker">Rateio do mês</p><h2>Fechar o rateio do mês</h2><p>Preencha de cima para baixo. O resultado aparece ao lado, na hora. Não sabe o que é um termo? Toque no <span class="info" aria-hidden="true">?</span>.</p></div>
-    <div class="exbar slim" id="rmEx"><p id="rmExMsg">Números de EXEMPLO. <span>Troque pelos do período da sua associação.</span></p><button type="button" class="btn small ghost" id="rmExemplo">Ver um exemplo</button><button type="button" class="btn small" id="rmClear">Apagar exemplo e começar</button></div>
-    <div class="rm-layout">
-      <form class="rm-form" id="rmForm" novalidate autocomplete="off"></form>
-      <aside class="rm-side" aria-label="Resultado do período"><div class="rm-sum" id="rmSum"></div></aside>
+    <div class="sec-head"><p class="kicker">Rateio e provisões</p><h2>Como funcionam o rateio e as provisões na regra nova</h2><p>As duas coisas são exigidas pela Resolução CNSP 491/2026 para os grupos de proteção. Quem calcula é a administradora, com o atuário. A associação precisa entender para conferir as contas e chegar preparada.</p></div>
+    <div class="ent-duo">
+      <article class="ent-card"><span class="ent-tag">Rateio</span><h3>Dividir entre todos o custo real dos eventos do período.</h3><p>Todo mês o associado paga uma parte fixa. Se o período custar mais do que isso, a diferença sai da reserva do grupo ou vira um rateio extra.</p><a href="#ent-rateio">Ver como funciona ↓</a></article>
+      <article class="ent-card"><span class="ent-tag">Provisões</span><h3>Separar o dinheiro dos eventos que já aconteceram e ainda não foram pagos.</h3><p>É dinheiro que já tem dono. Não pode ser tratado como sobra nem usado para outra coisa.</p><a href="#ent-prov">Ver como funciona ↓</a></article>
     </div>
+    <div class="ent-q"><b>É obrigação da SUSEP?</b> Sim, para os grupos geridos por uma administradora autorizada. A associação que ainda está em transição não é cobrada por isso hoje, mas é exatamente o modelo em que vai operar depois do contrato. Quem já trabalha assim chega pronta.</div>
   </section>
-  <section id="rmResultado">
-    <div class="sec-head"><p class="kicker">Detalhes</p><h2 id="rmHead">Fechamento</h2></div>
-    <div class="subtabs" id="rmSubtabs" role="tablist" aria-label="Detalhes do fechamento">
-      <button type="button" role="tab" data-sub="conta" aria-selected="true">A conta</button>
-      <button type="button" role="tab" data-sub="quem" aria-selected="false">Quem paga quanto</button>
-      <button type="button" role="tab" data-sub="prov" aria-selected="false">Provisões e reserva</button>
-      <button type="button" role="tab" data-sub="demo" aria-selected="false">Demonstrativo</button>
-      <button type="button" role="tab" data-sub="hist" aria-selected="false">Histórico</button>
-    </div>
-    <div id="rms-conta"></div>
-    <div id="rms-quem" hidden></div>
-    <div id="rms-prov" hidden></div>
-    <div id="rms-demo" hidden>
-      <div class="tpl">
-        <p class="hint">A regra exige mostrar ao associado como o rateio foi calculado. Copie e mande junto com o boleto.</p>
-        <textarea id="rmDemo" readonly aria-label="Demonstrativo do rateio"></textarea>
-        <div class="copyrow"><button type="button" class="btn" id="rmCopy">Copiar demonstrativo</button><span class="ok-msg" id="rmCopyMsg" aria-live="polite"></span></div>
-      </div>
-    </div>
-    <div id="rms-hist" hidden>
-      <div class="rmbar"><button type="button" class="btn" id="rmSave">Salvar este fechamento</button><button type="button" class="btn ghost" id="rmNext">Salvar e começar o próximo período</button><span class="ok-msg" id="rmSaveMsg" aria-live="polite"></span></div>
-      <p class="hint" style="margin-block:8px">Ficam salvos só neste aparelho.</p>
-      <div id="rmHist"></div>
-    </div>
-  </section>
-  <div class="nexttab"><a class="btn" href="#eventos">Próximo: Prazos dos eventos →</a></div>
-</div>
 
-<div class="wrap results" id="tab-eventos" role="tabpanel" aria-labelledby="tb-eventos" hidden>
-  <section>
-    <div class="sec-head"><p class="kicker">Prazos dos eventos</p><h2>Nenhum evento passando de 90 dias</h2><p>A regra dá no máximo <span class="term" tabindex="0" data-g="prazo90">90 dias</span> para regular e pagar cada evento. Lance os eventos avisados e acompanhe o prazo de cada um.</p></div>
-    <div class="exbar slim" id="evExBar"><p id="evExMsg">Eventos de EXEMPLO. <span>Troque pelos da sua associação.</span></p><button type="button" class="btn small ghost" id="evExemplo">Ver um exemplo</button><button type="button" class="btn small" id="evClear">Apagar exemplo e começar</button></div>
-    <div class="tiles" id="evTiles"></div>
-    <div class="evbar">
-      <div class="subtabs" id="evFiltros" role="tablist" aria-label="Mostrar"><button type="button" role="tab" data-evf="abertos" aria-selected="true">Abertos</button><button type="button" role="tab" data-evf="todos" aria-selected="false">Todos</button></div>
-      <button type="button" class="btn" id="evAdd">+ Novo evento</button>
-      <button type="button" class="btn ghost" id="evToRm">Usar os abertos no Rateio do mês</button>
-      <span class="ok-msg" id="evMsg" aria-live="polite"></span>
+  <section id="ent-rateio">
+    <div class="sec-head"><p class="kicker">Parte 1</p><h2>O rateio</h2></div>
+    <div class="vizgrid" style="margin-top:0">
+      <article class="viz"><h3>O boleto vem separado em 3 partes</h3>
+        <div class="hstack"><i style="flex:38.92 1 0;background:var(--s-adm)"></i><i style="flex:92.03 1 0;background:var(--s-ev)"></i><i style="flex:33.68 1 0;background:var(--s-res)"></i></div>
+        <div class="ent-parts">
+          <div><span class="sw" style="background:var(--s-adm)"></span><b>Taxa de administração · R$ 38,92</b><p>Fica com a administradora. Não entra no rateio. A taxa de quem não paga não pode ser jogada para os outros.</p></div>
+          <div><span class="sw" style="background:var(--s-ev)"></span><b><span class="term" tabindex="0" data-g="rateio">Rateio</span> · R$ 92,03</b><p>A parte de cada um no custo real dos eventos do período.</p></div>
+          <div><span class="sw" style="background:var(--s-res)"></span><b><span class="term" tabindex="0" data-g="estabilizacao">Estabilização</span> · R$ 33,68</b><p>Valor fixo por mês, escrito no contrato. Forma a reserva do grupo e segura o boleto nos meses ruins.</p></div>
+        </div>
+        <p class="note">Valores de exemplo, de uma associação com 1.250 placas.</p>
+      </article>
+      <article class="viz"><h3>Como o rateio é calculado, passo a passo</h3>
+        <ol class="ent-steps">
+          <li><b>Fecha o período.</b> Pode ser de 1, 2 ou 3 meses. A conta sai em até 5 dias depois do fechamento.</li>
+          <li><b>Soma o que saiu.</b> Indenizações, consertos, despesas dos eventos, seguro ou resseguro e o aumento das <span class="term" tabindex="0" data-g="provisao">provisões</span>.</li>
+          <li><b>Diminui o que voltou.</b> <span class="term" tabindex="0" data-g="salvados">Salvados</span>, <span class="term" tabindex="0" data-g="ressarcimento">ressarcimentos</span>, <span class="term" tabindex="0" data-g="franquia">cotas de participação</span> e o rendimento das aplicações do grupo.</li>
+          <li><b>Compara com a estabilização já paga.</b> Sobrou: vai para a reserva do grupo. Faltou: sai da reserva ou vira rateio extra.</li>
+          <li><b>Divide pelo valor de cada veículo.</b> Quem tem veículo mais caro ou de mais risco paga mais.</li>
+        </ol>
+      </article>
     </div>
-    <div class="evlist" id="evList"></div>
+    <div class="vizgrid">
+      <article class="viz"><h3>Exemplo de um mês</h3>
+        <div class="extrato">
+          <div class="ex-row"><span class="sg">+</span><span>Eventos pagos e despesas</span><span class="v">R$ 104.500</span></div>
+          <div class="ex-row"><span class="sg">+</span><span>Aumento das provisões (PEL e PEONA)</span><span class="v">R$ 22.133</span></div>
+          <div class="ex-row"><span class="sg">+</span><span>Inadimplência que não vai voltar</span><span class="v">R$ 3.100</span></div>
+          <div class="ex-row"><span class="sg">−</span><span>Salvados, ressarcimentos e cotas</span><span class="v">R$ 14.700</span></div>
+          <div class="ex-row"><span class="sg">−</span><span>Rendimento das aplicações</span><span class="v">R$ 600</span></div>
+          <div class="ex-row tot"><span class="sg">=</span><span><b>Custo a ratear</b></span><span class="v">R$ 114.433</span></div>
+          <div class="ex-row"><span class="sg">−</span><span>Estabilização paga pelos associados</span><span class="v">R$ 85.000</span></div>
+          <div class="ex-row tot"><span class="sg">=</span><span><b>Faltou</b></span><span class="v">R$ 29.433</span></div>
+          <div class="ex-row"><span class="sg">−</span><span>Coberto pela reserva do grupo</span><span class="v">R$ 22.500</span></div>
+          <div class="ex-row tot"><span class="sg">=</span><span><b><span class="term" tabindex="0" data-g="rateioExtra">Rateio extra</span></b></span><span class="v">R$ 6.933</span></div>
+        </div>
+        <p class="note">Dividido pelo valor protegido: <b>R$ 0,12 para cada R$ 1.000 de FIPE</b>. Um carro de FIPE R$ 45 mil paga R$ 5,45 a mais naquele mês.</p>
+      </article>
+      <article class="viz"><h3>O que a SUSEP exige no rateio</h3>
+        <ul class="ent-rules">
+          <li>Período de no máximo 3 meses, com a conta pronta em até 5 dias. <span>art. 67</span></li>
+          <li>Boleto separado em taxa, rateio e estabilização. <span>art. 70</span></li>
+          <li>Estabilização obrigatória, com valor fixo no contrato. <span>art. 69</span></li>
+          <li>A reserva do grupo não pode passar de 3 meses de contribuições. Se passar, o boleto baixa. <span>art. 69</span></li>
+          <li>Cada um paga conforme o valor protegido e o risco do veículo. <span>art. 70</span></li>
+          <li>Quem sai paga só o período em que ficou e recebe a sua parte da reserva em até 20 dias. <span>arts. 68 e 69</span></li>
+          <li>O associado recebe a explicação da conta e tem um canal para contestar. <span>art. 70</span></li>
+        </ul>
+      </article>
+    </div>
+  </section>
+
+  <section id="ent-prov">
+    <div class="sec-head"><p class="kicker">Parte 2</p><h2>As provisões</h2><p>São duas. As duas são fechadas no último dia de cada mês.</p></div>
+    <div class="vizgrid" style="margin-top:0">
+      <article class="viz"><span class="ent-tag">PEL</span><h3>Eventos avisados e ainda não pagos</h3>
+        <p>É a soma do valor que ainda falta pagar de cada evento em aberto. Exemplo: carro na oficina esperando pagamento, moto roubada em análise.</p>
+        <div class="extrato">
+          <div class="ex-row"><span class="sg"></span><span>Carro batido, na oficina</span><span class="v">R$ 22.000</span></div>
+          <div class="ex-row"><span class="sg"></span><span>Moto roubada, em análise</span><span class="v">R$ 7.500</span></div>
+          <div class="ex-row"><span class="sg"></span><span>Caminhão, colisão</span><span class="v">R$ 31.000</span></div>
+          <div class="ex-row"><span class="sg"></span><span>Vidro e lanterna</span><span class="v">R$ 4.800</span></div>
+          <div class="ex-row tot"><span class="sg">=</span><span><b>PEL do mês</b></span><span class="v">R$ 65.300</span></div>
+        </div>
+      </article>
+      <article class="viz"><span class="ent-tag">PEONA</span><h3>Eventos que aconteceram e ainda não foram avisados</h3>
+        <p>A batida do dia 30 que o associado só avisa no dia 5 já é um custo daquele mês. O atuário estima esse valor pelo histórico. Pode ser dispensada com justificativa do atuário.</p>
+        <div class="extrato">
+          <div class="ex-row"><span class="sg"></span><span>Custo médio de eventos por dia</span><span class="v">R$ 3.483</span></div>
+          <div class="ex-row"><span class="sg">×</span><span>Dias que o associado leva para avisar</span><span class="v">10 dias</span></div>
+          <div class="ex-row tot"><span class="sg">=</span><span><b>PEONA estimada</b></span><span class="v">R$ 34.833</span></div>
+        </div>
+        <p class="note">Conta simples para ter uma ideia. O método oficial é do atuário.</p>
+      </article>
+    </div>
+    <div class="ent-q" style="margin-top:16px"><b>Por que isso importa:</b> o aumento das provisões entra no custo do rateio. O dinheiro que cobre as provisões fica guardado em instituição conveniada com a SUSEP. E, pela lei, os diretores da associação respondem junto se faltar provisão.</div>
+  </section>
+
+  <section>
+    <div class="sec-head"><p class="kicker">Desde já</p><h2>O que a associação pode fazer agora</h2></div>
+    <ol class="ent-todo">
+      <li><b>Separar a conta do fundo</b> da conta da administração.</li>
+      <li><b>Fechar todo mês com a mesma conta:</b> custo do mês menos o que os associados pagaram para eventos.</li>
+      <li><b>Manter a lista de eventos em aberto atualizada.</b> Ela é a sua PEL.</li>
+      <li><b>Anotar a data do evento e a data do aviso</b> de cada evento. É o que o atuário usa para a PEONA.</li>
+      <li><b>Mandar a prestação de contas</b> para os associados todo mês.</li>
+    </ol>
     <div class="cta-mini">
-      <div><b>Eventos, prazos, rateio e provisões no mesmo lugar.</b><span>No GestiHub, o financeiro da associação fica pronto para a regra da SUSEP, todo mês.</span></div>
-      <div class="cta-btns"><button type="button" class="btn" data-ajuda="prazos dos eventos">Falar com um especialista</button><a class="btn ghost" data-ghlink="eventos" href="https://www.gestihub.com.br/" target="_blank" rel="noopener">Conhecer o GestiHub</a></div>
+      <div><b>Quer fazer isso todo mês num sistema, já no padrão da SUSEP?</b><span>Rateio, provisões e prestação de contas organizados. Quando a administradora chegar, você só ajusta o que for do jeito dela.</span></div>
+      <div class="cta-btns"><button type="button" class="btn" data-ajuda="rateio e provisões">Falar com um especialista</button><a class="btn ghost" href="#boleto">Ver o boleto com os meus números</a></div>
     </div>
   </section>
   <div class="nexttab"><a class="btn" href="#regras">Próximo: Administradoras e regras →</a></div>
@@ -1270,41 +1344,30 @@ body.modal-on{overflow:hidden}
 
 <div class="wrap results" id="tab-regras" role="tabpanel" aria-labelledby="tb-regras" hidden>
   <section id="adms">
-    <div class="sec-head"><p class="kicker">Administradoras</p><h2>Quem está na fila da SUSEP</h2><p>Projetos que pediram análise prioritária até 03/08/2026. Nenhum está autorizado ainda (conferido em 30/09/2026).</p></div>
+    <div class="sec-head"><p class="kicker">Administradoras</p><h2>Quem pediu autorização à SUSEP</h2><p>Projetos que pediram análise prioritária até 03/08/2026. A SUSEP divulgou só os nomes. Quando sair CNPJ ou andamento de algum, ele aparece aqui.</p></div>
     <div class="tiles">
       <div class="tile"><span class="tl">Projetos na fila</span><span class="tv" id="admTot">64</span><span class="td">lista oficial da SUSEP</span></div>
       <div class="tile tone-bad"><span class="tl">Autorizadas</span><span class="tv">0</span><span class="td"><b>nenhuma</b> até 30/09/2026</span></div>
       <div class="tile"><span class="tl">Prazo para ter contrato</span><span class="tv">07/05/2028</span><span class="td">com administradora já autorizada</span></div>
     </div>
+    <div class="admtools">
+      <div class="input compact"><input id="admBusca" type="search" placeholder="Procurar pelo nome" aria-label="Procurar administradora pelo nome"></div>
+      <span class="hint" id="admCount"></span>
+    </div>
+    <div class="admchips" id="admList"></div>
+    <p class="note" style="margin-top:14px">Estar na lista não é autorização. Antes de assinar, confira na <a href="https://www.gov.br/susep/pt-br/assuntos/protecao-patrimonial-mutualista/associacoes-de-protecao-patrimonial-mutualista" target="_blank" rel="noopener">página da SUSEP</a>. Fonte da lista: <a href="https://www.gov.br/susep/pt-br/central-de-conteudos/noticias/2026/agosto/susep-conclui-recebimento-de-solicitacoes-para-analise-prioritaria-de-administradoras-de-protecao-patrimonial-mutualista" target="_blank" rel="noopener">SUSEP, 06/08/2026</a>.</p>
     <div class="cta-mini">
       <div><b>São 64 projetos na fila. Quem escolhe é a associação.</b><span>Chegue com números, rateio e papéis prontos para comparar propostas de igual para igual.</span></div>
       <div class="cta-btns"><button type="button" class="btn" data-ajuda="lista de administradoras">Quero me preparar</button></div>
     </div>
-    <div class="admtools">
-      <div class="input compact"><input id="admBusca" type="search" placeholder="Procurar pelo nome" aria-label="Procurar administradora pelo nome"></div>
-      <label class="check"><input type="checkbox" id="admPista"> Só os que têm alguma pista de quem está por trás</label>
-      <span class="hint" id="admCount"></span>
-    </div>
-    <div class="admlist" id="admList"></div>
-    <details class="more" style="margin-top:14px"><summary>Como usar esta lista</summary><div>
-      <ul style="margin:0;padding-left:1.2em;display:grid;gap:6px">
-        <li>A SUSEP divulga só o <b>nome do projeto</b>. Ela não publica quem está por trás nem em que fase cada um está.</li>
-        <li>Pergunte à administradora qual é o nome do projeto dela nesta lista. Se não estiver aqui, ela não entrou na análise prioritária.</li>
-        <li><b>Estar na lista não é autorização.</b> Antes de assinar, confira na página da SUSEP se ela já foi autorizada.</li>
-        <li>As pistas são empresas abertas com o mesmo nome do projeto. <b>Não são confirmação</b> de que são elas.</li>
-        <li>Um dos projetos é a administradora criada pela AAAPV, aprovada pelas filiadas em 27/04/2026. O nome do projeto não foi divulgado.</li>
-      </ul>
-      <p class="src">Fontes: <a href="https://www.gov.br/susep/pt-br/central-de-conteudos/noticias/2026/agosto/susep-conclui-recebimento-de-solicitacoes-para-analise-prioritaria-de-administradoras-de-protecao-patrimonial-mutualista" target="_blank" rel="noopener">lista oficial da SUSEP</a> · <a href="https://www.gov.br/susep/pt-br/assuntos/protecao-patrimonial-mutualista/associacoes-de-protecao-patrimonial-mutualista" target="_blank" rel="noopener">administradoras autorizadas (SUSEP)</a> · <a href="https://aaapv.org.br/susep-conclui-recebimento-de-pedidos-de-analise-prioritaria-de-administradoras-mutualistas/" target="_blank" rel="noopener">AAAPV</a></p>
-    </div></details>
   </section>
 
   <section id="lei">
-    <div class="sec-head"><p class="kicker">A regra</p><h2>O que a lei e a SUSEP dizem, em ordem</h2><p>Toque em cada data para ver o resumo.</p></div>
+    <div class="sec-head"><p class="kicker">A regra</p><h2>Andamento da SUSEP e resoluções</h2><p>Em ordem de data. Toque em “Ver o resumo” para ler o que cada uma diz.</p></div>
     <div class="law" id="law"></div>
   </section>
 </div>
 
-<div class="mbar rmm" id="rmMbar"><span class="pill" id="rmMbS">–</span><b id="rmMbV">–</b><button type="button" class="btn small" id="rmMbBtn">Ver resultado</button></div>
 <div class="ajuda" id="ajuda" hidden role="dialog" aria-modal="true" aria-labelledby="ajudaTit">
   <div class="ajuda-box">
     <button type="button" class="ajuda-x" id="ajudaFechar" aria-label="Fechar">×</button>
@@ -1965,7 +2028,6 @@ function render(){
   renderRepasse(r);
   renderPlano(r);
   renderTpl();
-  renderRM();
   leadUpd();
   renderResumo(s, r, pr);
   save();
@@ -2440,391 +2502,6 @@ const LEI = [
 ];
 $('law').innerHTML = LEI.map(l => `<article class="law-item ${l.now?'now':''}"><div class="d">${l.d}<small>${l.s}</small></div><div><b>${l.t}</b><details class="more"><summary>Ver o resumo</summary><div><ul>${l.p.map(x=>`<li>${x}</li>`).join('')}</ul>${l.src?`<p class="src">Fonte: ${l.src}</p>`:''}</div></details></div></article>`).join('');
 
-/* ======================= RATEIO DO MÊS ======================= */
-const RMKEY = KEY + '.rm', RMHKEY = KEY + '.rmhist';
-const RMF = ['rm_mes','rm_dur','rm_pagos','rm_desp','rm_assist','rm_seguro','rm_pelIni','rm_dias','rm_peonaIni','rm_salv','rm_ress','rm_franq','rm_recSeg','rm_inad','rm_ajuste','rm_fin','rm_estab','rm_patIni','rm_usoMax','rm_f_carros','rm_f_motos','rm_f_pesados'];
-const RM_FLUXOS = ['rm_pagos','rm_desp','rm_assist','rm_seguro','rm_salv','rm_ress','rm_franq','rm_recSeg','rm_inad','rm_ajuste','rm_fin','rm_estab'];
-const RM_EX = {rm_mes:'-1', rm_dur:'1', rm_pagos:'98.000', rm_desp:'6.500', rm_assist:'4.200', rm_assistInc:false, rm_seguro:'0',
-  rm_pelIni:'48.000', rm_dias:'10', rm_peonaIni:'30.000', rm_salv:'9.000', rm_ress:'2.500', rm_franq:'3.200', rm_recSeg:'0',
-  rm_inad:'3.100', rm_ajuste:'0', rm_fin:'600', rm_estab:'85.000', rm_patIni:'90.000', rm_usoMax:'25', rm_f_carros:'1', rm_f_motos:'1', rm_f_pesados:'1',
-  pel:[{d:'Evento 0412 · carro batido, na oficina', t:'carros', v:'22.000'}, {d:'Evento 0415 · moto roubada, em análise', t:'motos', v:'7.500'}, {d:'Evento 0419 · caminhão, colisão', t:'pesados', v:'31.000'}, {d:'Evento 0421 · vidro e lanterna', t:'carros', v:'4.800'}]};
-let rmEx = true, rmPel = [], rmHist = [], RMO = null;
-
-// linha do formulário: rótulo (com explicação) à esquerda, valor à direita
-const lrow = (id, label, o = {}) => `<div class="lrow"><div class="ll"><label for="${id}">${label}</label>${o.g ? gi(o.g) : ''}${o.hint ? `<small>${o.hint}</small>` : ''}</div><div class="input compact">${o.suf ? '' : '<span class="pre">R$</span>'}<input id="${id}" inputmode="${o.int ? 'numeric' : 'decimal'}" data-kind="${o.kind || 'money'}">${o.suf ? `<span class="suf">${o.suf}</span>` : ''}</div></div>`;
-const lsel = (id, label, opts) => `<div class="lrow"><div class="ll"><label for="${id}">${label}</label></div><div class="input compact"><select id="${id}">${opts}</select></div></div>`;
-const leg = (n, txt) => `<legend><button type="button" class="lhead" data-acc="${n}" aria-expanded="false"><span class="ln">${n}</span><span class="lt">${txt}</span><span class="lsum" id="rmS${n}"></span><span class="chev" aria-hidden="true">▾</span></button></legend>`;
-$('rmForm').innerHTML = `
-  <fieldset class="ledger">${leg(1, 'Período')}
-    ${lsel('rm_mes', 'Mês do fechamento', Array.from({length:13}, (_, i) => -i).map(o => `<option value="${o}">${mesLabel(o)}</option>`).join(''))}
-    ${lsel('rm_dur', 'Período do rateio', '<option value="1">1 mês</option><option value="2">2 meses</option><option value="3">3 meses (máximo)</option>')}
-    <p class="hint lnote" id="rmBase"></p>
-  </fieldset>
-  <fieldset class="ledger">${leg(2, 'O que saiu com eventos')}
-    ${lrow('rm_pagos', 'Indenizações e consertos pagos')}
-    ${lrow('rm_desp', 'Despesas dos eventos', {hint:'Guincho do evento, perícia, vistoria.'})}
-    ${lrow('rm_seguro', 'Seguro ou resseguro pago', {g:'resseguro'})}
-    ${lrow('rm_assist', 'Assistência 24h')}
-    <label class="check lnote"><input type="checkbox" id="rm_assistInc"> O contrato diz que a assistência entra no rateio</label>
-  </fieldset>
-  <fieldset class="ledger">${leg(3, 'Eventos avisados e ainda não pagos (PEL)')}
-    <p class="hint lnote">Um evento por linha, com o valor que ainda falta pagar no último dia do período. A soma é a provisão ${gt('pel', 'PEL')}.</p>
-    <div class="pel" id="rmPelList"></div>
-    <button type="button" class="btn small ghost lnote" id="rmPelAdd">+ Adicionar evento em aberto</button>
-    ${lrow('rm_pelIni', 'Total em aberto no fechamento anterior', {hint:'A PEL do período passado.'})}
-  </fieldset>
-  <fieldset class="ledger">${leg(4, 'Eventos não avisados (PEONA)')}
-    <p class="hint lnote">Eventos que já aconteceram, mas o associado ainda não avisou. ${gt('peona', 'Entenda a PEONA')}</p>
-    ${lrow('rm_dias', 'Dias que o associado leva, em média, para avisar', {suf:'dias', int:true, kind:'int'})}
-    ${lrow('rm_peonaIni', 'Valor no fechamento anterior', {hint:'A PEONA do período passado.'})}
-    <p class="hint lnote">Conta simples: custo médio por dia × dias até o aviso. O atuário pode usar outro método.</p>
-  </fieldset>
-  <fieldset class="ledger">${leg(5, 'O que voltou para o grupo')}
-    ${lrow('rm_salv', 'Venda de salvados (carcaças)', {g:'salvados'})}
-    ${lrow('rm_ress', 'Ressarcimento de terceiros', {g:'ressarcimento'})}
-    ${lrow('rm_franq', 'Cotas de participação recebidas', {g:'franquia'})}
-    ${lrow('rm_recSeg', 'Recuperado de seguro ou resseguro')}
-  </fieldset>
-  <fieldset class="ledger">${leg(6, 'Ajustes')}
-    ${lrow('rm_inad', 'Inadimplência que não vai voltar', {g:'inadNaoRec'})}
-    ${lrow('rm_ajuste', 'Ajuste de períodos anteriores', {hint:'Use sinal de menos se for devolução.'})}
-    ${lrow('rm_fin', 'Rendimento das aplicações do grupo', {hint:'Use sinal de menos se deu prejuízo.'})}
-  </fieldset>
-  <fieldset class="ledger">${leg(7, 'Reserva do grupo')}
-    ${lrow('rm_estab', 'Estabilização recebida no período', {g:'estabilizacao', hint:'Hoje: a parte da mensalidade que vai para eventos.'})}
-    ${lrow('rm_patIni', 'Reserva do grupo no começo', {g:'patrimonio'})}
-    ${lrow('rm_usoMax', 'Usar no máximo, para cobrir falta', {suf:'% da reserva', kind:'pct', hint:'O que passar disso vira rateio extra.'})}
-    <details class="more lnote"><summary>Ajustar o risco por tipo de veículo</summary><div>
-      <p class="hint">1 = normal. 1,5 = paga 50% a mais por real de FIPE. Use o número que o atuário indicar.</p>
-      ${TIPOS.map(t => lrow('rm_f_' + t.id, t.n, {suf:'×'})).join('')}
-    </div></details>
-  </fieldset>`;
-
-
-function rmPelHTML(){
-  $('rmPelList').innerHTML = rmPel.map((p, i) => `<div class="pelrow">
-      <input class="pd" data-i="${i}" data-f="d" value="${esc(p.d || '')}" placeholder="Nº do evento ou placa" aria-label="Evento ${i + 1}: identificação">
-      <select data-i="${i}" data-f="t" aria-label="Evento ${i + 1}: tipo">${TIPOS.map(t => `<option value="${t.id}" ${p.t === t.id ? 'selected' : ''}>${t.n}</option>`).join('')}</select>
-      <div class="input compact"><span class="pre">R$</span><input data-i="${i}" data-f="v" inputmode="decimal" data-kind="money" value="${esc(p.v || '')}" aria-label="Evento ${i + 1}: valor que falta pagar"></div>
-      <button type="button" class="x" data-del="${i}" aria-label="Remover evento ${i + 1}">×</button>
-    </div>`).join('') + `<div class="pel-tot"><span>Total em aberto agora (${rmPel.length} ${rmPel.length === 1 ? 'evento' : 'eventos'})</span><span id="rmPelTot">–</span></div>`;
-}
-function readRM(){ const o = {}; RMF.forEach(k => o[k] = $(k).value); o.rm_assistInc = $('rm_assistInc').checked; o.pel = rmPel.map(p => ({...p})); return o; }
-function writeRM(o){
-  RMF.forEach(k => { $(k).value = o[k] ?? ($(k).tagName === 'SELECT' ? $(k).options[0].value : ''); });
-  $('rm_assistInc').checked = !!o.rm_assistInc;
-  rmPel = (o.pel || []).map(p => ({...p}));
-  rmPelHTML();
-  $('rmForm').querySelectorAll('input[data-kind]').forEach(fmtField);
-}
-function saveRM(){ try{ localStorage.setItem(RMKEY, JSON.stringify({s:readRM(), ex:rmEx})); localStorage.setItem(RMHKEY, JSON.stringify(rmHist)); }catch(e){} }
-function rmMarcaMeu(){
-  if(modoR === 'meu') return;
-  modoR = 'meu'; rmEx = false; modoBarra(BAR_R, modoR);
-}
-
-function calcRM(s, r){
-  const o = {};
-  const v = k => { const x = num(s[k]); return isFinite(x) ? x : 0; };
-  o.dur = +s.rm_dur || 1; o.dias = o.dur * 30;
-  const m0 = +s.rm_mes || 0;
-  o.per = o.dur === 1 ? mesLabel(m0) : mesLabel(m0 - o.dur + 1) + ' a ' + mesLabel(m0);
-  o.m0 = m0;
-  o.pagos = v('rm_pagos'); o.desp = v('rm_desp'); o.seguro = v('rm_seguro');
-  o.assist = s.rm_assistInc ? v('rm_assist') : 0; o.assistFora = s.rm_assistInc ? 0 : v('rm_assist');
-  o.pelFim = (s.pel || []).reduce((a, p) => a + (isFinite(num(p.v)) ? num(p.v) : 0), 0);
-  o.nPel = (s.pel || []).length;
-  o.pelIni = v('rm_pelIni'); o.dPel = o.pelFim - o.pelIni;
-  o.custoDia = (o.pagos + o.desp + o.assist) / o.dias;
-  o.diasAviso = v('rm_dias');
-  o.peonaFim = o.custoDia * o.diasAviso; o.peonaIni = v('rm_peonaIni'); o.dPeona = o.peonaFim - o.peonaIni;
-  o.salv = v('rm_salv'); o.ress = v('rm_ress'); o.franq = v('rm_franq'); o.recSeg = v('rm_recSeg');
-  o.recup = o.salv + o.ress + o.franq + o.recSeg;
-  o.inad = v('rm_inad'); o.ajuste = v('rm_ajuste'); o.fin = v('rm_fin');
-  o.custo = o.pagos + o.desp + o.assist + o.seguro + o.dPel + o.dPeona + o.inad + o.ajuste - o.recup - o.fin;
-  o.estab = v('rm_estab');
-  o.res = o.estab - o.custo;
-  o.patIni = v('rm_patIni');
-  o.usoMax = (isFinite(num(s.rm_usoMax)) ? Math.max(0, Math.min(100, num(s.rm_usoMax))) : 25) / 100;
-  if(o.res >= 0){ o.uso = 0; o.comp = 0; }
-  else { const falta = -o.res; o.uso = Math.min(falta, Math.max(0, o.patIni) * o.usoMax); o.comp = falta - o.uso; }
-  o.patFim = o.patIni + Math.max(0, o.res) - o.uso;
-  o.teto = 3 * o.estab / o.dur;
-  o.passaTeto = o.teto > 0 && o.patFim > o.teto;
-  o.provisoes = o.pelFim + o.peonaFim;
-  // base por tipo (placas e FIPE do passo 1)
-  const at = (r && r.ativos) || [];
-  o.semFipe = at.some(t => !ok(t.fipe));
-  o.tipos = at.map(t => {
-    const fat = ok(num(s['rm_f_' + t.id])) ? num(s['rm_f_' + t.id]) : 1;
-    return {...t, fat, peso: o.semFipe ? t.placas * fat : t.placas * t.fipe * fat};
-  });
-  const W = o.tipos.reduce((a, t) => a + t.peso, 0);
-  o.fipeTot = at.reduce((a, t) => a + t.placas * (ok(t.fipe) ? t.fipe : 0), 0);
-  o.tipos.forEach(t => {
-    t.porPlaca = W > 0 ? o.comp * t.peso / W / t.placas : NaN;
-    t.porMil = !o.semFipe && W > 0 ? o.comp * t.fat / W * 1000 : NaN;
-  });
-  o.porMil = !o.semFipe && o.fipeTot > 0 ? o.comp / o.fipeTot * 1000 : NaN;
-  o.custoPorMil = o.fipeTot > 0 ? o.custo / o.dur / o.fipeTot * 1000 : NaN;
-  // sugestão de estabilização: média do custo mensal (este + até 2 fechamentos salvos) + 5%
-  const hist = rmHist.filter(h => h.per !== o.per).slice(-2).map(h => h.custo / h.dur);
-  const serie = hist.concat([o.custo / o.dur]);
-  o.sugEstab = Math.max(0, serie.reduce((a, b) => a + b, 0) / serie.length * 1.05);
-  o.sugN = serie.length;
-  o.sugPorMil = o.fipeTot > 0 ? o.sugEstab / o.fipeTot * 1000 : NaN;
-  o.placas = r ? r.placas : NaN;
-  o.fipeMedia = r ? r.fipe : NaN;
-  return o;
-}
-
-function exRow(sg, label, val, sub, tot){
-  return `<div class="ex-row ${tot ? 'tot' : ''}"><span class="sg">${sg}</span><span>${label}${sub ? `<small>${sub}</small>` : ''}</span><span class="v">${brl(val)}</span></div>`;
-}
-let rmOpen = 1;
-const RM_LEDG = [...$('rmForm').querySelectorAll('.ledger')];
-RM_LEDG.forEach((fs, i) => {
-  const d = document.createElement('div'); d.className = 'lnext';
-  d.innerHTML = i < RM_LEDG.length - 1 ? '<button type="button" class="btn small" data-acc="' + (i + 2) + '">Continuar →</button>' : '<button type="button" class="btn small" data-acc="0">Ver o resultado</button>';
-  fs.appendChild(d);
-});
-function rmAcc(){ RM_LEDG.forEach((fs, i) => { const on = i + 1 === rmOpen; fs.classList.toggle('closed', !on); fs.classList.toggle('feito', rmOpen === 0 || i + 1 < rmOpen); fs.querySelector('.lhead').setAttribute('aria-expanded', on); }); }
-$('rmForm').addEventListener('click', e => {
-  const b = e.target.closest('[data-acc]'); if(!b) return;
-  const k = +b.dataset.acc;
-  rmOpen = (b.classList.contains('lhead') && rmOpen === k) ? 0 : k;
-  rmAcc();
-  if(k === 0 || rmOpen === 0) $('rmSum').scrollIntoView({behavior:'smooth', block:'center'});
-  else RM_LEDG[rmOpen - 1].scrollIntoView({behavior:'smooth', block:'nearest'});
-});
-rmAcc();
-let rmSub = 'conta';
-$('rmMbBtn').addEventListener('click', () => { $('rmSum').scrollIntoView({behavior:'smooth', block:'center'}); });
-function showSub(){
-  document.querySelectorAll('#rmSubtabs [data-sub]').forEach(b => { b.setAttribute('aria-selected', b.dataset.sub === rmSub); b.tabIndex = b.dataset.sub === rmSub ? 0 : -1; });
-  ['conta','quem','prov','demo','hist'].forEach(k => $('rms-' + k).hidden = k !== rmSub);
-}
-$('rmSubtabs').addEventListener('click', e => { const b = e.target.closest('[data-sub]'); if(b){ rmSub = b.dataset.sub; showSub(); } });
-
-function renderRM(){
-  if(!$('rmSum')) return;
-  const s = readRM(), o = calcRM(s, R);
-  RMO = o;
-  [o.per + ' · ' + (o.dur === 1 ? '1 mês' : o.dur + ' meses'), brl(o.pagos + o.desp + o.seguro + o.assist + o.assistFora), brl(o.pelFim), brl(o.peonaFim), brl(o.recup), brl(o.inad + o.ajuste - o.fin), brl(o.estab)]
-    .forEach((t, i) => { const el = $('rmS' + (i + 1)); if(el) el.textContent = t; });
-  $('rmPelTot').textContent = brl(o.pelFim);
-  $('rmBase').innerHTML = ok(o.placas) ? `Base do rateio: <b>${int(o.placas)} placas</b>${o.fipeTot > 0 ? ` e <b>${brlShort(o.fipeTot)}</b> em ${gt('fipe', 'FIPE')} protegida` : ''}, da aba Preencher.` : 'Preencha as placas por tipo na aba Preencher.';
-  $('rmHead').textContent = 'Fechamento de ' + o.per;
-  const falta = o.res < 0;
-  const tRes = !falta ? 'ok' : o.comp > 0.5 ? 'bad' : 'warn';
-  const carro = o.tipos.find(t => t.id === 'carros' && ok(t.fipe)) || o.tipos.find(t => ok(t.fipe));
-
-  // resumo ao lado do formulário
-  $('rmSum').innerHTML = `
-    <p class="rs-k">Resultado de ${o.per}</p>
-    <div class="rs-big tone-${tRes}"><span>${falta ? 'Faltou dinheiro' : 'Sobrou dinheiro'}</span><b>${brl(Math.abs(o.res))}</b><small>${falta ? 'o custo passou da estabilização' : 'vai para a reserva do grupo'}</small></div>
-    <div class="extrato">
-      ${exRow('', 'Custo do período', o.custo)}
-      ${exRow('−', gt('estabilizacao', 'Estabilização') + ' recebida', o.estab)}
-      ${falta ? exRow('−', 'Coberto pela ' + gt('patrimonio', 'reserva'), o.uso) : ''}
-      ${falta ? exRow('=', `<b>${gt('rateioExtra', 'Rateio extra')}</b>`, o.comp, '', true) : ''}
-    </div>
-    ${o.comp > 0.5 && isFinite(o.porMil) ? `<div class="rs-mil"><b>${brl(o.porMil, true)}</b> ${gt('porMil', 'por R$ 1.000 de FIPE')}${carro ? `<small>${carro.um.charAt(0).toUpperCase() + carro.um.slice(1)} de FIPE ${brlShort(carro.fipe)}: ${brl(carro.porMil * carro.fipe / 1000, true)}</small>` : ''}</div>` : ''}
-    <div class="rs-two">
-      <div><span>${gt('provisao', 'Provisões')}</span><b>${brlShort(o.provisoes)}</b></div>
-      <div><span>Reserva no fim</span><b>${brlShort(o.patFim)}</b></div>
-    </div>
-    ${o.passaTeto ? `<p class="note"><b>Reserva acima do ${gt('teto', 'teto')}.</b> Baixe a estabilização no próximo período.</p>` : ''}
-    <button type="button" class="btn small ghost" id="rmVerDet2">Ver a conta completa ↓</button>${rmHist.length >= 3 ? ghCard(rmHist.length) : ''}`;
-  $('rmMbS').textContent = o.comp > 0.5 ? 'Rateio extra' : falta ? 'Faltou' : 'Sobrou'; tone($('rmMbS'), tRes);
-  $('rmMbV').textContent = brl(o.comp > 0.5 ? o.comp : Math.abs(o.res));
-  $('rmVerDet2').addEventListener('click', () => { rmSub = 'conta'; showSub(); $('rmResultado').scrollIntoView({behavior:'smooth'}); });
-  if(!(o.pagos || o.desp || o.estab || o.pelFim || o.pelIni || o.recup || o.inad || o.patIni || o.seguro)){
-    $('rmSum').innerHTML = `<p class="rs-k">Resultado de ${o.per}</p><div class="empty">Preencha os eventos pagos e a estabilização recebida. O resultado do mês aparece aqui, na hora.</div>`;
-    $('rmMbS').textContent = 'Rateio'; tone($('rmMbS'), 'none'); $('rmMbV').textContent = '–';
-  }
-
-  // a conta (extrato): só linhas com valor
-  const L = [];
-  const add = (sg, label, val, sub) => { if(Math.abs(val) >= 0.5) L.push(exRow(sg, label, Math.abs(val), sub)); };
-  add('+', 'Indenizações e consertos pagos', o.pagos);
-  add('+', 'Despesas dos eventos', o.desp);
-  add('+', 'Assistência 24h', o.assist);
-  add('+', 'Seguro ou resseguro', o.seguro);
-  add(o.dPel >= 0 ? '+' : '−', (o.dPel >= 0 ? 'Aumento' : 'Redução') + ' dos eventos a pagar (' + gt('pel', 'PEL') + ')', o.dPel, `de ${brl(o.pelIni)} para ${brl(o.pelFim)}`);
-  add(o.dPeona >= 0 ? '+' : '−', (o.dPeona >= 0 ? 'Aumento' : 'Redução') + ' dos não avisados (' + gt('peona', 'PEONA') + ')', o.dPeona, `de ${brl(o.peonaIni)} para ${brl(o.peonaFim)}`);
-  add('+', gt('inadNaoRec', 'Inadimplência que não vai voltar'), o.inad);
-  add(o.ajuste >= 0 ? '+' : '−', 'Ajuste de períodos anteriores', o.ajuste);
-  add('−', `${gt('salvados', 'Salvados')}, ${gt('ressarcimento', 'ressarcimentos')} e ${gt('franquia', 'cotas de participação')}`, o.recup);
-  add(o.fin >= 0 ? '−' : '+', o.fin >= 0 ? 'Rendimento das aplicações' : 'Prejuízo nas aplicações', o.fin);
-  L.push(exRow('=', '<b>Custo a ratear</b>', o.custo, '', true));
-  L.push(exRow('−', gt('estabilizacao', 'Estabilização') + ' recebida', o.estab));
-  L.push(exRow('=', `<b>${falta ? 'Falta' : 'Sobra'}</b>`, Math.abs(o.res), falta ? '' : 'vai para a reserva do grupo', true));
-  if(falta){
-    L.push(exRow('−', 'Coberto pela ' + gt('patrimonio', 'reserva do grupo'), o.uso, `até ${pct(o.usoMax,0)} da reserva`));
-    L.push(exRow('=', `<b>${gt('rateioExtra', 'Rateio extra')} a cobrar</b>`, o.comp, '', true));
-  }
-  $('rms-conta').innerHTML = `<article class="viz">
-      <div class="extrato">${L.join('')}</div>
-      ${o.assistFora > 0.5 ? `<p class="note">${brl(o.assistFora)} de assistência ficou fora do rateio: pela regra, só entra se o contrato disser.</p>` : ''}
-      <details class="more"><summary>O que diz a regra</summary><div><p class="note">Resolução CNSP 491/2026, art. 69: o valor a ratear soma eventos pagos e despesas, a variação das provisões (PEL e PEONA), seguro ou resseguro, inadimplência não recuperada e ajustes, e desconta salvados, ressarcimentos, recuperações, contribuições já arrecadadas e o resultado das aplicações. A taxa de administração nunca entra. O período é de no máximo 3 meses.</p></div></details>
-    </article>`;
-
-  // quem paga quanto
-  const at = o.tipos, mx = Math.max(...at.map(t => t.porPlaca || 0), 0.01);
-  $('rms-quem').innerHTML = `<article class="viz">
-    ${o.comp <= 0.5 ? `<div class="empty">Neste período não tem ${gt('rateioExtra', 'rateio extra')}. A estabilização e a reserva cobriram o custo.</div>` : !at.length ? `<div class="empty">Preencha as placas por tipo na aba Preencher.</div>` : `
-      <p class="read">${isFinite(o.porMil) ? `Rateio extra de <b>${brl(o.comp)}</b>: <b>${brl(o.porMil, true)}</b> ${gt('porMil', 'por R$ 1.000 de FIPE')}.` : 'Dividido por placa, porque falta a FIPE média de algum tipo na aba Preencher.'}</p>
-      <div class="rows">${at.map(t => rowbar(`<b>${t.n}</b>${ok(t.fipe) ? `<br><span class="hint">FIPE média ${brlShort(t.fipe)}</span>` : ''}`, t.porPlaca / mx, brl(t.porPlaca, true), '--s-ev', `${brl(t.porPlaca, true)} por placa, em média\n${t.n}${t.fat !== 1 ? ' · risco ' + dec1(t.fat) + '×' : ''}`)).join('')}</div>
-      <div class="onecar">
-        <div class="field"><label for="rmVTipo" class="hint">Calcular para um veículo: tipo</label><div class="input compact"><select id="rmVTipo">${at.map(t => `<option value="${t.id}">${t.n}</option>`).join('')}</select></div></div>
-        <div class="field"><label for="rmVFipe" class="hint">FIPE do veículo</label><div class="input compact"><span class="pre">R$</span><input id="rmVFipe" inputmode="decimal" data-kind="money"></div></div>
-        <div class="out" id="rmVOut">–<small>rateio extra deste veículo</small></div>
-      </div>`}
-    </article>`;
-  if($('rmVTipo')){
-    const prev = renderRM.v || {};
-    if(prev.t && at.some(t => t.id === prev.t)) $('rmVTipo').value = prev.t;
-    $('rmVFipe').value = prev.f || '';
-    const calcV = () => {
-      const t = at.find(x => x.id === $('rmVTipo').value) || at[0], fv = num($('rmVFipe').value);
-      renderRM.v = {t: t.id, f: $('rmVFipe').value};
-      if(!ok(fv)){ $('rmVOut').innerHTML = '–<small>digite a FIPE do veículo</small>'; return; }
-      const val = isFinite(t.porMil) ? t.porMil * fv / 1000 : t.porPlaca;
-      $('rmVOut').innerHTML = `${brl(val, true)}<small>rateio extra deste veículo</small>`;
-    };
-    $('rmVTipo').addEventListener('change', calcV); $('rmVFipe').addEventListener('input', calcV); $('rmVFipe').addEventListener('blur', e => fmtField(e.target));
-    calcV();
-  }
-
-  // provisões e reserva
-  $('rms-prov').innerHTML = `<div class="vizgrid" style="margin-top:0">
-    <article class="viz"><h3>${gt('provisao', 'Provisões')}: quanto deixar separado</h3>
-      <div class="extrato">
-        ${exRow('', `Eventos avisados e não pagos (${gt('pel', 'PEL')})`, o.pelFim, `${o.nPel} ${o.nPel === 1 ? 'evento' : 'eventos'} em aberto`)}
-        ${exRow('', `Eventos não avisados (${gt('peona', 'PEONA')})`, o.peonaFim, `${brl(o.custoDia)} por dia × ${int(o.diasAviso)} dias`)}
-        ${exRow('=', '<b>Total das provisões</b>', o.provisoes, '', true)}
-      </div>
-      <p class="note">Esse dinheiro já tem dono: são eventos que vão ser pagos. Não conte como sobra.</p>
-    </article>
-    <article class="viz"><h3>${gt('patrimonio', 'Reserva do grupo')}</h3>
-      <div class="extrato">
-        ${exRow('', 'No começo do período', o.patIni)}
-        ${o.res >= 0 ? exRow('+', 'Sobra do período', o.res) : exRow('−', 'Usado para cobrir a falta', o.uso)}
-        ${exRow('=', '<b>No fim do período</b>', o.patFim, '', true)}
-      </div>
-      ${o.passaTeto ? `<p class="note"><b>Passou do ${gt('teto', 'teto da regra')}:</b> a reserva não pode passar de 3 meses de contribuições (uns ${brlShort(o.teto)}). Baixe a estabilização no próximo período.</p>` : ''}
-      <p class="note"><b>Estabilização sugerida para o próximo período:</b> ${brlShort(o.sugEstab)} por mês${isFinite(o.sugPorMil) ? `, ou ${brl(o.sugPorMil, true)} por R$ 1.000 de FIPE` : ''}. É a média do custo ${o.sugN > 1 ? `dos últimos ${o.sugN} fechamentos` : 'deste período'} mais 5%.</p>
-    </article></div>`;
-
-  $('rmDemo').value = rmDemonstrativo(o);
-  renderRMHist();
-  saveRM();
-}
-
-
-function rmDemonstrativo(o){
-  const nome = ($('nome').value || '[NOME DA ASSOCIAÇÃO]').toUpperCase();
-  const linhas = [
-    `DEMONSTRATIVO DO RATEIO · ${o.per.toUpperCase()}`, nome, '',
-    '1. Custo do período',
-    `   Indenizações e consertos pagos: ${brl(o.pagos)}`,
-    o.desp ? `   Despesas dos eventos: ${brl(o.desp)}` : null,
-    o.assist ? `   Assistência 24h: ${brl(o.assist)}` : null,
-    o.seguro ? `   Seguro ou resseguro: ${brl(o.seguro)}` : null,
-    `   Variação dos eventos em aberto (PEL): ${brl(o.dPel)} (de ${brl(o.pelIni)} para ${brl(o.pelFim)})`,
-    `   Variação dos não avisados (PEONA): ${brl(o.dPeona)}`,
-    o.inad ? `   Inadimplência não recuperada: ${brl(o.inad)}` : null,
-    o.ajuste ? `   Ajuste de períodos anteriores: ${brl(o.ajuste)}` : null,
-    o.recup ? `   (−) Salvados, ressarcimentos e franquias: ${brl(o.recup)}` : null,
-    o.fin ? `   (−) Resultado das aplicações do grupo: ${brl(o.fin)}` : null,
-    `   = Custo a ratear: ${brl(o.custo)}`, '',
-    `2. Estabilização recebida: ${brl(o.estab)}`,
-    `3. ${o.res < 0 ? 'Falta' : 'Sobra'}: ${brl(Math.abs(o.res))}`,
-    o.res < 0 ? `4. Coberto pelo patrimônio do grupo: ${brl(o.uso)}` : `4. A sobra foi para o patrimônio do grupo.`,
-    `   Patrimônio do grupo: de ${brl(o.patIni)} para ${brl(o.patFim)}`, '',
-    o.comp > 0.5 ? `5. Rateio extra: ${brl(o.comp)}${isFinite(o.porMil) ? ` = ${brl(o.porMil, true)} para cada R$ 1.000 de FIPE` : ''}` : '5. Não há rateio extra neste período.',
-    ...(o.comp > 0.5 ? o.tipos.map(t => `   ${t.n}: ${brl(t.porPlaca, true)} por placa, em média`) : []),
-    '',
-    `6. Provisões no fim do período: eventos em aberto ${brl(o.pelFim)}; não avisados (estimativa) ${brl(o.peonaFim)}.`,
-    '',
-    'Como calculamos: custo real do período, conforme o art. 69 da Resolução CNSP nº 491/2026, dividido de forma proporcional ao valor (FIPE) de cada veículo. A taxa de administração não entra no rateio.',
-    'O valor do rateio pode variar, para mais ou para menos, conforme os eventos do período. A proteção patrimonial mutualista não é seguro.',
-    'Dúvidas ou contestação: [TELEFONE / WHATSAPP / E-MAIL].'
-  ];
-  return linhas.filter(x => x !== null).join('\n');
-}
-
-function renderRMHist(){ renderRMHist0(); $('rmHist').insertAdjacentHTML('beforeend', `<p class="ghlinha">Fechamento todo mês sem planilha? <a href="${ghUrl('rateio-historico')}" target="_blank" rel="noopener">Conheça o GestiHub</a>.</p>`); }
-function renderRMHist0(){
-  const el = $('rmHist');
-  if(!rmHist.length){ el.innerHTML = '<div class="empty">Nenhum fechamento salvo ainda. Salve o de cada período para acompanhar a evolução.</div>'; return; }
-  const mx = Math.max(...rmHist.map(h => h.custo / h.dur), 1);
-  el.innerHTML = `<div class="viz"><div class="rows">${rmHist.map(h => rowbar(`<b>${h.per}</b>`, (h.custo / h.dur) / mx, brlShort(h.custo / h.dur) + '/mês', '--s-ev', `${brl(h.custo / h.dur)} de custo por mês\n${h.per}`)).join('')}</div>
-    <div class="tblwrap"><table class="hist"><thead><tr><th>Período</th><th>Custo</th><th>Estabilização</th><th>Rateio extra</th><th>Por R$ 1.000</th><th>Patrimônio no fim</th><th>Provisões</th><th></th></tr></thead>
-    <tbody>${rmHist.map((h, i) => `<tr><td>${h.per}</td><td>${brl(h.custo)}</td><td>${brl(h.estab)}</td><td>${brl(h.comp)}</td><td>${isFinite(h.porMil) && h.porMil !== null ? brl(h.porMil, true) : '–'}</td><td>${brl(h.patFim)}</td><td>${brl(h.prov)}</td><td><button type="button" class="x" data-hdel="${i}" aria-label="Excluir ${h.per}">×</button></td></tr>`).join('')}</tbody></table></div></div>`;
-}
-function rmSalvar(){
-  const o = RMO; if(!o) return false;
-  const h = {per:o.per, dur:o.dur, custo:o.custo, estab:o.estab, comp:o.comp, porMil:isFinite(o.porMil) ? o.porMil : null, patFim:o.patFim, prov:o.provisoes};
-  const i = rmHist.findIndex(x => x.per === o.per);
-  if(i >= 0) rmHist[i] = h; else rmHist.push(h);
-  renderRMHist(); saveRM();
-  return true;
-}
-const rmAviso = t => { $('rmSaveMsg').textContent = t; setTimeout(() => $('rmSaveMsg').textContent = '', 3500); };
-$('rmSave').addEventListener('click', () => { if(rmSalvar()){ rmAviso('Fechamento de ' + RMO.per + ' salvo.'); renderRM(); } });
-$('rmNext').addEventListener('click', () => {
-  if(!rmSalvar()) return;
-  const o = RMO, prox = Math.min(0, o.m0 + o.dur);
-  $('rm_pelIni').value = Math.round(o.pelFim).toLocaleString('pt-BR');
-  $('rm_peonaIni').value = Math.round(o.peonaFim).toLocaleString('pt-BR');
-  $('rm_patIni').value = Math.round(o.patFim).toLocaleString('pt-BR');
-  $('rm_mes').value = String(prox);
-  RM_FLUXOS.forEach(k => $(k).value = '');
-  rmMarcaMeu(); renderRM();
-  rmAviso('Salvo. O fim deste período virou o começo do próximo. Atualize os eventos em aberto.');
-  subirAte($('rmForm'));
-});
-$('rmHist').addEventListener('click', e => { const b = e.target.closest('[data-hdel]'); if(b){ rmHist.splice(+b.dataset.hdel, 1); renderRMHist(); saveRM(); } });
-$('rmForm').addEventListener('input', e => {
-  const i = e.target.dataset.i;
-  if(i !== undefined){ rmPel[+i][e.target.dataset.f] = e.target.value; }
-  rmMarcaMeu(); renderRM();
-});
-$('rmForm').addEventListener('change', e => { const i = e.target.dataset.i; if(i !== undefined) rmPel[+i][e.target.dataset.f] = e.target.value; rmMarcaMeu(); renderRM(); });
-$('rmForm').addEventListener('focusout', e => { if(e.target.matches('input[data-kind]')){ fmtField(e.target); const i = e.target.dataset.i; if(i !== undefined) rmPel[+i].v = e.target.value; } });
-$('rmForm').addEventListener('submit', e => e.preventDefault());
-$('rmForm').addEventListener('click', e => {
-  if(e.target.id === 'rmPelAdd'){ rmPel.push({d:'', t:'carros', v:''}); rmPelHTML(); rmMarcaMeu(); renderRM(); const ins = $('rmPelList').querySelectorAll('.pd'); ins[ins.length - 1].focus(); }
-  const d = e.target.closest('[data-del]'); if(d){ rmPel.splice(+d.dataset.del, 1); rmPelHTML(); rmMarcaMeu(); renderRM(); }
-});
-const RM_VAZIO = {rm_mes:'-1', rm_dur:'1', rm_usoMax:'25', rm_f_carros:'1', rm_f_motos:'1', rm_f_pesados:'1', pel:[]};
-let rmClearArmed = false;
-$('rmClear').addEventListener('click', () => {
-  if(modoR === 'meu' && !rmClearArmed){ rmClearArmed = true; $('rmClear').textContent = 'Clique de novo para confirmar'; setTimeout(() => { rmClearArmed = false; if(modoR === 'meu') $('rmClear').textContent = 'Apagar tudo'; }, 4000); return; }
-  rmClearArmed = false;
-  writeRM(RM_VAZIO);
-  if(modoR === 'meu') rmHist = [];
-  modoR = 'vazio'; rmEx = false; modoBarra(BAR_R, modoR);
-  rmOpen = 1; rmAcc(); renderRM();
-});
-$('rmExemplo').addEventListener('click', () => {
-  writeRM(RM_EX);
-  modoR = 'exemplo'; rmEx = true; modoBarra(BAR_R, modoR);
-  rmOpen = 1; rmAcc(); renderRM();
-});
-$('rmCopy').addEventListener('click', () => copiar($('rmDemo'), $('rmCopyMsg')));
-(function initRM(){
-  let sv = null;
-  try{ sv = JSON.parse(localStorage.getItem(RMKEY)); rmHist = JSON.parse(localStorage.getItem(RMHKEY)) || []; }catch(e){ rmHist = []; }
-  const temDados = st => RM_FLUXOS.some(k => num(st[k]) > 0) || (st.pel || []).length > 0 || num(st.rm_patIni) > 0;
-  if(sv && sv.s && !sv.ex){ writeRM(sv.s); modoR = temDados(sv.s) ? 'meu' : 'vazio'; }
-  else { writeRM(RM_VAZIO); modoR = 'vazio'; }
-  rmEx = false;
-  modoBarra(BAR_R, modoR);
-})();
-
 $('detalhes').addEventListener('toggle', () => { if($('detalhes').open && R) render(); });
 
 /* ======================= GESTIHUB ======================= */
@@ -2897,167 +2574,21 @@ $('leadWa').addEventListener('click', e => {
 });
 $('leadCopy').addEventListener('click', () => copiar($('leadMsg'), $('leadCopyMsg')));
 
-/* ======================= PRAZOS DOS EVENTOS ======================= */
-const EVKEY = KEY + '.ev', DIA = 864e5, PRAZO = 90;
-const EV_ST = {analise:'Em análise', aprovado:'Aprovado, falta pagar', pago:'Pago', negado:'Negado'};
-const isoDe = d => new Date(d.getTime() - d.getTimezoneOffset() * 6e4).toISOString().slice(0, 10);
-const hojeISO = () => isoDe(new Date());
-const isoMenos = k => { const d = new Date(); d.setDate(d.getDate() - k); return isoDe(d); };
-const diasEntre = (a, b) => Math.round((new Date(b + 'T12:00') - new Date(a + 'T12:00')) / DIA);
-const evAberto = e => e.s === 'analise' || e.s === 'aprovado';
-const EV_EX = () => [
-  {a:isoMenos(12), d:'Evento 0431 · carro, batida traseira', t:'carros', v:'6.800', s:'analise'},
-  {a:isoMenos(35), d:'Evento 0421 · vidro e lanterna', t:'carros', v:'4.800', s:'aprovado'},
-  {a:isoMenos(64), d:'Evento 0415 · moto roubada', t:'motos', v:'7.500', s:'analise'},
-  {a:isoMenos(83), d:'Evento 0412 · carro na oficina', t:'carros', v:'22.000', s:'aprovado'},
-  {a:isoMenos(97), d:'Evento 0409 · caminhão, colisão', t:'pesados', v:'31.000', s:'analise'},
-  {a:isoMenos(120), d:'Evento 0398 · perda total, carro', t:'carros', v:'41.000', s:'pago', p:isoMenos(50)},
-  {a:isoMenos(140), d:'Evento 0390 · terceiro, para-choque', t:'carros', v:'3.200', s:'negado'}
-];
-let evs = [], evEx = true, evFiltro = 'abertos';
-function evSave(){ try{ localStorage.setItem(EVKEY, JSON.stringify({evs, ex:evEx})); }catch(e){} }
-function evMeu(){
-  if(modoE === 'meu') return;
-  modoE = 'meu'; evEx = false; modoBarra(BAR_E, modoE);
-}
-function evInfo(e){
-  if(e.s === 'negado') return {k:'none', txt:'Negado', ord:9e9};
-  if(e.s === 'pago'){
-    const d = e.a && e.p ? diasEntre(e.a, e.p) : NaN;
-    return {k: isFinite(d) && d > PRAZO ? 'bad' : 'ok', txt: !isFinite(d) ? 'Pago' : d > PRAZO ? `Pago com atraso (${d} dias)` : `Pago em ${d} dias`, ord:8e9, dias:d};
-  }
-  if(!e.a) return {k:'warn', txt:'Falta a data do aviso', ord:-1e9};
-  const resta = PRAZO - diasEntre(e.a, hojeISO());
-  if(resta <= 0) return {k:'bad', txt: resta === 0 ? 'Vence hoje' : `Vencido há ${-resta} ${resta === -1 ? 'dia' : 'dias'}`, ord:resta, resta};
-  return {k: resta <= 30 ? 'warn' : 'ok', txt:`Faltam ${resta} ${resta === 1 ? 'dia' : 'dias'}`, ord:resta, resta};
-}
-function evResumo(){
-  const ab = evs.filter(evAberto), info = ab.map(evInfo);
-  const soma = ab.reduce((t, e) => t + (isFinite(num(e.v)) ? num(e.v) : 0), 0);
-  const venc = info.filter(i => i.resta !== undefined && i.resta <= 0).length;
-  const perto = info.filter(i => i.resta > 0 && i.resta <= 30).length;
-  const pagos = evs.filter(e => e.s === 'pago').map(evInfo).filter(i => isFinite(i.dias));
-  const media = pagos.length ? pagos.reduce((t, i) => t + i.dias, 0) / pagos.length : NaN;
-  $('evTiles').innerHTML = [
-    tileHTML('Em aberto', `${ab.length} ${ab.length === 1 ? 'evento' : 'eventos'}`, `${brlShort(soma)} · é a sua ${gt('pel', 'PEL')} hoje`),
-    tileHTML('Vencem em até 30 dias', String(perto), perto ? 'cuide destes primeiro' : 'nenhum perto do prazo', perto ? 'warn' : 'ok'),
-    tileHTML('Já passaram de 90 dias', String(venc), venc ? '<b>fora do prazo da regra</b>' : 'nenhum fora do prazo', venc ? 'bad' : 'ok'),
-    tileHTML('Tempo médio para pagar', isFinite(media) ? Math.round(media) + ' dias' : '–', pagos.length ? `em ${pagos.length} ${pagos.length === 1 ? 'evento pago' : 'eventos pagos'}` : 'nenhum evento pago ainda', isFinite(media) ? (media <= 60 ? 'ok' : media <= PRAZO ? 'warn' : 'bad') : '')
-  ].join('');
-}
-function evRow(e, i){
-  const inf = evInfo(e);
-  return `<article class="ev tone-${inf.k}" data-i="${i}">
-    <div class="ev-top">
-      <input class="ev-d" data-f="d" value="${esc(e.d || '')}" placeholder="Nº do evento ou placa" aria-label="Evento: identificação">
-      <select data-f="s" aria-label="Situação">${Object.entries(EV_ST).map(([k, t]) => `<option value="${k}" ${e.s === k ? 'selected' : ''}>${t}</option>`).join('')}</select>
-      <button type="button" class="x" data-evdel="${i}" aria-label="Apagar este evento">×</button>
-    </div>
-    <div class="ev-bot">
-      <label>Data do aviso<input type="date" data-f="a" value="${e.a || ''}" max="${hojeISO()}"></label>
-      <label>Tipo<select data-f="t">${TIPOS.map(t => `<option value="${t.id}" ${e.t === t.id ? 'selected' : ''}>${t.n}</option>`).join('')}</select></label>
-      <label>Valor estimado<span class="input compact"><span class="pre">R$</span><input data-f="v" inputmode="decimal" data-kind="money" value="${esc(e.v || '')}"></span></label>
-      ${e.s === 'pago' ? `<label>Pago em<input type="date" data-f="p" value="${e.p || ''}" max="${hojeISO()}"></label>` : ''}
-      <span class="pill ev-b">${inf.txt}</span>
-    </div>
-  </article>`;
-}
-function renderEv(){
-  const idx = evs.map((e, i) => i).filter(i => evFiltro === 'todos' || evAberto(evs[i]));
-  idx.sort((x, y) => evInfo(evs[x]).ord - evInfo(evs[y]).ord);
-  $('evList').innerHTML = idx.length ? idx.map(i => evRow(evs[i], i)).join('') : `<div class="empty">${evs.length ? 'Nenhum evento em aberto. Tudo pago ou negado.' : 'Nenhum evento lançado ainda. Clique em “+ Novo evento”.'}</div>`;
-  document.querySelectorAll('#evFiltros [data-evf]').forEach(b => b.setAttribute('aria-selected', b.dataset.evf === evFiltro));
-  evResumo(); evSave();
-}
-function evBadge(row, i){
-  const inf = evInfo(evs[i]);
-  row.classList.remove('tone-ok', 'tone-warn', 'tone-bad', 'tone-none'); row.classList.add('tone-' + inf.k);
-  row.querySelector('.ev-b').textContent = inf.txt;
-}
-$('evList').addEventListener('input', e => {
-  const row = e.target.closest('.ev'), fld = e.target.dataset.f; if(!row || !fld) return;
-  const i = +row.dataset.i; evs[i][fld] = e.target.value; evMeu();
-  if(fld === 'a' || fld === 'p') evBadge(row, i);
-  evResumo(); evSave();
-});
-$('evList').addEventListener('change', e => {
-  const row = e.target.closest('.ev'), fld = e.target.dataset.f; if(!row || !fld) return;
-  const i = +row.dataset.i; evs[i][fld] = e.target.value; evMeu();
-  if(fld === 's' && e.target.value === 'pago' && !evs[i].p) evs[i].p = hojeISO();
-  if(fld === 's' || fld === 't') renderEv(); else { evBadge(row, i); evResumo(); evSave(); }
-});
-$('evList').addEventListener('focusout', e => { if(e.target.matches('input[data-kind]')){ fmtField(e.target); const row = e.target.closest('.ev'); if(row){ evs[+row.dataset.i].v = e.target.value; evSave(); } } });
-$('evList').addEventListener('click', e => { const b = e.target.closest('[data-evdel]'); if(b){ evs.splice(+b.dataset.evdel, 1); evMeu(); renderEv(); } });
-$('evFiltros').addEventListener('click', e => { const b = e.target.closest('[data-evf]'); if(b){ evFiltro = b.dataset.evf; renderEv(); } });
-$('evAdd').addEventListener('click', () => {
-  evs.push({a:hojeISO(), d:'', t:'carros', v:'', s:'analise'}); evMeu(); evFiltro = 'abertos'; renderEv();
-  const ins = $('evList').querySelectorAll('.ev-d'); const alvo = [...ins].find(x => !x.value); if(alvo) alvo.focus();
-});
-$('evToRm').addEventListener('click', () => {
-  const ab = evs.filter(evAberto);
-  if(!ab.length){ $('evMsg').textContent = 'Nenhum evento em aberto para levar.'; return; }
-  rmPel = ab.map(e => ({d: e.d || 'Evento sem nome', t: e.t, v: e.v}));
-  rmPelHTML(); rmMarcaMeu(); rmOpen = 3; rmAcc(); renderRM();
-  irPara('rateiomes');
-  setTimeout(() => RM_LEDG[2].scrollIntoView({behavior:'smooth', block:'start'}), 50);
-});
-let evClearArmed = false;
-$('evClear').addEventListener('click', () => {
-  if(modoE === 'meu' && !evClearArmed){ evClearArmed = true; $('evClear').textContent = 'Clique de novo para confirmar'; setTimeout(() => { evClearArmed = false; if(modoE === 'meu') $('evClear').textContent = 'Apagar tudo'; }, 4000); return; }
-  evClearArmed = false; evs = [];
-  modoE = 'vazio'; evEx = false; modoBarra(BAR_E, modoE);
-  renderEv();
-});
-$('evExemplo').addEventListener('click', () => {
-  evs = EV_EX(); evFiltro = 'abertos';
-  modoE = 'exemplo'; evEx = true; modoBarra(BAR_E, modoE);
-  renderEv();
-});
-(function initEv(){
-  let sv = null; try{ sv = JSON.parse(localStorage.getItem(EVKEY)); }catch(e){}
-  if(sv && Array.isArray(sv.evs) && !sv.ex){ evs = sv.evs; modoE = evs.length ? 'meu' : 'vazio'; }
-  else { evs = []; modoE = 'vazio'; }
-  evEx = false;
-  modoBarra(BAR_E, modoE);
-  renderEv();
-})();
-
 /* ======================= ADMINISTRADORAS NA FILA ======================= */
-// Lista oficial da SUSEP (notícia de 06/08/2026, alterada em 12/08/2026). Pistas = empresa aberta com o mesmo nome; não confirmadas.
-const ECO = 'https://www.econodata.com.br/consulta-empresa/';
-const ADMS = [
-  ['4COVER', 'Existe a empresa 4COVER Administradora de Operações de Proteção Patrimonial Mutualista S.A., de São Paulo/SP, aberta em 12/05/2026 com capital de R$ 10 milhões.', 'https://open.cnpja.com/office/66843211000102'],
-  ['A3'], ['AD'], ['ALIANÇA'], ['ASPLEN MUTUAL'], ['ASSISTANCE'], ['ATLAS'], ['AUGERE'], ['BB'], ['CBAA'], ['CDC ADMINISTRADORA'], ['CENTRO MUTUAL'], ['COELHO MIRANDA'], ['CONFIA +'], ['DELPHOS'], ['EDX'],
-  ['ELO'], ['EMINENT'], ['FAST'], ['FBS'], ['FCP'], ['FORTIS'], ['G6+'], ['GARANT BRASIL'], ['GGO'], ['GMR'], ['GROWTH OPERADORA'], ['I3 CORP'], ['ILUMIVUS'], ['INTEGRIS'], ['JV'], ['LEGACY'],
-  ['MAVI'],
-  ['MONGERAL AEGON', 'O nome é igual ao do grupo segurador Mongeral Aegon (MAG Seguros), do Rio de Janeiro/RJ. O grupo não divulgou o projeto.', 'https://mag.com.br'],
-  ['MULT GESTORA'], ['MUTUAL'],
-  ['MUTUAL BRASIL', 'Existe a Associação de Proteção Patrimonial Mutual Brasil, de Goiânia/GO, aberta em 03/07/2025.', ECO + '61841918000158-associacao-de-protecao-patrimonial-mutual-brasil'],
-  ['MUTUALIZA'],
-  ['MUTUALLE', 'Existe a Mutualle Participações Ltda, de Goiânia/GO, aberta em 07/01/2026.', ECO + '64342450000145-mutualle-participacoes-ltda'],
-  ['NEXA'], ['NEXOS'], ['NEXUS'], ['NOBRE'],
-  ['NORD MUTUAL', 'Existe a Nord Mutual Gestão Ltda, de Maceió/AL, aberta em 29/04/2026.', ECO + '66525224000125-nord-mutual-gestao-ltda'],
-  ['ÓRION'], ['ORIZON'], ['PPM TOTAL'],
-  ['PRAKAR', 'Existe a Prakar Holding e Participações Ltda, de Sete Lagoas/MG, aberta em 30/01/2026.', ECO + '64898914000102-prakar-holding-e-participacoes-ltda'],
-  ['PRIME'], ['PRÓTON'], ['RR'], ['SEMPRE'], ['SIRIUS'],
-  ['SUL MUTUAL', 'Existe a Sul Mutual Gestão Ltda, de Canela/RS, aberta em 13/05/2026.', ECO + '66779177000146-sul-mutual-gestao-ltda'],
-  ['TAI'], ['TAURUS'], ['TPV'], ['ÚNICA'], ['UZZI'], ['VALORE'],
-  ['VANGARD', 'Existe a Vangard Gestora, de Belo Horizonte/MG, que diz no site trabalhar com gestão de entidades de socorro mútuo.', 'https://vangardgestora.com.br/'],
-  ['VENTURE'], ['VÉRTICE'], ['ZYRAQ']
-];
+// Lista oficial da SUSEP (notícia de 06/08/2026, alterada em 12/08/2026).
+// Para quando houver novidade: {n:'NOME', cnpj:'00.000.000/0000-00', and:'Autorização prévia em dd/mm/aaaa', fonte:'https://...'}
+const ADMS = ['4COVER','A3','AD','ALIANÇA','ASPLEN MUTUAL','ASSISTANCE','ATLAS','AUGERE','BB','CBAA','CDC ADMINISTRADORA','CENTRO MUTUAL','COELHO MIRANDA','CONFIA +','DELPHOS','EDX','ELO','EMINENT','FAST','FBS','FCP','FORTIS','G6+','GARANT BRASIL','GGO','GMR','GROWTH OPERADORA','I3 CORP','ILUMIVUS','INTEGRIS','JV','LEGACY','MAVI','MONGERAL AEGON','MULT GESTORA','MUTUAL','MUTUAL BRASIL','MUTUALIZA','MUTUALLE','NEXA','NEXOS','NEXUS','NOBRE','NORD MUTUAL','ÓRION','ORIZON','PPM TOTAL','PRAKAR','PRIME','PRÓTON','RR','SEMPRE','SIRIUS','SUL MUTUAL','TAI','TAURUS','TPV','ÚNICA','UZZI','VALORE','VANGARD','VENTURE','VÉRTICE','ZYRAQ']
+  .map(x => typeof x === 'string' ? {n:x} : x);
 const semAcento = t => t.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
 function renderAdms(){
-  const q = semAcento($('admBusca').value.trim()), so = $('admPista').checked;
-  const L = ADMS.filter(a => (!q || semAcento(a[0]).includes(q)) && (!so || a[1]));
+  const q = semAcento($('admBusca').value.trim());
+  const L = ADMS.filter(a => !q || semAcento(a.n).includes(q));
   $('admTot').textContent = ADMS.length;
-  $('admCount').textContent = L.length === ADMS.length ? '' : `Mostrando ${L.length} de ${ADMS.length}`;
-  $('admList').innerHTML = L.length ? L.map(a => `<div class="adm ${a[1] ? 'tem' : ''}"><b>${esc(a[0])}</b><span class="st">Na fila · não autorizada</span>${a[1]
-    ? `<details class="more"><summary>Pista (não confirmada)</summary><div><p class="pista">${esc(a[1])}</p><a href="${a[2]}" target="_blank" rel="noopener">ver fonte</a></div></details>`
-    : '<span class="hint" style="font-size:.85rem">Quem está por trás: não divulgado</span>'}</div>`).join('')
-    : '<div class="empty">Nenhum projeto com esse nome na lista da SUSEP. Se uma administradora diz que está na fila e não aparece aqui, desconfie.</div>';
+  $('admCount').textContent = q ? `${L.length} de ${ADMS.length}` : '';
+  $('admList').innerHTML = L.length ? L.map(a => `<div class="admchip${a.and ? ' tem' : ''}"><b>${esc(a.n)}</b>${a.cnpj ? `<span>CNPJ ${esc(a.cnpj)}</span>` : ''}${a.and ? `<span class="and">${esc(a.and)}</span>` : ''}</div>`).join('')
+    : '<div class="empty" style="grid-column:1/-1">Nenhum projeto com esse nome na lista da SUSEP.</div>';
 }
 $('admBusca').addEventListener('input', renderAdms);
-$('admPista').addEventListener('change', renderAdms);
 renderAdms();
 
 /* ======================= DICA FLUTUANTE ======================= */
@@ -3186,7 +2717,7 @@ window.addEventListener('resize', () => {
 });
 
 /* ======================= ABAS E PASSOS ======================= */
-const TABS = ['preencher','resultado','boleto','plano','rateiomes','eventos','regras'];
+const TABS = ['preencher','resultado','boleto','plano','entenda','regras'];
 const STEPS = [...document.querySelectorAll('#f > .step')];
 const STEP_LBL = ['Sua associação','Dinheiro que entra','Eventos','Reserva e rateio','Papéis','Caminho'];
 let tabAtual = 'preencher', passo = 1;
