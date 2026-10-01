@@ -734,6 +734,37 @@ h1,h2,h3{letter-spacing:-.01em;font-weight:600}
 .qb-dicas{background:var(--sunk);border-radius:12px;padding:14px 16px;display:grid;gap:8px}
 .qb-dicas ul{margin:0;padding-left:1.2em;display:grid;gap:6px}
 
+/* ===== chamadas da GestiHub ===== */
+.lead h2{font-size:clamp(1.8rem,3.6vw,2.6rem);letter-spacing:-.02em}
+.lead-kicker{color:#39D0B8;font-weight:700;font-size:.92rem}
+.lead-side{display:grid;gap:14px;min-width:0}
+.lead-list{margin:0;padding:0;list-style:none;display:grid;gap:10px}
+.lead-list li{position:relative;padding-left:30px;color:#C9D2DA}
+.lead-list li::before{content:"✓";position:absolute;left:0;top:2px;width:20px;height:20px;border-radius:50%;background:#11A594;color:#FFFFFF;display:grid;place-items:center;font-size:.72rem;font-weight:700}
+.lead-list b{color:#FFFFFF}
+.lead-note{color:#8C94A3;font-size:.93rem}
+.btn-wa{background:#25D366;border-color:#25D366;color:#0B2E1A}
+.btn.ghost-light{background:transparent;border-color:#39D0B8;color:#39D0B8;box-shadow:none}
+.cta-btns{display:flex;gap:10px;flex-wrap:wrap}
+.cta-mini{display:flex;gap:14px 20px;align-items:center;justify-content:space-between;flex-wrap:wrap;background:var(--accent-soft);border:1px solid var(--accent);border-radius:var(--r);padding:16px 20px;margin-block:16px}
+.cta-mini>div:first-child{display:grid;gap:2px;flex:1 1 320px;min-width:0}
+.cta-mini span{color:var(--muted);font-size:.95rem}
+.fab-help{position:fixed;right:24px;bottom:24px;z-index:40;display:none;align-items:center;gap:8px;border:0;border-radius:999px;background:#171823;color:#FFFFFF;padding:12px 18px;font:600 15px var(--f-body);box-shadow:0 10px 30px -10px rgba(0,0,0,.5);cursor:pointer}
+.fab-help:hover{background:#0B7F72}
+.fab-help svg{width:20px;height:20px;stroke:#39D0B8;fill:none;stroke-width:2;stroke-linejoin:round}
+.fab-help:hover svg{stroke:#FFFFFF}
+@media (min-width:1000px){.fab-help{display:inline-flex}}
+.mt-help{border:1px solid #3A3D50;background:transparent;color:#FFFFFF;border-radius:8px;padding:5px 10px;font:600 13px var(--f-body);cursor:pointer}
+.ajuda{position:fixed;inset:0;z-index:60;background:rgba(10,12,20,.62);display:flex;align-items:center;justify-content:center;padding:16px}
+.ajuda-box{position:relative;width:100%;max-width:580px;max-height:calc(100vh - 32px);overflow:auto;background:var(--surface);border-radius:16px;box-shadow:0 30px 60px -20px rgba(0,0,0,.6)}
+.ajuda-head{background:#171823;color:#C9D2DA;padding:24px 56px 22px 24px;display:grid;gap:8px}
+.ajuda-head img{height:16px;width:auto}
+.ajuda-head h2{color:#FFFFFF;font-size:1.5rem}
+.ajuda .lead-form{border-radius:0}
+.ajuda-x{position:absolute;right:12px;top:12px;width:38px;height:38px;border-radius:50%;border:0;background:rgba(255,255,255,.14);color:#FFFFFF;font-size:1.4rem;line-height:1;cursor:pointer}
+.ajuda-x:hover{background:rgba(255,255,255,.28)}
+body.modal-on{overflow:hidden}
+
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
 </head>
@@ -759,7 +790,7 @@ h1,h2,h3{letter-spacing:-.01em;font-weight:600}
   </div>
 </aside>
 <div class="main-col">
-<header class="mtop"><span class="rx" aria-hidden="true">RX</span><b>Raio-X SUSEP</b><span class="tscore" id="mtScore">–</span></header>
+<header class="mtop"><span class="rx" aria-hidden="true">RX</span><b>Raio-X SUSEP</b><span class="tscore" id="mtScore">–</span><button type="button" class="mt-help" data-ajuda="menu do celular">Ajuda</button></header>
 <div id="tabsTop"></div>
 <main class="wrap grid" id="tab-preencher" role="tabpanel" aria-labelledby="tb-preencher">
   <div class="phead">
@@ -1010,6 +1041,10 @@ h1,h2,h3{letter-spacing:-.01em;font-weight:600}
           <div class="input"><span class="pre">R$</span><input id="custoAssoc" inputmode="decimal" data-kind="money" placeholder="vazio = igual a hoje"><span class="suf">/mês</span></div>
         </div>
       </div>
+      <div class="cta-mini">
+        <div><b>Quer que um especialista revise o resultado com você?</b><span>Você escolhe a administradora. A GestiHub te ajuda a chegar preparado.</span></div>
+        <div class="cta-btns"><button type="button" class="btn" data-ajuda="fim do diagnóstico">Quero ajuda</button><a class="btn ghost" href="#resultado">Pular e ver o resultado</a></div>
+      </div>
     </section>
     <div class="stepnav"><button type="button" class="btn ghost" id="stPrev">← Voltar</button><span id="stCount">Passo 1 de 6</span><button type="button" class="btn" id="stNext">Próximo passo →</button></div>
   </form>
@@ -1086,22 +1121,19 @@ h1,h2,h3{letter-spacing:-.01em;font-weight:600}
   <section id="lead" class="lead">
     <div class="lead-txt">
       <img src="GHLOGO" alt="GestiHub" width="94" height="16">
-      <h2>Receba o relatório e fale com um especialista</h2>
-      <p>A GestiHub ajuda associações e administradoras de proteção veicular a organizar o financeiro para a regra nova. Mande o seu resultado pelo WhatsApp e receba uma orientação, sem compromisso.</p>
+      <p class="lead-kicker">Até 07/05/2028, toda associação vai ter que contratar uma administradora</p>
+      <h2>Escolha, não seja escolhido.</h2>
+      <p>Associação com os números em ordem compara propostas e fica com a melhor. Associação desorganizada aceita a taxa e as regras que vierem.</p>
     </div>
-    <form class="lead-form" id="leadForm" novalidate autocomplete="on">
-      <div class="lead-grid">
-        <div class="field"><label for="leadNome">Seu nome</label><div class="input compact text"><input id="leadNome" autocomplete="name" placeholder="Ex.: Carlos"></div></div>
-        <div class="field"><label for="leadCargo">Cargo</label><div class="input compact"><select id="leadCargo"><option value="">Escolha</option><option>Presidente</option><option>Diretor(a)</option><option>Gerente</option><option>Financeiro</option><option>Consultor(a)</option><option>Outro</option></select></div></div>
-        <div class="field"><label for="leadAssoc">Associação</label><div class="input compact text"><input id="leadAssoc" autocomplete="organization"></div></div>
-        <div class="field"><label for="leadCidade">Cidade e estado</label><div class="input compact text"><input id="leadCidade" autocomplete="address-level2" placeholder="Ex.: Belo Horizonte/MG"></div></div>
-      </div>
-      <label class="check"><input type="checkbox" id="leadOk"> <span>Autorizo enviar este resumo à GestiHub para entrarem em contato comigo. <a href="https://www.gestihub.com.br/politica-de-privacidade.html" target="_blank" rel="noopener">Política de privacidade</a></span></label>
-      <div class="copyrow"><a class="btn" id="leadWa" href="https://wa.me/551151785642" target="_blank" rel="noopener">Enviar pelo WhatsApp</a><span class="err" id="leadErr" aria-live="polite"></span></div>
-      <p class="hint">Abre o WhatsApp da GestiHub, (11) 5178-5642, com a mensagem pronta. Nada é enviado até você apertar enviar lá.</p>
-      <p class="ok-msg" id="leadDone" hidden>Pronto. Se o WhatsApp não abriu, copie a mensagem abaixo.</p>
-      <details class="more"><summary>Ver ou copiar a mensagem</summary><div><textarea id="leadMsg" readonly aria-label="Mensagem para a GestiHub"></textarea><div class="copyrow"><button type="button" class="btn small" id="leadCopy">Copiar mensagem</button><span class="ok-msg" id="leadCopyMsg" aria-live="polite"></span></div></div></details>
-    </form>
+    <div class="lead-side">
+      <ul class="lead-list">
+        <li><b>Financeiro organizado num sistema</b>, já no padrão que a SUSEP pede.</li>
+        <li><b>Rateio e provisões fechados todo mês</b>, com a prestação de contas pronta.</li>
+        <li><b>Consultoria</b> para entender o resultado e cumprir o plano até 2028.</li>
+      </ul>
+      <p class="lead-note">Quando escolher a administradora, você só ajusta o que for do jeito dela.</p>
+      <div class="cta-btns"><button type="button" class="btn btn-wa" data-ajuda="resultado do diagnóstico">Quero organizar minha associação</button><a class="btn ghost-light" data-ghlink="resultado-cta" href="https://www.gestihub.com.br/" target="_blank" rel="noopener">Conhecer o GestiHub</a></div>
+    </div>
   </section>
 
   <section class="share" id="compartilhar">
@@ -1145,6 +1177,10 @@ h1,h2,h3{letter-spacing:-.01em;font-weight:600}
     <div class="sec-head"><p class="kicker">A associação no modelo novo</p><h2>Quanto a associação precisa receber para sobreviver</h2><p>A associação só recebe o que estiver escrito no contrato com a administradora.</p></div>
     <div class="tiles" id="repTiles"></div>
     <div class="vizgrid"><article class="viz wide" id="vzRep"></article></div>
+    <div class="cta-mini">
+      <div><b>Vai negociar com uma administradora?</b><span>Quem chega com os números organizados negocia taxa e repasse de igual para igual.</span></div>
+      <div class="cta-btns"><button type="button" class="btn" data-ajuda="negociação com administradora">Quero chegar preparado</button></div>
+    </div>
   </section>
   <div class="nexttab"><a class="btn" href="#plano">Próximo: Plano de 18 meses →</a></div>
 </div>
@@ -1152,6 +1188,10 @@ h1,h2,h3{letter-spacing:-.01em;font-weight:600}
 <div class="wrap results" id="tab-plano" role="tabpanel" aria-labelledby="tb-plano" hidden>
   <section id="sec-plano">
     <div class="sec-head"><p class="kicker">Plano de 18 meses</p><h2>O que fazer, mês a mês</h2><p>Toque em cada fase para ver as tarefas. Marque o que já fez.</p></div>
+    <div class="cta-mini">
+      <div><b>Plano no papel é fácil. Difícil é cumprir.</b><span>Um especialista acompanha cada fase com você, com o financeiro organizado no sistema.</span></div>
+      <div class="cta-btns"><button type="button" class="btn" data-ajuda="plano de 18 meses">Quero ajuda com o plano</button></div>
+    </div>
     <div id="saveBox"></div>
     <div class="timeline" id="timeline"></div>
   </section>
@@ -1220,6 +1260,10 @@ h1,h2,h3{letter-spacing:-.01em;font-weight:600}
       <span class="ok-msg" id="evMsg" aria-live="polite"></span>
     </div>
     <div class="evlist" id="evList"></div>
+    <div class="cta-mini">
+      <div><b>Eventos, prazos, rateio e provisões no mesmo lugar.</b><span>No GestiHub, o financeiro da associação fica pronto para a regra da SUSEP, todo mês.</span></div>
+      <div class="cta-btns"><button type="button" class="btn" data-ajuda="prazos dos eventos">Falar com um especialista</button><a class="btn ghost" data-ghlink="eventos" href="https://www.gestihub.com.br/" target="_blank" rel="noopener">Conhecer o GestiHub</a></div>
+    </div>
   </section>
   <div class="nexttab"><a class="btn" href="#regras">Próximo: Administradoras e regras →</a></div>
 </div>
@@ -1231,6 +1275,10 @@ h1,h2,h3{letter-spacing:-.01em;font-weight:600}
       <div class="tile"><span class="tl">Projetos na fila</span><span class="tv" id="admTot">64</span><span class="td">lista oficial da SUSEP</span></div>
       <div class="tile tone-bad"><span class="tl">Autorizadas</span><span class="tv">0</span><span class="td"><b>nenhuma</b> até 30/09/2026</span></div>
       <div class="tile"><span class="tl">Prazo para ter contrato</span><span class="tv">07/05/2028</span><span class="td">com administradora já autorizada</span></div>
+    </div>
+    <div class="cta-mini">
+      <div><b>São 64 projetos na fila. Quem escolhe é a associação.</b><span>Chegue com números, rateio e papéis prontos para comparar propostas de igual para igual.</span></div>
+      <div class="cta-btns"><button type="button" class="btn" data-ajuda="lista de administradoras">Quero me preparar</button></div>
     </div>
     <div class="admtools">
       <div class="input compact"><input id="admBusca" type="search" placeholder="Procurar pelo nome" aria-label="Procurar administradora pelo nome"></div>
@@ -1257,6 +1305,30 @@ h1,h2,h3{letter-spacing:-.01em;font-weight:600}
 </div>
 
 <div class="mbar rmm" id="rmMbar"><span class="pill" id="rmMbS">–</span><b id="rmMbV">–</b><button type="button" class="btn small" id="rmMbBtn">Ver resultado</button></div>
+<div class="ajuda" id="ajuda" hidden role="dialog" aria-modal="true" aria-labelledby="ajudaTit">
+  <div class="ajuda-box">
+    <button type="button" class="ajuda-x" id="ajudaFechar" aria-label="Fechar">×</button>
+    <div class="ajuda-head">
+      <img src="GHLOGO" alt="GestiHub" width="94" height="16">
+      <h2 id="ajudaTit">Fale com um especialista</h2>
+      <p>Escolha, não seja escolhido. Conte quem você é: a mensagem vai pronta para o WhatsApp da GestiHub, com o seu resultado.</p>
+    </div>
+    <form class="lead-form" id="leadForm" novalidate autocomplete="on">
+      <div class="lead-grid">
+        <div class="field"><label for="leadNome">Seu nome</label><div class="input compact text"><input id="leadNome" autocomplete="name" placeholder="Ex.: Carlos"></div></div>
+        <div class="field"><label for="leadCargo">Cargo</label><div class="input compact"><select id="leadCargo"><option value="">Escolha</option><option>Presidente</option><option>Diretor(a)</option><option>Gerente</option><option>Financeiro</option><option>Consultor(a)</option><option>Outro</option></select></div></div>
+        <div class="field"><label for="leadAssoc">Associação</label><div class="input compact text"><input id="leadAssoc" autocomplete="organization"></div></div>
+        <div class="field"><label for="leadCidade">Cidade e estado</label><div class="input compact text"><input id="leadCidade" autocomplete="address-level2" placeholder="Ex.: Belo Horizonte/MG"></div></div>
+      </div>
+      <label class="check"><input type="checkbox" id="leadOk"> <span>Autorizo enviar este resumo à GestiHub para entrarem em contato comigo. <a href="https://www.gestihub.com.br/politica-de-privacidade.html" target="_blank" rel="noopener">Política de privacidade</a></span></label>
+      <div class="copyrow"><a class="btn" id="leadWa" href="https://wa.me/551151785642" target="_blank" rel="noopener">Enviar pelo WhatsApp</a><span class="err" id="leadErr" aria-live="polite"></span></div>
+      <p class="hint">Abre o WhatsApp da GestiHub, (11) 5178-5642, com a mensagem pronta. Nada é enviado até você apertar enviar lá.</p>
+      <p class="ok-msg" id="leadDone" hidden>Pronto. Se o WhatsApp não abriu, copie a mensagem abaixo.</p>
+      <details class="more"><summary>Ver ou copiar a mensagem</summary><div><textarea id="leadMsg" readonly aria-label="Mensagem para a GestiHub"></textarea><div class="copyrow"><button type="button" class="btn small" id="leadCopy">Copiar mensagem</button><span class="ok-msg" id="leadCopyMsg" aria-live="polite"></span></div></div></details>
+    </form>
+  </div>
+</div>
+<button type="button" class="fab-help" data-ajuda="botão de ajuda"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg>Precisa de ajuda?</button>
 <div id="tip" hidden></div>
 
 <footer>
@@ -2766,23 +2838,27 @@ function ghCard(nf){
 }
 
 /* ---------- receber meu relatório ---------- */
+let ajudaCtx = 'resultado do diagnóstico';
 function leadMsg(){
-  const r = R; if(!r) return '';
-  const pr = prioridades(r).slice(0, 3);
+  const r = R;
   const nome = $('leadNome').value.trim(), cargo = $('leadCargo').value, assoc = $('leadAssoc').value.trim() || $('nome').value.trim(), cid = $('leadCidade').value.trim();
-  return [
-    'Olá, GestiHub! Fiz o Raio-X SUSEP e quero receber o relatório da minha associação.',
+  const linhas = [
+    'Olá, GestiHub! Usei o Raio-X SUSEP e quero ajuda para organizar a minha associação para a regra da SUSEP.',
     '',
     'Nome: ' + (nome || '-') + (cargo ? ' (' + cargo + ')' : ''),
     'Associação: ' + (assoc || '-') + (cid ? ' · ' + cid : ''),
-    'Placas: ' + int(r.placas) + ' · Nota: ' + (r.incompleto ? 'faltam dados' : r.score + '/100 (' + r.statusTxt + ')'),
-    'Sinistralidade: ' + pct(r.sin) + ' · Boleto certo: ' + brl(r.ticketCerto, true) + ' (hoje ' + brl(r.ticket, true) + ')',
-    'Reserva: ' + brlShort(r.reserva) + ' de ' + brlShort(r.metaReserva),
-    ...(isFinite(r.qb) ? ['Qualidade da carteira: ' + r.qb + '/100 (' + r.qbTxt + ')'] : []),
-    pr.length ? 'Mais urgente: ' + pr.map((p, i) => (i + 1) + ') ' + p.t).join('; ') : '',
-    '',
-    'Quero entender como a GestiHub pode ajudar.'
-  ].join('\n');
+    'Estava em: ' + ajudaCtx
+  ];
+  if(r && !r.incompleto){
+    const pr = prioridades(r).slice(0, 3);
+    linhas.push('',
+      'Placas: ' + int(r.placas) + ' · Nota: ' + r.score + '/100 (' + r.statusTxt + ')',
+      'Boleto certo: ' + brl(r.ticketCerto, true) + ' (hoje ' + brl(r.ticket, true) + ') · Sinistralidade: ' + pct(r.sin),
+      'Guardar por mês: ' + brlShort(r.guardarMes) + ' · Reserva: ' + brlShort(r.reserva) + ' de ' + brlShort(r.metaReserva),
+      ...(isFinite(r.qb) ? ['Qualidade da carteira: ' + r.qb + '/100 (' + r.qbTxt + ')'] : []),
+      ...(pr.length ? ['Mais urgente: ' + pr.map((p, i) => (i + 1) + ') ' + p.t).join('; ')] : []));
+  }
+  return linhas.join('\n');
 }
 function leadUpd(){
   if(!$('leadMsg')) return;
@@ -2791,6 +2867,19 @@ function leadUpd(){
   $('leadMsg').value = m;
   $('leadWa').href = waLink(m);
 }
+document.querySelectorAll('[data-ghlink]').forEach(a => a.href = ghUrl(a.dataset.ghlink));
+function abrirAjuda(ctx){
+  ajudaCtx = ctx || 'site';
+  $('ajuda').hidden = false; document.body.classList.add('modal-on');
+  $('leadDone').hidden = true; $('leadErr').textContent = '';
+  leadUpd(); hideTip();
+  setTimeout(() => $('leadNome').focus(), 30);
+}
+function fecharAjuda(){ $('ajuda').hidden = true; document.body.classList.remove('modal-on'); }
+document.addEventListener('click', e => { const b = e.target.closest && e.target.closest('[data-ajuda]'); if(b){ e.preventDefault(); abrirAjuda(b.dataset.ajuda); } });
+$('ajudaFechar').addEventListener('click', fecharAjuda);
+$('ajuda').addEventListener('click', e => { if(e.target === $('ajuda')) fecharAjuda(); });
+document.addEventListener('keydown', e => { if(e.key === 'Escape' && !$('ajuda').hidden) fecharAjuda(); });
 $('leadForm').addEventListener('input', leadUpd);
 $('leadForm').addEventListener('change', leadUpd);
 $('leadForm').addEventListener('submit', e => e.preventDefault());
