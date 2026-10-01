@@ -1250,15 +1250,6 @@ h1,h2,h3{letter-spacing:-.01em;font-weight:600}
     </div></details>
   </section>
 
-  <section id="cuidado">
-    <div class="sec-head"><p class="kicker">Cuidado</p><h2>Sinais de administradora ou consultoria aproveitadora</h2><p>Se aparecer um destes sinais, pare e confira. Toque para ver o motivo.</p></div>
-    <div class="flags" id="flags"></div>
-    <div class="ask">
-      <h3>Pergunte isto antes de assinar qualquer coisa</h3>
-      <ol id="asks"></ol>
-    </div>
-  </section>
-
   <section id="lei">
     <div class="sec-head"><p class="kicker">A regra</p><h2>O que a lei e a SUSEP dizem, em ordem</h2><p>Toque em cada data para ver o resumo.</p></div>
     <div class="law" id="law"></div>
@@ -2332,30 +2323,6 @@ function renderResumo(s, r, pr){
 }
 
 /* ======================= CONTEÚDO FIXO ======================= */
-const FLAGS = [
-  ['Diz que “já é autorizada pela SUSEP”','Até 30/09/2026 a SUSEP não tinha autorizado nenhuma administradora. Estar na lista de projetos da SUSEP não é autorização.'],
-  ['Não sabe dizer o nome do projeto dela na SUSEP','Peça o nome e procure na lista acima. Se não estiver lá, ela não entrou na análise prioritária.'],
-  ['Quer que você assine agora “para garantir a vaga”','A SUSEP avisou: contrato com empresa não autorizada não regulariza a associação. O prazo é 07/05/2028.'],
-  ['Oferece ações ou sociedade para a diretoria','A associação, seus diretores, funcionários e parentes até 2º grau não podem ser donos da administradora que ela contrata.'],
-  ['Promete “comissão por fora” para a associação ou diretores','A associação só pode receber o que estiver escrito no contrato. A administradora não pode receber comissão de venda.'],
-  ['Cobra adiantado para “protocolar” ou “reservar lugar”','A associação não pede autorização à SUSEP: quem pede é a administradora. E o cadastro das associações já fechou em 15/07/2025.'],
-  ['Fala em mínimo de 1.000 placas ou capital de R$ 1,2 milhão','Esses números eram da minuta de 2025 e não entraram na regra final. Quem fala isso está desatualizado.'],
-  ['Quer o dinheiro do grupo na conta dela','O dinheiro do grupo tem CNPJ próprio, fica separado e é guardado em instituição conveniada com a SUSEP.'],
-  ['Diz que “não muda nada”','Muda tudo: boleto em 3 partes, rateio apurado em até 3 meses, pagamento de evento em até 90 dias e contrato novo para cada associado.'],
-  ['Diz que depois não dá para trocar de administradora','A regra garante a troca. A antiga tem 15 dias para entregar os dados e a proteção continua.'],
-  ['Chama o produto de “seguro”','A lei manda o contrato dizer, em destaque, que proteção patrimonial mutualista não é seguro.']
-];
-const ASKS = [
-  'Qual o nome do projeto de vocês na lista da SUSEP e em que fase está? (apresentação, protocolo, autorização prévia ou homologação)',
-  'Qual a taxa de administração, em % e em R$? Quanto dela fica para a associação? Me mande por escrito.',
-  'Onde fica guardado o dinheiro do grupo e como eu acompanho o saldo?',
-  'Qual vai ser o período de rateio (1, 2 ou 3 meses) e quanto vai ser a estabilização?',
-  'Quem é o atuário e qual o mínimo de placas que ele calculou para o nosso grupo?',
-  'Se a gente quiser trocar de administradora, como funciona e quanto custa?',
-  'Quais associações vocês vão atender? Posso falar com duas delas?'
-];
-$('flags').innerHTML = FLAGS.map(f => `<details class="flag"><summary><span class="x" aria-hidden="true">!</span><b>${f[0]}</b></summary><span>${f[1]}</span></details>`).join('');
-$('asks').innerHTML = ASKS.map(a => `<li>${a}</li>`).join('');
 
 const A = (u, t) => `<a href="${u}" target="_blank" rel="noopener">${t}</a>`;
 const LEI = [
