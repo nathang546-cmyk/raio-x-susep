@@ -500,7 +500,9 @@ h1,h2,h3{letter-spacing:-.02em}
 #tip{max-width:300px}
 /* rateio do mês */
 .exbar.slim{display:flex;align-items:center;justify-content:space-between;gap:8px 16px;flex-wrap:wrap;padding:8px 14px;border-radius:10px;margin-bottom:16px}
-.exbar.slim p{font-weight:700;font-size:.95rem}
+.exbar.slim p{font-weight:700;font-size:.95rem;flex:1 1 260px}
+.exbar .wrap,.exbar.slim{gap:8px}
+.exbar .btn.ghost{border-color:var(--accent);color:var(--accent)}
 .rm-layout{display:grid;grid-template-columns:minmax(0,1fr);gap:20px;align-items:start}
 @media (min-width:1000px){.rm-layout{grid-template-columns:minmax(0,1fr) 340px}.rm-side{position:sticky;top:calc(env(safe-area-inset-top,0px) + 76px)}}
 .rm-form{display:grid;gap:14px;min-width:0;container-type:inline-size}
@@ -686,6 +688,30 @@ h1,h2,h3{letter-spacing:-.01em;font-weight:600}
 .ev-b{margin-left:auto}
 @media (max-width:560px){.ev-top{grid-template-columns:minmax(0,1fr) 40px}.ev-top select{grid-column:1/-1;grid-row:2}.ev-bot label{flex:1 1 140px;width:auto}.ev-b{margin-left:0}}
 
+/* ===== resumo de 3 frases ===== */
+.r3{display:grid;grid-template-columns:minmax(0,1fr);gap:14px}
+@media (min-width:900px){.r3{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.r3-item{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:22px 22px 20px;display:flex;flex-direction:column;gap:6px;box-shadow:var(--shadow);min-width:0}
+.r3-n{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:var(--tone-soft,var(--sunk));color:var(--tone,var(--ink));font:700 14px var(--f-display);margin-bottom:6px}
+.r3-k{font-weight:700;color:var(--muted);font-size:.95rem}
+.r3-v{font:700 clamp(1.9rem,3.4vw,2.5rem)/1.1 var(--f-display);color:var(--ink);letter-spacing:-.02em}
+.r3-v small{font:500 .95rem var(--f-body);color:var(--muted);letter-spacing:0}
+.r3-s{font-size:1rem}
+.r3-l{margin:4px 0 0;padding-left:1.2em;display:grid;gap:6px;font-weight:600;font-size:1.02rem}
+.r3-foot{grid-column:1/-1;color:var(--muted);font-size:.98rem}
+.r3-foot b{color:var(--ink)}
+.r3-vazio{grid-column:1/-1;background:var(--surface);border:1px dashed var(--line);border-radius:var(--r);padding:26px;display:flex;gap:16px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.r3-vazio p{font-size:1.05rem;max-width:56ch}
+.det{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow)}
+.det>summary{cursor:pointer;list-style:none;display:flex;align-items:baseline;gap:6px 14px;flex-wrap:wrap;padding:18px 22px;font:600 1.1rem var(--f-display)}
+.det>summary::-webkit-details-marker{display:none}
+.det>summary::after{content:"▾";margin-left:auto;color:var(--muted)}
+.det[open]>summary::after{content:"▴"}
+.det>summary small{font:400 .9rem var(--f-body);color:var(--muted)}
+.det[open]{background:transparent;border-color:transparent;box-shadow:none}
+.det[open]>summary{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);margin-bottom:28px}
+.det-body{display:flex;flex-direction:column;gap:52px}
+
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
 </head>
@@ -716,7 +742,7 @@ h1,h2,h3{letter-spacing:-.01em;font-weight:600}
 <main class="wrap grid" id="tab-preencher" role="tabpanel" aria-labelledby="tb-preencher">
   <div class="phead">
     <div><p class="kicker">Diagnóstico</p><h1>Diagnóstico da associação</h1><p class="hint">Responda 6 passos. O resultado aparece ao lado, na hora.</p></div>
-    <div class="exbar" id="exbar"><div class="wrap"><p id="exmsg">Você está vendo números de EXEMPLO. <span>Troque pelos números da sua associação.</span></p><button type="button" class="btn small" id="btnClear">Apagar exemplo e começar</button></div></div>
+    <div class="exbar" id="exbar"><div class="wrap"><p id="exmsg">Você está vendo números de EXEMPLO. <span>Troque pelos números da sua associação.</span></p><button type="button" class="btn small ghost" id="btnExemplo">Ver um exemplo</button><button type="button" class="btn small" id="btnClear">Apagar exemplo e começar</button></div></div>
   </div>
   <form class="form" id="f" novalidate autocomplete="off">
     <div class="progress">
@@ -976,9 +1002,9 @@ h1,h2,h3{letter-spacing:-.01em;font-weight:600}
 </div>
 
 <div class="wrap results" id="tab-resultado" role="tabpanel" aria-labelledby="tb-resultado" hidden>
-  <section>
-    <div class="sec-head"><p class="kicker">Seu resultado</p><h2 id="vHead">Diagnóstico</h2></div>
-    <div class="res-top"><div class="verdict" id="verdict"></div><article class="viz" id="vz100"></article></div>
+  <section id="resumo3">
+    <div class="sec-head"><p class="kicker">Seu resultado</p><h2>O que a sua associação precisa fazer</h2></div>
+    <div class="r3" id="r3"></div>
   </section>
 
   <section id="lead" class="lead">
@@ -1002,6 +1028,14 @@ h1,h2,h3{letter-spacing:-.01em;font-weight:600}
     </form>
   </section>
 
+  <details class="det" id="detalhes">
+    <summary><span>Ver o diagnóstico completo</span><small>gráficos, números e explicação de cada item</small></summary>
+    <div class="det-body">
+  <section>
+    <div class="sec-head"><p class="kicker">Diagnóstico completo</p><h2 id="vHead">Diagnóstico</h2></div>
+    <div class="res-top"><div class="verdict" id="verdict"></div><article class="viz" id="vz100"></article></div>
+  </section>
+
   <section id="visao">
     <div class="sec-head"><p class="kicker">Visão geral</p><h2>A associação em um mês típico</h2><p>Média dos últimos 12 meses. Toque nos gráficos para ver os valores.</p></div>
     <div class="tiles" id="tiles"></div>
@@ -1016,6 +1050,9 @@ h1,h2,h3{letter-spacing:-.01em;font-weight:600}
     <div class="sec-head"><p class="kicker">Número por número</p><h2>O que cada número quer dizer</h2><p>Verde: bom. Amarelo: atenção. Vermelho: agir já. Toque em “Entender” para ver a explicação.</p></div>
     <div class="cards" id="cards"></div>
   </section>
+
+    </div>
+  </details>
 
   <section class="share" id="compartilhar">
     <h2>Mande o resumo para a diretoria</h2>
@@ -1087,7 +1124,7 @@ h1,h2,h3{letter-spacing:-.01em;font-weight:600}
 <div class="wrap results" id="tab-rateiomes" role="tabpanel" aria-labelledby="tb-rateiomes" hidden>
   <section>
     <div class="sec-head"><p class="kicker">Rateio do mês</p><h2>Fechar o rateio do mês</h2><p>Preencha de cima para baixo. O resultado aparece ao lado, na hora. Não sabe o que é um termo? Toque no <span class="info" aria-hidden="true">?</span>.</p></div>
-    <div class="exbar slim" id="rmEx"><p id="rmExMsg">Números de EXEMPLO. <span>Troque pelos do período da sua associação.</span></p><button type="button" class="btn small" id="rmClear">Apagar exemplo e começar</button></div>
+    <div class="exbar slim" id="rmEx"><p id="rmExMsg">Números de EXEMPLO. <span>Troque pelos do período da sua associação.</span></p><button type="button" class="btn small ghost" id="rmExemplo">Ver um exemplo</button><button type="button" class="btn small" id="rmClear">Apagar exemplo e começar</button></div>
     <div class="rm-layout">
       <form class="rm-form" id="rmForm" novalidate autocomplete="off"></form>
       <aside class="rm-side" aria-label="Resultado do período"><div class="rm-sum" id="rmSum"></div></aside>
@@ -1124,7 +1161,7 @@ h1,h2,h3{letter-spacing:-.01em;font-weight:600}
 <div class="wrap results" id="tab-eventos" role="tabpanel" aria-labelledby="tb-eventos" hidden>
   <section>
     <div class="sec-head"><p class="kicker">Prazos dos eventos</p><h2>Nenhum evento passando de 90 dias</h2><p>A regra dá no máximo <span class="term" tabindex="0" data-g="prazo90">90 dias</span> para regular e pagar cada evento. Lance os eventos avisados e acompanhe o prazo de cada um.</p></div>
-    <div class="exbar slim" id="evExBar"><p id="evExMsg">Eventos de EXEMPLO. <span>Troque pelos da sua associação.</span></p><button type="button" class="btn small" id="evClear">Apagar exemplo e começar</button></div>
+    <div class="exbar slim" id="evExBar"><p id="evExMsg">Eventos de EXEMPLO. <span>Troque pelos da sua associação.</span></p><button type="button" class="btn small ghost" id="evExemplo">Ver um exemplo</button><button type="button" class="btn small" id="evClear">Apagar exemplo e começar</button></div>
     <div class="tiles" id="evTiles"></div>
     <div class="evbar">
       <div class="subtabs" id="evFiltros" role="tablist" aria-label="Mostrar"><button type="button" role="tab" data-evf="abertos" aria-selected="true">Abertos</button><button type="button" role="tab" data-evf="todos" aria-selected="false">Todos</button></div>
@@ -1310,6 +1347,28 @@ function niceStep(v){ if(!(v > 0)) return 1; const p = Math.pow(10, Math.floor(M
 function radio(name){ const r = document.querySelector('input[name="'+name+'"]:checked'); return r ? r.value : ''; }
 function setRadio(name, v){ document.querySelectorAll('input[name="'+name+'"]').forEach(x => x.checked = (x.value === v)); }
 function tone(el, t){ el.classList.remove('tone-ok','tone-warn','tone-bad','tone-none'); el.classList.add('tone-'+t); }
+
+/* faixa de estado de cada ferramenta: vazio, exemplo ou dados da associação */
+function modoBarra(c, modo){
+  $(c.bar).classList.toggle('mine', modo !== 'exemplo');
+  $(c.msg).innerHTML = c.txt[modo];
+  $(c.ex).hidden = modo !== 'vazio';
+  $(c.clr).hidden = modo === 'vazio';
+  $(c.clr).textContent = modo === 'exemplo' ? 'Apagar exemplo e começar' : 'Apagar tudo';
+}
+const BAR_P = {bar:'exbar', msg:'exmsg', ex:'btnExemplo', clr:'btnClear', txt:{
+  vazio:'Comece pelo passo 1. <span>Os dados ficam só neste aparelho.</span>',
+  exemplo:'Você está vendo um EXEMPLO. <span>Troque pelos números da sua associação.</span>',
+  meu:'Seus números. <span>Ficam salvos só neste aparelho.</span>'}};
+const BAR_R = {bar:'rmEx', msg:'rmExMsg', ex:'rmExemplo', clr:'rmClear', txt:{
+  vazio:'Comece pelo período e pelos eventos pagos. <span>Os dados ficam só neste aparelho.</span>',
+  exemplo:'Você está vendo um EXEMPLO. <span>Troque pelos números do período da sua associação.</span>',
+  meu:'Seus números. <span>Ficam salvos só neste aparelho.</span>'}};
+const BAR_E = {bar:'evExBar', msg:'evExMsg', ex:'evExemplo', clr:'evClear', txt:{
+  vazio:'Nenhum evento ainda. <span>Clique em “+ Novo evento” para começar.</span>',
+  exemplo:'Você está vendo eventos de EXEMPLO. <span>Troque pelos da sua associação.</span>',
+  meu:'Seus eventos. <span>Ficam salvos só neste aparelho.</span>'}};
+let modoP = 'vazio', modoR = 'vazio', modoE = 'vazio';
 
 /* ======================= MONTAR CAMPOS REPETIDOS ======================= */
 $('tipos').innerHTML = TIPOS.map(t => `
@@ -1500,6 +1559,13 @@ function calc(s){
   r.score = Math.round(Math.max(0, Math.min(100, sc)));
   r.tScore = r.score >= 75 ? 'ok' : r.score >= 50 ? 'warn' : 'bad';
   r.statusTxt = r.score >= 75 ? 'Boa base' : r.score >= 50 ? 'Dá para chegar lá' : 'Risco alto';
+  r.faltando = [];
+  if(!ok(r.placas)) r.faltando.push({sev:9, t:'Placas por tipo de veículo', d:'Passo 1: quantas placas de cada tipo e a FIPE média.'});
+  if(!ok(r.ticket)) r.faltando.push({sev:9, t:'Mensalidade média', d:'Passo 2: quanto cada associado paga por mês, em média.'});
+  if(!isFinite(r.sin)) r.faltando.push({sev:9, t:'Eventos pagos e arrecadação', d:'Passo 3: quanto saiu com eventos nos últimos 12 meses.'});
+  r.incompleto = r.faltando.length > 0;
+  if(r.incompleto){ r.tScore = 'none'; r.statusTxt = 'Faltam dados'; }
+  r.notaTxt = r.incompleto ? '–' : String(r.score);
   return r;
 }
 
@@ -1693,15 +1759,15 @@ function render(){
     : (isFinite(r.sin) ? `(${brl(r.eventos12)} − ${brl(r.recup12)}) ÷ ${brl(r.receitaAno)}${r.receitaEstimada?' (estimado)':''} × 100 = <b>${pct(r.sin)}</b>` : '–');
 
   // painel
-  $('ringTxt').textContent = r.score;
-  $('ringVal').style.strokeDashoffset = (263.9 * (1 - r.score/100)).toFixed(1);
+  $('ringTxt').textContent = r.notaTxt;
+  $('ringVal').style.strokeDashoffset = (263.9 * (1 - (r.incompleto ? 0 : r.score) / 100)).toFixed(1);
   tone($('scorebox'), r.tScore);
   $('pStatus').textContent = r.statusTxt; tone($('pStatus'), r.tScore);
   $('mStatus').textContent = r.statusTxt; tone($('mStatus'), r.tScore);
-  $('mScore').textContent = r.score;
-  $('tabScore').textContent = r.score; tone($('tabScore'), r.tScore);
-  $('mtScore').textContent = 'Nota ' + r.score; tone($('mtScore'), r.tScore);
-  $('pSay').textContent = r.score >= 75 ? 'Bem encaminhada. Falta acertar detalhes.' : r.score >= 50 ? 'Tem base, mas precisa de disciplina nos próximos meses.' : 'Precisa começar agora. Do jeito que está, não passa.';
+  $('mScore').textContent = r.notaTxt;
+  $('tabScore').textContent = r.notaTxt; tone($('tabScore'), r.tScore);
+  $('mtScore').textContent = r.incompleto ? 'Sem nota' : 'Nota ' + r.score; tone($('mtScore'), r.tScore);
+  $('pSay').textContent = r.incompleto ? 'Preencha os passos 1 a 3 para ver a nota.' : r.score >= 75 ? 'Bem encaminhada. Falta acertar detalhes.' : r.score >= 50 ? 'Tem base, mas precisa de disciplina nos próximos meses.' : 'Precisa começar agora. Do jeito que está, não passa.';
   $('pPlacas').textContent = ok(r.placas) ? int(r.placas) : '–';
   const m = mesesAte(REG.prazoFinal);
   $('pPrazo').textContent = m > 0 ? `faltam ${m} meses` : 'vencido';
@@ -1713,15 +1779,16 @@ function render(){
   kpi('kDocs', r.tDocs, `${r.docsSim} de ${DOCS.length}`, '');
 
   // veredito
-  const pr = prioridades(r);
+  const pr = r.incompleto ? r.faltando : prioridades(r);
   const nome = s.nome ? esc(s.nome) : 'Sua associação';
-  const vt = r.susep === 'nao' ? `${nome} precisa resolver a situação na SUSEP antes de qualquer outra coisa.`
+  const vt = r.incompleto ? 'Preencha o diagnóstico para ver o resultado.' : r.susep === 'nao' ? `${nome} precisa resolver a situação na SUSEP antes de qualquer outra coisa.`
     : r.score >= 75 ? `${nome} tem base boa para entrar na regra.`
     : r.score >= 50 ? `${nome} consegue chegar lá, mas precisa acertar ${Math.min(pr.length,3)} coisas primeiro.`
     : `${nome} está em risco. Do jeito que está, não passa na regra nova.`;
-  $('vHead').textContent = `Nota ${r.score} de 100 · ${r.statusTxt}`;
-  $('verdict').innerHTML = `<div class="v-ring tone-${r.tScore}"><svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="42" class="vr-t"/><circle cx="50" cy="50" r="42" class="vr-v" stroke-dasharray="263.9" stroke-dashoffset="${(263.9 * (1 - r.score / 100)).toFixed(1)}" transform="rotate(-90 50 50)"/><text x="50" y="56" text-anchor="middle">${r.score}</text><text x="50" y="71" text-anchor="middle" class="of">de 100</text></svg><span class="pill">${r.statusTxt}</span></div><div class="v-body">` + `<p class="v-title">${vt}</p>` + (pr.length ? `<div><p class="hint" style="margin-bottom:12px">As 3 coisas mais urgentes:</p><ol class="prio">${pr.slice(0,3).map(p => `<li class="tone-${p.sev>=2.4?'bad':'warn'}"><div><b>${p.t}</b><span>${p.d}</span></div></li>`).join('')}</ol></div>` : '<p>Nenhum problema grave encontrado. Siga o plano para manter.</p>') + '</div>';
+  $('vHead').textContent = r.incompleto ? 'Faltam dados para dar a nota' : `Nota ${r.score} de 100 · ${r.statusTxt}`;
+  $('verdict').innerHTML = `<div class="v-ring tone-${r.tScore}"><svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="42" class="vr-t"/><circle cx="50" cy="50" r="42" class="vr-v" stroke-dasharray="263.9" stroke-dashoffset="${(263.9 * (1 - (r.incompleto ? 0 : r.score) / 100)).toFixed(1)}" transform="rotate(-90 50 50)"/><text x="50" y="56" text-anchor="middle">${r.notaTxt}</text><text x="50" y="71" text-anchor="middle" class="of">de 100</text></svg><span class="pill">${r.statusTxt}</span></div><div class="v-body">` + `<p class="v-title">${vt}</p>` + (pr.length ? `<div><p class="hint" style="margin-bottom:12px">${r.incompleto ? 'O que falta preencher:' : 'As 3 coisas mais urgentes:'}</p><ol class="prio">${pr.slice(0,3).map(p => `<li class="tone-${p.sev>=2.4?'bad':'warn'}"><div><b>${p.t}</b><span>${p.d}</span></div></li>`).join('')}</ol></div>` : '<p>Nenhum problema grave encontrado. Siga o plano para manter.</p>') + '</div>';
 
+  renderR3(r);
   renderVisao(r);
   renderCards(r);
   renderRateio(r);
@@ -1735,6 +1802,35 @@ function render(){
   save();
 }
 
+function renderR3(r){
+  const el = $('r3');
+  if(r.incompleto){
+    el.innerHTML = `<div class="r3-vazio"><p>Preencha os passos 1 a 3 do diagnóstico. Aqui vai aparecer, em 3 frases, o que a associação precisa fazer.</p><a class="btn" href="#preencher">Ir para o diagnóstico</a></div>`;
+    return;
+  }
+  const dif = r.ticketCerto - r.ticket;
+  const pr = prioridades(r).slice(0, 3);
+  const guarda = r.guardarMes > 0.5;
+  el.innerHTML = `
+    <article class="r3-item tone-${r.tTicket}">
+      <span class="r3-n">1</span>
+      <p class="r3-k">Cobrar, em média, por placa</p>
+      <p class="r3-v">${brl(r.ticketCerto, true)}<small> por mês</small></p>
+      <p class="r3-s">${dif > 0.5 ? `Hoje são ${brl(r.ticket, true)}. Faltam <b>${brl(dif, true)}</b> por placa.` : `Hoje são ${brl(r.ticket, true)}. Já está cobrindo.`}</p>
+    </article>
+    <article class="r3-item tone-${r.tRes}">
+      <span class="r3-n">2</span>
+      <p class="r3-k">Guardar todo mês</p>
+      <p class="r3-v">${guarda ? brlShort(r.guardarMes) : 'Nada a mais'}</p>
+      <p class="r3-s">${guarda ? `Por ${REG.horizonte} meses, até juntar ${brlShort(r.metaReserva)}. Já está dentro do boleto acima.` : 'A reserva já está na meta.'}</p>
+    </article>
+    <article class="r3-item tone-${pr.length ? 'bad' : 'ok'}">
+      <span class="r3-n">3</span>
+      <p class="r3-k">Resolver primeiro</p>
+      ${pr.length ? `<ul class="r3-l">${pr.map(p => `<li>${p.t}</li>`).join('')}</ul>` : '<p class="r3-s">Nada urgente. Siga o plano de 18 meses.</p>'}
+    </article>
+    <p class="r3-foot">Prazo final: contrato com administradora autorizada pela SUSEP até <b>07/05/2028</b>. Nota do diagnóstico: <b>${r.score} de 100</b> (${r.statusTxt}).</p>`;
+}
 function renderVisao(r){
   // números de destaque
   const sobraT = !isFinite(r.sobraMes) ? 'none' : r.sobraMes >= (r.guardarMes || 0) ? 'ok' : r.sobraMes >= 0 ? 'warn' : 'bad';
@@ -1760,7 +1856,7 @@ function renderVisao(r){
   } else v100.innerHTML = '<div><h3>Para onde vai cada R$ 100 que entram</h3></div><div class="empty">Preencha os passos 2 e 3.</div>';
 
   // de onde vem a nota
-  $('vzNota').innerHTML = `<div><h3>De onde vem a nota ${r.score}</h3></div><p class="sub">Pontos ganhos em cada parte, do total possível.</p>
+  $('vzNota').innerHTML = `<div><h3>De onde vem a nota ${r.incompleto ? '' : r.score}</h3></div><p class="sub">Pontos ganhos em cada parte, do total possível.</p>
     <div class="rows">${r.parts.map(p => rowbar(p.n, p.got / p.max, `${Math.round(p.got)} de ${p.max}`, '--accent', `${Math.round(p.got)} de ${p.max} pontos\n${p.n}`)).join('')}</div>
     ${r.susep === 'nao' ? '<p class="note">Sem cadastro na SUSEP, a nota fica travada em 25 no máximo.</p>' : ''}`;
 
@@ -2098,7 +2194,7 @@ function renderResumo(s, r, pr){
   const cam = {contratar:'contratar administradora autorizada', propria:'montar administradora', cooperativa:'virar cooperativa de seguros', encerrar:'encerrar as atividades'}[r.caminhoFinal];
   const linhas = [
     `*Raio-X SUSEP · ${nome}*`,
-    `Nota: ${r.score}/100 (${r.statusTxt})`,
+    r.incompleto ? 'Nota: faltam dados' : `Nota: ${r.score}/100 (${r.statusTxt})`,
     `Placas ativas: ${int(r.placas)}`,
     `Sinistralidade: ${pct(r.sin)} (limite ${pct(r.limite,0)})`,
     `Por mês: entra ${brlShort(r.receitaMes)}, eventos ${brlShort(r.eventosMes)}, administração ${brlShort(r.admMes)}, ${r.sobraMes < 0 ? 'falta' : 'sobra'} ${brlShort(Math.abs(r.sobraMes))}`,
@@ -2266,10 +2362,8 @@ function writeRM(o){
 }
 function saveRM(){ try{ localStorage.setItem(RMKEY, JSON.stringify({s:readRM(), ex:rmEx})); localStorage.setItem(RMHKEY, JSON.stringify(rmHist)); }catch(e){} }
 function rmMarcaMeu(){
-  if(!rmEx) return; rmEx = false;
-  $('rmEx').classList.add('mine');
-  $('rmExMsg').innerHTML = 'Agora são os seus números. <span>Ficam salvos só neste aparelho.</span>';
-  $('rmClear').textContent = 'Apagar tudo';
+  if(modoR === 'meu') return;
+  modoR = 'meu'; rmEx = false; modoBarra(BAR_R, modoR);
 }
 
 function calcRM(s, r){
@@ -2388,6 +2482,10 @@ function renderRM(){
   $('rmMbS').textContent = o.comp > 0.5 ? 'Rateio extra' : falta ? 'Faltou' : 'Sobrou'; tone($('rmMbS'), tRes);
   $('rmMbV').textContent = brl(o.comp > 0.5 ? o.comp : Math.abs(o.res));
   $('rmVerDet2').addEventListener('click', () => { rmSub = 'conta'; showSub(); $('rmResultado').scrollIntoView({behavior:'smooth'}); });
+  if(!(o.pagos || o.desp || o.estab || o.pelFim || o.pelIni || o.recup || o.inad || o.patIni || o.seguro)){
+    $('rmSum').innerHTML = `<p class="rs-k">Resultado de ${o.per}</p><div class="empty">Preencha os eventos pagos e a estabilização recebida. O resultado do mês aparece aqui, na hora.</div>`;
+    $('rmMbS').textContent = 'Rateio'; tone($('rmMbS'), 'none'); $('rmMbV').textContent = '–';
+  }
 
   // a conta (extrato): só linhas com valor
   const L = [];
@@ -2544,22 +2642,33 @@ $('rmForm').addEventListener('click', e => {
   if(e.target.id === 'rmPelAdd'){ rmPel.push({d:'', t:'carros', v:''}); rmPelHTML(); rmMarcaMeu(); renderRM(); const ins = $('rmPelList').querySelectorAll('.pd'); ins[ins.length - 1].focus(); }
   const d = e.target.closest('[data-del]'); if(d){ rmPel.splice(+d.dataset.del, 1); rmPelHTML(); rmMarcaMeu(); renderRM(); }
 });
+const RM_VAZIO = {rm_mes:'-1', rm_dur:'1', rm_usoMax:'25', rm_f_carros:'1', rm_f_motos:'1', rm_f_pesados:'1', pel:[]};
 let rmClearArmed = false;
 $('rmClear').addEventListener('click', () => {
-  if(!rmEx && !rmClearArmed){ rmClearArmed = true; $('rmClear').textContent = 'Clique de novo para confirmar'; setTimeout(() => { rmClearArmed = false; $('rmClear').textContent = 'Apagar tudo'; }, 4000); return; }
+  if(modoR === 'meu' && !rmClearArmed){ rmClearArmed = true; $('rmClear').textContent = 'Clique de novo para confirmar'; setTimeout(() => { rmClearArmed = false; if(modoR === 'meu') $('rmClear').textContent = 'Apagar tudo'; }, 4000); return; }
   rmClearArmed = false;
-  writeRM({rm_mes:'-1', rm_dur:'1', rm_usoMax:'25', rm_f_carros:'1', rm_f_motos:'1', rm_f_pesados:'1', pel:[]});
-  rmHist = []; rmEx = true; rmMarcaMeu();
-  $('rmExMsg').innerHTML = 'Formulário limpo. <span>Comece pelo período e pelos eventos pagos.</span>';
-  renderRM();
+  writeRM(RM_VAZIO);
+  if(modoR === 'meu') rmHist = [];
+  modoR = 'vazio'; rmEx = false; modoBarra(BAR_R, modoR);
+  rmOpen = 1; rmAcc(); renderRM();
+});
+$('rmExemplo').addEventListener('click', () => {
+  writeRM(RM_EX);
+  modoR = 'exemplo'; rmEx = true; modoBarra(BAR_R, modoR);
+  rmOpen = 1; rmAcc(); renderRM();
 });
 $('rmCopy').addEventListener('click', () => copiar($('rmDemo'), $('rmCopyMsg')));
 (function initRM(){
   let sv = null;
   try{ sv = JSON.parse(localStorage.getItem(RMKEY)); rmHist = JSON.parse(localStorage.getItem(RMHKEY)) || []; }catch(e){ rmHist = []; }
-  if(sv && sv.s && !sv.ex){ writeRM(sv.s); rmEx = true; rmMarcaMeu(); }
-  else writeRM(RM_EX);
+  const temDados = st => RM_FLUXOS.some(k => num(st[k]) > 0) || (st.pel || []).length > 0 || num(st.rm_patIni) > 0;
+  if(sv && sv.s && !sv.ex){ writeRM(sv.s); modoR = temDados(sv.s) ? 'meu' : 'vazio'; }
+  else { writeRM(RM_VAZIO); modoR = 'vazio'; }
+  rmEx = false;
+  modoBarra(BAR_R, modoR);
 })();
+
+$('detalhes').addEventListener('toggle', () => { if($('detalhes').open && R) render(); });
 
 /* ======================= GESTIHUB ======================= */
 const WA_GH = '551151785642';
@@ -2581,7 +2690,7 @@ function leadMsg(){
     '',
     'Nome: ' + (nome || '-') + (cargo ? ' (' + cargo + ')' : ''),
     'Associação: ' + (assoc || '-') + (cid ? ' · ' + cid : ''),
-    'Placas: ' + int(r.placas) + ' · Nota: ' + r.score + '/100 (' + r.statusTxt + ')',
+    'Placas: ' + int(r.placas) + ' · Nota: ' + (r.incompleto ? 'faltam dados' : r.score + '/100 (' + r.statusTxt + ')'),
     'Sinistralidade: ' + pct(r.sin) + ' · Boleto certo: ' + brl(r.ticketCerto, true) + ' (hoje ' + brl(r.ticket, true) + ')',
     'Reserva: ' + brlShort(r.reserva) + ' de ' + brlShort(r.metaReserva),
     pr.length ? 'Mais urgente: ' + pr.map((p, i) => (i + 1) + ') ' + p.t).join('; ') : '',
@@ -2633,10 +2742,8 @@ const EV_EX = () => [
 let evs = [], evEx = true, evFiltro = 'abertos';
 function evSave(){ try{ localStorage.setItem(EVKEY, JSON.stringify({evs, ex:evEx})); }catch(e){} }
 function evMeu(){
-  if(!evEx) return; evEx = false;
-  $('evExBar').classList.add('mine');
-  $('evExMsg').innerHTML = 'Agora são os seus eventos. <span>Ficam salvos só neste aparelho.</span>';
-  $('evClear').textContent = 'Apagar tudo';
+  if(modoE === 'meu') return;
+  modoE = 'meu'; evEx = false; modoBarra(BAR_E, modoE);
 }
 function evInfo(e){
   if(e.s === 'negado') return {k:'none', txt:'Negado', ord:9e9};
@@ -2721,15 +2828,22 @@ $('evToRm').addEventListener('click', () => {
 });
 let evClearArmed = false;
 $('evClear').addEventListener('click', () => {
-  if(!evEx && !evClearArmed){ evClearArmed = true; $('evClear').textContent = 'Clique de novo para confirmar'; setTimeout(() => { evClearArmed = false; if(!evEx) $('evClear').textContent = 'Apagar tudo'; }, 4000); return; }
-  evClearArmed = false; evs = []; evEx = true; evMeu();
-  $('evExMsg').innerHTML = 'Lista limpa. <span>Clique em “+ Novo evento” para começar.</span>';
+  if(modoE === 'meu' && !evClearArmed){ evClearArmed = true; $('evClear').textContent = 'Clique de novo para confirmar'; setTimeout(() => { evClearArmed = false; if(modoE === 'meu') $('evClear').textContent = 'Apagar tudo'; }, 4000); return; }
+  evClearArmed = false; evs = [];
+  modoE = 'vazio'; evEx = false; modoBarra(BAR_E, modoE);
+  renderEv();
+});
+$('evExemplo').addEventListener('click', () => {
+  evs = EV_EX(); evFiltro = 'abertos';
+  modoE = 'exemplo'; evEx = true; modoBarra(BAR_E, modoE);
   renderEv();
 });
 (function initEv(){
   let sv = null; try{ sv = JSON.parse(localStorage.getItem(EVKEY)); }catch(e){}
-  if(sv && Array.isArray(sv.evs) && !sv.ex){ evs = sv.evs; evEx = true; evMeu(); }
-  else evs = EV_EX();
+  if(sv && Array.isArray(sv.evs) && !sv.ex){ evs = sv.evs; modoE = evs.length ? 'meu' : 'vazio'; }
+  else { evs = []; modoE = 'vazio'; }
+  evEx = false;
+  modoBarra(BAR_E, modoE);
   renderEv();
 })();
 
@@ -2810,11 +2924,8 @@ window.addEventListener('scroll', () => { tipFixo = null; hideTip(); }, {passive
 
 /* ======================= EVENTOS ======================= */
 function markMine(){
-  if(!isExample) return;
-  isExample = false;
-  $('exbar').classList.add('mine');
-  $('exmsg').innerHTML = 'Agora são os seus números. <span>Ficam salvos só neste aparelho.</span>';
-  $('btnClear').textContent = 'Apagar tudo';
+  if(modoP === 'meu') return;
+  modoP = 'meu'; isExample = false; modoBarra(BAR_P, modoP);
 }
 function fmtField(el){
   const k = el.dataset.kind; if(!k) return;
@@ -2845,24 +2956,33 @@ function simReset(){ simInadTocado = false; $('simBoleto').value = 0; $('simEv')
 $('simReset').addEventListener('click', () => { simReset(); renderSim(); });
 document.querySelectorAll('input[name="tpl"]').forEach(x => x.addEventListener('change', renderTpl));
 
+const VAZIO_P = {docs:{}, taxaSim:'20', repasseSim:'50', nivelRes:'auto'};
+function limparP(){
+  writeState(VAZIO_P); doneTasks = {};
+  ['hArrecMes','hPlacasMes','hAdmGasto','hAdmArrec'].forEach(id => $(id).value = '');
+  renderRateio.oc = {}; simReset();
+}
 let clearArmed = false;
 $('btnClear').addEventListener('click', () => {
-  if(!isExample && !clearArmed){
+  if(modoP === 'meu' && !clearArmed){
     clearArmed = true; $('btnClear').textContent = 'Clique de novo para confirmar';
-    setTimeout(() => { clearArmed = false; $('btnClear').textContent = 'Apagar tudo'; }, 4000);
+    setTimeout(() => { clearArmed = false; if(modoP === 'meu') $('btnClear').textContent = 'Apagar tudo'; }, 4000);
     return;
   }
   clearArmed = false;
-  writeState({docs:{}, taxaSim:'20', repasseSim:'50', nivelRes:'auto'}); doneTasks = {};
-  ['hArrecMes','hPlacasMes','hAdmGasto','hAdmArrec'].forEach(id => $(id).value = '');
-  renderRateio.oc = {}; simReset();
-  isExample = false;
-  $('exbar').classList.add('mine');
-  $('exmsg').innerHTML = 'Formulário limpo. <span>Comece pelo passo 1. Os dados ficam só neste aparelho.</span>';
-  $('btnClear').textContent = 'Apagar tudo';
+  limparP();
+  modoP = 'vazio'; isExample = false; modoBarra(BAR_P, modoP);
   helpers(); render();
   showStep(1, false); irPara('preencher');
   $('tp_carros_placas').focus();
+});
+$('btnExemplo').addEventListener('click', () => {
+  limparP();
+  writeState(EXEMPLO);
+  document.querySelectorAll('#f input[data-kind]').forEach(fmtField);
+  modoP = 'exemplo'; isExample = true; modoBarra(BAR_P, modoP);
+  helpers(); render();
+  showStep(1, false);
 });
 
 document.addEventListener('change', e => {
@@ -2948,20 +3068,23 @@ $('stNext').addEventListener('click', () => passo < STEPS.length ? showStep(pass
 /* ======================= INÍCIO ======================= */
 (function start(){
   const saved = load();
+  const temDados = st => ['tp_carros_placas','tp_motos_placas','tp_pesados_placas','ticket','eventos12','admPct'].some(k => st && st[k]);
   if(saved && saved.s && !saved.ex){
     writeState(saved.s); doneTasks = saved.done || {};
-    isExample = true; markMine();
+    modoP = temDados(saved.s) ? 'meu' : 'vazio';
   } else {
-    writeState(EXEMPLO);
-    doneTasks = (saved && saved.done) || {};
+    writeState(VAZIO_P); doneTasks = {};
+    modoP = 'vazio';
   }
+  isExample = false;
+  modoBarra(BAR_P, modoP);
   document.querySelectorAll('input[data-kind]').forEach(fmtField);
   let nav = {};
   try{ nav = JSON.parse(localStorage.getItem(KEY + '.nav')) || {}; }catch(e){}
   const h = location.hash.slice(1);
-  showStep(nav.passo || 1, false);
+  showStep(modoP === 'vazio' ? 1 : (nav.passo || 1), false);
   helpers(); render();
-  showTab(TABS.includes(h) ? h : (nav.tab || 'preencher'), false);
+  showTab(TABS.includes(h) ? h : (modoP === 'vazio' ? 'preencher' : (nav.tab || 'preencher')), false);
 })();
 </script>
 </body>
