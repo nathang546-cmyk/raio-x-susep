@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="Ferramenta gratuita oferecida pela GestiHub para associações de proteção veicular: diagnóstico, boleto certo, rateio do mês, provisões e plano de 18 meses para a regra da SUSEP (LC 213/2025 e Res. CNSP 491/2026).">
+<meta name="description" content="Ferramenta gratuita oferecida pela GestiHub para associações de proteção veicular: diagnóstico, boleto certo, rateio do mês, prazos dos eventos, provisões e plano de 18 meses para a regra da SUSEP (LC 213/2025 e Res. CNSP 491/2026).">
 <style>body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
 <title>Raio-X SUSEP da Associação</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -598,8 +598,8 @@ h1,h2,h3{letter-spacing:-.01em;font-weight:600}
   .mtop .rx{width:32px;height:32px;font-size:13px;border-radius:8px}
   .mtop b{flex:1;font:600 16px var(--f-display)}
   .tabs{position:fixed;left:0;right:0;bottom:0;top:auto;z-index:30;background:var(--side);border:0;box-shadow:0 -6px 18px -10px rgba(0,0,0,.6);padding-bottom:env(safe-area-inset-bottom,0px)}
-  .tabs-in{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));padding:0;gap:0;max-width:none;margin:0;overflow:visible}
-  .tabs button{flex-direction:column;justify-content:center;gap:3px;padding:9px 2px 8px;border:0;border-radius:0;font-size:11px;font-weight:600;color:var(--side-muted);min-width:0}
+  .tabs-in{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));padding:0;gap:0;max-width:none;margin:0;overflow:visible}
+  .tabs button{flex-direction:column;justify-content:center;gap:3px;padding:9px 1px 8px;border:0;border-radius:0;font-size:10.5px;overflow:hidden;font-weight:600;color:var(--side-muted);min-width:0}
   .tabs button:hover{border:0;color:#FFFFFF}
   .tabs button[aria-selected="true"]{color:#39D0B8;border:0}
   .tabs button svg{width:22px;height:22px}
@@ -647,6 +647,45 @@ h1,h2,h3{letter-spacing:-.01em;font-weight:600}
 .lnext{display:flex;justify-content:flex-end;padding:12px 0 6px;border-top:1px solid var(--line);margin-top:6px}
 @media (max-width:460px){.lsum{display:none}.ledger:not(.closed) .lsum{display:inline}}
 
+/* ===== relatório GestiHub, convite e prazos ===== */
+.lead{display:grid;grid-template-columns:minmax(0,1fr);gap:20px;background:#171823;color:#C9D2DA;border-radius:var(--r);padding:24px;box-shadow:var(--shadow)}
+@media (min-width:900px){.lead{grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);align-items:center;padding:30px 34px}}
+.lead h2{color:#FFFFFF;font-size:clamp(1.3rem,2.4vw,1.7rem)}
+.lead-txt{display:grid;gap:12px;align-content:start}
+.lead-txt img{height:16px;width:auto}
+.lead-form{background:var(--surface);color:var(--ink);border-radius:12px;padding:18px;display:grid;gap:12px;min-width:0}
+.lead-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px}
+.lead-form .field>label{font-size:.92rem}
+.lead-form .check{font-weight:500;font-size:.92rem;align-items:flex-start}
+.lead-form .check input{margin-top:2px}
+.lead-form textarea{width:100%;min-height:170px;border:1px solid var(--line);border-radius:10px;padding:10px;font:.9rem/1.5 var(--f-body);background:var(--sunk);color:var(--ink);resize:vertical}
+#leadWa{background:#25D366;border-color:#25D366;color:#0B2E1A}
+.err{color:var(--bad);font-weight:700}
+.ghcard{background:#171823;color:#C9D2DA;border-radius:12px;padding:14px 16px;display:grid;gap:10px}
+.ghcard img{height:15px;width:auto}
+.ghcard b{color:#FFFFFF}
+.ghbtns{display:flex;gap:8px;flex-wrap:wrap}
+.ghcard .btn{background:#39D0B8;border-color:#39D0B8;color:#0F111A;box-shadow:none}
+.ghcard .btn.ghost{background:transparent;color:#39D0B8}
+.ghlinha{margin-top:14px;font-size:.92rem;color:var(--muted)}
+.evbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-block:18px 12px}
+.evbar .subtabs{margin:0}
+.evlist{display:grid;gap:10px}
+.ev{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:grid;gap:10px;box-shadow:var(--shadow)}
+.ev.tone-bad{border-color:var(--bad)}
+.ev.tone-warn{border-color:var(--warn)}
+.ev-top{display:grid;grid-template-columns:minmax(0,1fr) minmax(150px,220px) 40px;gap:8px;align-items:center}
+.ev .ev-d,.ev select,.ev input[type="date"]{border:1px solid var(--line);border-radius:10px;min-height:42px;padding:8px 10px;background:var(--surface);color:var(--ink);min-width:0;width:100%;font:inherit}
+.ev .ev-d{font-weight:600}
+.ev .x{width:40px;height:40px;border-radius:10px;border:1px solid var(--line);background:var(--surface);cursor:pointer;font-size:1.2rem;color:var(--muted)}
+.ev .x:hover{border-color:var(--bad);color:var(--bad)}
+.ev-bot{display:flex;flex-wrap:wrap;gap:10px 14px;align-items:flex-end}
+.ev-bot label{display:grid;gap:4px;font-size:.82rem;color:var(--muted);font-weight:600;width:170px}
+.ev-bot .input{min-height:42px}
+.ev-bot .input input{font-size:1rem;padding:8px 10px}
+.ev-b{margin-left:auto}
+@media (max-width:560px){.ev-top{grid-template-columns:minmax(0,1fr) 40px}.ev-top select{grid-column:1/-1;grid-row:2}.ev-bot label{flex:1 1 140px;width:auto}.ev-b{margin-left:0}}
+
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
 </head>
@@ -663,6 +702,7 @@ h1,h2,h3{letter-spacing:-.01em;font-weight:600}
   <button type="button" role="tab" id="tb-boleto" data-tab="boleto" aria-controls="tab-boleto"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2h12v20l-3-2-3 2-3-2-3 2V2z"/><path d="M9 7h6M9 11h6M9 15h4"/></svg><span class="tl-long">Boleto e simulações</span><span class="tl-short">Boleto</span></button>
   <button type="button" role="tab" id="tb-plano" data-tab="plano" aria-controls="tab-plano"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg><span class="tl-long">Plano de 18 meses</span><span class="tl-short">Plano</span></button>
   <button type="button" role="tab" id="tb-rateiomes" data-tab="rateiomes" aria-controls="tab-rateiomes"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M8 6h8M8 11h2M14 11h2M8 15h2M14 15h2M8 19h2M14 19h2"/></svg><span class="tl-long">Rateio do mês</span><span class="tl-short">Rateio</span></button>
+  <button type="button" role="tab" id="tb-eventos" data-tab="eventos" aria-controls="tab-eventos"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span class="tl-long">Prazos dos eventos</span><span class="tl-short">Eventos</span></button>
   <button type="button" role="tab" id="tb-regras" data-tab="regras" aria-controls="tab-regras"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 21h18M5 21V10l7-6 7 6v11"/><path d="M10 21v-6h4v6"/></svg><span class="tl-long">Administradoras e regras</span><span class="tl-short">Regras</span></button>
 </div></nav>
   <div class="side-foot">
@@ -941,6 +981,27 @@ h1,h2,h3{letter-spacing:-.01em;font-weight:600}
     <div class="res-top"><div class="verdict" id="verdict"></div><article class="viz" id="vz100"></article></div>
   </section>
 
+  <section id="lead" class="lead">
+    <div class="lead-txt">
+      <img src="GHLOGO" alt="GestiHub" width="94" height="16">
+      <h2>Receba o relatório e fale com um especialista</h2>
+      <p>A GestiHub ajuda associações e administradoras de proteção veicular a organizar o financeiro para a regra nova. Mande o seu resultado pelo WhatsApp e receba uma orientação, sem compromisso.</p>
+    </div>
+    <form class="lead-form" id="leadForm" novalidate autocomplete="on">
+      <div class="lead-grid">
+        <div class="field"><label for="leadNome">Seu nome</label><div class="input compact text"><input id="leadNome" autocomplete="name" placeholder="Ex.: Carlos"></div></div>
+        <div class="field"><label for="leadCargo">Cargo</label><div class="input compact"><select id="leadCargo"><option value="">Escolha</option><option>Presidente</option><option>Diretor(a)</option><option>Gerente</option><option>Financeiro</option><option>Consultor(a)</option><option>Outro</option></select></div></div>
+        <div class="field"><label for="leadAssoc">Associação</label><div class="input compact text"><input id="leadAssoc" autocomplete="organization"></div></div>
+        <div class="field"><label for="leadCidade">Cidade e estado</label><div class="input compact text"><input id="leadCidade" autocomplete="address-level2" placeholder="Ex.: Belo Horizonte/MG"></div></div>
+      </div>
+      <label class="check"><input type="checkbox" id="leadOk"> <span>Autorizo enviar este resumo à GestiHub para entrarem em contato comigo. <a href="https://www.gestihub.com.br/politica-de-privacidade.html" target="_blank" rel="noopener">Política de privacidade</a></span></label>
+      <div class="copyrow"><a class="btn" id="leadWa" href="https://wa.me/551151785642" target="_blank" rel="noopener">Enviar pelo WhatsApp</a><span class="err" id="leadErr" aria-live="polite"></span></div>
+      <p class="hint">Abre o WhatsApp da GestiHub, (11) 5178-5642, com a mensagem pronta. Nada é enviado até você apertar enviar lá.</p>
+      <p class="ok-msg" id="leadDone" hidden>Pronto. Se o WhatsApp não abriu, copie a mensagem abaixo.</p>
+      <details class="more"><summary>Ver ou copiar a mensagem</summary><div><textarea id="leadMsg" readonly aria-label="Mensagem para a GestiHub"></textarea><div class="copyrow"><button type="button" class="btn small" id="leadCopy">Copiar mensagem</button><span class="ok-msg" id="leadCopyMsg" aria-live="polite"></span></div></div></details>
+    </form>
+  </section>
+
   <section id="visao">
     <div class="sec-head"><p class="kicker">Visão geral</p><h2>A associação em um mês típico</h2><p>Média dos últimos 12 meses. Toque nos gráficos para ver os valores.</p></div>
     <div class="tiles" id="tiles"></div>
@@ -1057,6 +1118,22 @@ h1,h2,h3{letter-spacing:-.01em;font-weight:600}
       <div id="rmHist"></div>
     </div>
   </section>
+  <div class="nexttab"><a class="btn" href="#eventos">Próximo: Prazos dos eventos →</a></div>
+</div>
+
+<div class="wrap results" id="tab-eventos" role="tabpanel" aria-labelledby="tb-eventos" hidden>
+  <section>
+    <div class="sec-head"><p class="kicker">Prazos dos eventos</p><h2>Nenhum evento passando de 90 dias</h2><p>A regra dá no máximo <span class="term" tabindex="0" data-g="prazo90">90 dias</span> para regular e pagar cada evento. Lance os eventos avisados e acompanhe o prazo de cada um.</p></div>
+    <div class="exbar slim" id="evExBar"><p id="evExMsg">Eventos de EXEMPLO. <span>Troque pelos da sua associação.</span></p><button type="button" class="btn small" id="evClear">Apagar exemplo e começar</button></div>
+    <div class="tiles" id="evTiles"></div>
+    <div class="evbar">
+      <div class="subtabs" id="evFiltros" role="tablist" aria-label="Mostrar"><button type="button" role="tab" data-evf="abertos" aria-selected="true">Abertos</button><button type="button" role="tab" data-evf="todos" aria-selected="false">Todos</button></div>
+      <button type="button" class="btn" id="evAdd">+ Novo evento</button>
+      <button type="button" class="btn ghost" id="evToRm">Usar os abertos no Rateio do mês</button>
+      <span class="ok-msg" id="evMsg" aria-live="polite"></span>
+    </div>
+    <div class="evlist" id="evList"></div>
+  </section>
   <div class="nexttab"><a class="btn" href="#regras">Próximo: Administradoras e regras →</a></div>
 </div>
 
@@ -1143,6 +1220,7 @@ const GLOS = {
   inadNaoRec:{t:'Inadimplência que não vai voltar', d:'Contribuições que não foram pagas e não vão ser. Pela regra, entram na conta de quem paga.'},
   teto:{t:'Teto da reserva', d:'Pela regra nova, a reserva do grupo não pode passar de 3 meses de contribuições. Se passar, o boleto tem que baixar.'},
   reserva:{t:'Reserva', d:'Dinheiro guardado só para eventos, para aguentar meses ruins e perdas totais caras.'},
+  prazo90:{t:'Prazo de 90 dias', d:'A Resolução CNSP 491/2026 (art. 22) dá no máximo 90 dias para regular e pagar cada evento. Confira no regulamento a partir de quando o prazo começa a contar.'},
   administradora:{t:'Administradora', d:'Empresa autorizada pela SUSEP que vai cuidar dos grupos das associações. Até 30/09/2026 nenhuma foi autorizada.'}
 };
 const gi = k => `<button type="button" class="info" data-g="${k}" aria-label="O que é ${GLOS[k].t}?">?</button>`;
@@ -1652,6 +1730,7 @@ function render(){
   renderPlano(r);
   renderTpl();
   renderRM();
+  leadUpd();
   renderResumo(s, r, pr);
   save();
 }
@@ -2305,7 +2384,7 @@ function renderRM(){
       <div><span>Reserva no fim</span><b>${brlShort(o.patFim)}</b></div>
     </div>
     ${o.passaTeto ? `<p class="note"><b>Reserva acima do ${gt('teto', 'teto')}.</b> Baixe a estabilização no próximo período.</p>` : ''}
-    <button type="button" class="btn small ghost" id="rmVerDet2">Ver a conta completa ↓</button>`;
+    <button type="button" class="btn small ghost" id="rmVerDet2">Ver a conta completa ↓</button>${rmHist.length >= 3 ? ghCard(rmHist.length) : ''}`;
   $('rmMbS').textContent = o.comp > 0.5 ? 'Rateio extra' : falta ? 'Faltou' : 'Sobrou'; tone($('rmMbS'), tRes);
   $('rmMbV').textContent = brl(o.comp > 0.5 ? o.comp : Math.abs(o.res));
   $('rmVerDet2').addEventListener('click', () => { rmSub = 'conta'; showSub(); $('rmResultado').scrollIntoView({behavior:'smooth'}); });
@@ -2421,7 +2500,8 @@ function rmDemonstrativo(o){
   return linhas.filter(x => x !== null).join('\n');
 }
 
-function renderRMHist(){
+function renderRMHist(){ renderRMHist0(); $('rmHist').insertAdjacentHTML('beforeend', `<p class="ghlinha">Fechamento todo mês sem planilha? <a href="${ghUrl('rateio-historico')}" target="_blank" rel="noopener">Conheça o GestiHub</a>.</p>`); }
+function renderRMHist0(){
   const el = $('rmHist');
   if(!rmHist.length){ el.innerHTML = '<div class="empty">Nenhum fechamento salvo ainda. Salve o de cada período para acompanhar a evolução.</div>'; return; }
   const mx = Math.max(...rmHist.map(h => h.custo / h.dur), 1);
@@ -2438,7 +2518,7 @@ function rmSalvar(){
   return true;
 }
 const rmAviso = t => { $('rmSaveMsg').textContent = t; setTimeout(() => $('rmSaveMsg').textContent = '', 3500); };
-$('rmSave').addEventListener('click', () => { if(rmSalvar()) rmAviso('Fechamento de ' + RMO.per + ' salvo.'); });
+$('rmSave').addEventListener('click', () => { if(rmSalvar()){ rmAviso('Fechamento de ' + RMO.per + ' salvo.'); renderRM(); } });
 $('rmNext').addEventListener('click', () => {
   if(!rmSalvar()) return;
   const o = RMO, prox = Math.min(0, o.m0 + o.dur);
@@ -2479,6 +2559,178 @@ $('rmCopy').addEventListener('click', () => copiar($('rmDemo'), $('rmCopyMsg')))
   try{ sv = JSON.parse(localStorage.getItem(RMKEY)); rmHist = JSON.parse(localStorage.getItem(RMHKEY)) || []; }catch(e){ rmHist = []; }
   if(sv && sv.s && !sv.ex){ writeRM(sv.s); rmEx = true; rmMarcaMeu(); }
   else writeRM(RM_EX);
+})();
+
+/* ======================= GESTIHUB ======================= */
+const WA_GH = '551151785642';
+const ghUrl = c => 'https://www.gestihub.com.br/?utm_source=raio-x-susep&utm_medium=ferramenta&utm_campaign=protecao-veicular&utm_content=' + c;
+const GH_LOGO = document.querySelector('.gh-strip img').src;
+document.querySelectorAll('img[src="GHLOGO"]').forEach(i => i.src = GH_LOGO);
+const waLink = txt => 'https://wa.me/' + WA_GH + '?text=' + encodeURIComponent(txt);
+function ghCard(nf){
+  return `<div class="ghcard"><img src="${GH_LOGO}" alt="GestiHub" width="88" height="15"><p><b>Já são ${nf} fechamentos aqui.</b> No GestiHub, o financeiro da associação fica num lugar só e o fechamento do mês sai sem planilha.</p><div class="ghbtns"><a class="btn small" href="${ghUrl('rateio-' + nf)}" target="_blank" rel="noopener">Conhecer o GestiHub</a><a class="btn small ghost" href="${waLink('Olá, GestiHub! Uso o Rateio do mês do Raio-X SUSEP e quero fazer o fechamento mensal da associação no GestiHub.')}" target="_blank" rel="noopener">Falar no WhatsApp</a></div></div>`;
+}
+
+/* ---------- receber meu relatório ---------- */
+function leadMsg(){
+  const r = R; if(!r) return '';
+  const pr = prioridades(r).slice(0, 3);
+  const nome = $('leadNome').value.trim(), cargo = $('leadCargo').value, assoc = $('leadAssoc').value.trim() || $('nome').value.trim(), cid = $('leadCidade').value.trim();
+  return [
+    'Olá, GestiHub! Fiz o Raio-X SUSEP e quero receber o relatório da minha associação.',
+    '',
+    'Nome: ' + (nome || '-') + (cargo ? ' (' + cargo + ')' : ''),
+    'Associação: ' + (assoc || '-') + (cid ? ' · ' + cid : ''),
+    'Placas: ' + int(r.placas) + ' · Nota: ' + r.score + '/100 (' + r.statusTxt + ')',
+    'Sinistralidade: ' + pct(r.sin) + ' · Boleto certo: ' + brl(r.ticketCerto, true) + ' (hoje ' + brl(r.ticket, true) + ')',
+    'Reserva: ' + brlShort(r.reserva) + ' de ' + brlShort(r.metaReserva),
+    pr.length ? 'Mais urgente: ' + pr.map((p, i) => (i + 1) + ') ' + p.t).join('; ') : '',
+    '',
+    'Quero entender como a GestiHub pode ajudar.'
+  ].join('\n');
+}
+function leadUpd(){
+  if(!$('leadMsg')) return;
+  if(!$('leadAssoc').value) $('leadAssoc').placeholder = $('nome').value || 'Nome da associação';
+  const m = leadMsg();
+  $('leadMsg').value = m;
+  $('leadWa').href = waLink(m);
+}
+$('leadForm').addEventListener('input', leadUpd);
+$('leadForm').addEventListener('change', leadUpd);
+$('leadForm').addEventListener('submit', e => e.preventDefault());
+$('leadWa').addEventListener('click', e => {
+  const semNome = !$('leadNome').value.trim(), semOk = !$('leadOk').checked;
+  if(semNome || semOk){
+    e.preventDefault();
+    $('leadErr').textContent = semNome ? 'Escreva o seu nome.' : 'Marque a autorização para enviar.';
+    (semNome ? $('leadNome') : $('leadOk')).focus();
+    return;
+  }
+  $('leadErr').textContent = '';
+  leadUpd();
+  $('leadDone').hidden = false;
+});
+$('leadCopy').addEventListener('click', () => copiar($('leadMsg'), $('leadCopyMsg')));
+
+/* ======================= PRAZOS DOS EVENTOS ======================= */
+const EVKEY = KEY + '.ev', DIA = 864e5, PRAZO = 90;
+const EV_ST = {analise:'Em análise', aprovado:'Aprovado, falta pagar', pago:'Pago', negado:'Negado'};
+const isoDe = d => new Date(d.getTime() - d.getTimezoneOffset() * 6e4).toISOString().slice(0, 10);
+const hojeISO = () => isoDe(new Date());
+const isoMenos = k => { const d = new Date(); d.setDate(d.getDate() - k); return isoDe(d); };
+const diasEntre = (a, b) => Math.round((new Date(b + 'T12:00') - new Date(a + 'T12:00')) / DIA);
+const evAberto = e => e.s === 'analise' || e.s === 'aprovado';
+const EV_EX = () => [
+  {a:isoMenos(12), d:'Evento 0431 · carro, batida traseira', t:'carros', v:'6.800', s:'analise'},
+  {a:isoMenos(35), d:'Evento 0421 · vidro e lanterna', t:'carros', v:'4.800', s:'aprovado'},
+  {a:isoMenos(64), d:'Evento 0415 · moto roubada', t:'motos', v:'7.500', s:'analise'},
+  {a:isoMenos(83), d:'Evento 0412 · carro na oficina', t:'carros', v:'22.000', s:'aprovado'},
+  {a:isoMenos(97), d:'Evento 0409 · caminhão, colisão', t:'pesados', v:'31.000', s:'analise'},
+  {a:isoMenos(120), d:'Evento 0398 · perda total, carro', t:'carros', v:'41.000', s:'pago', p:isoMenos(50)},
+  {a:isoMenos(140), d:'Evento 0390 · terceiro, para-choque', t:'carros', v:'3.200', s:'negado'}
+];
+let evs = [], evEx = true, evFiltro = 'abertos';
+function evSave(){ try{ localStorage.setItem(EVKEY, JSON.stringify({evs, ex:evEx})); }catch(e){} }
+function evMeu(){
+  if(!evEx) return; evEx = false;
+  $('evExBar').classList.add('mine');
+  $('evExMsg').innerHTML = 'Agora são os seus eventos. <span>Ficam salvos só neste aparelho.</span>';
+  $('evClear').textContent = 'Apagar tudo';
+}
+function evInfo(e){
+  if(e.s === 'negado') return {k:'none', txt:'Negado', ord:9e9};
+  if(e.s === 'pago'){
+    const d = e.a && e.p ? diasEntre(e.a, e.p) : NaN;
+    return {k: isFinite(d) && d > PRAZO ? 'bad' : 'ok', txt: !isFinite(d) ? 'Pago' : d > PRAZO ? `Pago com atraso (${d} dias)` : `Pago em ${d} dias`, ord:8e9, dias:d};
+  }
+  if(!e.a) return {k:'warn', txt:'Falta a data do aviso', ord:-1e9};
+  const resta = PRAZO - diasEntre(e.a, hojeISO());
+  if(resta <= 0) return {k:'bad', txt: resta === 0 ? 'Vence hoje' : `Vencido há ${-resta} ${resta === -1 ? 'dia' : 'dias'}`, ord:resta, resta};
+  return {k: resta <= 30 ? 'warn' : 'ok', txt:`Faltam ${resta} ${resta === 1 ? 'dia' : 'dias'}`, ord:resta, resta};
+}
+function evResumo(){
+  const ab = evs.filter(evAberto), info = ab.map(evInfo);
+  const soma = ab.reduce((t, e) => t + (isFinite(num(e.v)) ? num(e.v) : 0), 0);
+  const venc = info.filter(i => i.resta !== undefined && i.resta <= 0).length;
+  const perto = info.filter(i => i.resta > 0 && i.resta <= 30).length;
+  const pagos = evs.filter(e => e.s === 'pago').map(evInfo).filter(i => isFinite(i.dias));
+  const media = pagos.length ? pagos.reduce((t, i) => t + i.dias, 0) / pagos.length : NaN;
+  $('evTiles').innerHTML = [
+    tileHTML('Em aberto', `${ab.length} ${ab.length === 1 ? 'evento' : 'eventos'}`, `${brlShort(soma)} · é a sua ${gt('pel', 'PEL')} hoje`),
+    tileHTML('Vencem em até 30 dias', String(perto), perto ? 'cuide destes primeiro' : 'nenhum perto do prazo', perto ? 'warn' : 'ok'),
+    tileHTML('Já passaram de 90 dias', String(venc), venc ? '<b>fora do prazo da regra</b>' : 'nenhum fora do prazo', venc ? 'bad' : 'ok'),
+    tileHTML('Tempo médio para pagar', isFinite(media) ? Math.round(media) + ' dias' : '–', pagos.length ? `em ${pagos.length} ${pagos.length === 1 ? 'evento pago' : 'eventos pagos'}` : 'nenhum evento pago ainda', isFinite(media) ? (media <= 60 ? 'ok' : media <= PRAZO ? 'warn' : 'bad') : '')
+  ].join('');
+}
+function evRow(e, i){
+  const inf = evInfo(e);
+  return `<article class="ev tone-${inf.k}" data-i="${i}">
+    <div class="ev-top">
+      <input class="ev-d" data-f="d" value="${esc(e.d || '')}" placeholder="Nº do evento ou placa" aria-label="Evento: identificação">
+      <select data-f="s" aria-label="Situação">${Object.entries(EV_ST).map(([k, t]) => `<option value="${k}" ${e.s === k ? 'selected' : ''}>${t}</option>`).join('')}</select>
+      <button type="button" class="x" data-evdel="${i}" aria-label="Apagar este evento">×</button>
+    </div>
+    <div class="ev-bot">
+      <label>Data do aviso<input type="date" data-f="a" value="${e.a || ''}" max="${hojeISO()}"></label>
+      <label>Tipo<select data-f="t">${TIPOS.map(t => `<option value="${t.id}" ${e.t === t.id ? 'selected' : ''}>${t.n}</option>`).join('')}</select></label>
+      <label>Valor estimado<span class="input compact"><span class="pre">R$</span><input data-f="v" inputmode="decimal" data-kind="money" value="${esc(e.v || '')}"></span></label>
+      ${e.s === 'pago' ? `<label>Pago em<input type="date" data-f="p" value="${e.p || ''}" max="${hojeISO()}"></label>` : ''}
+      <span class="pill ev-b">${inf.txt}</span>
+    </div>
+  </article>`;
+}
+function renderEv(){
+  const idx = evs.map((e, i) => i).filter(i => evFiltro === 'todos' || evAberto(evs[i]));
+  idx.sort((x, y) => evInfo(evs[x]).ord - evInfo(evs[y]).ord);
+  $('evList').innerHTML = idx.length ? idx.map(i => evRow(evs[i], i)).join('') : `<div class="empty">${evs.length ? 'Nenhum evento em aberto. Tudo pago ou negado.' : 'Nenhum evento lançado ainda. Clique em “+ Novo evento”.'}</div>`;
+  document.querySelectorAll('#evFiltros [data-evf]').forEach(b => b.setAttribute('aria-selected', b.dataset.evf === evFiltro));
+  evResumo(); evSave();
+}
+function evBadge(row, i){
+  const inf = evInfo(evs[i]);
+  row.classList.remove('tone-ok', 'tone-warn', 'tone-bad', 'tone-none'); row.classList.add('tone-' + inf.k);
+  row.querySelector('.ev-b').textContent = inf.txt;
+}
+$('evList').addEventListener('input', e => {
+  const row = e.target.closest('.ev'), fld = e.target.dataset.f; if(!row || !fld) return;
+  const i = +row.dataset.i; evs[i][fld] = e.target.value; evMeu();
+  if(fld === 'a' || fld === 'p') evBadge(row, i);
+  evResumo(); evSave();
+});
+$('evList').addEventListener('change', e => {
+  const row = e.target.closest('.ev'), fld = e.target.dataset.f; if(!row || !fld) return;
+  const i = +row.dataset.i; evs[i][fld] = e.target.value; evMeu();
+  if(fld === 's' && e.target.value === 'pago' && !evs[i].p) evs[i].p = hojeISO();
+  if(fld === 's' || fld === 't') renderEv(); else { evBadge(row, i); evResumo(); evSave(); }
+});
+$('evList').addEventListener('focusout', e => { if(e.target.matches('input[data-kind]')){ fmtField(e.target); const row = e.target.closest('.ev'); if(row){ evs[+row.dataset.i].v = e.target.value; evSave(); } } });
+$('evList').addEventListener('click', e => { const b = e.target.closest('[data-evdel]'); if(b){ evs.splice(+b.dataset.evdel, 1); evMeu(); renderEv(); } });
+$('evFiltros').addEventListener('click', e => { const b = e.target.closest('[data-evf]'); if(b){ evFiltro = b.dataset.evf; renderEv(); } });
+$('evAdd').addEventListener('click', () => {
+  evs.push({a:hojeISO(), d:'', t:'carros', v:'', s:'analise'}); evMeu(); evFiltro = 'abertos'; renderEv();
+  const ins = $('evList').querySelectorAll('.ev-d'); const alvo = [...ins].find(x => !x.value); if(alvo) alvo.focus();
+});
+$('evToRm').addEventListener('click', () => {
+  const ab = evs.filter(evAberto);
+  if(!ab.length){ $('evMsg').textContent = 'Nenhum evento em aberto para levar.'; return; }
+  rmPel = ab.map(e => ({d: e.d || 'Evento sem nome', t: e.t, v: e.v}));
+  rmPelHTML(); rmMarcaMeu(); rmOpen = 3; rmAcc(); renderRM();
+  irPara('rateiomes');
+  setTimeout(() => RM_LEDG[2].scrollIntoView({behavior:'smooth', block:'start'}), 50);
+});
+let evClearArmed = false;
+$('evClear').addEventListener('click', () => {
+  if(!evEx && !evClearArmed){ evClearArmed = true; $('evClear').textContent = 'Clique de novo para confirmar'; setTimeout(() => { evClearArmed = false; if(!evEx) $('evClear').textContent = 'Apagar tudo'; }, 4000); return; }
+  evClearArmed = false; evs = []; evEx = true; evMeu();
+  $('evExMsg').innerHTML = 'Lista limpa. <span>Clique em “+ Novo evento” para começar.</span>';
+  renderEv();
+});
+(function initEv(){
+  let sv = null; try{ sv = JSON.parse(localStorage.getItem(EVKEY)); }catch(e){}
+  if(sv && Array.isArray(sv.evs) && !sv.ex){ evs = sv.evs; evEx = true; evMeu(); }
+  else evs = EV_EX();
+  renderEv();
 })();
 
 /* ======================= ADMINISTRADORAS NA FILA ======================= */
@@ -2639,7 +2891,7 @@ window.addEventListener('resize', () => {
 });
 
 /* ======================= ABAS E PASSOS ======================= */
-const TABS = ['preencher','resultado','boleto','plano','rateiomes','regras'];
+const TABS = ['preencher','resultado','boleto','plano','rateiomes','eventos','regras'];
 const STEPS = [...document.querySelectorAll('#f > .step')];
 const STEP_LBL = ['Sua associação','Dinheiro que entra','Eventos','Reserva e rateio','Papéis','Caminho'];
 let tabAtual = 'preencher', passo = 1;
