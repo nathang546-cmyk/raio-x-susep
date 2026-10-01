@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="Ferramenta gratuita oferecida pela GestiHub para associações de proteção veicular: diagnóstico, boleto certo, rateio do mês, prazos dos eventos, provisões e plano de 18 meses para a regra da SUSEP (LC 213/2025 e Res. CNSP 491/2026).">
+<meta name="description" content="Ferramenta gratuita oferecida pela GestiHub para associações de proteção veicular: diagnóstico, qualidade da carteira, boleto certo, rateio do mês, prazos dos eventos, provisões e plano de 18 meses para a regra da SUSEP (LC 213/2025 e Res. CNSP 491/2026).">
 <style>body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
 <title>Raio-X SUSEP da Associação</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -726,6 +726,14 @@ h1,h2,h3{letter-spacing:-.01em;font-weight:600}
 .det{background:transparent;border:0;box-shadow:none}
 .det[open]>summary{border:1.5px solid var(--accent)}
 
+.qb-top{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap}
+.qb-nota{display:flex;align-items:baseline;gap:8px}
+.qb-nota b{font:700 2.4rem/1 var(--f-display);color:var(--tone)}
+.qb-nota span{color:var(--muted)}
+.qb-nota .pill{align-self:center}
+.qb-dicas{background:var(--sunk);border-radius:12px;padding:14px 16px;display:grid;gap:8px}
+.qb-dicas ul{margin:0;padding-left:1.2em;display:grid;gap:6px}
+
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
 </head>
@@ -787,6 +795,21 @@ h1,h2,h3{letter-spacing:-.01em;font-weight:600}
           <label for="fipeMax">FIPE do veículo mais caro protegido</label>
           <p class="hint">Uma perda total dele sai de uma vez só do caixa. Entra na conta da reserva.</p>
           <div class="input"><span class="pre">R$</span><input id="fipeMax" inputmode="decimal" data-kind="money"></div>
+        </div>
+        <div class="field wide">
+          <details class="help plus" id="detBase" open>
+            <summary>Qualidade da carteira (opcional: quanto mais preencher, melhor o diagnóstico)</summary>
+            <div class="help-body">
+              <div class="mini">
+                <div class="field"><label for="anoMedio" class="hint">Ano médio dos veículos</label><div class="input compact"><input id="anoMedio" inputmode="numeric" data-kind="ano" placeholder="Ex.: 2015"></div></div>
+                <div class="field"><label for="pctRastreador" class="hint">Com rastreador</label><div class="input compact"><input id="pctRastreador" inputmode="decimal" data-kind="pct"><span class="suf">%</span></div></div>
+                <div class="field"><label for="pctVistoria" class="hint">Entraram com vistoria com fotos</label><div class="input compact"><input id="pctVistoria" inputmode="decimal" data-kind="pct"><span class="suf">%</span></div></div>
+                <div class="field"><label for="pctApp" class="hint">Usados para aplicativo ou trabalho</label><div class="input compact"><input id="pctApp" inputmode="decimal" data-kind="pct"><span class="suf">%</span></div></div>
+                <div class="field"><label for="cancel12" class="hint">Placas canceladas em 12 meses</label><div class="input compact"><input id="cancel12" inputmode="numeric" data-kind="int"><span class="suf">placas</span></div></div>
+              </div>
+              <p class="calcline" id="qbOut">–</p>
+            </div>
+          </details>
         </div>
       </div>
     </section>
@@ -1014,6 +1037,7 @@ h1,h2,h3{letter-spacing:-.01em;font-weight:600}
         <div class="kpi" id="kRes"><span class="dot"></span><dt><span class="term" tabindex="0" data-g="reserva">Reserva</span></dt><dd>–</dd></div>
         <div class="kpi" id="kInad"><span class="dot"></span><dt><span class="term" tabindex="0" data-g="inadimplencia">Inadimplência</span></dt><dd>–</dd></div>
         <div class="kpi" id="kDocs"><span class="dot"></span><dt>Papéis em dia</dt><dd>–</dd></div>
+        <div class="kpi" id="kBase"><span class="dot"></span><dt><span class="term" tabindex="0" data-g="qualidade">Qualidade da carteira</span></dt><dd>–</dd></div>
       </dl>
       <a class="btn" href="#resultado">Ver resultado completo</a>
     </div>
@@ -1046,6 +1070,7 @@ h1,h2,h3{letter-spacing:-.01em;font-weight:600}
     <div class="vizgrid vis2">
       <article class="viz" id="vzMeses"></article>
       <article class="viz" id="vzRes"></article>
+      <article class="viz wide" id="vzBase"></article>
       <article class="viz wide" id="vzNota"></article>
     </div>
   </section>
@@ -1280,6 +1305,7 @@ const GLOS = {
   porMil:{t:'Por R$ 1.000 de FIPE', d:'Quanto cada um paga para cada R$ 1.000 do valor do veículo. Ex.: R$ 0,12 por mil num carro de R$ 45.000 = R$ 5,40.'},
   rateioExtra:{t:'Rateio extra', d:'Valor cobrado a mais quando o custo do período passa da estabilização e da parte da reserva que você decidiu usar.'},
   inadNaoRec:{t:'Inadimplência que não vai voltar', d:'Contribuições que não foram pagas e não vão ser. Pela regra, entram na conta de quem paga.'},
+  qualidade:{t:'Qualidade da carteira', d:'Nota de 0 a 100 que mostra se os veículos da carteira têm perfil de pouco ou de muito evento: idade, valor, rastreador, vistoria, uso e cancelamentos. É uma referência prática da ferramenta, não um número oficial.'},
   teto:{t:'Teto da reserva', d:'Pela regra nova, a reserva do grupo não pode passar de 3 meses de contribuições. Se passar, o boleto tem que baixar.'},
   reserva:{t:'Reserva', d:'Dinheiro guardado só para eventos, para aguentar meses ruins e perdas totais caras.'},
   prazo90:{t:'Prazo de 90 dias', d:'A Resolução CNSP 491/2026 (art. 22) dá no máximo 90 dias para regular e pagar cada evento. Confira no regulamento a partir de quando o prazo começa a contar.'},
@@ -1315,14 +1341,14 @@ const EXEMPLO = {
   tp_motos_placas:'200', tp_motos_fipe:'14.000', tp_motos_ev:'150.000',
   tp_pesados_placas:'50', tp_pesados_fipe:'190.000', tp_pesados_ev:'180.000',
   placas12:'1.100', fipeMax:'210.000',
-  ticket:'139', admPct:'28', inad:'8', eventos12:'1.340.000', recup12:'70.000', receita12:'', qtdEventos:'190', sinDireto:'',
+  ticket:'139', admPct:'28', inad:'8', eventos12:'1.340.000', recup12:'70.000', receita12:'', qtdEventos:'190', sinDireto:'', anoMedio:'2014', pctRastreador:'35', pctVistoria:'80', pctApp:'12', cancel12:'180',
   mes_0:'92.000', mes_1:'118.000', mes_2:'85.000', mes_3:'140.000', mes_4:'101.000', mes_5:'96.000', mes_6:'171.000', mes_7:'88.000', mes_8:'109.000', mes_9:'124.000', mes_10:'97.000', mes_11:'119.000',
   reserva:'90.000', pendentes:'48.000', nivelRes:'auto', rateioModo:'misto', contaSep:'nao', caminho:'contratar',
   taxaSim:'20', repasseSim:'50', custoAssoc:'',
   docs:{susep:'sim',estatuto:'nao',atas:'sim',regulamento:'sim',coberturas:'ns',base:'sim',historico:'ns',processos:'nao',contabil:'sim',vendedores:'nao',prestacao:'nao',reclamacao:'nao',lgpd:'nao',sistema:'sim'}
 };
 
-const FIELDS = ['nome','placas12','fipeMax','ticket','admPct','inad','inadValor','eventos12','recup12','receita12','qtdEventos','sinDireto','reserva','pendentes','nivelRes','rateioModo','taxaSim','repasseSim','custoAssoc']
+const FIELDS = ['nome','placas12','fipeMax','anoMedio','pctRastreador','pctVistoria','pctApp','cancel12','ticket','admPct','inad','inadValor','eventos12','recup12','receita12','qtdEventos','sinDireto','reserva','pendentes','nivelRes','rateioModo','taxaSim','repasseSim','custoAssoc']
   .concat(TIPOS.flatMap(t => ['tp_'+t.id+'_placas','tp_'+t.id+'_fipe','tp_'+t.id+'_ev']))
   .concat(Array.from({length:12}, (_,i) => 'mes_'+i));
 const KEY = 'raioxSusep.v3';
@@ -1565,6 +1591,42 @@ function calc(s){
   r.tPorte = !ok(r.placas) ? 'none' : r.placas >= 3000 ? 'ok' : r.placas >= 800 ? 'warn' : 'bad';
   r.cresc = ok(r.placas) && ok(r.placas12) ? r.placas / r.placas12 - 1 : NaN;
   r.freq = ok(r.qtdEventos) && ok(r.placas) ? r.qtdEventos / r.placas : NaN;
+
+  // qualidade da carteira (referência prática da ferramenta, não oficial)
+  const anoHoje = new Date().getFullYear();
+  const pIn = k => { const x = num(s[k]); return isFinite(x) ? Math.min(Math.max(x, 0), 100) / 100 : NaN; };
+  r.anoMedio = num(s.anoMedio);
+  r.idade = isFinite(r.anoMedio) && r.anoMedio > 1950 && r.anoMedio <= anoHoje + 1 ? Math.max(0, anoHoje - r.anoMedio) : NaN;
+  r.pRast = pIn('pctRastreador'); r.pVist = pIn('pctVistoria'); r.pApp = pIn('pctApp');
+  r.cancel12 = num(s.cancel12);
+  r.churn = ok(r.placas) && isFinite(r.cancel12) ? r.cancel12 / r.placas : NaN;
+  const plTipo = id => { const t = r.tipos.find(x => x.id === id); return t && ok(t.placas) ? t.placas : 0; };
+  r.pMotoPes = ok(r.placas) ? (plTipo('motos') + plTipo('pesados')) / r.placas : NaN;
+  const faixa = (v, cortes, pts) => { for(let i = 0; i < cortes.length; i++) if(v <= cortes[i]) return pts[i]; return pts[pts.length - 1]; };
+  const QB = [
+    {n:'Idade média dos veículos', max:20, got: isFinite(r.idade) ? 20 * faixa(r.idade, [5, 8, 12, 16], [1, .8, .5, .25, .1]) : NaN,
+      val: isFinite(r.idade) ? `${r.idade} anos (ano ${Math.round(r.anoMedio)})` : '', dica:'Carro mais velho quebra mais e chega mais rápido à perda total. Cuidado ao aceitar veículos com mais de 15 anos.'},
+    {n:'Valor FIPE médio', max:10, got: ok(r.fipe) ? 10 * (r.fipe < 20000 ? .4 : r.fipe < 30000 ? .7 : r.fipe <= 120000 ? 1 : .7) : NaN,
+      val: ok(r.fipe) ? brlShort(r.fipe) : '', dica: ok(r.fipe) && r.fipe > 120000 ? 'Valor alto concentra risco: use limite de FIPE e resseguro.' : 'Veículo barato chega à perda total com um conserto médio. Revise a cota de participação.'},
+    {n:'Veículos com rastreador', max:15, got: isFinite(r.pRast) ? 15 * r.pRast : NaN,
+      val: isFinite(r.pRast) ? pct(r.pRast, 0) : '', dica:'Exigir rastreador nos veículos mais visados e nos mais caros reduz roubo e furto.'},
+    {n:'Entrada com vistoria com fotos', max:15, got: isFinite(r.pVist) ? 15 * r.pVist : NaN,
+      val: isFinite(r.pVist) ? pct(r.pVist, 0) : '', dica:'Vistoria com fotos em toda entrada evita aceitar carro que já chega batido.'},
+    {n:'Uso para aplicativo ou trabalho', max:10, got: isFinite(r.pApp) ? 10 * faixa(r.pApp, [.1, .25, .5], [1, .7, .4, .1]) : NaN,
+      val: isFinite(r.pApp) ? pct(r.pApp, 0) : '', dica:'Quem trabalha com o carro roda mais e bate mais. Cobre diferente ou limite a entrada.'},
+    {n:'Motos e pesados na carteira', max:10, got: isFinite(r.pMotoPes) ? 10 * faixa(r.pMotoPes, [.15, .3, .5], [1, .7, .4, .2]) : NaN,
+      val: isFinite(r.pMotoPes) ? pct(r.pMotoPes, 0) : '', dica:'Moto é mais roubada e pesado custa caro no evento. Cobre por tipo de veículo (aba Boleto).'},
+    {n:'Eventos por placa no ano', max:10, got: isFinite(r.freq) ? 10 * faixa(r.freq, [.1, .15, .25], [1, .7, .4, .1]) : NaN,
+      val: isFinite(r.freq) ? `${Math.round(r.freq * 100)} a cada 100 placas` : '', dica:'Muito evento por placa: reveja as regras de entrada e procure fraude.'},
+    {n:'Cancelamentos em 12 meses', max:10, got: isFinite(r.churn) ? 10 * faixa(r.churn, [.1, .2, .35], [1, .7, .4, .1]) : NaN,
+      val: isFinite(r.churn) ? pct(r.churn, 0) + ' das placas' : '', dica:'Muita gente saindo: quem fica costuma ser quem mais usa a proteção.'}
+  ];
+  r.qbItens = QB.filter(q => isFinite(q.got));
+  const qMax = r.qbItens.reduce((t, q) => t + q.max, 0), qGot = r.qbItens.reduce((t, q) => t + q.got, 0);
+  r.qb = r.qbItens.length >= 3 ? Math.round(qGot / qMax * 100) : NaN;
+  r.tQb = !isFinite(r.qb) ? 'none' : r.qb >= 75 ? 'ok' : r.qb >= 50 ? 'warn' : 'bad';
+  r.qbTxt = !isFinite(r.qb) ? '' : r.qb >= 75 ? 'Boa' : r.qb >= 50 ? 'Média' : 'Fraca';
+  r.qbFracos = r.qbItens.filter(q => q.got / q.max < .7).sort((a, b) => a.got / a.max - b.got / b.max).slice(0, 3);
   r.custoMedioEv = ok(r.qtdEventos) && isFinite(r.eventosLiq) ? r.eventosLiq / r.qtdEventos : NaN;
 
   let tw = 0, got = 0, sim = 0; const faltando = [];
@@ -1818,6 +1880,8 @@ function render(){
   kpi('kRes', r.tRes, brlShort(r.reserva), isFinite(r.metaReserva) ? 'meta ' + brlShort(r.metaReserva) : '');
   kpi('kInad', r.tInad, pct(r.inad,0), 'ideal até 5%');
   kpi('kDocs', r.tDocs, `${r.docsSim} de ${DOCS.length}`, '');
+  kpi('kBase', r.tQb, isFinite(r.qb) ? r.qb + ' de 100' : '–', isFinite(r.qb) ? r.qbTxt : 'preencha o perfil');
+  $('qbOut').innerHTML = isFinite(r.qb) ? `Qualidade da carteira: <b>${r.qb} de 100 (${r.qbTxt})</b>, com ${r.qbItens.length} de 8 itens. O detalhe fica no Diagnóstico completo.` : `Preencha pelo menos 3 itens para ver a qualidade da carteira (${r.qbItens.length} de 8 até agora).`;
 
   // veredito
   const pr = r.incompleto ? r.faltando : prioridades(r);
@@ -1831,6 +1895,7 @@ function render(){
 
   renderR3(r);
   renderVisao(r);
+  renderBase(r);
   renderCards(r);
   renderRateio(r);
   renderSim();
@@ -1843,6 +1908,17 @@ function render(){
   save();
 }
 
+function renderBase(r){
+  const el = $('vzBase');
+  if(!isFinite(r.qb)){
+    el.innerHTML = `<div><h3>${gt('qualidade', 'Qualidade da carteira')}</h3></div><div class="empty">Preencha pelo menos 3 itens de “Qualidade da carteira” no passo 1 (ano médio, rastreador, vistoria, uso para aplicativo, cancelamentos).</div>`;
+    return;
+  }
+  el.innerHTML = `<div class="qb-top tone-${r.tQb}"><div><h3>${gt('qualidade', 'Qualidade da carteira')}</h3><p class="sub" style="margin-top:4px">Perfil dos veículos: quanto maior, menos evento a carteira tende a ter.</p></div><div class="qb-nota"><b>${r.qb}</b><span>de 100</span><span class="pill">${r.qbTxt}</span></div></div>
+    <div class="rows">${r.qbItens.map(q => rowbar(`<b>${q.n}</b><br><span class="hint">${q.val}</span>`, q.got / q.max, `${Math.round(q.got)} de ${q.max}`, q.got / q.max >= .7 ? '--ok' : q.got / q.max >= .4 ? '--warn' : '--bad', `${Math.round(q.got)} de ${q.max} pontos\n${q.n}`)).join('')}</div>
+    ${r.qbFracos.length ? `<div class="qb-dicas"><p><b>O que mais melhora a carteira</b></p><ul>${r.qbFracos.map(q => `<li><b>${q.n}:</b> ${q.dica}</li>`).join('')}</ul></div>` : ''}
+    <p class="note">Referência prática da ferramenta, não é número oficial. ${r.qbItens.length < 8 ? `Calculado com ${r.qbItens.length} de 8 itens; preencha o resto no passo 1 para ficar mais preciso. ` : ''}O atuário da administradora usa critérios próprios.</p>`;
+}
 function renderR3(r){
   const el = $('r3');
   if(r.incompleto){
@@ -1870,7 +1946,7 @@ function renderR3(r){
       <p class="r3-k">Resolver primeiro</p>
       ${pr.length ? `<ul class="r3-l">${pr.map(p => `<li>${p.t}</li>`).join('')}</ul>` : '<p class="r3-s">Nada urgente. Siga o plano de 18 meses.</p>'}
     </article>
-    <p class="r3-foot">Prazo final: contrato com administradora autorizada pela SUSEP até <b>07/05/2028</b>. Nota do diagnóstico: <b>${r.score} de 100</b> (${r.statusTxt}).</p>`;
+    <p class="r3-foot">Prazo final: contrato com administradora autorizada pela SUSEP até <b>07/05/2028</b>. Nota do diagnóstico: <b>${r.score} de 100</b> (${r.statusTxt}).${isFinite(r.qb) ? ` ${gt('qualidade', 'Qualidade da carteira')}: <b>${r.qb} de 100</b> (${r.qbTxt}).` : ''}</p>`;
 }
 function renderVisao(r){
   // números de destaque
@@ -2245,6 +2321,7 @@ function renderResumo(s, r, pr){
     `Reserva: ${brlShort(r.reserva)} de ${brlShort(r.metaReserva)} → guardar ${brlShort(r.guardarMes)}/mês por ${REG.horizonte} meses`,
     `Inadimplência: ${pct(r.inad,0)}`,
     `Papéis em dia: ${r.docsSim} de ${DOCS.length}`,
+    ...(isFinite(r.qb) ? [`Qualidade da carteira: ${r.qb}/100 (${r.qbTxt})`] : []),
     `Caminho: ${cam}${!r.caminho || r.caminho==='naosei' ? ' (sugerido)' : ''}`,
     `Prazo final SUSEP: 07/05/2028`,
     '',
@@ -2734,6 +2811,7 @@ function leadMsg(){
     'Placas: ' + int(r.placas) + ' · Nota: ' + (r.incompleto ? 'faltam dados' : r.score + '/100 (' + r.statusTxt + ')'),
     'Sinistralidade: ' + pct(r.sin) + ' · Boleto certo: ' + brl(r.ticketCerto, true) + ' (hoje ' + brl(r.ticket, true) + ')',
     'Reserva: ' + brlShort(r.reserva) + ' de ' + brlShort(r.metaReserva),
+    ...(isFinite(r.qb) ? ['Qualidade da carteira: ' + r.qb + '/100 (' + r.qbTxt + ')'] : []),
     pr.length ? 'Mais urgente: ' + pr.map((p, i) => (i + 1) + ') ' + p.t).join('; ') : '',
     '',
     'Quero entender como a GestiHub pode ajudar.'
@@ -2969,7 +3047,7 @@ function markMine(){
   modoP = 'meu'; isExample = false; modoBarra(BAR_P, modoP);
 }
 function fmtField(el){
-  const k = el.dataset.kind; if(!k) return;
+  const k = el.dataset.kind; if(!k || k === 'ano') return;
   const n = num(el.value); if(!isFinite(n)) return;
   el.value = k === 'int' ? Math.round(n).toLocaleString('pt-BR') : n.toLocaleString('pt-BR',{maximumFractionDigits:2});
 }
