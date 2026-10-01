@@ -792,6 +792,13 @@ body.modal-on{overflow:hidden}
 .admchip .and{color:var(--accent);font-weight:700}
 .admchip.tem{border-color:var(--accent)}
 
+.dest{display:flex;gap:2px;font-size:.78rem;font-weight:700;color:var(--muted);margin-top:-4px}
+.dest span{border-top:2px solid var(--line);padding-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+.dest span:first-child{border-top-color:var(--s-adm)}
+.dest span:nth-child(2){border-top-color:var(--accent);color:var(--ink)}
+.dest i{display:block}
+.compare .dest{order:0}
+
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
 </head>
@@ -1252,12 +1259,13 @@ body.modal-on{overflow:hidden}
     <div class="vizgrid" style="margin-top:0">
       <article class="viz"><h3>O boleto vem separado em 3 partes</h3>
         <div class="hstack"><i style="flex:38.92 1 0;background:var(--s-adm)"></i><i style="flex:92.03 1 0;background:var(--s-ev)"></i><i style="flex:33.68 1 0;background:var(--s-res)"></i></div>
+        <div class="dest"><span style="flex:38.92 1 0">Administradora</span><span style="flex:125.71 1 0">Grupo · CNPJ próprio</span></div>
         <div class="ent-parts">
-          <div><span class="sw" style="background:var(--s-adm)"></span><b>Taxa de administração · R$ 38,92</b><p>Fica com a administradora. Não entra no rateio. A taxa de quem não paga não pode ser jogada para os outros.</p></div>
-          <div><span class="sw" style="background:var(--s-ev)"></span><b><span class="term" tabindex="0" data-g="rateio">Rateio</span> · R$ 92,03</b><p>A parte de cada um no custo real dos eventos do período.</p></div>
-          <div><span class="sw" style="background:var(--s-res)"></span><b><span class="term" tabindex="0" data-g="estabilizacao">Estabilização</span> · R$ 33,68</b><p>Valor fixo por mês, escrito no contrato. Forma a reserva do grupo e segura o boleto nos meses ruins.</p></div>
+          <div><span class="sw" style="background:var(--s-adm)"></span><b>Taxa de administração · R$ 38,92</b><p><b>Vai para a administradora.</b> É a receita dela: paga equipe, sistema e o repasse da associação. Não entra no rateio.</p></div>
+          <div><span class="sw" style="background:var(--s-ev)"></span><b><span class="term" tabindex="0" data-g="rateio">Rateio</span> · R$ 92,03</b><p><b>Vai para a conta do grupo.</b> Paga os eventos do período.</p></div>
+          <div><span class="sw" style="background:var(--s-res)"></span><b><span class="term" tabindex="0" data-g="estabilizacao">Estabilização</span> · R$ 33,68</b><p><b>Vai para a conta do grupo.</b> Vira a reserva do grupo e segura o boleto nos meses ruins. Não é da administradora: ela só administra.</p></div>
         </div>
-        <p class="note">Valores de exemplo, de uma associação com 1.250 placas.</p>
+        <p class="note">O grupo tem CNPJ próprio e dinheiro separado da associação e da administradora. Se a administradora quebrar, esse dinheiro não entra na falência (LC 213, arts. 88-E e 88-G). Valores de exemplo, de uma associação com 1.250 placas.</p>
       </article>
       <article class="viz"><h3>Como o rateio é calculado, passo a passo</h3>
         <ol class="ent-steps">
@@ -2186,7 +2194,8 @@ function caminhoCard(r){
 }
 
 const legBoleto = (a, b, c, la) => `<div class="legend">${sw('--s-adm', la, brl(a,true))}${sw('--s-ev', gt('rateio', 'Rateio'), brl(b,true))}${sw('--s-res', gt('estabilizacao', 'Estabilização'), brl(c,true))}</div>`;
-const segBoleto = (a, b, c, la, tot) => hstack([{v:a, c:'--s-adm', tip:`${brl(a,true)}\n${la}`}, {v:b, c:'--s-ev', tip:`${brl(b,true)}\nRateio dos eventos`}, {v:c, c:'--s-res', tip:`${brl(c,true)}\nEstabilização (reserva)`}], tot);
+const destBoleto = (a, b, c, tot) => { const t = Math.max(tot || 0, a + b + c); return `<div class="dest"><span style="flex:${(a / t * 100).toFixed(2)} 1 0">Administradora</span><span style="flex:${((b + c) / t * 100).toFixed(2)} 1 0">Grupo · CNPJ próprio</span>${t > (a + b + c) * 1.001 ? `<i style="flex:${((t - a - b - c) / t * 100).toFixed(2)} 1 0"></i>` : ''}</div>`; };
+const segBoleto = (a, b, c, la, tot) => hstack([{v:a, c:'--s-adm', tip:`${brl(a,true)}\n${la}`}, {v:b, c:'--s-ev', tip:`${brl(b,true)}\nRateio dos eventos`}, {v:c, c:'--s-res', tip:`${brl(c,true)}\nEstabilização (reserva)`}], tot) + destBoleto(a, b, c, tot);
 
 function renderRateio(r){
   const F = $('formula'), T = $('vzTipos');
@@ -2207,7 +2216,7 @@ function renderRateio(r){
           <div class="boleto-h"><b>Com administradora cobrando ${pct(r.x,0)}</b><span class="tot">${brl(r.novoBoleto,true)}</span></div>
           ${segBoleto(r.novoTaxaR, r.rateioR, r.estabR, 'Taxa', mx)}
           ${legBoleto(r.novoTaxaR, r.rateioR, r.estabR, 'Taxa')}
-          <p class="hint">Simulação. Troque a taxa no passo 6.</p>
+          <p class="hint">Simulação: a taxa é calculada sobre o boleto inteiro, mas só ela fica com a administradora. Rateio e estabilização vão para a conta do grupo. Troque a taxa no passo 6.</p>
         </div>
       </div>
       <details class="more"><summary>Como a conta é feita</summary><div>
