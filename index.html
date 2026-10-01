@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="Diagnóstico gratuito para associações de proteção veicular: sinistralidade, boleto certo, reserva e plano de 18 meses para a regra da SUSEP (LC 213/2025 e Res. CNSP 491/2026).">
+<meta name="description" content="Diagnóstico gratuito para associações de proteção veicular: sinistralidade, boleto certo, rateio do mês, provisões, reserva e plano de 18 meses para a regra da SUSEP (LC 213/2025 e Res. CNSP 491/2026).">
 <style>body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
 <title>Raio-X SUSEP da Associação</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -227,6 +227,38 @@ body:not(.on-form) .mbar{display:none}
 .prog-bar button.feito::before,.prog-bar button[aria-current="step"]::before{background:var(--accent)}
 .prog-bar button:hover::before{filter:brightness(1.15)}
 .step-num{display:none}
+.rmgrid{align-items:start;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:16px}
+.rmcard{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:20px;display:grid;gap:14px;align-content:start;min-width:0}
+.rmcard h3{font-size:1.25rem}
+.mini2{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px}
+.check{display:flex;gap:10px;align-items:center;font-weight:700;cursor:pointer}
+.check input{width:20px;height:20px;accent-color:var(--accent);flex:none}
+.pel{display:grid;gap:8px}
+.pelrow{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.2fr) 40px;gap:8px;align-items:center;padding-bottom:8px;border-bottom:1px dashed var(--line)}
+.pelrow .pd{grid-column:1/-1}
+.pelrow .pd,.pelrow select{border:1.5px solid var(--line);border-radius:10px;min-height:44px;padding:8px 10px;background:var(--surface);min-width:0;width:100%}
+.pelrow .x{width:40px;height:40px;border-radius:10px;border:1.5px solid var(--line);background:var(--surface);cursor:pointer;font-size:1.2rem;color:var(--muted)}
+.pelrow .x:hover{border-color:var(--bad);color:var(--bad)}
+
+.pel-tot{font-weight:700;display:flex;justify-content:space-between;gap:10px;font-variant-numeric:tabular-nums;background:var(--sunk);border-radius:10px;padding:10px 12px}
+.extrato{display:grid}
+.ex-row{display:grid;grid-template-columns:20px minmax(0,1fr) auto;gap:8px;padding-block:7px;border-top:1px solid var(--line);font-variant-numeric:tabular-nums;align-items:baseline}
+.ex-row .sg{color:var(--muted);font-weight:700;text-align:center}
+.ex-row .v{font-weight:700;white-space:nowrap}
+.ex-row small{display:block;color:var(--muted);font-size:.85rem}
+.ex-row.tot{border-top:2px solid var(--ink)}
+.ex-row.tot>span:nth-child(2){font-weight:700}
+.rmbar{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.hist td .x{border:0;background:transparent;color:var(--muted);cursor:pointer;font-size:1.1rem}
+.admtools{display:flex;gap:12px 20px;align-items:center;flex-wrap:wrap;margin-block:16px 12px}
+.admtools .input{flex:1 1 260px;max-width:420px}
+.admlist{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,230px),1fr));gap:8px}
+.adm{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:10px 12px;display:grid;gap:4px;min-width:0}
+.adm b{font-size:1.02rem}
+.adm .st{font-size:.8rem;font-weight:700;color:var(--muted)}
+.adm .pista{font-size:.88rem;color:var(--ink);overflow-wrap:anywhere}
+.adm .pista a{font-size:.85rem}
+.adm.tem{border-color:var(--accent)}
 .stepnav{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
 .stepnav span{color:var(--muted);font-weight:700}
 
@@ -247,7 +279,7 @@ body:not(.on-form) .mbar{display:none}
 .secnav{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
 
 /* números de destaque */
-.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
 .tile{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px;display:flex;flex-direction:column;gap:4px;min-width:0}
 .tile .tl{color:var(--muted);font-size:.92rem}
 .tile .tv{font-family:var(--f-display);font-weight:800;font-size:1.9rem;line-height:1.05}
@@ -256,7 +288,7 @@ body:not(.on-form) .mbar{display:none}
 .tile .from{font-size:.9rem;color:var(--muted)}
 
 /* gráficos */
-.vizgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:16px;margin-top:16px}
+.vizgrid{align-items:start;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:16px;margin-top:16px}
 .viz{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:20px;display:flex;flex-direction:column;gap:14px;min-width:0}
 .viz.wide{grid-column:1/-1}
 .viz h3{font-size:1.3rem;font-weight:700}
@@ -301,14 +333,27 @@ th{color:var(--muted);font-weight:700}
 #tip{position:fixed;z-index:50;pointer-events:none;background:var(--ink);color:var(--bg);border-radius:8px;padding:8px 10px;font-size:.88rem;line-height:1.35;white-space:pre-line;max-width:260px;box-shadow:0 6px 20px -8px rgba(0,0,0,.5)}
 #tip b{font-size:1rem}
 
-.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px}
+.cards{align-items:start;display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px}
 .card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:20px;display:flex;flex-direction:column;gap:12px;min-width:0}
 .card-top{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
 .card h3{font-size:1.3rem;font-weight:700}
 .card .value{font-family:var(--f-display);font-weight:800;font-size:2.3rem;line-height:1;color:var(--tone,var(--ink))}
 .card .value small{font-size:1rem;color:var(--muted);font-weight:600}
 .card .todo{font-size:.97rem;background:var(--sunk);border-radius:8px;padding:10px 12px}
-.gauge{width:100%;max-width:300px;height:auto;align-self:center}
+.gauge{width:100%;max-width:230px;height:auto;align-self:center}
+details.more>summary{cursor:pointer;color:var(--accent);font-weight:700;font-size:.93rem;list-style:none;display:inline-flex;align-items:center;gap:6px}
+details.more>summary::-webkit-details-marker{display:none}
+details.more>summary::after{content:"▾";font-size:.85em}
+details.more[open]>summary::after{content:"▴"}
+details.more>div{display:grid;gap:10px;margin-top:10px}
+.card .short{font-size:1rem}
+.calc{margin:0;padding-left:1.3em;display:grid;gap:6px;font-variant-numeric:tabular-nums}
+.phase-d>summary{cursor:pointer;list-style:none;display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+.phase-d>summary::-webkit-details-marker{display:none}
+.phase-d>summary .cnt{color:var(--accent);font-weight:700;font-size:.93rem}
+.phase-d>summary .cnt::after{content:" ▾"}
+.phase-d[open]>summary .cnt::after{content:" ▴"}
+.phase-d>.tasks{margin-top:10px}
 .gauge text{font-family:var(--f-display);font-weight:600;fill:var(--muted);font-size:11px}
 .gauge .gv{font-size:30px;font-weight:800;fill:var(--ink)}
 .bar{height:14px;border-radius:999px;background:var(--sunk);overflow:hidden}
@@ -386,10 +431,12 @@ th{color:var(--muted);font-weight:700}
 
 /* alertas */
 .flags{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:12px}
-.flag{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 16px;display:grid;grid-template-columns:28px 1fr;gap:10px}
+.flag{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px 14px}
+.flag>summary{display:grid;grid-template-columns:28px 1fr;gap:10px;align-items:center;cursor:pointer;list-style:none}
+.flag>summary::-webkit-details-marker{display:none}
 .flag .x{width:24px;height:24px;border-radius:50%;background:var(--bad-soft);color:var(--bad);display:grid;place-items:center;font-weight:800;font-family:var(--f-display)}
 .flag b{display:block}
-.flag span{color:var(--muted);font-size:.95rem}
+.flag>span{display:block;margin:8px 0 0 38px;color:var(--muted);font-size:.95rem}
 .ask{margin-top:16px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:20px}
 .ask h3{font-size:1.3rem;margin-bottom:10px}
 .ask ol{margin:0;padding-left:1.3em;display:grid;gap:6px}
@@ -446,7 +493,8 @@ footer p+p{margin-top:8px}
   <button type="button" role="tab" id="tb-resultado" data-tab="resultado" aria-controls="tab-resultado">Resultado <span class="tscore" id="tabScore">–</span></button>
   <button type="button" role="tab" id="tb-boleto" data-tab="boleto" aria-controls="tab-boleto">Boleto e simulações</button>
   <button type="button" role="tab" id="tb-plano" data-tab="plano" aria-controls="tab-plano">Plano de 18 meses</button>
-  <button type="button" role="tab" id="tb-regras" data-tab="regras" aria-controls="tab-regras">Regras e cuidados</button>
+  <button type="button" role="tab" id="tb-rateiomes" data-tab="rateiomes" aria-controls="tab-rateiomes">Rateio do mês</button>
+  <button type="button" role="tab" id="tb-regras" data-tab="regras" aria-controls="tab-regras">Administradoras e regras</button>
 </div></nav>
 
 <main class="wrap grid" id="tab-preencher" role="tabpanel" aria-labelledby="tb-preencher">
@@ -714,7 +762,7 @@ footer p+p{margin-top:8px}
   </section>
 
   <section id="visao">
-    <div class="sec-head"><p class="kicker">Visão geral</p><h2>A associação em um mês típico</h2><p>Média dos últimos 12 meses. Passe o dedo ou o mouse nos gráficos para ver os valores.</p></div>
+    <div class="sec-head"><p class="kicker">Visão geral</p><h2>A associação em um mês típico</h2><p>Média dos últimos 12 meses. Toque nos gráficos para ver os valores.</p></div>
     <div class="tiles" id="tiles"></div>
     <div class="vizgrid">
       <article class="viz" id="vz100"></article>
@@ -725,7 +773,7 @@ footer p+p{margin-top:8px}
   </section>
 
   <section id="numeros">
-    <div class="sec-head"><p class="kicker">Número por número</p><h2>O que cada número quer dizer</h2><p>Verde está bom. Amarelo pede atenção. Vermelho precisa de ação já. Os limites de cor são referência da ferramenta, não número oficial da SUSEP.</p></div>
+    <div class="sec-head"><p class="kicker">Número por número</p><h2>O que cada número quer dizer</h2><p>Verde: bom. Amarelo: atenção. Vermelho: agir já. Toque em “Entender” para ver a explicação.</p></div>
     <div class="cards" id="cards"></div>
   </section>
 
@@ -743,16 +791,16 @@ footer p+p{margin-top:8px}
 
 <div class="wrap results" id="tab-boleto" role="tabpanel" aria-labelledby="tb-boleto" hidden>
   <section id="rateio">
-    <div class="sec-head"><p class="kicker">Boleto e rateio</p><h2>Como fica o boleto do jeito certo</h2><p>Pela Resolução CNSP 491/2026, o boleto vem separado em 3 partes e cada associado paga conforme o valor e o risco do seu veículo.</p></div>
+    <div class="sec-head"><p class="kicker">Boleto e rateio</p><h2>Como fica o boleto do jeito certo</h2><p>O boleto vem em 3 partes. Cada um paga conforme o valor e o risco do veículo.</p></div>
     <div class="formula" id="formula"></div>
     <div class="vizgrid">
       <article class="viz wide" id="vzTipos"></article>
     </div>
-    <div class="models" id="models"></div>
+    <div id="models" style="margin-top:16px"></div>
   </section>
 
   <section id="simulador">
-    <div class="sec-head"><p class="kicker">E se…?</p><h2>Mexa e veja o que acontece</h2><p>Arraste os controles. Nada aqui muda os números que você preencheu: é só para testar ideias antes de levar para a diretoria.</p></div>
+    <div class="sec-head"><p class="kicker">E se…?</p><h2>Mexa e veja o que acontece</h2><p>Teste ideias. Nada aqui muda o que você preencheu.</p></div>
     <div class="sim">
       <div class="sliders">
         <div class="slider"><label for="simBoleto">Mudar o boleto</label><input type="range" id="simBoleto" min="-20" max="60" step="1" value="0"><output id="oBoleto" for="simBoleto">–</output></div>
@@ -767,7 +815,7 @@ footer p+p{margin-top:8px}
   </section>
 
   <section id="repasse">
-    <div class="sec-head"><p class="kicker">A associação no modelo novo</p><h2>Quanto a associação precisa receber para sobreviver</h2><p>No modelo novo, a taxa de administração é da administradora. A associação só recebe o que estiver escrito no contrato com ela.</p></div>
+    <div class="sec-head"><p class="kicker">A associação no modelo novo</p><h2>Quanto a associação precisa receber para sobreviver</h2><p>A associação só recebe o que estiver escrito no contrato com a administradora.</p></div>
     <div class="tiles" id="repTiles"></div>
     <div class="vizgrid"><article class="viz wide" id="vzRep"></article></div>
   </section>
@@ -776,13 +824,13 @@ footer p+p{margin-top:8px}
 
 <div class="wrap results" id="tab-plano" role="tabpanel" aria-labelledby="tb-plano" hidden>
   <section id="sec-plano">
-    <div class="sec-head"><p class="kicker">Plano de 18 meses</p><h2>O que fazer, mês a mês</h2><p>As tarefas mudam conforme os seus números e o caminho escolhido. Marque o que já fez; fica salvo neste aparelho.</p></div>
+    <div class="sec-head"><p class="kicker">Plano de 18 meses</p><h2>O que fazer, mês a mês</h2><p>Toque em cada fase para ver as tarefas. Marque o que já fez.</p></div>
     <div id="saveBox"></div>
     <div class="timeline" id="timeline"></div>
   </section>
 
   <section id="modelos">
-    <div class="sec-head"><p class="kicker">Modelos prontos</p><h2>Textos para copiar e adaptar</h2><p>Já vêm com os seus números. São rascunhos: mostre para o advogado da associação antes de usar.</p></div>
+    <div class="sec-head"><p class="kicker">Modelos prontos</p><h2>Textos para copiar e adaptar</h2><p>Já vêm com os seus números. Mostre ao advogado antes de usar.</p></div>
     <div class="tpl">
       <div class="seg" role="radiogroup" aria-label="Escolha o modelo">
         <input type="radio" name="tpl" id="tpl_pauta" value="pauta" checked><label for="tpl_pauta">Pauta de assembleia</label>
@@ -793,12 +841,63 @@ footer p+p{margin-top:8px}
       <div class="copyrow"><button type="button" class="btn" id="tplCopy">Copiar texto</button><span class="ok-msg" id="tplMsg" aria-live="polite"></span></div>
     </div>
   </section>
-  <div class="nexttab"><a class="btn" href="#regras">Próximo: Regras e cuidados →</a></div>
+  <div class="nexttab"><a class="btn" href="#rateiomes">Próximo: Rateio do mês →</a></div>
+</div>
+
+<div class="wrap results" id="tab-rateiomes" role="tabpanel" aria-labelledby="tb-rateiomes" hidden>
+  <section>
+    <div class="sec-head"><p class="kicker">Rateio do mês</p><h2>Fechar o rateio e as provisões</h2><p>Preencha os números do período. A ferramenta calcula as provisões, quanto ratear e monta o demonstrativo para o associado.</p></div>
+    <div class="exbar" id="rmEx" style="border:1px solid var(--line);border-radius:10px;margin-bottom:16px"><div style="display:flex;align-items:center;justify-content:space-between;gap:8px 16px;flex-wrap:wrap;padding:8px 14px"><p id="rmExMsg">Números de EXEMPLO. <span>Troque pelos do período da sua associação.</span></p><button type="button" class="btn small" id="rmClear">Apagar exemplo e começar</button></div></div>
+    <form class="rmgrid" id="rmForm" novalidate autocomplete="off"></form>
+  </section>
+  <section id="rmResultado">
+    <div class="sec-head"><p class="kicker">Fechamento</p><h2 id="rmHead">Resultado do período</h2></div>
+    <div id="rmOut"></div>
+  </section>
+  <section>
+    <div class="tpl">
+      <h3 style="font-size:1.3rem">Demonstrativo para o associado</h3>
+      <p class="hint">A regra exige mostrar como o rateio foi calculado. Copie e mande junto com o boleto.</p>
+      <textarea id="rmDemo" readonly aria-label="Demonstrativo do rateio"></textarea>
+      <div class="copyrow"><button type="button" class="btn" id="rmCopy">Copiar demonstrativo</button><span class="ok-msg" id="rmCopyMsg" aria-live="polite"></span></div>
+    </div>
+  </section>
+  <section>
+    <div class="sec-head"><p class="kicker">Histórico</p><h2>Fechamentos salvos</h2><p>Ficam salvos só neste aparelho.</p></div>
+    <div class="rmbar"><button type="button" class="btn" id="rmSave">Salvar este fechamento</button><button type="button" class="btn ghost" id="rmNext">Salvar e começar o próximo período</button><span class="ok-msg" id="rmSaveMsg" aria-live="polite"></span></div>
+    <div id="rmHist" style="margin-top:14px"></div>
+  </section>
+  <div class="nexttab"><a class="btn" href="#regras">Próximo: Administradoras e regras →</a></div>
 </div>
 
 <div class="wrap results" id="tab-regras" role="tabpanel" aria-labelledby="tb-regras" hidden>
+  <section id="adms">
+    <div class="sec-head"><p class="kicker">Administradoras</p><h2>Quem está na fila da SUSEP</h2><p>Projetos que pediram análise prioritária até 03/08/2026. Nenhum está autorizado ainda (conferido em 30/09/2026).</p></div>
+    <div class="tiles">
+      <div class="tile"><span class="tl">Projetos na fila</span><span class="tv" id="admTot">64</span><span class="td">lista oficial da SUSEP</span></div>
+      <div class="tile tone-bad"><span class="tl">Autorizadas</span><span class="tv">0</span><span class="td"><b>nenhuma</b> até 30/09/2026</span></div>
+      <div class="tile"><span class="tl">Prazo para ter contrato</span><span class="tv">07/05/2028</span><span class="td">com administradora já autorizada</span></div>
+    </div>
+    <div class="admtools">
+      <div class="input compact"><input id="admBusca" type="search" placeholder="Procurar pelo nome" aria-label="Procurar administradora pelo nome"></div>
+      <label class="check"><input type="checkbox" id="admPista"> Só os que têm alguma pista de quem está por trás</label>
+      <span class="hint" id="admCount"></span>
+    </div>
+    <div class="admlist" id="admList"></div>
+    <details class="more" style="margin-top:14px"><summary>Como usar esta lista</summary><div>
+      <ul style="margin:0;padding-left:1.2em;display:grid;gap:6px">
+        <li>A SUSEP divulga só o <b>nome do projeto</b>. Ela não publica quem está por trás nem em que fase cada um está.</li>
+        <li>Pergunte à administradora qual é o nome do projeto dela nesta lista. Se não estiver aqui, ela não entrou na análise prioritária.</li>
+        <li><b>Estar na lista não é autorização.</b> Antes de assinar, confira na página da SUSEP se ela já foi autorizada.</li>
+        <li>As pistas são empresas abertas com o mesmo nome do projeto. <b>Não são confirmação</b> de que são elas.</li>
+        <li>Um dos projetos é a administradora criada pela AAAPV, aprovada pelas filiadas em 27/04/2026. O nome do projeto não foi divulgado.</li>
+      </ul>
+      <p class="src">Fontes: <a href="https://www.gov.br/susep/pt-br/central-de-conteudos/noticias/2026/agosto/susep-conclui-recebimento-de-solicitacoes-para-analise-prioritaria-de-administradoras-de-protecao-patrimonial-mutualista" target="_blank" rel="noopener">lista oficial da SUSEP</a> · <a href="https://www.gov.br/susep/pt-br/assuntos/protecao-patrimonial-mutualista/associacoes-de-protecao-patrimonial-mutualista" target="_blank" rel="noopener">administradoras autorizadas (SUSEP)</a> · <a href="https://aaapv.org.br/susep-conclui-recebimento-de-pedidos-de-analise-prioritaria-de-administradoras-mutualistas/" target="_blank" rel="noopener">AAAPV</a></p>
+    </div></details>
+  </section>
+
   <section id="cuidado">
-    <div class="sec-head"><p class="kicker">Cuidado</p><h2>Sinais de administradora ou consultoria aproveitadora</h2><p>Tem muita gente vendendo “regularização” sem ter o que entregar. Se aparecer um destes sinais, pare e confira.</p></div>
+    <div class="sec-head"><p class="kicker">Cuidado</p><h2>Sinais de administradora ou consultoria aproveitadora</h2><p>Se aparecer um destes sinais, pare e confira. Toque para ver o motivo.</p></div>
     <div class="flags" id="flags"></div>
     <div class="ask">
       <h3>Pergunte isto antes de assinar qualquer coisa</h3>
@@ -807,7 +906,7 @@ footer p+p{margin-top:8px}
   </section>
 
   <section id="lei">
-    <div class="sec-head"><p class="kicker">A regra</p><h2>O que a lei e a SUSEP dizem, em ordem</h2><p>Resumo em linguagem simples. Sempre confira o texto oficial nos links.</p></div>
+    <div class="sec-head"><p class="kicker">A regra</p><h2>O que a lei e a SUSEP dizem, em ordem</h2><p>Toque em cada data para ver o resumo.</p></div>
     <div class="law" id="law"></div>
   </section>
 </div>
@@ -1267,13 +1366,13 @@ function gaugeSVG(v, lim){
     <text x="${cx}" y="${cy+30}" text-anchor="middle" class="gv">${pct(v)}</text>
   </svg>`;
 }
-function card(t, title, value, means, todo, extra=''){
+function card(t, title, value, short, means, todo, extra=''){
   return `<article class="card tone-${t}">
     <div class="card-top"><h3>${title}</h3><span class="pill">${{ok:'Bom',warn:'Atenção',bad:'Urgente',none:'Falta dado'}[t]}</span></div>
     ${extra}
     <div class="value">${value}</div>
-    <p>${means}</p>
-    ${todo ? `<p class="todo"><b>O que fazer:</b> ${todo}</p>` : ''}
+    ${short ? `<p class="short">${short}</p>` : ''}
+    ${(means || todo) ? `<details class="more"><summary>${todo ? 'Entender e o que fazer' : 'Entender'}</summary><div>${means ? `<p>${means}</p>` : ''}${todo ? `<p class="todo"><b>O que fazer:</b> ${todo}</p>` : ''}</div></details>` : ''}
   </article>`;
 }
 
@@ -1331,6 +1430,7 @@ function render(){
   renderRepasse(r);
   renderPlano(r);
   renderTpl();
+  renderRM();
   renderResumo(s, r, pr);
   save();
 }
@@ -1383,64 +1483,68 @@ function renderVisao(r){
         ${rowbar('<b>Meta total</b>', r.metaReserva / mx, `<b>${brlShort(r.metaReserva)}</b>`, '--s-res')}
         ${rowbar('<b>Guardado hoje</b>', r.reserva / mx, `<b>${brlShort(r.reserva)}</b>`, '--s-mute')}
       </div>
-      <p class="note">Por que tanto: numa carteira ${ok(r.placas) && r.placas < 3000 ? 'deste tamanho' : 'como esta'}, uma perda total cara ou dois meses ruins seguidos esvaziam um fundo pequeno. E no dia da mudança para a administradora, os eventos antigos ainda precisam ser pagos com o dinheiro antigo.</p>
-      ${r.passaTeto ? `<p class="note"><b>Atenção para depois da mudança:</b> na regra nova, o patrimônio do grupo não pode passar de 3 meses de contribuições (para vocês, uns ${brlShort(r.tetoRegra)}). O que passar disso tem que voltar como boleto mais baixo. Lá, o risco de perda total grande é coberto por limite de valor por veículo e resseguro, não por um fundo maior. Até mudar, guardar mais é o que protege.</p>` : ''}`;
+      <details class="more"><summary>Por que a meta é tão alta?</summary><div><p class="note">Numa carteira ${ok(r.placas) && r.placas < 3000 ? 'deste tamanho' : 'como esta'}, uma perda total cara ou dois meses ruins seguidos esvaziam um fundo pequeno. E no dia da mudança para a administradora, os eventos antigos ainda precisam ser pagos com o dinheiro antigo.</p>
+      ${r.passaTeto ? `<p class="note"><b>Atenção para depois da mudança:</b> na regra nova, o patrimônio do grupo não pode passar de 3 meses de contribuições (para vocês, uns ${brlShort(r.tetoRegra)}). O que passar disso tem que voltar como boleto mais baixo. Lá, o risco de perda total grande é coberto por limite de valor por veículo e resseguro, não por um fundo maior. Até mudar, guardar mais é o que protege.</p>` : ''}</div></details>`;
   } else vr.innerHTML = '<div><h3>Quanto precisa ter guardado, e por quê</h3></div><div class="empty">Preencha os passos 1 a 4.</div>';
 }
 
 function renderCards(r){
   const C = [];
+  const porte = !ok(r.placas) ? '' : r.placas < 800 ? 'Carteira pequena: oscila muito.' : r.placas < 3000 ? 'Carteira média: oscila.' : 'Carteira grande: mais estável.';
   C.push(card(r.tSin, 'Sinistralidade', pct(r.sin),
-    isFinite(r.sin) ? `De cada R$ 100 que entram, ${brl(r.sin*100,true)} saem com evento. Com ${pct(r.a,0)} indo para a administração, o limite para vocês é <b>${pct(r.limite,0)}</b>. No seguro de carro das seguradoras, ficou perto de ${pct(REG.segAuto,0)} em 2025.` : 'Falta preencher o passo 3.',
-    r.tSin==='bad' ? 'Reajuste o boleto, reveja as regras de entrada (vistoria, rastreador, limite de FIPE) e ataque fraude. Não dá para esperar.' : r.tSin==='warn' ? 'Acompanhe todo mês, somando sempre 12 meses. Se passar do limite 2 meses seguidos, reajuste.' : isFinite(r.sin) ? 'Mantenha. Acompanhe todo mês, somando sempre 12 meses.' : '',
+    isFinite(r.sin) ? `De cada R$ 100, ${brl(r.sin*100,true)} vão para eventos. Limite: ${pct(r.limite,0)}.` : 'Falta preencher o passo 3.',
+    isFinite(r.sin) ? `O limite sai de 100% menos a parte da administração (${pct(r.a,0)}) e uma folga de 5% para a reserva. No seguro de carro das seguradoras, a sinistralidade ficou perto de ${pct(REG.segAuto,0)} em 2025.` : '',
+    r.tSin==='bad' ? 'Reajuste o boleto, reveja as regras de entrada (vistoria, rastreador, limite de FIPE) e ataque fraude.' : r.tSin==='warn' ? 'Acompanhe todo mês, somando 12 meses. Se passar do limite 2 meses seguidos, reajuste.' : '',
     gaugeSVG(r.sin, r.limite)));
-  C.push(card(r.tTicket, 'Boleto certo', brl(r.ticketCerto,true) + ' <small>/mês, na média</small>',
-    isFinite(r.ticketCerto) ? `Hoje vocês cobram <b>${brl(r.ticket,true)}</b>. Para pagar evento e administração sem guardar nada: <b>${brl(r.ticketMin,true)}</b>. Para montar a reserva em ${REG.horizonte} meses: <b>${brl(r.ticketCerto,true)}</b>.` : 'Falta preencher mensalidade, parte da administração ou eventos.',
-    isFinite(r.difTicket) ? (r.difTicket > 0.5 ? `Faltam <b>${brl(r.difTicket,true)}</b> por placa, na média. Veja o valor por tipo de veículo mais abaixo e teste alternativas no simulador.` : 'O boleto está cobrindo. Revise a cada 6 meses.') : ''));
+  C.push(card(r.tTicket, 'Boleto certo', brl(r.ticketCerto,true) + ' <small>/mês</small>',
+    isFinite(r.ticketCerto) ? `Hoje: ${brl(r.ticket,true)}. ${r.difTicket > .5 ? 'Faltam ' + brl(r.difTicket,true) + ' por placa.' : 'Está cobrindo.'}` : 'Falta preencher os passos 1 a 3.',
+    isFinite(r.ticketCerto) ? `Só para pagar evento e administração: ${brl(r.ticketMin,true)}. Para também montar a reserva em ${REG.horizonte} meses: ${brl(r.ticketCerto,true)}. A conta completa está na aba “Boleto e simulações”.` : '',
+    isFinite(r.difTicket) && r.difTicket > .5 ? 'Aprove o reajuste em assembleia e avise os associados com 30 dias. Teste valores menores no simulador.' : ''));
   C.push(card(r.tRes, 'Reserva', brlShort(r.reserva) + (isFinite(r.metaReserva) ? ` <small>de ${brlShort(r.metaReserva)}</small>` : ''),
-    isFinite(r.metaReserva) ? `Depois de pagar o que já se deve, o dinheiro livre cobre <b>${dec1(r.mesesCobertos)} mês(es)</b> de eventos. A meta inclui dívidas, eventos não avisados, colchão de ${r.colchaoPorPior ? '2 vezes o pior mês' : r.nMeses + ' meses'} e uma perda total do veículo mais caro.` : 'Falta preencher eventos e arrecadação.',
-    isFinite(r.guardarMes) && r.guardarMes > 0 ? `Guarde <b>${brlShort(r.guardarMes)} por mês</b> numa conta separada, sem mexer, por ${REG.horizonte} meses.` : 'Meta atingida.',
+    isFinite(r.guardarMes) ? (r.guardarMes > 0 ? `Guardar ${brlShort(r.guardarMes)} por mês, por ${REG.horizonte} meses.` : 'Meta atingida.') : 'Falta preencher eventos e arrecadação.',
+    isFinite(r.metaReserva) ? `Hoje o dinheiro livre cobre ${dec1(r.mesesCobertos)} mês(es) de eventos. A meta soma dívidas de eventos, eventos não avisados, colchão e uma perda total do veículo mais caro. O gráfico na aba Resultado mostra cada parte.` : '',
+    isFinite(r.guardarMes) && r.guardarMes > 0 ? 'Transferência automática para uma conta separada, todo mês, sem mexer.' : '',
     `<div class="bar" aria-hidden="true"><i style="width:${isFinite(r.coberturaRes)?Math.round(r.coberturaRes*100):0}%"></i></div>`));
   C.push(card(r.tInad, 'Inadimplência', pct(r.inad,0),
-    `De cada 100 associados, ${Math.round(r.inad*100)} não pagam. Na regra nova, o que não for recuperado entra na conta de quem paga. O ideal é até 5%.`,
-    r.tInad!=='ok' ? 'Lembrete antes do vencimento, Pix e cartão recorrente, suspensão conforme o regulamento e cobrança ativa.' : ''));
-  C.push(card(r.tConc, 'Risco do veículo mais caro', isFinite(r.concentr) ? pct(r.concentr,0) : '–',
-    isFinite(r.concentr) ? `Uma perda total do veículo mais caro (${brlShort(r.fipeMax)}) come ${pct(r.concentr,0)} de todo o dinheiro de eventos de um mês (${brlShort(r.fundoMes)}).` : 'Falta a FIPE do mais caro ou a arrecadação.',
-    r.tConc==='bad' ? 'Coloque limite de FIPE para novas entradas. Na regra nova, o atuário define um limite por veículo e o excesso pode ir para resseguro.' : r.tConc==='warn' ? 'Defina um limite de FIPE no regulamento e evite juntar muitos veículos caros.' : ''));
+    `${Math.round(r.inad*100)} de cada 100 não pagam. Ideal: até 5.`,
+    'Na regra nova, o que não for recuperado entra na conta de quem paga.',
+    r.tInad!=='ok' ? 'Lembrete antes do vencimento, Pix e cartão recorrente, suspensão conforme o regulamento.' : ''));
+  C.push(card(r.tConc, 'Veículo mais caro', isFinite(r.concentr) ? pct(r.concentr,0) : '–',
+    isFinite(r.concentr) ? `Uma perda total dele leva ${pct(r.concentr,0)} do dinheiro de eventos de um mês.` : 'Falta a FIPE do mais caro.',
+    isFinite(r.concentr) ? `FIPE do mais caro: ${brlShort(r.fipeMax)}. Dinheiro de eventos por mês: ${brlShort(r.fundoMes)}.` : '',
+    r.tConc==='bad' ? 'Coloque limite de FIPE para novas entradas. Na regra nova, o excesso pode ir para resseguro.' : r.tConc==='warn' ? 'Defina um limite de FIPE no regulamento.' : ''));
   C.push(card(r.tPorte, 'Tamanho da carteira', ok(r.placas) ? int(r.placas) + ' <small>placas</small>' : '–',
-    (ok(r.placas) ? (r.placas < 800 ? 'Carteira pequena: poucos eventos grandes já bagunçam o mês. ' : r.placas < 3000 ? 'Carteira média: aguenta, mas oscila. ' : 'Carteira grande: os números ficam mais estáveis. ') : '') +
-    (isFinite(r.cresc) ? `Em 12 meses a carteira ${r.cresc>=0?'cresceu':'encolheu'} <b>${pct(Math.abs(r.cresc),0)}</b>. ` : '') +
-    (isFinite(r.freq) ? `A cada 100 placas, ${(r.freq*100).toLocaleString('pt-BR',{maximumFractionDigits:0})} tiveram evento pago no ano, com custo médio de ${brl(r.custoMedioEv)}. ` : '') +
-    'A regra não tem número mínimo fixo de placas: o atuário da administradora calcula o mínimo para cada grupo.',
-    ok(r.placas) && r.placas < 800 ? 'Grupo pequeno tem rateio que oscila muito, e o contrato vai ter que avisar isso em destaque.' : isFinite(r.cresc) && r.cresc < 0 ? 'Descubra por que estão saindo. Carteira encolhendo com sinistralidade subindo é o começo do problema.' : ''));
-  C.push(card(r.tDocs, 'Papéis e organização', `${r.docsSim} <small>de ${DOCS.length} em dia</small>`,
-    r.docsFalta.length ? 'Faltam: ' + r.docsFalta.slice(0,4).map(d => d.t.charAt(0).toLowerCase() + d.t.slice(1)).join('; ') + (r.docsFalta.length>4?'; e mais…':'.') : 'Tudo em ordem.',
-    r.docsFalta.length ? 'Cada papel que falta virou tarefa no plano de 18 meses.' : '',
+    porte + (isFinite(r.cresc) ? ` ${r.cresc>=0?'Cresceu':'Encolheu'} ${pct(Math.abs(r.cresc),0)} em 12 meses.` : ''),
+    (isFinite(r.freq) ? `A cada 100 placas, ${Math.round(r.freq*100)} tiveram evento pago no ano, com custo médio de ${brl(r.custoMedioEv)}. ` : '') + 'A regra não tem número mínimo fixo de placas: o atuário calcula o mínimo de cada grupo.',
+    isFinite(r.cresc) && r.cresc < 0 ? 'Descubra por que estão saindo.' : ''));
+  C.push(card(r.tDocs, 'Papéis', `${r.docsSim} <small>de ${DOCS.length} em dia</small>`,
+    r.docsFalta.length ? `Faltam ${r.docsFalta.length}. Viraram tarefas no plano.` : 'Tudo em ordem.',
+    r.docsFalta.length ? 'Faltam: ' + r.docsFalta.map(d => d.t.charAt(0).toLowerCase() + d.t.slice(1)).join('; ') + '.' : '',
+    '',
     `<div class="bar" aria-hidden="true"><i style="width:${Math.round(r.docsPct*100)}%"></i></div>`));
   C.push(caminhoCard(r));
   $('cards').innerHTML = C.join('');
 }
 
 function caminhoCard(r){
-  const esc0 = !r.caminho || r.caminho === 'naosei';
-  if(r.caminhoFinal === 'contratar'){
-    return card(r.susep==='nao'?'bad':'ok', esc0 ? 'Caminho sugerido' : 'Seu caminho', 'Contratar administradora',
-      `${esc0 ? 'Para quase todas as associações, este é o caminho mais realista. ' : ''}A associação continua, e uma administradora autorizada pela SUSEP cuida do grupo. O contrato tem que ser apresentado à SUSEP até <b>07/05/2028</b>. Hoje nenhuma administradora está autorizada ainda: escolha com calma.`,
-      'Não assine nada que “garanta vaga”. Contrato com empresa não autorizada não regulariza a associação.');
-  }
-  if(r.caminhoFinal === 'propria'){
-    return card('warn', 'Seu caminho', 'Montar administradora',
-      `Capital base de <b>R$ 1,3 mi</b> (1 região), <b>R$ 2,6 mi</b> (2 regiões) ou <b>R$ 4 mi</b> (nacional), mais o capital de risco de 0,67% das contribuições do ano${isFinite(r.capRisco)?` (para vocês, uns ${brlShort(r.capRisco)})`:''}. Para ser autorizada, precisa de patrimônio de pelo menos 1,5 vez isso. Também exige diretoria aprovada pela SUSEP, atuário, contador, ouvidor, auditoria e controles internos.`,
-      '<b>A associação, seus diretores, funcionários e parentes até 2º grau não podem ser donos da administradora que ela contrata</b> (Res. CNSP 491, art. 6º). A janela de análise prioritária fechou em 03/08/2026.');
-  }
-  if(r.caminhoFinal === 'cooperativa'){
-    return card('warn', 'Seu caminho', 'Cooperativa de seguros',
-      'É outro negócio: a cooperativa vende seguro de verdade, com regras de seguradora (Res. CNSP 492/2026). Segundo a SUSEP, cooperativa de seguros não pode operar proteção patrimonial mutualista.',
-      'Converse com advogado e atuário antes. Enquanto isso, a associação continua precisando se regularizar como proteção veicular.');
-  }
-  return card('bad', 'Seu caminho', 'Encerrar atividades',
-    'A associação cadastrada pode optar por encerrar em até 180 dias depois da Resolução CNSP 491 (por volta de <b>1º/11/2026</b>). Até 30/09/2026 a SUSEP ainda não tinha publicado como fazer essa comunicação. Se encerrar, os processos da SUSEP contra a associação são arquivados.',
-    'Procure advogado já. Antes de encerrar: pare de aceitar novos associados, pague todos os eventos em aberto e preste contas aos associados.');
+  const sug = !r.caminho || r.caminho === 'naosei';
+  const tt = sug ? 'Caminho sugerido' : 'Seu caminho';
+  if(r.caminhoFinal === 'contratar') return card(r.susep==='nao'?'bad':'ok', tt, 'Contratar administradora',
+    'Prazo: contrato apresentado à SUSEP até 07/05/2028.',
+    'A associação continua, e uma administradora autorizada pela SUSEP cuida do grupo. Até 30/09/2026 nenhuma estava autorizada.',
+    'Não assine nada que “garanta vaga”. Contrato com empresa não autorizada não regulariza a associação.');
+  if(r.caminhoFinal === 'propria') return card('warn', tt, 'Montar administradora',
+    `Capital de R$ 1,3 a 4 milhões, mais 0,67% das contribuições do ano${isFinite(r.capRisco)?` (${brlShort(r.capRisco)})`:''}.`,
+    'Para ser autorizada, precisa de patrimônio de pelo menos 1,5 vez o capital exigido, diretoria aprovada pela SUSEP, atuário, contador, ouvidor, auditoria e controles internos.',
+    'A associação, seus diretores, funcionários e parentes até 2º grau não podem ser donos da administradora que ela contrata (Res. CNSP 491, art. 6º).');
+  if(r.caminhoFinal === 'cooperativa') return card('warn', tt, 'Cooperativa de seguros',
+    'Vira seguro de verdade, com regras de seguradora.',
+    'Res. CNSP 492/2026. Segundo a SUSEP, cooperativa de seguros não pode operar proteção patrimonial mutualista.',
+    'Converse com advogado e atuário antes. Enquanto isso, a associação continua precisando se regularizar.');
+  return card('bad', tt, 'Encerrar atividades',
+    'Prazo para optar: por volta de 1º/11/2026.',
+    'A SUSEP ainda não publicou como fazer essa comunicação. Se encerrar, os processos da SUSEP contra a associação são arquivados.',
+    'Procure advogado já. Pare de aceitar novos associados, pague os eventos em aberto e preste contas.');
 }
 
 const legBoleto = (a, b, c, la) => `<div class="legend">${sw('--s-adm', la, brl(a,true))}${sw('--s-ev', 'Rateio', brl(b,true))}${sw('--s-res', 'Estabilização', brl(c,true))}</div>`;
@@ -1468,9 +1572,17 @@ function renderRateio(r){
           <p class="hint">Simulação. Troque a taxa no passo 6.</p>
         </div>
       </div>
-      <p class="note"><b>Rateio</b> = custo dos eventos dividido pelas placas que pagam: ${brl(r.eventosMes)} por mês ÷ ${int(r.pagantes)} placas = ${brl(r.rateioR,true)}. Divide pelas placas que <b>pagam</b> porque quem não paga não entra no caixa.</p>
-      <p class="note"><b>Estabilização</b> = valor fixo por mês que forma a reserva. Enquanto a reserva está sendo montada, fica em ${brl(r.estabR,true)}. Depois pode cair para perto de ${brl(r.rateioR*REG.folga,true)}.</p>
-      <p class="note">A regra <b>não tem teto</b> para a taxa de administração e <b>não fala em 20%</b>. Compare propostas por escrito.</p>`;
+      <details class="more"><summary>Como a conta é feita</summary><div>
+        <ol class="calc">
+          <li><b>Custo dos eventos por mês:</b> ${r.sinFonte === 'informado' ? `${pct(r.sin)} × ${brl(r.receitaMes)} arrecadados` : `(${brl(r.eventos12)} pagos − ${brl(r.recup12)} que voltaram) ÷ 12`} = <b>${brl(r.eventosMes)}</b></li>
+          <li><b>Placas que pagam:</b> ${int(r.placas)} × ${pct(1 - r.inad,0)} = <b>${int(r.pagantes)}</b></li>
+          <li><b>Rateio:</b> ${brl(r.eventosMes)} ÷ ${int(r.pagantes)} = <b>${brl(r.rateioR,true)}</b></li>
+          <li><b>Administração:</b> ${pct(r.a,0)} × ${brl(r.ticket,true)} = <b>${brl(r.admR,true)}</b></li>
+          <li><b>Estabilização:</b> ${r.guardarMes / r.pagantes >= r.rateioR * REG.folga ? `falta guardar ${brl(r.faltaReserva)} ÷ ${REG.horizonte} meses ÷ ${int(r.pagantes)} placas` : `mínimo de 5% do rateio`} = <b>${brl(r.estabR,true)}</b></li>
+          <li><b>Boleto:</b> ${brl(r.admR,true)} + ${brl(r.rateioR,true)} + ${brl(r.estabR,true)} = <b>${brl(r.ticketCerto,true)}</b></li>
+        </ol>
+        <p class="note">Na regra oficial, o rateio é o custo real de cada período de até 3 meses, calculado pelo atuário. Aqui usamos a média de 12 meses para planejar. A regra não tem teto para a taxa de administração e não fala em 20%.</p>
+      </div></details>`;
 
     // por tipo
     const at = r.ativos;
@@ -1516,10 +1628,10 @@ function renderRateio(r){
     {id:'variavel', h:'Só rateio depois (pós-pago puro)', tone:'warn', tag:'Incompleto', p:['Divide a conta depois que os eventos aconteceram.','O boleto muda muito de um mês para outro e a inadimplência sobe.','A regra nova exige também a contribuição de estabilização, fixa, todo mês.']},
     {id:'regra', h:'Boleto em 3 partes', tone:'ok', tag:'É o que a regra exige', p:['<b>Taxa de administração:</b> fica com a administradora. A taxa de quem não paga não pode ser jogada para os outros.','<b>Rateio:</b> custo real dos eventos, apurado a cada período de até 3 meses, com relatório do atuário.','<b>Estabilização:</b> valor fixo mensal, definido no contrato. Sobra vira patrimônio do grupo; falta é coberta por ele.','Cada um paga conforme o valor protegido e o risco do seu veículo.','Quem sai paga só o período em que ficou e recebe a sua parte do patrimônio em até 20 dias.']}
   ];
-  $('models').innerHTML = M.map(m => `<article class="model tone-${m.tone} ${m.id==='regra'?'rec':''}">
+  $('models').innerHTML = '<details class="more"><summary>Os 3 jeitos de cobrar: qual a regra aceita</summary><div class="models">' + M.map(m => `<article class="model tone-${m.tone} ${m.id==='regra'?'rec':''}">
     <span class="tag">${m.tag}</span>
     <h3>${m.h}</h3><ul>${m.p.map(x=>`<li>${x}</li>`).join('')}</ul>
-    ${m.id===hoje ? '<p class="yours">← É o mais parecido com o que vocês fazem hoje.</p>' : ''}</article>`).join('');
+    ${m.id===hoje ? '<p class="yours">← É o mais parecido com o que vocês fazem hoje.</p>' : ''}</article>`).join('') + '</div></details>';
 }
 
 /* ---------- simulador ---------- */
@@ -1570,7 +1682,7 @@ function renderRepasse(r){
       ${rowbar('Repasse da administradora', r.repasseMes / mx, brlShort(r.repasseMes), '--s-mute', `${brl(r.repasseMes)} por mês\nRepasse simulado`)}
     </div>
     <p class="note"><b>Repasse mínimo para pagar a estrutura:</b> ${brl(r.repMinPlaca,true)} por placa pagante, por mês. Só isso já seria ${pct(r.repMinPct,0)} do boleto, fora a parte que fica com a administradora. Leve esse número para a negociação.</p>
-    <p class="note">Pela regra, a associação só pode receber o que estiver discriminado no contrato com a administradora (Res. CNSP 491, art. 56). Nada de comissão por fora. E a administradora assume funções que hoje custam dinheiro para a associação (atuário, contabilidade do grupo, regulação de eventos, relação com a SUSEP): veja o que sai da sua folha antes de fazer a conta.</p>`;
+    <details class="more"><summary>O que a regra diz</summary><div><p class="note">Pela regra, a associação só pode receber o que estiver discriminado no contrato com a administradora (Res. CNSP 491, art. 56). Nada de comissão por fora. E a administradora assume funções que hoje custam dinheiro para a associação (atuário, contabilidade do grupo, regulação de eventos, relação com a SUSEP): veja o que sai da sua folha antes de fazer a conta.</p></div></details>`;
 }
 
 function task(id, t, d, hot){
@@ -1597,7 +1709,7 @@ function renderPlano(r){
     return;
   }
 
-  $('saveBox').innerHTML = isFinite(r.guardarMes) && r.guardarMes > 0 ? `<div class="save-box"><span class="big">${brlShort(r.guardarMes)}</span><p><b>É quanto guardar por mês</b> durante ${REG.horizonte} meses para chegar à reserva de ${brlShort(r.metaReserva)}. Dá ${brl(r.guardarMes / (r.pagantes||1), true)} por placa pagante, por mês. Se ficar pesado, teste no simulador quanto tempo leva guardando menos.</p></div>` : '';
+  $('saveBox').innerHTML = isFinite(r.guardarMes) && r.guardarMes > 0 ? `<div class="save-box"><span class="big">${brlShort(r.guardarMes)}</span><p><b>É quanto guardar por mês</b> durante ${REG.horizonte} meses para chegar à reserva de ${brlShort(r.metaReserva)}. Dá ${brl(r.guardarMes / (r.pagantes||1), true)} por placa pagante, por mês.</p></div>` : '';
 
   const f1 = [], f2 = [], f3 = [], f4 = [];
   if(r.susep === 'nao') f1.push(task('susep_nao','Procurar advogado sobre a falta de cadastro na SUSEP','Associação sem cadastro tem que parar de operar. Só volta depois de contratar administradora autorizada.', true));
@@ -1647,10 +1759,10 @@ function renderPlano(r){
     {a:7,b:12, h:'Profissionalizar', L:f3},
     {a:13,b:18, h:'Entrar na regra', L:f4}
   ];
-  $('timeline').innerHTML = P.filter(p => p.L.length).map(p => `
+  $('timeline').innerHTML = P.filter(p => p.L.length).map((p, i) => `
     <div class="phase">
       <div class="when"><b>Meses ${p.a}–${p.b}</b><span>${mesLabel(p.a-1+off)} a ${mesLabel(p.b-1+off)}</span></div>
-      <div class="phase-body"><h3>${p.h}</h3><ul class="tasks">${p.L.join('')}</ul></div>
+      <div class="phase-body"><details class="phase-d" ${i === 0 ? 'open' : ''}><summary><h3>${p.h}</h3><span class="cnt">${p.L.length} tarefas</span></summary><ul class="tasks">${p.L.join('')}</ul></details></div>
     </div>`).join('') + `
     <div class="phase final">
       <div class="when"><b>07/05/2028</b><span>prazo da regra</span></div>
@@ -1708,6 +1820,7 @@ function renderResumo(s, r, pr){
 /* ======================= CONTEÚDO FIXO ======================= */
 const FLAGS = [
   ['Diz que “já é autorizada pela SUSEP”','Até 30/09/2026 a SUSEP não tinha autorizado nenhuma administradora. Estar na lista de projetos da SUSEP não é autorização.'],
+  ['Não sabe dizer o nome do projeto dela na SUSEP','Peça o nome e procure na lista acima. Se não estiver lá, ela não entrou na análise prioritária.'],
   ['Quer que você assine agora “para garantir a vaga”','A SUSEP avisou: contrato com empresa não autorizada não regulariza a associação. O prazo é 07/05/2028.'],
   ['Oferece ações ou sociedade para a diretoria','A associação, seus diretores, funcionários e parentes até 2º grau não podem ser donos da administradora que ela contrata.'],
   ['Promete “comissão por fora” para a associação ou diretores','A associação só pode receber o que estiver escrito no contrato. A administradora não pode receber comissão de venda.'],
@@ -1727,7 +1840,7 @@ const ASKS = [
   'Se a gente quiser trocar de administradora, como funciona e quanto custa?',
   'Quais associações vocês vão atender? Posso falar com duas delas?'
 ];
-$('flags').innerHTML = FLAGS.map(f => `<div class="flag"><span class="x" aria-hidden="true">!</span><div><b>${f[0]}</b><span>${f[1]}</span></div></div>`).join('');
+$('flags').innerHTML = FLAGS.map(f => `<details class="flag"><summary><span class="x" aria-hidden="true">!</span><b>${f[0]}</b></summary><span>${f[1]}</span></details>`).join('');
 $('asks').innerHTML = ASKS.map(a => `<li>${a}</li>`).join('');
 
 const A = (u, t) => `<a href="${u}" target="_blank" rel="noopener">${t}</a>`;
@@ -1772,7 +1885,378 @@ const LEI = [
     'Se o primeiro lote de autorizações sair tarde, a associação ganha no mínimo 6 meses depois dele.'],
     src: A('https://www.gov.br/susep/pt-br/assuntos/protecao-patrimonial-mutualista/administradoras-de-protecao-patrimonial-mutualista','gov.br/susep')}
 ];
-$('law').innerHTML = LEI.map(l => `<article class="law-item ${l.now?'now':''}"><div class="d">${l.d}<small>${l.s}</small></div><div><b>${l.t}</b><ul>${l.p.map(x=>`<li>${x}</li>`).join('')}</ul>${l.src?`<p class="src">Fonte: ${l.src}</p>`:''}</div></article>`).join('');
+$('law').innerHTML = LEI.map(l => `<article class="law-item ${l.now?'now':''}"><div class="d">${l.d}<small>${l.s}</small></div><div><b>${l.t}</b><details class="more"><summary>Ver o resumo</summary><div><ul>${l.p.map(x=>`<li>${x}</li>`).join('')}</ul>${l.src?`<p class="src">Fonte: ${l.src}</p>`:''}</div></details></div></article>`).join('');
+
+/* ======================= RATEIO DO MÊS ======================= */
+const RMKEY = KEY + '.rm', RMHKEY = KEY + '.rmhist';
+const RMF = ['rm_mes','rm_dur','rm_pagos','rm_desp','rm_assist','rm_seguro','rm_pelIni','rm_dias','rm_peonaIni','rm_salv','rm_ress','rm_franq','rm_recSeg','rm_inad','rm_ajuste','rm_fin','rm_estab','rm_patIni','rm_usoMax','rm_f_carros','rm_f_motos','rm_f_pesados'];
+const RM_FLUXOS = ['rm_pagos','rm_desp','rm_assist','rm_seguro','rm_salv','rm_ress','rm_franq','rm_recSeg','rm_inad','rm_ajuste','rm_fin','rm_estab'];
+const RM_EX = {rm_mes:'-1', rm_dur:'1', rm_pagos:'98.000', rm_desp:'6.500', rm_assist:'4.200', rm_assistInc:false, rm_seguro:'0',
+  rm_pelIni:'48.000', rm_dias:'10', rm_peonaIni:'30.000', rm_salv:'9.000', rm_ress:'2.500', rm_franq:'3.200', rm_recSeg:'0',
+  rm_inad:'3.100', rm_ajuste:'0', rm_fin:'600', rm_estab:'85.000', rm_patIni:'90.000', rm_usoMax:'25', rm_f_carros:'1', rm_f_motos:'1', rm_f_pesados:'1',
+  pel:[{d:'Evento 0412 · carro batido, na oficina', t:'carros', v:'22.000'}, {d:'Evento 0415 · moto roubada, em análise', t:'motos', v:'7.500'}, {d:'Evento 0419 · caminhão, colisão', t:'pesados', v:'31.000'}, {d:'Evento 0421 · vidro e lanterna', t:'carros', v:'4.800'}]};
+let rmEx = true, rmPel = [], rmHist = [], RMO = null;
+
+const rmMoney = (id, label, hint) => `<div class="field"><label for="${id}">${label}</label>${hint ? `<p class="hint">${hint}</p>` : ''}<div class="input compact"><span class="pre">R$</span><input id="${id}" inputmode="decimal" data-kind="money"></div></div>`;
+$('rmForm').innerHTML = `
+  <div class="rmcard"><h3>Período</h3>
+    <div class="mini2">
+      <div class="field"><label for="rm_mes">Mês do fechamento</label><div class="input compact"><select id="rm_mes">${Array.from({length:13}, (_, i) => -i).map(o => `<option value="${o}">${mesLabel(o)}</option>`).join('')}</select></div></div>
+      <div class="field"><label for="rm_dur">Período do rateio</label><div class="input compact"><select id="rm_dur"><option value="1">1 mês</option><option value="2">2 meses</option><option value="3">3 meses (máximo da regra)</option></select></div></div>
+    </div>
+    <p class="hint" id="rmBase"></p>
+  </div>
+  <div class="rmcard"><h3>O que saiu com eventos</h3>
+    <div class="mini2">
+      ${rmMoney('rm_pagos','Indenizações e consertos pagos')}
+      ${rmMoney('rm_desp','Despesas dos eventos','Guincho do evento, perícia, vistoria.')}
+      ${rmMoney('rm_seguro','Seguro ou resseguro pago')}
+      ${rmMoney('rm_assist','Assistência 24h')}
+    </div>
+    <label class="check"><input type="checkbox" id="rm_assistInc"> O contrato diz que a assistência entra no rateio</label>
+  </div>
+  <div class="rmcard"><h3>Eventos avisados e ainda não pagos (PEL)</h3>
+    <p class="hint">Um por linha, com o valor que ainda falta pagar no último dia do período. A soma é a provisão PEL.</p>
+    <div class="pel" id="rmPelList"></div>
+    <button type="button" class="btn small ghost" id="rmPelAdd">+ Adicionar evento em aberto</button>
+    ${rmMoney('rm_pelIni','PEL no começo do período','Total de eventos em aberto no fechamento anterior.')}
+  </div>
+  <div class="rmcard"><h3>Eventos que aconteceram e ainda não foram avisados (PEONA)</h3>
+    <div class="mini2">
+      <div class="field"><label for="rm_dias">Em média, quantos dias o associado leva para avisar?</label><div class="input compact"><input id="rm_dias" inputmode="numeric" data-kind="int"><span class="suf">dias</span></div></div>
+      ${rmMoney('rm_peonaIni','PEONA no começo do período','Valor do fechamento anterior.')}
+    </div>
+    <p class="hint">Estimativa simples: custo médio por dia × dias até o aviso. O atuário pode usar outro método.</p>
+  </div>
+  <div class="rmcard"><h3>O que voltou para o grupo</h3>
+    <div class="mini2">
+      ${rmMoney('rm_salv','Venda de salvados (carcaças)')}
+      ${rmMoney('rm_ress','Ressarcimento de terceiros')}
+      ${rmMoney('rm_franq','Cotas de participação recebidas')}
+      ${rmMoney('rm_recSeg','Recuperado de seguro ou resseguro')}
+    </div>
+  </div>
+  <div class="rmcard"><h3>Ajustes</h3>
+    <div class="mini2">
+      ${rmMoney('rm_inad','Inadimplência que não vai voltar','Contribuições do grupo que não foram e não vão ser pagas.')}
+      ${rmMoney('rm_ajuste','Ajuste de períodos anteriores','Coloque sinal de menos se for devolução.')}
+      ${rmMoney('rm_fin','Rendimento das aplicações do grupo','Coloque sinal de menos se deu prejuízo.')}
+    </div>
+  </div>
+  <div class="rmcard"><h3>Dinheiro do grupo</h3>
+    <div class="mini2">
+      ${rmMoney('rm_estab','Estabilização recebida no período','A parte fixa dos boletos que vai para o grupo. Hoje: a parte da mensalidade que vai para eventos.')}
+      ${rmMoney('rm_patIni','Patrimônio do grupo no começo','A reserva do grupo no fechamento anterior.')}
+      <div class="field"><label for="rm_usoMax">Usar no máximo quanto do patrimônio para cobrir falta?</label><p class="hint">O que passar disso vira rateio extra.</p><div class="input compact"><input id="rm_usoMax" inputmode="decimal" data-kind="pct"><span class="suf">%</span></div></div>
+    </div>
+    <details class="more"><summary>Ajustar o risco por tipo de veículo</summary><div>
+      <p class="hint">1 = normal. 1,5 = paga 50% a mais por real de FIPE. Use o número que o atuário indicar.</p>
+      <div class="mini2">${TIPOS.map(t => `<div class="field"><label for="rm_f_${t.id}">${t.n}</label><div class="input compact"><input id="rm_f_${t.id}" inputmode="decimal" data-kind="money"><span class="suf">×</span></div></div>`).join('')}</div>
+    </div></details>
+  </div>`;
+
+function rmPelHTML(){
+  $('rmPelList').innerHTML = rmPel.map((p, i) => `<div class="pelrow">
+      <input class="pd" data-i="${i}" data-f="d" value="${esc(p.d || '')}" placeholder="Nº do evento ou placa" aria-label="Evento ${i + 1}: identificação">
+      <select data-i="${i}" data-f="t" aria-label="Evento ${i + 1}: tipo">${TIPOS.map(t => `<option value="${t.id}" ${p.t === t.id ? 'selected' : ''}>${t.n}</option>`).join('')}</select>
+      <div class="input compact"><span class="pre">R$</span><input data-i="${i}" data-f="v" inputmode="decimal" data-kind="money" value="${esc(p.v || '')}" aria-label="Evento ${i + 1}: valor que falta pagar"></div>
+      <button type="button" class="x" data-del="${i}" aria-label="Remover evento ${i + 1}">×</button>
+    </div>`).join('') + `<div class="pel-tot"><span>PEL no fim do período (${rmPel.length} ${rmPel.length === 1 ? 'evento' : 'eventos'})</span><span id="rmPelTot">–</span></div>`;
+}
+function readRM(){ const o = {}; RMF.forEach(k => o[k] = $(k).value); o.rm_assistInc = $('rm_assistInc').checked; o.pel = rmPel.map(p => ({...p})); return o; }
+function writeRM(o){
+  RMF.forEach(k => { $(k).value = o[k] ?? ($(k).tagName === 'SELECT' ? $(k).options[0].value : ''); });
+  $('rm_assistInc').checked = !!o.rm_assistInc;
+  rmPel = (o.pel || []).map(p => ({...p}));
+  rmPelHTML();
+  $('rmForm').querySelectorAll('input[data-kind]').forEach(fmtField);
+}
+function saveRM(){ try{ localStorage.setItem(RMKEY, JSON.stringify({s:readRM(), ex:rmEx})); localStorage.setItem(RMHKEY, JSON.stringify(rmHist)); }catch(e){} }
+function rmMarcaMeu(){
+  if(!rmEx) return; rmEx = false;
+  $('rmEx').classList.add('mine');
+  $('rmExMsg').innerHTML = 'Agora são os seus números. <span>Ficam salvos só neste aparelho.</span>';
+  $('rmClear').textContent = 'Apagar tudo';
+}
+
+function calcRM(s, r){
+  const o = {};
+  const v = k => { const x = num(s[k]); return isFinite(x) ? x : 0; };
+  o.dur = +s.rm_dur || 1; o.dias = o.dur * 30;
+  const m0 = +s.rm_mes || 0;
+  o.per = o.dur === 1 ? mesLabel(m0) : mesLabel(m0 - o.dur + 1) + ' a ' + mesLabel(m0);
+  o.m0 = m0;
+  o.pagos = v('rm_pagos'); o.desp = v('rm_desp'); o.seguro = v('rm_seguro');
+  o.assist = s.rm_assistInc ? v('rm_assist') : 0; o.assistFora = s.rm_assistInc ? 0 : v('rm_assist');
+  o.pelFim = (s.pel || []).reduce((a, p) => a + (isFinite(num(p.v)) ? num(p.v) : 0), 0);
+  o.nPel = (s.pel || []).length;
+  o.pelIni = v('rm_pelIni'); o.dPel = o.pelFim - o.pelIni;
+  o.custoDia = (o.pagos + o.desp + o.assist) / o.dias;
+  o.diasAviso = v('rm_dias');
+  o.peonaFim = o.custoDia * o.diasAviso; o.peonaIni = v('rm_peonaIni'); o.dPeona = o.peonaFim - o.peonaIni;
+  o.salv = v('rm_salv'); o.ress = v('rm_ress'); o.franq = v('rm_franq'); o.recSeg = v('rm_recSeg');
+  o.recup = o.salv + o.ress + o.franq + o.recSeg;
+  o.inad = v('rm_inad'); o.ajuste = v('rm_ajuste'); o.fin = v('rm_fin');
+  o.custo = o.pagos + o.desp + o.assist + o.seguro + o.dPel + o.dPeona + o.inad + o.ajuste - o.recup - o.fin;
+  o.estab = v('rm_estab');
+  o.res = o.estab - o.custo;
+  o.patIni = v('rm_patIni');
+  o.usoMax = (isFinite(num(s.rm_usoMax)) ? Math.max(0, Math.min(100, num(s.rm_usoMax))) : 25) / 100;
+  if(o.res >= 0){ o.uso = 0; o.comp = 0; }
+  else { const falta = -o.res; o.uso = Math.min(falta, Math.max(0, o.patIni) * o.usoMax); o.comp = falta - o.uso; }
+  o.patFim = o.patIni + Math.max(0, o.res) - o.uso;
+  o.teto = 3 * o.estab / o.dur;
+  o.passaTeto = o.teto > 0 && o.patFim > o.teto;
+  o.provisoes = o.pelFim + o.peonaFim;
+  // base por tipo (placas e FIPE do passo 1)
+  const at = (r && r.ativos) || [];
+  o.semFipe = at.some(t => !ok(t.fipe));
+  o.tipos = at.map(t => {
+    const fat = ok(num(s['rm_f_' + t.id])) ? num(s['rm_f_' + t.id]) : 1;
+    return {...t, fat, peso: o.semFipe ? t.placas * fat : t.placas * t.fipe * fat};
+  });
+  const W = o.tipos.reduce((a, t) => a + t.peso, 0);
+  o.fipeTot = at.reduce((a, t) => a + t.placas * (ok(t.fipe) ? t.fipe : 0), 0);
+  o.tipos.forEach(t => {
+    t.porPlaca = W > 0 ? o.comp * t.peso / W / t.placas : NaN;
+    t.porMil = !o.semFipe && W > 0 ? o.comp * t.fat / W * 1000 : NaN;
+  });
+  o.porMil = !o.semFipe && o.fipeTot > 0 ? o.comp / o.fipeTot * 1000 : NaN;
+  o.custoPorMil = o.fipeTot > 0 ? o.custo / o.dur / o.fipeTot * 1000 : NaN;
+  // sugestão de estabilização: média do custo mensal (este + até 2 fechamentos salvos) + 5%
+  const hist = rmHist.filter(h => h.per !== o.per).slice(-2).map(h => h.custo / h.dur);
+  const serie = hist.concat([o.custo / o.dur]);
+  o.sugEstab = Math.max(0, serie.reduce((a, b) => a + b, 0) / serie.length * 1.05);
+  o.sugN = serie.length;
+  o.sugPorMil = o.fipeTot > 0 ? o.sugEstab / o.fipeTot * 1000 : NaN;
+  o.placas = r ? r.placas : NaN;
+  o.fipeMedia = r ? r.fipe : NaN;
+  return o;
+}
+
+function exRow(sg, label, val, sub, tot){
+  return `<div class="ex-row ${tot ? 'tot' : ''}"><span class="sg">${sg}</span><span>${label}${sub ? `<small>${sub}</small>` : ''}</span><span class="v">${brl(val)}</span></div>`;
+}
+function renderRM(){
+  if(!$('rmOut')) return;
+  const s = readRM(), o = calcRM(s, R);
+  RMO = o;
+  $('rmPelTot').textContent = brl(o.pelFim);
+  $('rmBase').innerHTML = ok(o.placas) ? `Base: <b>${int(o.placas)} placas</b>${o.fipeTot > 0 ? `, <b>${brlShort(o.fipeTot)}</b> em FIPE protegida` : ''}, do passo 1 da aba Preencher.` : 'Preencha as placas por tipo no passo 1 da aba Preencher.';
+  $('rmHead').textContent = 'Resultado de ' + o.per;
+  const falta = o.res < 0;
+  const tRes = !falta ? 'ok' : o.comp > 0 ? 'bad' : 'warn';
+  // extrato: só mostra linhas com valor
+  const L = [];
+  const add = (sg, label, val, sub) => { if(Math.abs(val) >= 0.5) L.push(exRow(sg, label, Math.abs(val), sub)); };
+  add('+', 'Indenizações e consertos pagos', o.pagos);
+  add('+', 'Despesas dos eventos', o.desp);
+  add('+', 'Assistência 24h', o.assist);
+  add('+', 'Seguro ou resseguro', o.seguro);
+  add(o.dPel >= 0 ? '+' : '−', o.dPel >= 0 ? 'Aumento dos eventos em aberto (PEL)' : 'Redução dos eventos em aberto (PEL)', o.dPel, `de ${brl(o.pelIni)} para ${brl(o.pelFim)}`);
+  add(o.dPeona >= 0 ? '+' : '−', o.dPeona >= 0 ? 'Aumento dos não avisados (PEONA)' : 'Redução dos não avisados (PEONA)', o.dPeona, `de ${brl(o.peonaIni)} para ${brl(o.peonaFim)}`);
+  add('+', 'Inadimplência que não vai voltar', o.inad);
+  add(o.ajuste >= 0 ? '+' : '−', 'Ajuste de períodos anteriores', o.ajuste);
+  add('−', 'Salvados, ressarcimentos e franquias', o.recup);
+  add(o.fin >= 0 ? '−' : '+', o.fin >= 0 ? 'Rendimento das aplicações' : 'Prejuízo nas aplicações', o.fin);
+  L.push(exRow('=', '<b>Custo a ratear</b>', o.custo, '', true));
+  L.push(exRow('−', 'Estabilização recebida', o.estab));
+  L.push(exRow('=', `<b>${falta ? 'Falta' : 'Sobra'}</b>`, Math.abs(o.res), falta ? '' : 'vai para o patrimônio do grupo', true));
+  if(falta){
+    L.push(exRow('−', 'Coberto pelo patrimônio do grupo', o.uso, `até ${pct(o.usoMax,0)} do patrimônio`));
+    L.push(exRow('=', '<b>Rateio extra a cobrar</b>', o.comp, '', true));
+  }
+  const at = o.tipos, mx = Math.max(...at.map(t => t.porPlaca || 0), 0.01);
+  $('rmOut').innerHTML = `
+    <div class="tiles">
+      ${tileHTML('Custo do período', brlShort(o.custo), o.per)}
+      ${tileHTML('Estabilização recebida', brlShort(o.estab), '')}
+      ${tileHTML(falta ? 'Falta' : 'Sobra', brlShort(Math.abs(o.res)), falta ? `${brlShort(o.uso)} do patrimônio + ${brlShort(o.comp)} de rateio extra` : 'vai para o patrimônio do grupo', tRes)}
+      ${tileHTML('Rateio extra', o.comp > 0.5 ? brlShort(o.comp) : 'nenhum', o.comp > 0.5 ? (isFinite(o.porMil) ? `${brl(o.porMil, true)} por R$ 1.000 de FIPE` : '') : 'a estabilização e o patrimônio cobriram', o.comp > 0.5 ? 'warn' : 'ok')}
+      ${tileHTML('Provisões', brlShort(o.provisoes), 'deixar separado', '')}
+    </div>
+    <div class="vizgrid">
+      <article class="viz"><h3>A conta do período</h3>
+        <div class="extrato">${L.join('')}</div>
+        ${o.assistFora > 0.5 ? `<p class="note">${brl(o.assistFora)} de assistência ficou fora do rateio: pela regra, só entra se o contrato disser.</p>` : ''}
+        <details class="more"><summary>O que diz a regra</summary><div><p class="note">Resolução CNSP 491/2026, art. 69: o valor a ratear soma eventos pagos e despesas, a variação das provisões (PEL e PEONA), seguro ou resseguro, inadimplência não recuperada e ajustes, e desconta salvados, ressarcimentos, recuperações, contribuições já arrecadadas e o resultado das aplicações. A taxa de administração nunca entra. O período é de no máximo 3 meses e a apuração sai em até 5 dias depois do fechamento.</p></div></details>
+      </article>
+      <article class="viz"><h3>Quanto cada um paga de rateio extra</h3>
+        ${o.comp <= 0.5 ? `<div class="empty">Neste período não tem rateio extra.</div>` : !at.length ? `<div class="empty">Preencha as placas por tipo no passo 1.</div>` : `
+          <p class="read">${isFinite(o.porMil) ? `<b>${brl(o.porMil, true)}</b> para cada R$ 1.000 de FIPE.` : 'Dividido por placa, porque falta a FIPE média de algum tipo no passo 1.'}</p>
+          <div class="rows">${at.map(t => rowbar(`<b>${t.n}</b>${ok(t.fipe) ? `<br><span class="hint">FIPE média ${brlShort(t.fipe)}</span>` : ''}`, t.porPlaca / mx, brl(t.porPlaca, true), '--s-ev', `${brl(t.porPlaca, true)} por placa\n${t.n}${t.fat !== 1 ? ' · risco ' + dec1(t.fat) + '×' : ''}`)).join('')}</div>
+          <div class="onecar">
+            <div class="field"><label for="rmVTipo" class="hint">Calcular para um veículo: tipo</label><div class="input compact"><select id="rmVTipo">${at.map(t => `<option value="${t.id}">${t.n}</option>`).join('')}</select></div></div>
+            <div class="field"><label for="rmVFipe" class="hint">FIPE do veículo</label><div class="input compact"><span class="pre">R$</span><input id="rmVFipe" inputmode="decimal" data-kind="money"></div></div>
+            <div class="out" id="rmVOut">–<small>rateio extra deste veículo</small></div>
+          </div>`}
+      </article>
+      <article class="viz"><h3>Provisões: quanto deixar separado</h3>
+        <div class="extrato">
+          ${exRow('', `Eventos avisados e não pagos (PEL)`, o.pelFim, `${o.nPel} ${o.nPel === 1 ? 'evento' : 'eventos'} em aberto`)}
+          ${exRow('', 'Eventos não avisados (PEONA)', o.peonaFim, `${brl(o.custoDia)} por dia × ${int(o.diasAviso)} dias`)}
+          ${exRow('=', '<b>Total das provisões</b>', o.provisoes, '', true)}
+        </div>
+        <p class="note">Esse dinheiro já tem dono: são eventos que vão ser pagos. Não conte como sobra.</p>
+      </article>
+      <article class="viz"><h3>Patrimônio do grupo</h3>
+        <div class="extrato">
+          ${exRow('', 'No começo do período', o.patIni)}
+          ${o.res >= 0 ? exRow('+', 'Sobra do período', o.res) : exRow('−', 'Usado para cobrir a falta', o.uso)}
+          ${exRow('=', '<b>No fim do período</b>', o.patFim, '', true)}
+        </div>
+        ${o.passaTeto ? `<p class="note"><b>Passou do teto da regra:</b> o patrimônio não pode passar de 3 meses de contribuições (uns ${brlShort(o.teto)}). Baixe a estabilização no próximo período.</p>` : ''}
+        <p class="note"><b>Estabilização sugerida para o próximo período:</b> ${brlShort(o.sugEstab)} por mês${isFinite(o.sugPorMil) ? `, ou ${brl(o.sugPorMil, true)} por R$ 1.000 de FIPE${ok(o.fipeMedia) ? ` (um veículo de FIPE ${brlShort(o.fipeMedia)} paga ${brl(o.sugPorMil * o.fipeMedia / 1000, true)})` : ''}` : ''}. É a média do custo ${o.sugN > 1 ? `dos últimos ${o.sugN} fechamentos` : 'deste período'} mais 5%.</p>
+      </article>
+    </div>`;
+  if($('rmVTipo')){
+    const prev = renderRM.v || {};
+    if(prev.t && at.some(t => t.id === prev.t)) $('rmVTipo').value = prev.t;
+    $('rmVFipe').value = prev.f || '';
+    const calcV = () => {
+      const t = at.find(x => x.id === $('rmVTipo').value) || at[0], fv = num($('rmVFipe').value);
+      renderRM.v = {t: t.id, f: $('rmVFipe').value};
+      if(!ok(fv)){ $('rmVOut').innerHTML = '–<small>digite a FIPE do veículo</small>'; return; }
+      const val = isFinite(t.porMil) ? t.porMil * fv / 1000 : t.porPlaca;
+      $('rmVOut').innerHTML = `${brl(val, true)}<small>rateio extra deste veículo</small>`;
+    };
+    $('rmVTipo').addEventListener('change', calcV); $('rmVFipe').addEventListener('input', calcV); $('rmVFipe').addEventListener('blur', e => fmtField(e.target));
+    calcV();
+  }
+  $('rmDemo').value = rmDemonstrativo(o);
+  renderRMHist();
+  saveRM();
+}
+
+function rmDemonstrativo(o){
+  const nome = ($('nome').value || '[NOME DA ASSOCIAÇÃO]').toUpperCase();
+  const linhas = [
+    `DEMONSTRATIVO DO RATEIO · ${o.per.toUpperCase()}`, nome, '',
+    '1. Custo do período',
+    `   Indenizações e consertos pagos: ${brl(o.pagos)}`,
+    o.desp ? `   Despesas dos eventos: ${brl(o.desp)}` : null,
+    o.assist ? `   Assistência 24h: ${brl(o.assist)}` : null,
+    o.seguro ? `   Seguro ou resseguro: ${brl(o.seguro)}` : null,
+    `   Variação dos eventos em aberto (PEL): ${brl(o.dPel)} (de ${brl(o.pelIni)} para ${brl(o.pelFim)})`,
+    `   Variação dos não avisados (PEONA): ${brl(o.dPeona)}`,
+    o.inad ? `   Inadimplência não recuperada: ${brl(o.inad)}` : null,
+    o.ajuste ? `   Ajuste de períodos anteriores: ${brl(o.ajuste)}` : null,
+    o.recup ? `   (−) Salvados, ressarcimentos e franquias: ${brl(o.recup)}` : null,
+    o.fin ? `   (−) Resultado das aplicações do grupo: ${brl(o.fin)}` : null,
+    `   = Custo a ratear: ${brl(o.custo)}`, '',
+    `2. Estabilização recebida: ${brl(o.estab)}`,
+    `3. ${o.res < 0 ? 'Falta' : 'Sobra'}: ${brl(Math.abs(o.res))}`,
+    o.res < 0 ? `4. Coberto pelo patrimônio do grupo: ${brl(o.uso)}` : `4. A sobra foi para o patrimônio do grupo.`,
+    `   Patrimônio do grupo: de ${brl(o.patIni)} para ${brl(o.patFim)}`, '',
+    o.comp > 0.5 ? `5. Rateio extra: ${brl(o.comp)}${isFinite(o.porMil) ? ` = ${brl(o.porMil, true)} para cada R$ 1.000 de FIPE` : ''}` : '5. Não há rateio extra neste período.',
+    ...(o.comp > 0.5 ? o.tipos.map(t => `   ${t.n}: ${brl(t.porPlaca, true)} por placa, em média`) : []),
+    '',
+    `6. Provisões no fim do período: eventos em aberto ${brl(o.pelFim)}; não avisados (estimativa) ${brl(o.peonaFim)}.`,
+    '',
+    'Como calculamos: custo real do período, conforme o art. 69 da Resolução CNSP nº 491/2026, dividido de forma proporcional ao valor (FIPE) de cada veículo. A taxa de administração não entra no rateio.',
+    'O valor do rateio pode variar, para mais ou para menos, conforme os eventos do período. A proteção patrimonial mutualista não é seguro.',
+    'Dúvidas ou contestação: [TELEFONE / WHATSAPP / E-MAIL].'
+  ];
+  return linhas.filter(x => x !== null).join('\n');
+}
+
+function renderRMHist(){
+  const el = $('rmHist');
+  if(!rmHist.length){ el.innerHTML = '<div class="empty">Nenhum fechamento salvo ainda. Salve o de cada período para acompanhar a evolução.</div>'; return; }
+  const mx = Math.max(...rmHist.map(h => h.custo / h.dur), 1);
+  el.innerHTML = `<div class="viz"><div class="rows">${rmHist.map(h => rowbar(`<b>${h.per}</b>`, (h.custo / h.dur) / mx, brlShort(h.custo / h.dur) + '/mês', '--s-ev', `${brl(h.custo / h.dur)} de custo por mês\n${h.per}`)).join('')}</div>
+    <div class="tblwrap"><table class="hist"><thead><tr><th>Período</th><th>Custo</th><th>Estabilização</th><th>Rateio extra</th><th>Por R$ 1.000</th><th>Patrimônio no fim</th><th>Provisões</th><th></th></tr></thead>
+    <tbody>${rmHist.map((h, i) => `<tr><td>${h.per}</td><td>${brl(h.custo)}</td><td>${brl(h.estab)}</td><td>${brl(h.comp)}</td><td>${isFinite(h.porMil) && h.porMil !== null ? brl(h.porMil, true) : '–'}</td><td>${brl(h.patFim)}</td><td>${brl(h.prov)}</td><td><button type="button" class="x" data-hdel="${i}" aria-label="Excluir ${h.per}">×</button></td></tr>`).join('')}</tbody></table></div></div>`;
+}
+function rmSalvar(){
+  const o = RMO; if(!o) return false;
+  const h = {per:o.per, dur:o.dur, custo:o.custo, estab:o.estab, comp:o.comp, porMil:isFinite(o.porMil) ? o.porMil : null, patFim:o.patFim, prov:o.provisoes};
+  const i = rmHist.findIndex(x => x.per === o.per);
+  if(i >= 0) rmHist[i] = h; else rmHist.push(h);
+  renderRMHist(); saveRM();
+  return true;
+}
+const rmAviso = t => { $('rmSaveMsg').textContent = t; setTimeout(() => $('rmSaveMsg').textContent = '', 3500); };
+$('rmSave').addEventListener('click', () => { if(rmSalvar()) rmAviso('Fechamento de ' + RMO.per + ' salvo.'); });
+$('rmNext').addEventListener('click', () => {
+  if(!rmSalvar()) return;
+  const o = RMO, prox = Math.min(0, o.m0 + o.dur);
+  $('rm_pelIni').value = Math.round(o.pelFim).toLocaleString('pt-BR');
+  $('rm_peonaIni').value = Math.round(o.peonaFim).toLocaleString('pt-BR');
+  $('rm_patIni').value = Math.round(o.patFim).toLocaleString('pt-BR');
+  $('rm_mes').value = String(prox);
+  RM_FLUXOS.forEach(k => $(k).value = '');
+  rmMarcaMeu(); renderRM();
+  rmAviso('Salvo. O fim deste período virou o começo do próximo. Atualize os eventos em aberto.');
+  subirAte($('rmForm'));
+});
+$('rmHist').addEventListener('click', e => { const b = e.target.closest('[data-hdel]'); if(b){ rmHist.splice(+b.dataset.hdel, 1); renderRMHist(); saveRM(); } });
+$('rmForm').addEventListener('input', e => {
+  const i = e.target.dataset.i;
+  if(i !== undefined){ rmPel[+i][e.target.dataset.f] = e.target.value; }
+  rmMarcaMeu(); renderRM();
+});
+$('rmForm').addEventListener('change', e => { const i = e.target.dataset.i; if(i !== undefined) rmPel[+i][e.target.dataset.f] = e.target.value; rmMarcaMeu(); renderRM(); });
+$('rmForm').addEventListener('focusout', e => { if(e.target.matches('input[data-kind]')){ fmtField(e.target); const i = e.target.dataset.i; if(i !== undefined) rmPel[+i].v = e.target.value; } });
+$('rmForm').addEventListener('submit', e => e.preventDefault());
+$('rmForm').addEventListener('click', e => {
+  if(e.target.id === 'rmPelAdd'){ rmPel.push({d:'', t:'carros', v:''}); rmPelHTML(); rmMarcaMeu(); renderRM(); const ins = $('rmPelList').querySelectorAll('.pd'); ins[ins.length - 1].focus(); }
+  const d = e.target.closest('[data-del]'); if(d){ rmPel.splice(+d.dataset.del, 1); rmPelHTML(); rmMarcaMeu(); renderRM(); }
+});
+let rmClearArmed = false;
+$('rmClear').addEventListener('click', () => {
+  if(!rmEx && !rmClearArmed){ rmClearArmed = true; $('rmClear').textContent = 'Clique de novo para confirmar'; setTimeout(() => { rmClearArmed = false; $('rmClear').textContent = 'Apagar tudo'; }, 4000); return; }
+  rmClearArmed = false;
+  writeRM({rm_mes:'-1', rm_dur:'1', rm_usoMax:'25', rm_f_carros:'1', rm_f_motos:'1', rm_f_pesados:'1', pel:[]});
+  rmHist = []; rmEx = true; rmMarcaMeu();
+  $('rmExMsg').innerHTML = 'Formulário limpo. <span>Comece pelo período e pelos eventos pagos.</span>';
+  renderRM();
+});
+$('rmCopy').addEventListener('click', () => copiar($('rmDemo'), $('rmCopyMsg')));
+(function initRM(){
+  let sv = null;
+  try{ sv = JSON.parse(localStorage.getItem(RMKEY)); rmHist = JSON.parse(localStorage.getItem(RMHKEY)) || []; }catch(e){ rmHist = []; }
+  if(sv && sv.s && !sv.ex){ writeRM(sv.s); rmEx = true; rmMarcaMeu(); }
+  else writeRM(RM_EX);
+})();
+
+/* ======================= ADMINISTRADORAS NA FILA ======================= */
+// Lista oficial da SUSEP (notícia de 06/08/2026, alterada em 12/08/2026). Pistas = empresa aberta com o mesmo nome; não confirmadas.
+const ECO = 'https://www.econodata.com.br/consulta-empresa/';
+const ADMS = [
+  ['4COVER', 'Existe a empresa 4COVER Administradora de Operações de Proteção Patrimonial Mutualista S.A., de São Paulo/SP, aberta em 12/05/2026 com capital de R$ 10 milhões.', 'https://open.cnpja.com/office/66843211000102'],
+  ['A3'], ['AD'], ['ALIANÇA'], ['ASPLEN MUTUAL'], ['ASSISTANCE'], ['ATLAS'], ['AUGERE'], ['BB'], ['CBAA'], ['CDC ADMINISTRADORA'], ['CENTRO MUTUAL'], ['COELHO MIRANDA'], ['CONFIA +'], ['DELPHOS'], ['EDX'],
+  ['ELO'], ['EMINENT'], ['FAST'], ['FBS'], ['FCP'], ['FORTIS'], ['G6+'], ['GARANT BRASIL'], ['GGO'], ['GMR'], ['GROWTH OPERADORA'], ['I3 CORP'], ['ILUMIVUS'], ['INTEGRIS'], ['JV'], ['LEGACY'],
+  ['MAVI'],
+  ['MONGERAL AEGON', 'O nome é igual ao do grupo segurador Mongeral Aegon (MAG Seguros), do Rio de Janeiro/RJ. O grupo não divulgou o projeto.', 'https://mag.com.br'],
+  ['MULT GESTORA'], ['MUTUAL'],
+  ['MUTUAL BRASIL', 'Existe a Associação de Proteção Patrimonial Mutual Brasil, de Goiânia/GO, aberta em 03/07/2025.', ECO + '61841918000158-associacao-de-protecao-patrimonial-mutual-brasil'],
+  ['MUTUALIZA'],
+  ['MUTUALLE', 'Existe a Mutualle Participações Ltda, de Goiânia/GO, aberta em 07/01/2026.', ECO + '64342450000145-mutualle-participacoes-ltda'],
+  ['NEXA'], ['NEXOS'], ['NEXUS'], ['NOBRE'],
+  ['NORD MUTUAL', 'Existe a Nord Mutual Gestão Ltda, de Maceió/AL, aberta em 29/04/2026.', ECO + '66525224000125-nord-mutual-gestao-ltda'],
+  ['ÓRION'], ['ORIZON'], ['PPM TOTAL'],
+  ['PRAKAR', 'Existe a Prakar Holding e Participações Ltda, de Sete Lagoas/MG, aberta em 30/01/2026.', ECO + '64898914000102-prakar-holding-e-participacoes-ltda'],
+  ['PRIME'], ['PRÓTON'], ['RR'], ['SEMPRE'], ['SIRIUS'],
+  ['SUL MUTUAL', 'Existe a Sul Mutual Gestão Ltda, de Canela/RS, aberta em 13/05/2026.', ECO + '66779177000146-sul-mutual-gestao-ltda'],
+  ['TAI'], ['TAURUS'], ['TPV'], ['ÚNICA'], ['UZZI'], ['VALORE'],
+  ['VANGARD', 'Existe a Vangard Gestora, de Belo Horizonte/MG, que diz no site trabalhar com gestão de entidades de socorro mútuo.', 'https://vangardgestora.com.br/'],
+  ['VENTURE'], ['VÉRTICE'], ['ZYRAQ']
+];
+const semAcento = t => t.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+function renderAdms(){
+  const q = semAcento($('admBusca').value.trim()), so = $('admPista').checked;
+  const L = ADMS.filter(a => (!q || semAcento(a[0]).includes(q)) && (!so || a[1]));
+  $('admTot').textContent = ADMS.length;
+  $('admCount').textContent = L.length === ADMS.length ? '' : `Mostrando ${L.length} de ${ADMS.length}`;
+  $('admList').innerHTML = L.length ? L.map(a => `<div class="adm ${a[1] ? 'tem' : ''}"><b>${esc(a[0])}</b><span class="st">Na fila · não autorizada</span>${a[1]
+    ? `<details class="more"><summary>Pista (não confirmada)</summary><div><p class="pista">${esc(a[1])}</p><a href="${a[2]}" target="_blank" rel="noopener">ver fonte</a></div></details>`
+    : '<span class="hint" style="font-size:.85rem">Quem está por trás: não divulgado</span>'}</div>`).join('')
+    : '<div class="empty">Nenhum projeto com esse nome na lista da SUSEP. Se uma administradora diz que está na fila e não aparece aqui, desconfie.</div>';
+}
+$('admBusca').addEventListener('input', renderAdms);
+$('admPista').addEventListener('change', renderAdms);
+renderAdms();
 
 /* ======================= DICA FLUTUANTE ======================= */
 const tipEl = $('tip');
@@ -1882,7 +2366,7 @@ window.addEventListener('resize', () => {
 });
 
 /* ======================= ABAS E PASSOS ======================= */
-const TABS = ['preencher','resultado','boleto','plano','regras'];
+const TABS = ['preencher','resultado','boleto','plano','rateiomes','regras'];
 const STEPS = [...document.querySelectorAll('#f > .step')];
 const STEP_LBL = ['Sua associação','Dinheiro que entra','Eventos','Reserva e rateio','Papéis','Caminho'];
 let tabAtual = 'preencher', passo = 1;
