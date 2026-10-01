@@ -712,6 +712,20 @@ h1,h2,h3{letter-spacing:-.01em;font-weight:600}
 .det[open]>summary{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);margin-bottom:28px}
 .det-body{display:flex;flex-direction:column;gap:52px}
 
+.inad-box{display:grid;gap:6px}
+.inad-box label.hint{font-weight:400}
+.det>summary{background:var(--accent-soft);border:1.5px solid var(--accent);border-radius:var(--r);color:var(--ink);align-items:center;padding:16px 20px}
+.det>summary svg{width:22px;height:22px;flex:none;stroke:var(--accent);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.det>summary small{flex-basis:100%;padding-left:36px;margin-top:-2px}
+.det>summary::after{position:absolute;right:22px;top:18px;font-size:1.1rem;color:var(--accent)}
+.det>summary{position:relative;padding-right:48px}
+.det>summary:hover{background:var(--surface)}
+.det-f{display:none}
+.det[open] .det-a{display:none}
+.det[open] .det-f{display:inline}
+.det{background:transparent;border:0;box-shadow:none}
+.det[open]>summary{border:1.5px solid var(--accent)}
+
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
 </head>
@@ -816,9 +830,20 @@ h1,h2,h3{letter-spacing:-.01em;font-weight:600}
           </details>
         </div>
         <div class="field">
-          <label for="inad">De cada 100 boletos, quantos não são pagos? <button type="button" class="info" data-g="inadimplencia" aria-label="O que é inadimplência?">?</button></label>
-          <p class="hint">Isso é a inadimplência. Se 8 de cada 100 atrasam ou não pagam, coloque 8.</p>
-          <div class="input"><input id="inad" inputmode="decimal" data-kind="pct"><span class="suf">%</span></div>
+          <span class="lbl" id="lblInad">Quanto deixa de ser pago? <button type="button" class="info" data-g="inadimplencia" aria-label="O que é inadimplência?">?</button></span>
+          <div class="seg" role="radiogroup" aria-labelledby="lblInad">
+            <input type="radio" name="inadModo" id="inadModo_pct" value="pct" checked><label for="inadModo_pct">Em %</label>
+            <input type="radio" name="inadModo" id="inadModo_brl" value="brl"><label for="inadModo_brl">Em R$ por mês</label>
+          </div>
+          <div class="inad-box" id="inadPctBox">
+            <label class="hint" for="inad">De cada 100 boletos, quantos não são pagos? Se 8 de cada 100 atrasam ou não pagam, coloque 8.</label>
+            <div class="input"><input id="inad" inputmode="decimal" data-kind="pct"><span class="suf">%</span></div>
+          </div>
+          <div class="inad-box" id="inadBrlBox" hidden>
+            <label class="hint" for="inadValor">Quanto, em reais, deixou de ser pago em um mês normal.</label>
+            <div class="input"><span class="pre">R$</span><input id="inadValor" inputmode="decimal" data-kind="money"><span class="suf">/mês</span></div>
+            <p class="hint" id="inadEq"></p>
+          </div>
         </div>
       </div>
     </section>
@@ -1007,29 +1032,8 @@ h1,h2,h3{letter-spacing:-.01em;font-weight:600}
     <div class="r3" id="r3"></div>
   </section>
 
-  <section id="lead" class="lead">
-    <div class="lead-txt">
-      <img src="GHLOGO" alt="GestiHub" width="94" height="16">
-      <h2>Receba o relatório e fale com um especialista</h2>
-      <p>A GestiHub ajuda associações e administradoras de proteção veicular a organizar o financeiro para a regra nova. Mande o seu resultado pelo WhatsApp e receba uma orientação, sem compromisso.</p>
-    </div>
-    <form class="lead-form" id="leadForm" novalidate autocomplete="on">
-      <div class="lead-grid">
-        <div class="field"><label for="leadNome">Seu nome</label><div class="input compact text"><input id="leadNome" autocomplete="name" placeholder="Ex.: Carlos"></div></div>
-        <div class="field"><label for="leadCargo">Cargo</label><div class="input compact"><select id="leadCargo"><option value="">Escolha</option><option>Presidente</option><option>Diretor(a)</option><option>Gerente</option><option>Financeiro</option><option>Consultor(a)</option><option>Outro</option></select></div></div>
-        <div class="field"><label for="leadAssoc">Associação</label><div class="input compact text"><input id="leadAssoc" autocomplete="organization"></div></div>
-        <div class="field"><label for="leadCidade">Cidade e estado</label><div class="input compact text"><input id="leadCidade" autocomplete="address-level2" placeholder="Ex.: Belo Horizonte/MG"></div></div>
-      </div>
-      <label class="check"><input type="checkbox" id="leadOk"> <span>Autorizo enviar este resumo à GestiHub para entrarem em contato comigo. <a href="https://www.gestihub.com.br/politica-de-privacidade.html" target="_blank" rel="noopener">Política de privacidade</a></span></label>
-      <div class="copyrow"><a class="btn" id="leadWa" href="https://wa.me/551151785642" target="_blank" rel="noopener">Enviar pelo WhatsApp</a><span class="err" id="leadErr" aria-live="polite"></span></div>
-      <p class="hint">Abre o WhatsApp da GestiHub, (11) 5178-5642, com a mensagem pronta. Nada é enviado até você apertar enviar lá.</p>
-      <p class="ok-msg" id="leadDone" hidden>Pronto. Se o WhatsApp não abriu, copie a mensagem abaixo.</p>
-      <details class="more"><summary>Ver ou copiar a mensagem</summary><div><textarea id="leadMsg" readonly aria-label="Mensagem para a GestiHub"></textarea><div class="copyrow"><button type="button" class="btn small" id="leadCopy">Copiar mensagem</button><span class="ok-msg" id="leadCopyMsg" aria-live="polite"></span></div></div></details>
-    </form>
-  </section>
-
   <details class="det" id="detalhes">
-    <summary><span>Ver o diagnóstico completo</span><small>gráficos, números e explicação de cada item</small></summary>
+    <summary><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19v-7M10 19V5M16 19v-4M22 21H2"/></svg><span class="det-a">Ver o diagnóstico completo</span><span class="det-f">Esconder o diagnóstico completo</span><small>nota detalhada, gráficos, todos os números e o que cada um quer dizer</small></summary>
     <div class="det-body">
   <section>
     <div class="sec-head"><p class="kicker">Diagnóstico completo</p><h2 id="vHead">Diagnóstico</h2></div>
@@ -1053,6 +1057,27 @@ h1,h2,h3{letter-spacing:-.01em;font-weight:600}
 
     </div>
   </details>
+
+  <section id="lead" class="lead">
+    <div class="lead-txt">
+      <img src="GHLOGO" alt="GestiHub" width="94" height="16">
+      <h2>Receba o relatório e fale com um especialista</h2>
+      <p>A GestiHub ajuda associações e administradoras de proteção veicular a organizar o financeiro para a regra nova. Mande o seu resultado pelo WhatsApp e receba uma orientação, sem compromisso.</p>
+    </div>
+    <form class="lead-form" id="leadForm" novalidate autocomplete="on">
+      <div class="lead-grid">
+        <div class="field"><label for="leadNome">Seu nome</label><div class="input compact text"><input id="leadNome" autocomplete="name" placeholder="Ex.: Carlos"></div></div>
+        <div class="field"><label for="leadCargo">Cargo</label><div class="input compact"><select id="leadCargo"><option value="">Escolha</option><option>Presidente</option><option>Diretor(a)</option><option>Gerente</option><option>Financeiro</option><option>Consultor(a)</option><option>Outro</option></select></div></div>
+        <div class="field"><label for="leadAssoc">Associação</label><div class="input compact text"><input id="leadAssoc" autocomplete="organization"></div></div>
+        <div class="field"><label for="leadCidade">Cidade e estado</label><div class="input compact text"><input id="leadCidade" autocomplete="address-level2" placeholder="Ex.: Belo Horizonte/MG"></div></div>
+      </div>
+      <label class="check"><input type="checkbox" id="leadOk"> <span>Autorizo enviar este resumo à GestiHub para entrarem em contato comigo. <a href="https://www.gestihub.com.br/politica-de-privacidade.html" target="_blank" rel="noopener">Política de privacidade</a></span></label>
+      <div class="copyrow"><a class="btn" id="leadWa" href="https://wa.me/551151785642" target="_blank" rel="noopener">Enviar pelo WhatsApp</a><span class="err" id="leadErr" aria-live="polite"></span></div>
+      <p class="hint">Abre o WhatsApp da GestiHub, (11) 5178-5642, com a mensagem pronta. Nada é enviado até você apertar enviar lá.</p>
+      <p class="ok-msg" id="leadDone" hidden>Pronto. Se o WhatsApp não abriu, copie a mensagem abaixo.</p>
+      <details class="more"><summary>Ver ou copiar a mensagem</summary><div><textarea id="leadMsg" readonly aria-label="Mensagem para a GestiHub"></textarea><div class="copyrow"><button type="button" class="btn small" id="leadCopy">Copiar mensagem</button><span class="ok-msg" id="leadCopyMsg" aria-live="polite"></span></div></div></details>
+    </form>
+  </section>
 
   <section class="share" id="compartilhar">
     <h2>Mande o resumo para a diretoria</h2>
@@ -1297,7 +1322,7 @@ const EXEMPLO = {
   docs:{susep:'sim',estatuto:'nao',atas:'sim',regulamento:'sim',coberturas:'ns',base:'sim',historico:'ns',processos:'nao',contabil:'sim',vendedores:'nao',prestacao:'nao',reclamacao:'nao',lgpd:'nao',sistema:'sim'}
 };
 
-const FIELDS = ['nome','placas12','fipeMax','ticket','admPct','inad','eventos12','recup12','receita12','qtdEventos','sinDireto','reserva','pendentes','nivelRes','rateioModo','taxaSim','repasseSim','custoAssoc']
+const FIELDS = ['nome','placas12','fipeMax','ticket','admPct','inad','inadValor','eventos12','recup12','receita12','qtdEventos','sinDireto','reserva','pendentes','nivelRes','rateioModo','taxaSim','repasseSim','custoAssoc']
   .concat(TIPOS.flatMap(t => ['tp_'+t.id+'_placas','tp_'+t.id+'_fipe','tp_'+t.id+'_ev']))
   .concat(Array.from({length:12}, (_,i) => 'mes_'+i));
 const KEY = 'raioxSusep.v3';
@@ -1395,6 +1420,7 @@ function readState(){
   FIELDS.forEach(k => s[k] = $(k).value);
   s.contaSep = radio('contaSep');
   s.caminho = radio('caminho');
+  s.inadModo = radio('inadModo') || 'pct';
   s.docs = {};
   DOCS.forEach(d => s.docs[d.id] = radio('doc_'+d.id));
   return s;
@@ -1403,6 +1429,7 @@ function writeState(s){
   FIELDS.forEach(k => { $(k).value = s[k] ?? ($(k).tagName === 'SELECT' ? $(k).options[0].value : ''); });
   setRadio('contaSep', s.contaSep || '');
   setRadio('caminho', s.caminho || '');
+  setRadio('inadModo', s.inadModo || 'pct');
   DOCS.forEach(d => setRadio('doc_'+d.id, (s.docs||{})[d.id] || ''));
 }
 let isExample = true;
@@ -1425,8 +1452,16 @@ function calc(s){
   r.fipeMax = num(s.fipeMax);
   r.ticket = num(s.ticket);
   r.a = isFinite(num(s.admPct)) ? Math.min(num(s.admPct), 90)/100 : NaN;
-  r.inad = isFinite(num(s.inad)) ? Math.min(num(s.inad), 90)/100 : 0;
-  r.inadInformada = isFinite(num(s.inad));
+  r.inadModo = s.inadModo === 'brl' ? 'brl' : 'pct';
+  r.inadValor = num(s.inadValor);
+  r.faturado = ok(r.ticket) && ok(r.placas) ? r.ticket * r.placas : NaN;
+  if(r.inadModo === 'brl'){
+    r.inad = isFinite(r.inadValor) && ok(r.faturado) ? Math.min(Math.max(r.inadValor, 0) / r.faturado, 0.9) : 0;
+    r.inadInformada = isFinite(r.inadValor) && ok(r.faturado);
+  } else {
+    r.inad = isFinite(num(s.inad)) ? Math.min(num(s.inad), 90)/100 : 0;
+    r.inadInformada = isFinite(num(s.inad));
+  }
   r.recup12 = isFinite(num(s.recup12)) ? num(s.recup12) : 0;
   r.receita12In = num(s.receita12);
   r.qtdEventos = num(s.qtdEventos);
@@ -1744,6 +1779,11 @@ function render(){
   const r = calc(s);
   R = r;
 
+  // inadimplência: % ou R$
+  $('inadPctBox').hidden = r.inadModo === 'brl';
+  $('inadBrlBox').hidden = r.inadModo !== 'brl';
+  $('inadEq').innerHTML = r.inadModo !== 'brl' ? '' : !ok(r.faturado) ? 'Preencha as placas (passo 1) e a mensalidade acima para converter em %.' : isFinite(r.inadValor) ? `${brl(r.inadValor)} de ${brl(r.faturado)} cobrados no mês = <b>${pct(r.inad, 1)}</b> de inadimplência.` : `Cobrança do mês: ${brl(r.faturado)} (mensalidade × placas).`;
+
   // passo 1 e 3
   $('totPlacas').textContent = ok(r.placas) ? int(r.placas) + ' placas' : '–';
   $('ev12note').hidden = !r.usaMeses;
@@ -1765,8 +1805,9 @@ function render(){
   $('pStatus').textContent = r.statusTxt; tone($('pStatus'), r.tScore);
   $('mStatus').textContent = r.statusTxt; tone($('mStatus'), r.tScore);
   $('mScore').textContent = r.notaTxt;
-  $('tabScore').textContent = r.notaTxt; tone($('tabScore'), r.tScore);
-  $('mtScore').textContent = r.incompleto ? 'Sem nota' : 'Nota ' + r.score; tone($('mtScore'), r.tScore);
+  $('tabScore').textContent = r.notaTxt; tone($('tabScore'), r.tScore); $('tabScore').hidden = r.incompleto;
+  $('mtScore').textContent = 'Nota ' + r.score; tone($('mtScore'), r.tScore); $('mtScore').hidden = r.incompleto;
+  $('mScore').parentElement.hidden = r.incompleto;
   $('pSay').textContent = r.incompleto ? 'Preencha os passos 1 a 3 para ver a nota.' : r.score >= 75 ? 'Bem encaminhada. Falta acertar detalhes.' : r.score >= 50 ? 'Tem base, mas precisa de disciplina nos próximos meses.' : 'Precisa começar agora. Do jeito que está, não passa.';
   $('pPlacas').textContent = ok(r.placas) ? int(r.placas) : '–';
   const m = mesesAte(REG.prazoFinal);
