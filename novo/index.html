@@ -936,6 +936,20 @@ body[data-view="inicio"] .fab-help{display:none!important}
 .hero-foot{position:absolute;left:0;right:0;bottom:4px;text-align:center;font-size:.78rem;color:#6E7686}
 @media (max-width:560px){.hero-foot{display:none}.hero-vis{padding-bottom:40px}.chip-a{left:-6px;bottom:10px}.chip-b{right:-6px;top:4px}}
 
+.worries{max-width:480px;padding:0;display:grid;gap:14px}
+.w-k{font:600 .82rem var(--f-display);letter-spacing:.1em;text-transform:uppercase;color:#39D0B8}
+.wlist{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.wlist li{display:flex;gap:14px;align-items:flex-start;padding:16px 18px;border-radius:16px;background:linear-gradient(180deg,rgba(255,255,255,.08),rgba(255,255,255,.035));border:1px solid rgba(255,255,255,.1);backdrop-filter:blur(8px);transition:transform .2s,border-color .2s,background .2s}
+.wlist li:hover{transform:translateX(-4px);border-color:rgba(57,208,184,.45);background:linear-gradient(180deg,rgba(57,208,184,.12),rgba(255,255,255,.04))}
+.wlist li:nth-child(even){margin-left:22px}
+.w-ic{flex:none;width:38px;height:38px;border-radius:11px;display:grid;place-items:center;background:rgba(240,168,60,.14)}
+.w-ic svg{width:20px;height:20px;fill:none;stroke:#F3B451;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.wlist b{display:block;color:#FFFFFF;font:600 1.02rem/1.3 var(--f-display)}
+.wlist small{display:block;margin-top:4px;color:#AEB6C4;font-size:.9rem;line-height:1.45}
+.w-foot{display:flex;align-items:center;gap:8px;color:#39D0B8;font-weight:600;font-size:.92rem}
+.w-foot::before{content:"";width:18px;height:2px;background:#39D0B8}
+@media (max-width:560px){.wlist li:nth-child(even){margin-left:0}}
+.hero{padding-bottom:88px}
 .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr));margin-top:56px;border:1px solid rgba(255,255,255,.1);border-radius:18px;background:rgba(255,255,255,.03);overflow:hidden}
 .stats div{padding:20px 22px;display:grid;gap:4px;border-left:1px solid rgba(255,255,255,.08)}
 .stats div:first-child{border-left:0}
@@ -1123,7 +1137,7 @@ body[data-view="inicio"] .fab-help{display:none!important}
       <div class="hero-txt">
         <p class="hero-badge"><span class="dot-live" aria-hidden="true"></span>Regra nova da SUSEP · LC 213/2025 e Res. CNSP 491/2026</p>
         <h1>Sua associação está pronta para a <span class="grad">SUSEP</span>?</h1>
-        <p class="hero-lede">Descubra em 5 minutos quanto guardar até <b>07/05/2028</b>, quanto separar por mês e o boleto certo de cada associado.</p>
+        <p class="hero-lede">Boleto que vai subir, caixa que não cobre uma perda total, repasse que não paga a estrutura. Descubra em 5 minutos onde a sua associação está exposta e o que fazer até <b>07/05/2028</b>.</p>
         <div class="hero-ctas">
           <a class="btn big btn-glow" href="#diagnostico" id="heroGo">Calcular agora <span aria-hidden="true">→</span></a>
           <button type="button" class="btn big ghost-light" id="heroEx">Ver um exemplo</button>
@@ -1132,32 +1146,15 @@ body[data-view="inicio"] .fab-help{display:none!important}
         <p class="hero-resume" id="heroResume" hidden>Você já começou um diagnóstico neste aparelho. <a href="#resultado">Ver meu resultado →</a></p>
       </div>
 
-      <div class="hero-vis" aria-label="Exemplo de resultado">
-        <div class="mock">
-          <div class="mock-top"><i></i><i></i><i></i><span>Resultado · Associação Exemplo</span></div>
-          <div class="mock-body">
-            <p class="mk-k">Precisa ter guardado até 07/05/2028</p>
-            <p class="mk-v" id="hcMeta">R$ 367 mil</p>
-            <div class="mk-bar"><i id="hcBar" style="width:18%"></i></div>
-            <p class="mk-sub" id="hcHoje">Hoje tem R$ 68 mil, que é 18% da meta</p>
-            <div class="mk-rows">
-              <div><span>Guardar por mês</span><b id="hcGuardar">R$ 17 mil</b></div>
-              <div><span>Boleto certo por placa</span><b id="hcBoleto">R$ 138,83</b></div>
-            </div>
-          </div>
-        </div>
-        <div class="chip chip-a"><span class="ring-mini" id="hcRing" style="--p:58"><b id="hcNota">58</b></span><div><small>Nota de preparo</small><b id="hcStatus">Dá para chegar lá</b></div></div>
-        <div class="chip chip-b"><span class="chip-ic" aria-hidden="true">✓</span><div><small>Plano de 18 meses</small><b>4 fases, passo a passo</b></div></div>
-        <p class="hero-foot" id="hcFoot">Exemplo: associação com faturamento de R$ 120 mil por mês</p>
-      </div>
-    </div>
-
-    <div class="wrap">
-      <div class="stats">
-        <div><b id="ugDias">–</b><span>dias até o prazo final</span></div>
-        <div><b>64</b><span>projetos de administradora na fila da SUSEP</span></div>
-        <div><b>0</b><span>administradoras autorizadas até 30/09/2026</span></div>
-        <div><b>3</b><span>partes obrigatórias no boleto: taxa, rateio e estabilização</span></div>
+      <div class="hero-vis worries rv" aria-label="O que preocupa a diretoria">
+        <p class="w-k">O que tira o sono da diretoria</p>
+        <ul class="wlist">
+          <li><span class="w-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 2h12v20l-3-2-3 2-3-2-3 2V2z"/><path d="M9 7h6M9 11h6"/></svg></span><div><b>“Quanto o boleto vai subir?”</b><small>Veja o boleto certo de cada tipo de veículo antes de sentar com a administradora.</small></div></li>
+          <li><span class="w-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 17h14l-1.5-6.5A2 2 0 0 0 15.6 9H8.4a2 2 0 0 0-1.9 1.5L5 17z"/><circle cx="8" cy="18" r="1.6"/><circle cx="16" cy="18" r="1.6"/></svg></span><div><b>“O caixa aguenta uma perda total?”</b><small>A reserva é calculada com o veículo mais caro da carteira e os eventos em aberto.</small></div></li>
+          <li><span class="w-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 21h18M5 21V10l7-6 7 6v11"/><path d="M10 21v-6h4v6"/></svg></span><div><b>“A associação sobrevive só com o repasse?”</b><small>Simule a taxa e o repasse e veja se pagam a estrutura que vocês têm hoje.</small></div></li>
+          <li><span class="w-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 4.5-3.4 8.3-8 9-4.6-.7-8-4.5-8-9V6l8-3z"/><path d="M12 8v5M12 16h.01"/></svg></span><div><b>“A diretoria responde se faltar dinheiro?”</b><small>Pela lei, os diretores respondem junto se faltar provisão. O plano mostra o que arrumar primeiro.</small></div></li>
+        </ul>
+        <p class="w-foot">O Raio-X responde as quatro com os números da sua associação.</p>
       </div>
     </div>
   </section>
@@ -3459,15 +3456,7 @@ $('stNext').addEventListener('click', () => passo < STEPS.length ? showStep(pass
   const corNota = n => n >= 75 ? '#16A06A' : n >= 50 ? '#D99A1E' : '#D9482B';
   try{
     const x = calc(EXEMPLO);
-    const f = Math.max(0, Math.min(1, x.reserva / x.metaReserva));
-    $('hcMeta').textContent = brlShort(x.metaReserva);
-    $('hcHoje').textContent = 'Hoje tem ' + brlShort(x.reserva) + ', que é ' + pct(f, 0) + ' da meta';
-    $('hcBar').style.width = Math.max(3, f * 100).toFixed(0) + '%';
-    $('hcGuardar').textContent = brlShort(x.guardarMes);
-    $('hcBoleto').textContent = brl(x.ticketCerto, true);
-    $('hcNota').textContent = x.score;
-    $('hcStatus').textContent = x.statusTxt;
-    [$('hcRing'), $('bxRing')].forEach(el => { el.style.setProperty('--p', x.score); el.style.setProperty('--rc', corNota(x.score)); });
+    $('bxRing').style.setProperty('--p', x.score); $('bxRing').style.setProperty('--rc', corNota(x.score));
     // 01: reserva crescendo até a meta
     $('bxMeta').textContent = brlShort(x.metaReserva);
     $('bxGuardar').textContent = brlShort(x.guardarMes);
@@ -3488,8 +3477,6 @@ $('stNext').addEventListener('click', () => passo < STEPS.length ? showStep(pass
     const pr = prioridades(x).slice(0, 3);
     if(pr.length) $('bxPrio').innerHTML = pr.map(p => `<li>${p.t}</li>`).join('');
   }catch(e){}
-  const dias = Math.ceil((REG.prazoFinal - new Date()) / 864e5);
-  $('ugDias').textContent = dias > 0 ? dias.toLocaleString('pt-BR') : '0';
   // linha do tempo: o que já passou e o próximo marco
   const hoje = new Date(); let prox = null;
   document.querySelectorAll('#tl li').forEach((li, i, all) => {
