@@ -903,6 +903,12 @@ body[data-view="inicio"] .fab-help{display:none!important}
 .hero-lede b{color:#FFFFFF;font-weight:600}
 .hero-ctas{display:flex;flex-wrap:wrap;gap:12px;margin-top:32px}
 .btn-glow{background:linear-gradient(180deg,#19B9A6,#0E9483)!important;border-color:transparent!important;color:#FFFFFF!important;box-shadow:0 10px 30px -8px rgba(17,165,148,.65),inset 0 1px 0 rgba(255,255,255,.25)!important;transition:transform .15s,box-shadow .15s}
+.btn-glow{position:relative;overflow:hidden}
+.btn-glow.apertado{transform:scale(.97)}
+.onda{position:absolute;width:12px;height:12px;margin:-6px 0 0 -6px;border-radius:50%;background:rgba(255,255,255,.55);pointer-events:none;animation:onda .5s ease-out forwards}
+@keyframes onda{to{transform:scale(28);opacity:0}}
+.v-in{animation:vIn .45s cubic-bezier(.2,.7,.2,1) both}
+@keyframes vIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
 .btn-glow:hover{transform:translateY(-1px);box-shadow:0 14px 36px -8px rgba(17,165,148,.8),inset 0 1px 0 rgba(255,255,255,.25)!important}
 .hero .ghost-light,.lp-final .ghost-light{border-color:rgba(255,255,255,.22);color:#FFFFFF}
 .hero .ghost-light:hover,.lp-final .ghost-light:hover{background:rgba(255,255,255,.06)}
@@ -1218,8 +1224,8 @@ body[data-view="inicio"] .fab-help{display:none!important}
       <ol class="tl rv" id="tl">
         <li data-d="2025-07-15"><span>15/07/2025</span><b>Fim do cadastro na SUSEP</b><small>Quem não se cadastrou não pode operar</small></li>
         <li data-d="2026-05-06"><span>06/05/2026</span><b>Res. CNSP 491 publicada</b><small>As regras de rateio, reserva e administradora</small></li>
-        <li data-d="2026-11-01"><span>~01/11/2026</span><b>Opção de encerrar</b><small>Prazo para quem decidir parar</small></li>
-        <li data-d="2027-06-01"><span>2027</span><b>Escolher a administradora</b><small>Sugestão: comparar propostas e negociar com tempo</small></li>
+        <li data-d="2026-08-06"><span>Ago/2026</span><b>64 administradoras na fila</b><small>Projetos que pediram autorização à SUSEP</small></li>
+        <li data-d="2099-01-01"><span>Em breve</span><b>Primeiras autorizações</b><small>A SUSEP ainda não divulgou a data. Depois delas, é hora de comparar propostas</small></li>
         <li data-d="2028-05-07"><span>07/05/2028</span><b>Prazo final</b><small>Contrato com administradora autorizada</small></li>
       </ol>
     </div>
@@ -3382,6 +3388,7 @@ document.querySelectorAll('.fields > .field').forEach(fl => {
 });
 
 /* ======================= NAVEGAÇÃO: capa → diagnóstico → resultado ======================= */
+const reduzMov = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
 const VIEWS = {inicio:'view-inicio', diagnostico:'tab-preencher', resultado:'view-resultado'};
 const ALIAS = {'':'inicio', preencher:'diagnostico', boleto:'rateio', plano:'sec-plano', especialista:'lead', entenda:'dEnt', regras:'dAdm', simulador:'dSim', repasse:'dRep'};
 const STEPS = [...document.querySelectorAll('#f > .step')];
@@ -3393,6 +3400,7 @@ function showView(v){
   if(!VIEWS[v]) v = 'inicio';
   const mudou = v !== viewAtual;
   viewAtual = v;
+  if(mudou && !reduzMov){ const el = $(VIEWS[v]); el.classList.remove('v-in'); void el.offsetWidth; el.classList.add('v-in'); }
   Object.entries(VIEWS).forEach(([k, id]) => $(id).hidden = k !== v);
   document.body.dataset.view = v;
   hideTip();
@@ -3435,6 +3443,14 @@ document.addEventListener('click', e => {
   if(!a) return;
   const h = a.getAttribute('href').slice(1);
   if(h === 'conteudo') return;
+  if(a.classList.contains('btn-glow') && !reduzMov){
+    e.preventDefault();
+    const b = a.getBoundingClientRect(), o = document.createElement('span');
+    o.className = 'onda'; o.style.left = (e.clientX - b.left) + 'px'; o.style.top = (e.clientY - b.top) + 'px';
+    a.appendChild(o); a.classList.add('apertado');
+    setTimeout(() => { a.classList.remove('apertado'); o.remove(); irPara(h); }, 260);
+    return;
+  }
   if(irPara(h)) e.preventDefault();
 });
 window.addEventListener('popstate', () => irPara(location.hash.slice(1), false));
