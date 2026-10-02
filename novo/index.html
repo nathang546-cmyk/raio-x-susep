@@ -2022,9 +2022,10 @@ body[data-view="inicio"] .hero{padding-top:160px}
     <form class="lead-form" id="leadForm" novalidate autocomplete="on">
       <div class="lead-grid">
         <div class="field"><label for="leadNome">Seu nome</label><div class="input compact text"><input id="leadNome" autocomplete="name" placeholder="Ex.: Carlos"></div></div>
+        <div class="field"><label for="leadTel">WhatsApp ou telefone</label><div class="input compact"><input id="leadTel" type="tel" inputmode="tel" autocomplete="tel-national" placeholder="(11) 91234-5678" maxlength="16"></div></div>
         <div class="field"><label for="leadCargo">Cargo</label><div class="input compact"><select id="leadCargo"><option value="">Escolha</option><option>Presidente</option><option>Diretor(a)</option><option>Gerente</option><option>Financeiro</option><option>Consultor(a)</option><option>Outro</option></select></div></div>
         <div class="field"><label for="leadAssoc">Associação</label><div class="input compact text"><input id="leadAssoc" autocomplete="organization"></div></div>
-        <div class="field"><label for="leadCidade">Cidade e estado</label><div class="input compact text"><input id="leadCidade" autocomplete="address-level2" placeholder="Ex.: Belo Horizonte/MG"></div></div>
+        <div class="field" style="grid-column:1/-1"><label for="leadCidade">Cidade e estado</label><div class="input compact text"><input id="leadCidade" autocomplete="address-level2" placeholder="Ex.: Belo Horizonte/MG"></div></div>
       </div>
       <label class="check"><input type="checkbox" id="leadOk"> <span>Autorizo enviar este resumo à GestiHub para entrarem em contato comigo. <a href="https://www.gestihub.com.br/politica-de-privacidade.html" target="_blank" rel="noopener">Política de privacidade</a></span></label>
       <div class="copyrow"><a class="btn" id="leadWa" href="https://wa.me/551151785642" target="_blank" rel="noopener">Enviar pelo WhatsApp</a><span class="err" id="leadErr" aria-live="polite"></span></div>
@@ -3368,11 +3369,13 @@ function ghCard(nf){
 let ajudaCtx = 'resultado do diagnóstico';
 function leadMsg(){
   const r = R;
+  const tel = $('leadTel').value.trim();
   const nome = $('leadNome').value.trim(), cargo = $('leadCargo').value, assoc = $('leadAssoc').value.trim() || $('nome').value.trim(), cid = $('leadCidade').value.trim();
   const linhas = [
     'Olá, GestiHub! Usei o Raio-X SUSEP e quero ajuda para organizar a minha associação para a regra da SUSEP.',
     '',
     'Nome: ' + (nome || '-') + (cargo ? ' (' + cargo + ')' : ''),
+    'Telefone: ' + (tel || '-'),
     'Associação: ' + (assoc || '-') + (cid ? ' · ' + cid : ''),
     'Estava em: ' + ajudaCtx
   ];
@@ -3407,15 +3410,19 @@ document.addEventListener('click', e => { const b = e.target.closest && e.target
 $('ajudaFechar').addEventListener('click', fecharAjuda);
 $('ajuda').addEventListener('click', e => { if(e.target === $('ajuda')) fecharAjuda(); });
 document.addEventListener('keydown', e => { if(e.key === 'Escape' && !$('ajuda').hidden) fecharAjuda(); });
+$('leadTel').addEventListener('input', () => {
+  const d = $('leadTel').value.replace(/D/g, '').slice(0, 11);
+  $('leadTel').value = d.length > 10 ? `(${d.slice(0,2)}) ${d.slice(2,7)}-${d.slice(7)}` : d.length > 6 ? `(${d.slice(0,2)}) ${d.slice(2,6)}-${d.slice(6)}` : d.length > 2 ? `(${d.slice(0,2)}) ${d.slice(2)}` : d;
+});
 $('leadForm').addEventListener('input', leadUpd);
 $('leadForm').addEventListener('change', leadUpd);
 $('leadForm').addEventListener('submit', e => e.preventDefault());
 $('leadWa').addEventListener('click', e => {
-  const semNome = !$('leadNome').value.trim(), semOk = !$('leadOk').checked;
-  if(semNome || semOk){
+  const semNome = !$('leadNome').value.trim(), semTel = $('leadTel').value.replace(/D/g, '').length < 10, semOk = !$('leadOk').checked;
+  if(semNome || semTel || semOk){
     e.preventDefault();
-    $('leadErr').textContent = semNome ? 'Escreva o seu nome.' : 'Marque a autorização para enviar.';
-    (semNome ? $('leadNome') : $('leadOk')).focus();
+    $('leadErr').textContent = semNome ? 'Escreva o seu nome.' : semTel ? 'Escreva o seu telefone com DDD.' : 'Marque a autorização para enviar.';
+    (semNome ? $('leadNome') : semTel ? $('leadTel') : $('leadOk')).focus();
     return;
   }
   $('leadErr').textContent = '';
