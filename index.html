@@ -916,6 +916,16 @@ body.modal-on{overflow:hidden}
 .destline i.d-assoc{background:transparent;border:2px solid var(--s-adm)}
 .destline i.d-grupo{background:var(--accent)}
 
+/* sanfonas brancas, que ficam verdes ao passar o mouse; abrir e dicas com entrada suave */
+.det>summary{background:var(--surface)!important;border:1px solid var(--line)!important;transition:background .2s,border-color .2s,box-shadow .2s}
+.det>summary:hover{background:var(--accent-soft)!important;border-color:var(--accent)!important}
+.det[open]>summary{border-color:var(--accent)!important;box-shadow:0 0 0 3px var(--accent-soft)}
+.det[open]>.det-body{animation:abre .32s ease-out}
+@keyframes abre{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:none}}
+#tip:not([hidden]){animation:tipIn .18s ease-out}
+@keyframes tipIn{from{opacity:0;transform:translateY(5px) scale(.96)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.det[open]>.det-body,#tip:not([hidden]){animation:none}}
+
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
 </head>
@@ -1234,7 +1244,7 @@ body.modal-on{overflow:hidden}
     </div>
     <div class="lead-side">
       <ul class="lead-list">
-        <li><b>Financeiro organizado num sistema</b>, já no padrão que a SUSEP pede.</li>
+        <li><b>Um sistema completo</b> para organizar o financeiro da associação.</li>
         <li><b>Rateio e provisões fechados todo mês</b>, com a prestação de contas pronta.</li>
         <li><b>Consultoria</b> para entender o resultado e cumprir o plano até 2028.</li>
       </ul>
@@ -1488,7 +1498,7 @@ body.modal-on{overflow:hidden}
       <li><b>Mandar a prestação de contas</b> para os associados todo mês.</li>
     </ol>
     <div class="cta-mini">
-      <div><b>Quer fazer isso todo mês num sistema, já no padrão da SUSEP?</b><span>Rateio, provisões e prestação de contas organizados. Quando a administradora chegar, você só ajusta o que for do jeito dela.</span></div>
+      <div><b>Quer ajuda para fazer isso com um sistema completo?</b><span>Rateio, provisões e prestação de contas organizados todo mês. Quando escolher a administradora, você só ajusta o que for do jeito dela.</span></div>
       <div class="cta-btns"><button type="button" class="btn" data-ajuda="rateio e provisões">Falar com um especialista</button><a class="btn ghost" href="#boleto">Ver o boleto com os meus números</a></div>
     </div>
   </section>
@@ -1497,8 +1507,8 @@ body.modal-on{overflow:hidden}
 
 <div class="wrap results" id="tab-regras" role="tabpanel" aria-labelledby="tb-regras" hidden>
   <section id="adms">
-    <div class="sec-head"><p class="kicker">Administradoras</p><h2>Quem pediu autorização à SUSEP</h2><p>Projetos que pediram análise prioritária até 03/08/2026. A SUSEP divulgou só os nomes. Quando uma delas abre a empresa ou tem andamento na SUSEP, aparece aqui (CNPJ conferido na base da Receita Federal de 09/2026).</p></div>
-    <div class="tiles">
+    <div class="sec-head"><p class="kicker">Administradoras</p><h2>Quem pediu autorização à SUSEP</h2><p>Os projetos que pediram análise prioritária à SUSEP até 03/08/2026. Estar na lista não é autorização.</p></div>
+    <div class="tiles" hidden>
       <div class="tile"><span class="tl">Projetos na fila</span><span class="tv" id="admTot">64</span><span class="td">lista oficial da SUSEP</span></div>
       <div class="tile tone-bad"><span class="tl">Autorizadas</span><span class="tv">0</span><span class="td"><b>nenhuma</b> até 30/09/2026</span></div>
       <div class="tile"><span class="tl">Prazo para ter contrato</span><span class="tv">07/05/2028</span><span class="td">com administradora já autorizada</span></div>
@@ -2896,7 +2906,7 @@ function renderAdms(){
   const L = ADMS.filter(a => !q || semAcento(a.n).includes(q));
   $('admTot').textContent = ADMS.length;
   $('admCount').textContent = q ? `${L.length} de ${ADMS.length}` : '';
-  $('admList').innerHTML = L.length ? L.map(a => `<div class="admchip${a.and ? ' tem' : ''}"><b>${esc(a.n)}</b>${a.cnpj ? `<span>CNPJ ${esc(a.cnpj)}</span>` : ''}${a.and ? `<span class="and">${esc(a.and)}</span>` : ''}</div>`).join('')
+  $('admList').innerHTML = L.length ? L.map(a => `<div class="admchip"><b>${esc(a.n)}</b></div>`).join('')
     : '<div class="empty" style="grid-column:1/-1">Nenhum projeto com esse nome na lista da SUSEP.</div>';
 }
 $('admBusca').addEventListener('input', renderAdms);
