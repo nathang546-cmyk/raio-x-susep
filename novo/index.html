@@ -1138,6 +1138,41 @@ body[data-view="inicio"] .fab-help{display:none!important}
 .rh-ans .bar i{display:block;height:100%;background:#39D0B8;border-radius:999px}
 .rh-ans b{color:#FFFFFF}
 .rh-acts{display:flex;flex-wrap:wrap;gap:10px}
+.rh-verdict{font-size:clamp(1.05rem,1.6vw,1.2rem);line-height:1.5;max-width:70ch;color:var(--ink)}
+.rh-verdict a{color:var(--accent);font-weight:700}
+.kpi3{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,250px),1fr));gap:14px}
+.kc{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:20px 22px;display:grid;gap:8px;align-content:start;position:relative;overflow:hidden}
+.kc::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--tone,var(--line))}
+.kc-k{font-size:.85rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+.kc-v{font:700 clamp(1.9rem,3.4vw,2.5rem)/1 var(--f-display);letter-spacing:-.02em}
+.kc-s{color:var(--muted);font-size:.93rem;line-height:1.45}
+.kc-s b{color:var(--ink)}
+.kc-bar{height:8px;border-radius:999px;background:var(--sunk);overflow:hidden}
+.kc-bar i{display:block;height:100%;border-radius:999px;background:var(--tone,var(--accent))}
+.prio-list{list-style:none;margin:0;padding:0;display:grid;gap:10px;counter-reset:pl}
+.prio-list li{counter-increment:pl;display:flex;gap:16px;align-items:flex-start;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:16px 18px}
+.prio-list li::before{content:counter(pl);flex:none;width:34px;height:34px;border-radius:10px;display:grid;place-items:center;font:700 1rem var(--f-display);background:var(--sunk);color:var(--ink)}
+.prio-list li.sev-alta::before{background:var(--bad-soft);color:var(--bad)}
+.prio-list li.sev-media::before{background:var(--warn-soft);color:var(--warn)}
+.prio-list li b{font-size:1.02rem}
+.prio-list li p{color:var(--muted);margin-top:3px}
+.prio-list li.prio-mais,.prio-list li.prio-ok{background:transparent;border-style:dashed}
+.prio-list li.prio-mais::before{content:"+"}
+.prio-list li.prio-ok::before{content:"✓";background:var(--ok-soft);color:var(--ok)}
+.prio-list li.prio-mais a{color:var(--accent);font-weight:700;align-self:center}
+.bol-card{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:22px;display:grid;gap:14px}
+.bol-top{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;flex-wrap:wrap}
+.bol-top>div{display:grid;gap:4px}
+.bol-v{font:700 clamp(1.8rem,3vw,2.3rem)/1 var(--f-display)}
+.bol-mod{font-size:.85rem;font-weight:700;color:var(--accent);background:var(--accent-soft);padding:5px 12px;border-radius:999px}
+.bol-tipos{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;border-top:1px solid var(--line);padding-top:14px}
+.bol-tipos div{display:grid;gap:2px;background:var(--bg);border-radius:12px;padding:12px 14px}
+.bol-tipos span{font-size:.88rem;color:var(--muted);font-weight:600}
+.bol-tipos b{font:700 1.3rem var(--f-display)}
+.bol-tipos small{color:var(--muted)}
+.bol-more{color:var(--muted);font-size:.93rem}
+.bol-more a{color:var(--accent);font-weight:700}
+#view-resultado #saveBox{display:none}
 .rh-idx{display:flex;flex-wrap:wrap;align-items:center;gap:8px;border-top:1px solid var(--line);padding-top:14px}
 .rh-idx span{color:var(--muted);font-size:.9rem;margin-right:2px}
 .rh-idx a{padding:6px 14px;border-radius:999px;background:var(--surface);border:1px solid var(--line);color:var(--ink);font-weight:600;font-size:.92rem;text-decoration:none}
@@ -1539,7 +1574,8 @@ body[data-view="inicio"] .fab-help{display:none!important}
       </div>
       <span class="pill" id="rhNota" hidden>–</span>
     </div>
-    <div class="rh-ans" id="rhAns"></div>
+    <p class="rh-verdict" id="rhVerdict"></p>
+    <div class="kpi3" id="rhKpis"></div>
     <div class="rh-acts">
       <a class="btn small btn-wa" id="rhWa" href="https://wa.me/" target="_blank" rel="noopener">Mandar o resumo no WhatsApp</a>
       <button type="button" class="btn small ghost" id="rhPrint">Imprimir ou salvar PDF</button>
@@ -1548,28 +1584,14 @@ body[data-view="inicio"] .fab-help{display:none!important}
     <nav class="rh-idx" aria-label="Partes do resultado"><span>Ir para:</span><a href="#boleto">Boleto</a><a href="#plano">Plano até 2028</a><a href="#especialista">Falar com especialista</a><a href="#aprofundar">Aprofundar</a></nav>
   </section>
 
-  <section id="resumo3">
-    <div class="sec-head"><p class="kicker">Seu resultado</p><h2>O que a sua associação precisa fazer</h2></div>
-    <div class="r3" id="r3"></div>
+  <section id="prioridades">
+    <div class="sec-head"><p class="kicker">Por onde começar</p><h2>O que resolver primeiro</h2><p>Em ordem de urgência. Cada item já está no plano mais abaixo.</p></div>
+    <ol class="prio-list" id="prioList"></ol>
   </section>
 
-  <section id="rateio">
-    <div class="sec-head"><p class="kicker">Boleto e rateio</p><h2>Como fica o boleto do jeito certo</h2><p>O boleto vem em 3 partes. Cada um paga conforme o valor e o risco do veículo.</p></div>
-    <div class="modsel">
-      <p class="modsel-q">Como a estabilização vai ser usada? <button type="button" class="info" data-g="estabilizacao" aria-label="O que é estabilização?">?</button></p>
-      <div class="choices" role="radiogroup" aria-label="Modelo de boleto">
-        <div class="choice"><input type="radio" name="modelo" id="mod_fixo" value="fixo" checked><label for="mod_fixo"><b>Boleto fixo</b><span>A estabilização cobre o custo médio dos eventos. O rateio só entra se a reserva não der conta. Quando a reserva enche, o boleto baixa.</span></label></div>
-        <div class="choice"><input type="radio" name="modelo" id="mod_var" value="variavel"><label for="mod_var"><b>Boleto que varia</b><span>A estabilização é pequena. O rateio cobra o custo real de cada período, então o boleto sobe e desce.</span></label></div>
-      </div>
-      <p class="hint">As duas formas cumprem a regra. Na média do ano, o associado paga o mesmo. Muda o quanto o boleto varia.</p>
-    </div>
-    <div class="formula" id="formula"></div>
-    <div class="vizgrid">
-      <article class="viz wide" id="vzDoze"></article>
-      <article class="viz wide" id="vzFaixa"></article>
-      <article class="viz wide" id="vzTipos"></article>
-    </div>
-    <div id="models" style="margin-top:16px"></div>
+  <section id="boleto-resumo">
+    <div class="sec-head"><p class="kicker">Boleto</p><h2>Como deve ser o boleto</h2><p>Valor médio por placa, separado em três partes, da forma que a SUSEP exige.</p></div>
+    <div class="bol-card" id="bolResumo"></div>
   </section>
 
   <section id="sec-plano">
@@ -1612,6 +1634,26 @@ body[data-view="inicio"] .fab-help{display:none!important}
 
   <section id="aprofundar" class="mais">
     <div class="sec-head"><p class="kicker">Quer se aprofundar?</p><h2>Tudo o que está por trás do resultado</h2><p>Abra só o que interessar.</p></div>
+    <details class="det" id="dBol"><summary><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2h12v20l-3-2-3 2-3-2-3 2V2z"/><path d="M9 7h6M9 11h6M9 15h4"/></svg><span class="det-a">O boleto em detalhe</span><span class="det-f">Fechar</span><small>boleto fixo ou que varia, os próximos 12 meses, quando o boleto tem que baixar e o valor por tipo de veículo</small></summary><div class="det-body">
+    <section id="rateio">
+      <div class="sec-head"><p class="kicker">Boleto e rateio</p><h2>Como fica o boleto do jeito certo</h2><p>O boleto vem em 3 partes. Cada um paga conforme o valor e o risco do veículo.</p></div>
+      <div class="modsel">
+        <p class="modsel-q">Como a estabilização vai ser usada? <button type="button" class="info" data-g="estabilizacao" aria-label="O que é estabilização?">?</button></p>
+        <div class="choices" role="radiogroup" aria-label="Modelo de boleto">
+          <div class="choice"><input type="radio" name="modelo" id="mod_fixo" value="fixo" checked><label for="mod_fixo"><b>Boleto fixo</b><span>A estabilização cobre o custo médio dos eventos. O rateio só entra se a reserva não der conta. Quando a reserva enche, o boleto baixa.</span></label></div>
+          <div class="choice"><input type="radio" name="modelo" id="mod_var" value="variavel"><label for="mod_var"><b>Boleto que varia</b><span>A estabilização é pequena. O rateio cobra o custo real de cada período, então o boleto sobe e desce.</span></label></div>
+        </div>
+        <p class="hint">As duas formas cumprem a regra. Na média do ano, o associado paga o mesmo. Muda o quanto o boleto varia.</p>
+      </div>
+      <div class="formula" id="formula"></div>
+      <div class="vizgrid">
+        <article class="viz wide" id="vzDoze"></article>
+        <article class="viz wide" id="vzFaixa"></article>
+        <article class="viz wide" id="vzTipos"></article>
+      </div>
+      <div id="models" style="margin-top:16px"></div>
+    </section>
+    </div></details>
     <details class="det" id="detalhes">
       <summary><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19v-7M10 19V5M16 19v-4M22 21H2"/></svg><span class="det-a">Ver o diagnóstico completo</span><span class="det-f">Esconder o diagnóstico completo</span><small>nota detalhada, gráficos, todos os números e o que cada um quer dizer</small></summary>
       <div class="det-body">
@@ -1884,6 +1926,10 @@ body[data-view="inicio"] .fab-help{display:none!important}
     </section>
     </div></details>
   </section>
+<div hidden>  <section id="resumo3">
+    <div class="sec-head"><p class="kicker">Seu resultado</p><h2>O que a sua associação precisa fazer</h2></div>
+    <div class="r3" id="r3"></div>
+  </section></div>
 </div>
 
 <div class="ajuda" id="ajuda" hidden role="dialog" aria-modal="true" aria-labelledby="ajudaTit">
@@ -2521,13 +2567,40 @@ function renderHead(r){
   document.querySelector('.rh-acts').hidden = r.incompleto;
   $('rhNota').textContent = 'Nota ' + r.score + ' de 100 · ' + r.statusTxt;
   tone($('rhNota'), r.tScore);
-  if(r.incompleto || !isFinite(r.metaReserva)){ $('rhAns').innerHTML = ''; }
-  else {
+  const pr = r.incompleto ? [] : prioridades(r);
+  ['prioridades', 'boleto-resumo'].forEach(id => $(id).hidden = r.incompleto);
+  if(r.incompleto || !isFinite(r.metaReserva)){
+    $('rhVerdict').innerHTML = 'Preencha os passos 1 a 3 do diagnóstico para ver o resultado. <a href="#diagnostico">Ir para o diagnóstico →</a>';
+    $('rhKpis').innerHTML = '';
+  } else {
+    const verd = r.score >= 75 ? 'A associação está bem encaminhada.' : r.score >= 50 ? 'A associação tem base para chegar lá, mas precisa agir nos próximos meses.' : 'A associação precisa começar agora: do jeito que está, não chega pronta ao prazo.';
+    $('rhVerdict').innerHTML = verd + (pr.length ? ` Ponto mais urgente: <b>${pr[0].t.charAt(0).toLowerCase() + pr[0].t.slice(1)}</b>.` : '');
+    // os três números: o único lugar onde aparecem
     const f = Math.max(0, Math.min(1, r.reserva / r.metaReserva));
-    $('rhAns').innerHTML = `<p>Até <b>07/05/2028</b>, a associação precisa ter guardado</p>
-      <p class="big">${brlShort(r.metaReserva)}</p>
-      <div class="bar" aria-hidden="true"><i style="width:${Math.max(2, f * 100).toFixed(0)}%"></i></div>
-      <p>Hoje tem <b>${brlShort(r.reserva)}</b> (${pct(f, 0)} da meta). ${r.guardarMes > .5 ? `Para chegar lá, guarde <b>${brlShort(r.guardarMes)} por mês</b> e cobre, em média, <b>${brl(r.ticketCerto, true)}</b> por placa.` : `A reserva já está na meta. O boleto médio certo é <b>${brl(r.ticketCerto, true)}</b> por placa.`}</p>`;
+    const guarda = r.guardarMes > .5, dif = r.ticketCerto - r.ticket;
+    $('rhKpis').innerHTML = `
+      <article class="kc tone-${r.tRes}"><span class="kc-k">Reserva até 07/05/2028</span><b class="kc-v">${brlShort(r.metaReserva)}</b>
+        <div class="kc-bar" aria-hidden="true"><i style="width:${Math.max(3, f * 100).toFixed(0)}%"></i></div>
+        <span class="kc-s">Hoje tem ${brlShort(r.reserva)}, que é ${pct(f, 0)} da meta.</span></article>
+      <article class="kc tone-${guarda ? 'warn' : 'ok'}"><span class="kc-k">Guardar por mês</span><b class="kc-v">${guarda ? brlShort(r.guardarMes) : 'Nada a mais'}</b>
+        <span class="kc-s">${guarda ? `Nos ${REG.horizonte} meses que faltam, o que dá ${brl(r.guardarMes / (r.pagantes || 1), true)} por placa. ${REG.horizonte > 6 ? `Se começar só daqui a 3 meses, sobe para ${brlShort(r.faltaReserva / (REG.horizonte - 3))}.` : ''}` : 'A reserva já está na meta.'}</span></article>
+      <article class="kc tone-${r.tTicket}"><span class="kc-k">Boleto médio certo</span><b class="kc-v">${brl(r.ticketCerto, true)}</b>
+        <span class="kc-s">Hoje a associação cobra ${brl(r.ticket, true)}${dif > .5 ? `: faltam <b>${brl(dif, true)}</b> por placa.` : ', o que já cobre a conta.'}</span></article>`;
+    // prioridades com o porquê
+    $('prioList').innerHTML = pr.length ? pr.slice(0, 4).map(x => `<li class="sev-${x.sev >= 2.5 ? 'alta' : x.sev >= 1.8 ? 'media' : 'baixa'}"><div><b>${x.t}</b><p>${x.d}</p></div></li>`).join('')
+      + (pr.length > 4 ? `<li class="prio-mais"><a href="#plano">Mais ${pr.length - 4} ${pr.length - 4 === 1 ? 'ponto' : 'pontos'} no plano →</a></li>` : '')
+      : '<li class="prio-ok"><div><b>Nada urgente</b><p>Siga o plano até 07/05/2028 para manter a associação em dia.</p></div></li>';
+    // boleto resumido
+    const fx = r.modelo === 'fixo';
+    if(isFinite(r.ticketCerto)){
+      const a = r.admR, c = fx ? 0 : r.rateioR, e = fx ? r.estabFixa : r.estabR;
+      $('bolResumo').innerHTML = `
+        <div class="bol-top"><div><span class="kc-k">Boleto médio por placa</span><b class="bol-v">${brl(r.ticketCerto, true)}</b></div><span class="bol-mod">${fx ? 'Boleto fixo' : 'Boleto que varia'}</span></div>
+        ${segBoleto(a, c, e, 'Administração', r.ticketCerto)}
+        ${legBoleto(a, c, e, 'Administração', fx)}
+        ${r.ativos.length > 1 ? `<div class="bol-tipos">${r.ativos.map(t => `<div><span>${t.n}</span><b>${brl(t.boleto, true)}</b><small>${int(t.placas)} placas</small></div>`).join('')}</div>` : ''}
+        <p class="bol-more">${fx ? 'No boleto fixo, a estabilização cobre o custo médio dos eventos e o rateio só entra se a reserva não der conta.' : 'No boleto que varia, o rateio cobra o custo real de cada período.'} <a href="#dBol">Ver o boleto em detalhe →</a></p>`;
+    }
   }
   const txt = $('resumo').value;
   $('rhWa').href = 'https://wa.me/?text=' + encodeURIComponent(txt);
@@ -3428,7 +3501,7 @@ const reduzMov = window.matchMedia && matchMedia('(prefers-reduced-motion: reduc
 const _modoBarra = modoBarra;
 modoBarra = (c, m) => { _modoBarra(c, m); if(c === BAR_P) $('exbar').hidden = m === 'vazio'; };
 const VIEWS = {inicio:'view-inicio', diagnostico:'tab-preencher', resultado:'view-resultado'};
-const ALIAS = {'':'inicio', preencher:'diagnostico', boleto:'rateio', plano:'sec-plano', especialista:'lead', entenda:'dEnt', regras:'dAdm', simulador:'dSim', repasse:'dRep'};
+const ALIAS = {'':'inicio', preencher:'diagnostico', boleto:'boleto-resumo', rateio:'dBol', plano:'sec-plano', especialista:'lead', entenda:'dEnt', regras:'dAdm', simulador:'dSim', repasse:'dRep'};
 const STEPS = [...document.querySelectorAll('#f > .step')];
 const STEP_LBL = ['Sua associação','Faturamento','Eventos','Reserva e rateio','Papéis'];
 let viewAtual = 'inicio', passo = 1;
