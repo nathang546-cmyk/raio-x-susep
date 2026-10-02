@@ -2022,7 +2022,7 @@ body[data-view="inicio"] .hero{padding-top:160px}
     <form class="lead-form" id="leadForm" novalidate autocomplete="on">
       <div class="lead-grid">
         <div class="field"><label for="leadNome">Seu nome</label><div class="input compact text"><input id="leadNome" autocomplete="name" placeholder="Ex.: Carlos"></div></div>
-        <div class="field"><label for="leadTel">WhatsApp ou telefone</label><div class="input compact"><input id="leadTel" type="tel" inputmode="tel" autocomplete="tel-national" placeholder="(11) 91234-5678" maxlength="16"></div></div>
+        <div class="field"><label for="leadTel">WhatsApp ou telefone</label><div class="input compact"><input id="leadTel" type="tel" inputmode="tel" autocomplete="tel-national" placeholder="(11) 91234-5678" maxlength="22"></div></div>
         <div class="field"><label for="leadCargo">Cargo</label><div class="input compact"><select id="leadCargo"><option value="">Escolha</option><option>Presidente</option><option>Diretor(a)</option><option>Gerente</option><option>Financeiro</option><option>Consultor(a)</option><option>Outro</option></select></div></div>
         <div class="field"><label for="leadAssoc">Associação</label><div class="input compact text"><input id="leadAssoc" autocomplete="organization"></div></div>
         <div class="field" style="grid-column:1/-1"><label for="leadCidade">Cidade e estado</label><div class="input compact text"><input id="leadCidade" autocomplete="address-level2" placeholder="Ex.: Belo Horizonte/MG"></div></div>
@@ -3410,15 +3410,32 @@ document.addEventListener('click', e => { const b = e.target.closest && e.target
 $('ajudaFechar').addEventListener('click', fecharAjuda);
 $('ajuda').addEventListener('click', e => { if(e.target === $('ajuda')) fecharAjuda(); });
 document.addEventListener('keydown', e => { if(e.key === 'Escape' && !$('ajuda').hidden) fecharAjuda(); });
-$('leadTel').addEventListener('input', () => {
-  const d = $('leadTel').value.replace(/D/g, '').slice(0, 11);
-  $('leadTel').value = d.length > 10 ? `(${d.slice(0,2)}) ${d.slice(2,7)}-${d.slice(7)}` : d.length > 6 ? `(${d.slice(0,2)}) ${d.slice(2,6)}-${d.slice(6)}` : d.length > 2 ? `(${d.slice(0,2)}) ${d.slice(2)}` : d;
+// telefone: aceita qualquer jeito de digitar (com +55, com 0 antes do DDD, com espaços) e refaz a máscara
+function telPartes(v){
+  let d = String(v).replace(/\D/g, '');
+  let cc = '';
+  if(d.length > 11 && d.startsWith('55')){ cc = '55'; d = d.slice(2); }
+  d = d.replace(/^0+/, '');   // 0 antes do DDD (011...)
+  return {cc, d: d.slice(0, 11)};
+}
+function telFormata(v){
+  const {cc, d} = telPartes(v);
+  if(!d) return cc ? '+' + cc : '';
+  const ddd = d.slice(0, 2), num = d.slice(2), corte = num.length > 8 ? 5 : 4;
+  const base = d.length <= 2 ? '(' + ddd : '(' + ddd + ') ' + num.slice(0, corte) + (num.length > corte ? '-' + num.slice(corte) : '');
+  return (cc ? '+' + cc + ' ' : '') + base;
+}
+const telValido = v => { const n = telPartes(v).d.length; return n === 10 || n === 11; };
+$('leadTel').addEventListener('input', e => {
+  const el = $('leadTel'), fim = el.selectionStart === el.value.length;
+  el.value = telFormata(el.value);
+  if(fim) el.setSelectionRange(el.value.length, el.value.length);
 });
 $('leadForm').addEventListener('input', leadUpd);
 $('leadForm').addEventListener('change', leadUpd);
 $('leadForm').addEventListener('submit', e => e.preventDefault());
 $('leadWa').addEventListener('click', e => {
-  const semNome = !$('leadNome').value.trim(), semTel = $('leadTel').value.replace(/D/g, '').length < 10, semOk = !$('leadOk').checked;
+  const semNome = !$('leadNome').value.trim(), semTel = !telValido($('leadTel').value), semOk = !$('leadOk').checked;
   if(semNome || semTel || semOk){
     e.preventDefault();
     $('leadErr').textContent = semNome ? 'Escreva o seu nome.' : semTel ? 'Escreva o seu telefone com DDD.' : 'Marque a autorização para enviar.';
