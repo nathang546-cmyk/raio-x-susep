@@ -927,6 +927,14 @@ body.modal-on{overflow:hidden}
 .destline i.d-assoc{background:transparent;border:2px solid var(--s-adm)}
 .destline i.d-grupo{background:var(--accent)}
 
+/* sanfonas brancas, que ficam verdes ao passar o mouse; abrir e dicas com entrada suave */
+.det>summary{background:var(--surface)!important;border:1px solid var(--line)!important;transition:background .2s,border-color .2s,box-shadow .2s}
+.det>summary:hover{background:var(--accent-soft)!important;border-color:var(--accent)!important}
+.det[open]>summary{border-color:var(--accent)!important;box-shadow:0 0 0 3px var(--accent-soft)}
+.det[open]>.det-body{animation:abre .32s ease-out}
+@keyframes abre{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:none}}
+#tip:not([hidden]){animation:tipIn .18s ease-out}
+@keyframes tipIn{from{opacity:0;transform:translateY(5px) scale(.96)}to{opacity:1;transform:none}}
 /* ===== site em passos: capa, diagnóstico, resultado ===== */
 .shell,.side,.mtop,.tabs,.mbar,.gh-strip,#tab-preencher>.panel{display:none!important}
 body{padding-bottom:0!important}
@@ -1274,6 +1282,8 @@ body[data-view="inicio"] .hero{padding-top:160px}
   .sitehead,.fab-help,.rh-acts,.rh-ex,.mais,.sitefoot,#lead .cta-btns,.cta-mini{display:none!important}
   body{background:#FFFFFF}
 }
+
+@media (prefers-reduced-motion:reduce){.det[open]>.det-body,#tip:not([hidden]){animation:none}}
 
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
@@ -1692,7 +1702,7 @@ body[data-view="inicio"] .hero{padding-top:160px}
     </div>
     <div class="lead-side">
       <ul class="lead-list">
-        <li><b>Financeiro organizado num sistema</b>, já no padrão que a SUSEP pede.</li>
+        <li><b>Um sistema completo</b> para organizar o financeiro da associação.</li>
         <li><b>Rateio e provisões fechados todo mês</b>, com a prestação de contas pronta.</li>
         <li><b>Consultoria</b> para entender o resultado e cumprir o plano até 2028.</li>
       </ul>
@@ -1937,7 +1947,7 @@ body[data-view="inicio"] .hero{padding-top:160px}
         <li><b>Mandar a prestação de contas</b> para os associados todo mês.</li>
       </ol>
       <div class="cta-mini">
-        <div><b>Quer fazer isso todo mês num sistema, já no padrão da SUSEP?</b><span>Rateio, provisões e prestação de contas organizados. Quando a administradora chegar, você só ajusta o que for do jeito dela.</span></div>
+        <div><b>Quer ajuda para fazer isso com um sistema completo?</b><span>Rateio, provisões e prestação de contas organizados todo mês. Quando escolher a administradora, você só ajusta o que for do jeito dela.</span></div>
         <div class="cta-btns"><button type="button" class="btn" data-ajuda="rateio e provisões">Falar com um especialista</button><a class="btn ghost" href="#boleto">Ver o boleto com os meus números</a></div>
       </div>
     </section>
@@ -1946,8 +1956,8 @@ body[data-view="inicio"] .hero{padding-top:160px}
     <details class="det" id="dAdm"><summary><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 21h18M5 21V10l7-6 7 6v11"/><path d="M10 21v-6h4v6"/></svg><span class="det-a">Administradoras e regras</span><span class="det-f">Fechar</span><small>quem pediu autorização à SUSEP e o andamento das resoluções</small></summary><div class="det-body">
   
     <section id="adms">
-      <div class="sec-head"><p class="kicker">Administradoras</p><h2>Quem pediu autorização à SUSEP</h2><p>Projetos que pediram análise prioritária até 03/08/2026. A SUSEP divulgou só os nomes. Quando uma delas abre a empresa ou tem andamento na SUSEP, aparece aqui (CNPJ conferido na base da Receita Federal de 09/2026).</p></div>
-      <div class="tiles">
+      <div class="sec-head"><p class="kicker">Administradoras</p><h2>Quem pediu autorização à SUSEP</h2><p>Os projetos que pediram análise prioritária à SUSEP até 03/08/2026. Estar na lista não é autorização.</p></div>
+      <div class="tiles" hidden>
         <div class="tile"><span class="tl">Projetos na fila</span><span class="tv" id="admTot">64</span><span class="td">lista oficial da SUSEP</span></div>
         <div class="tile tone-bad"><span class="tl">Autorizadas</span><span class="tv">0</span><span class="td"><b>nenhuma</b> até 30/09/2026</span></div>
         <div class="tile"><span class="tl">Prazo para ter contrato</span><span class="tv">07/05/2028</span><span class="td">com administradora já autorizada</span></div>
@@ -1983,7 +1993,7 @@ body[data-view="inicio"] .hero{padding-top:160px}
       </div>
     </section>
     </div>
-    <details class="det" id="dShare"><summary><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12v8h16v-8M12 3v12M7 8l5-5 5 5"/></svg><span class="det-a">Resumo em texto para a diretoria</span><span class="det-f">Fechar</span><small>para copiar e colar no WhatsApp ou no e-mail</small></summary><div class="det-body">
+    <div hidden>
     <section class="share" id="compartilhar">
       <h2>Mande o resumo para a diretoria</h2>
       <p>Copie e cole no WhatsApp ou no e-mail.</p>
@@ -1993,7 +2003,7 @@ body[data-view="inicio"] .hero{padding-top:160px}
         <span class="ok-msg" id="copyMsg" aria-live="polite"></span>
       </div>
     </section>
-    </div></details>
+    </div>
   </section>
 <div hidden>  <section id="resumo3">
     <div class="sec-head"><p class="kicker">Seu resultado</p><h2>O que a sua associação precisa fazer</h2></div>
@@ -3425,7 +3435,7 @@ function renderAdms(){
   const L = ADMS.filter(a => !q || semAcento(a.n).includes(q));
   $('admTot').textContent = ADMS.length;
   $('admCount').textContent = q ? `${L.length} de ${ADMS.length}` : '';
-  $('admList').innerHTML = L.length ? L.map(a => `<div class="admchip${a.and ? ' tem' : ''}"><b>${esc(a.n)}</b>${a.cnpj ? `<span>CNPJ ${esc(a.cnpj)}</span>` : ''}${a.and ? `<span class="and">${esc(a.and)}</span>` : ''}</div>`).join('')
+  $('admList').innerHTML = L.length ? L.map(a => `<div class="admchip"><b>${esc(a.n)}</b></div>`).join('')
     : '<div class="empty" style="grid-column:1/-1">Nenhum projeto com esse nome na lista da SUSEP.</div>';
 }
 $('admBusca').addEventListener('input', renderAdms);
