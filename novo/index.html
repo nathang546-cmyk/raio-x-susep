@@ -1194,12 +1194,12 @@ body[data-view="inicio"] .fab-help{display:none!important}
         </div>
       </article>
       <article class="bx bx-c rv">
-        <div class="bx-txt"><span class="bx-n">03</span><h3>O que fazer</h3><p>Um plano de 18 meses, com as tarefas de cada fase até a escolha da administradora.</p></div>
-        <ol class="phases">
-          <li class="ok"><span>Meses 1–2</span><b>Arrumar a casa</b></li>
-          <li><span>Meses 3–6</span><b>Acertar o dinheiro e os papéis</b></li>
-          <li><span>Meses 7–12</span><b>Profissionalizar</b></li>
-          <li><span>Meses 13–18</span><b>Entrar na regra</b></li>
+        <div class="bx-txt"><span class="bx-n">03</span><h3>O que fazer</h3><p>Um plano mês a mês até 07/05/2028, com as tarefas de cada fase até a escolha da administradora.</p></div>
+        <ol class="phases" id="bxFases">
+          <li class="ok"><span>Começo</span><b>Arrumar a casa</b></li>
+          <li><span>Depois</span><b>Acertar o dinheiro e os papéis</b></li>
+          <li><span>Em seguida</span><b>Profissionalizar</b></li>
+          <li><span>Até 07/05/2028</span><b>Entrar na regra</b></li>
         </ol>
       </article>
       <article class="bx bx-d rv">
@@ -1518,7 +1518,7 @@ body[data-view="inicio"] .fab-help{display:none!important}
       <button type="button" class="btn small ghost" id="rhPrint">Imprimir ou salvar PDF</button>
       <a class="btn small ghost" href="#diagnostico">Editar respostas</a>
     </div>
-    <nav class="rh-idx" aria-label="Partes do resultado"><span>Ir para:</span><a href="#boleto">Boleto</a><a href="#plano">Plano de 18 meses</a><a href="#especialista">Falar com especialista</a><a href="#aprofundar">Aprofundar</a></nav>
+    <nav class="rh-idx" aria-label="Partes do resultado"><span>Ir para:</span><a href="#boleto">Boleto</a><a href="#plano">Plano até 2028</a><a href="#especialista">Falar com especialista</a><a href="#aprofundar">Aprofundar</a></nav>
   </section>
 
   <section id="resumo3">
@@ -1546,7 +1546,7 @@ body[data-view="inicio"] .fab-help{display:none!important}
   </section>
 
   <section id="sec-plano">
-    <div class="sec-head"><p class="kicker">Plano de 18 meses</p><h2>O que fazer, mês a mês</h2><p>O caminho até 07/05/2028. Toque em cada fase para ver as tarefas e marque o que já fez.</p></div>
+    <div class="sec-head"><p class="kicker">Plano até 07/05/2028</p><h2>O que fazer, mês a mês</h2><p>O caminho até 07/05/2028. Toque em cada fase para ver as tarefas e marque o que já fez.</p></div>
         <div class="caminho-sel">
       <p class="modsel-q">Qual caminho a associação vai seguir? <span class="opt">O plano muda conforme a escolha.</span></p>
       <div class="choices" role="radiogroup" aria-label="Caminho da associação">
@@ -1561,7 +1561,7 @@ body[data-view="inicio"] .fab-help{display:none!important}
     <div class="timeline" id="timeline"></div>
     <div class="cta-mini">
       <div><b>Plano no papel é fácil. Difícil é cumprir.</b><span>Um especialista acompanha cada fase com você, com o financeiro organizado no sistema.</span></div>
-      <div class="cta-btns"><button type="button" class="btn" data-ajuda="plano de 18 meses">Quero ajuda com o plano</button></div>
+      <div class="cta-btns"><button type="button" class="btn" data-ajuda="plano até 2028">Quero ajuda com o plano</button></div>
     </div>
   </section>
 
@@ -1900,9 +1900,20 @@ body[data-view="inicio"] .fab-help{display:none!important}
 const REG = {
   prazoFinal: new Date(2028, 4, 7),   // 07/05/2028: contrato com administradora autorizada (Res. CNSP 491, art. 2º)
   folga: 0.05,                        // estabilização mínima depois que a reserva estiver montada
-  horizonte: 18,
+  horizonte: 0,                       // meses de hoje até o prazo final (calculado logo abaixo)
   segAuto: 0.60                       // sinistralidade do seguro auto em 2025 (IRB+ / CNseg), só como comparação
 };
+// o plano vai de hoje até o prazo final: quem chega mais tarde tem menos meses e precisa guardar mais por mês.
+// Se a SUSEP prorrogar o prazo, basta trocar REG.prazoFinal.
+REG.horizonte = Math.max(4, mesesAte(REG.prazoFinal));
+// as 4 fases do plano, divididas na proporção de 2, 4, 6 e 6 meses de um plano de 18
+function fasesPlano(N){
+  const fim = [2 / 18, 6 / 18, 12 / 18, 1].map(x => Math.round(N * x));
+  fim.forEach((v, i) => { fim[i] = Math.max(v, i + 1, i ? fim[i - 1] + 1 : 1); });
+  fim[3] = Math.max(fim[3], N);
+  return fim.map((b, i) => ({a: i ? fim[i - 1] + 1 : 1, b}));
+}
+const mesesTxt = (a, b) => a === b ? 'Mês ' + a : 'Meses ' + a + '–' + b;
 /* glossário: explicação simples de cada termo técnico (aparece ao tocar no "?") */
 const GLOS = {
   sinistralidade:{t:'Sinistralidade', d:'Mostra quanto, de cada R$ 100 que entram, sai para pagar eventos como batidas, roubos e perdas totais. Assim, 66% significa R$ 66 de cada R$ 100.'},
@@ -2418,7 +2429,7 @@ function chartProj(r, simO, mexeu){
   const x = k => m.l + iw * k / N, y = v => m.t + ih * (1 - (v - lo) / (hi - lo));
   let g = '';
   for(let v = lo; v <= hi + 1; v += step){ g += `<line x1="${m.l}" x2="${W - m.r}" y1="${y(v).toFixed(1)}" y2="${y(v).toFixed(1)}" stroke="var(${Math.abs(v) < 1 ? '--axis' : '--grid'})" stroke-width="1"/><text x="${m.l - 8}" y="${(y(v) + 4).toFixed(1)}" text-anchor="end">${axisFmt(v)}</text>`; }
-  [0, 6, 12, 18].forEach(k => { g += `<text x="${x(k).toFixed(1)}" y="${H - 8}" text-anchor="${k === 0 ? 'start' : k === N ? 'end' : 'middle'}">${k === 0 ? 'hoje' : 'mês ' + k}</text>`; });
+  [...new Set([0, Math.round(N / 3), Math.round(N * 2 / 3), N])].forEach(k => { g += `<text x="${x(k).toFixed(1)}" y="${H - 8}" text-anchor="${k === 0 ? 'start' : k === N ? 'end' : 'middle'}">${k === 0 ? 'hoje' : 'mês ' + k}</text>`; });
   const meta = `<line x1="${m.l}" x2="${W - m.r}" y1="${y(r.metaReserva).toFixed(1)}" y2="${y(r.metaReserva).toFixed(1)}" stroke="var(--ink)" stroke-width="1"/><text class="lbl" x="${m.l + 6}" y="${(y(r.metaReserva) - 6).toFixed(1)}">meta ${brlShort(r.metaReserva)}</text>`;
   const lines = S.map(s => `<path d="${s.vals.map((v,k) => (k ? 'L' : 'M') + x(k).toFixed(1) + ' ' + y(v).toFixed(1)).join('')}" fill="none" stroke="var(${s.c})" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/><circle cx="${x(N).toFixed(1)}" cy="${y(s.vals[N]).toFixed(1)}" r="5" fill="var(${s.c})" stroke="var(--surface)" stroke-width="2"/>`).join('');
   el.innerHTML = `
@@ -2609,7 +2620,7 @@ function renderR3(r){
     <article class="r3-item tone-${pr.length ? 'bad' : 'ok'}">
       <span class="r3-n">3</span>
       <p class="r3-k">Resolver primeiro</p>
-      ${pr.length ? `<ul class="r3-l">${pr.map(p => `<li>${p.t}</li>`).join('')}</ul>` : '<p class="r3-s">Nada urgente. Siga o plano de 18 meses.</p>'}
+      ${pr.length ? `<ul class="r3-l">${pr.map(p => `<li>${p.t}</li>`).join('')}</ul>` : '<p class="r3-s">Nada urgente. Siga o plano até 07/05/2028.</p>'}
     </article>
     <p class="r3-foot">Prazo final: contrato com administradora autorizada pela SUSEP até <b>07/05/2028</b>. Nota do diagnóstico: <b>${r.score} de 100</b> (${r.statusTxt}).${isFinite(r.qb) ? ` ${gt('qualidade', 'Qualidade da carteira')}: <b>${r.qb} de 100</b> (${r.qbTxt}).` : ''}</p>`;
 }
@@ -2995,7 +3006,7 @@ function renderPlano(r){
     return;
   }
 
-  $('saveBox').innerHTML = isFinite(r.guardarMes) && r.guardarMes > 0 ? `<div class="save-box"><span class="big">${brlShort(r.guardarMes)}</span><p><b>É quanto guardar por mês</b> durante ${REG.horizonte} meses para chegar à reserva de ${brlShort(r.metaReserva)}. Dá ${brl(r.guardarMes / (r.pagantes||1), true)} por placa pagante, por mês.</p></div>` : '';
+  $('saveBox').innerHTML = isFinite(r.guardarMes) && r.guardarMes > 0 ? `<div class="save-box"><span class="big">${brlShort(r.guardarMes)}</span><p><b>É quanto guardar por mês</b> nos ${REG.horizonte} meses que faltam até 07/05/2028 para chegar à reserva de ${brlShort(r.metaReserva)}, o que dá ${brl(r.guardarMes / (r.pagantes||1), true)} por placa pagante.${REG.horizonte > 6 ? ` Se a associação deixar para começar daqui a 3 meses, o valor sobe para <b>${brlShort(r.faltaReserva / (REG.horizonte - 3))} por mês</b>.` : ''}</p></div>` : '';
 
   const f1 = [], f2 = [], f3 = [], f4 = [];
   if(r.susep === 'nao') f1.push(task('susep_nao','Procurar advogado sobre a falta de cadastro na SUSEP','Associação sem cadastro tem que parar de operar. Só volta depois de contratar administradora autorizada.', true));
@@ -3039,15 +3050,16 @@ function renderPlano(r){
   if(cam === 'cooperativa') f4.push(task('pedido_coop','Protocolar e acompanhar o pedido da cooperativa na SUSEP'));
   f4.push(task('rotina','Criar a rotina mensal da regra nova','Fechamento do mês, relatório para associados, apuração do rateio e revisão do boleto a cada 6 meses.'));
 
+  const FZ = fasesPlano(REG.horizonte);
   const P = [
-    {a:1,b:2, h:'Arrumar a casa', L:f1},
-    {a:3,b:6, h:'Acertar o dinheiro e os papéis', L:f2},
-    {a:7,b:12, h:'Profissionalizar', L:f3},
-    {a:13,b:18, h:'Entrar na regra', L:f4}
+    {...FZ[0], h:'Arrumar a casa', L:f1},
+    {...FZ[1], h:'Acertar o dinheiro e os papéis', L:f2},
+    {...FZ[2], h:'Profissionalizar', L:f3},
+    {...FZ[3], h:'Entrar na regra', L:f4}
   ];
   $('timeline').innerHTML = P.filter(p => p.L.length).map((p, i) => `
     <div class="phase">
-      <div class="when"><b>Meses ${p.a}–${p.b}</b><span>${mesLabel(p.a-1+off)} a ${mesLabel(p.b-1+off)}</span></div>
+      <div class="when"><b>${mesesTxt(p.a, p.b)}</b><span>${p.a === p.b ? mesLabel(p.a-1+off) : mesLabel(p.a-1+off) + ' a ' + mesLabel(p.b-1+off)}</span></div>
       <div class="phase-body"><details class="phase-d" ${i === 0 ? 'open' : ''}><summary><h3>${p.h}</h3><span class="cnt">${p.L.length} tarefas</span></summary><ul class="tasks">${p.L.join('')}</ul></details></div>
     </div>`).join('') + `
     <div class="phase final">
@@ -3496,6 +3508,9 @@ $('stNext').addEventListener('click', () => passo < STEPS.length ? showStep(pass
     $('bxBoleto').textContent = brl(x.ticketCerto, true);
     $('bxStack').innerHTML = partes.map(p => `<i style="flex:${p[1].toFixed(2)} 1 0;background:var(${p[2]})"></i>`).join('');
     $('bxStackLeg').innerHTML = partes.map(p => `<li><i style="background:var(${p[2]})"></i>${p[0]}<b>${brl(p[1], true)}</b></li>`).join('');
+    // 03: fases do plano com os meses que faltam hoje
+    const FZ = fasesPlano(REG.horizonte);
+    document.querySelectorAll('#bxFases li span').forEach((sp, i) => sp.textContent = mesesTxt(FZ[i].a, FZ[i].b));
     // +: nota e prioridades
     $('bxNota').textContent = x.score;
     const pr = prioridades(x).slice(0, 3);
