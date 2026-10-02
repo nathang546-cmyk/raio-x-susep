@@ -92,7 +92,33 @@ a.chip:hover{border-color:var(--accent)}
 .step-num{flex:none;width:40px;height:40px;border-radius:50%;background:var(--accent);color:var(--accent-ink);display:grid;place-items:center;font-family:var(--f-display);font-weight:800;font-size:1.3rem}
 .step-head h2{font-size:1.7rem;font-weight:700}
 .step-head p{color:var(--muted);margin-top:4px}
-.fields{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px 22px}
+.fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px 22px}
+@media (min-width:860px){.fields.f3{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (max-width:640px){.fields,.fields.f3{grid-template-columns:minmax(0,1fr)}}
+.trow.thead{font-size:.82rem;font-weight:600;color:var(--muted);align-items:center;padding-bottom:0}
+.trow.thead span{display:flex;align-items:center;gap:6px}
+.trow .tn{padding-bottom:0!important;align-self:center}
+.trow{align-items:center!important}
+@media (max-width:560px){.trow.thead span:first-child{display:none}}
+.qbgrid{grid-template-columns:repeat(6,minmax(0,1fr))!important}
+.qbgrid .field{grid-column:span 2}
+.qbgrid .field:nth-child(n+4){grid-column:span 3}
+@media (max-width:640px){.qbgrid{grid-template-columns:repeat(2,minmax(0,1fr))!important}.qbgrid .field,.qbgrid .field:nth-child(n+4){grid-column:span 1}.qbgrid .field:last-child{grid-column:1/-1}}
+.qbgrid label{white-space:normal!important;display:flex;align-items:center;gap:6px}
+.cobra{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.cobra .cb:last-child{grid-column:1/-1}
+@media (max-width:640px){.cobra{grid-template-columns:minmax(0,1fr)}}
+.cb{display:flex;align-items:center;gap:12px;border:1.5px solid var(--line);border-radius:12px;padding:12px 14px;cursor:pointer;background:var(--surface);transition:border-color .15s,background .15s}
+.cb:hover{border-color:var(--accent)}
+.cb input{width:18px;height:18px;accent-color:var(--accent);flex:none;margin:0}
+.cb span{display:grid;gap:1px;min-width:0}
+.cb b{font-size:.98rem}
+.cb small{color:var(--muted);font-size:.85rem}
+.cb:has(input:checked){border-color:var(--accent);background:var(--accent-soft)}
+.docs-count{margin:-8px 0 0;color:var(--muted);font-size:.92rem}
+.docs-count b{color:var(--ink)}
+.docs-count.done b{color:var(--ok)}
+.doc .dt b{display:flex!important;align-items:center;gap:8px}
 .field{display:flex;flex-direction:column;gap:6px;min-width:0}
 .field.wide{grid-column:1/-1}
 .field>label,.field>.lbl,.fhead>label,.fhead>.lbl{font-weight:700;font-size:1.02rem}
@@ -925,39 +951,38 @@ body.modal-on{overflow:hidden}
 
     <!-- PASSO 1 -->
     <section class="step" aria-labelledby="h1s">
-      <div class="step-head"><span class="step-num">1</span><div><h2 id="h1s">Sua associação</h2><p>Comece pelo tamanho da carteira: quantas placas a associação protege em cada tipo de veículo e quanto elas valem.</p></div></div>
+      <div class="step-head"><span class="step-num">1</span><div><h2 id="h1s">Sua associação</h2><p>Quantas placas a associação protege e quanto elas valem.</p></div></div>
       <div class="fields">
         <div class="field wide">
           <label for="nome">Nome da associação <span class="opt">(opcional)</span></label>
           <div class="input text"><input id="nome" type="text" placeholder="Associação"></div>
         </div>
         <div class="field wide">
-          <span class="lbl">Placas ativas por tipo de veículo <button type="button" class="info" data-g="fipe" aria-label="O que é FIPE?">?</button></span>
-          <p class="hint">Considere apenas os veículos com mensalidade ativa e preencha só as linhas dos tipos com que a associação trabalha. Para a FIPE média, some a FIPE de todos os veículos do tipo e divida pelo número de placas; se não tiver esse número, use o valor de um veículo típico da carteira.</p>
+          <span class="lbl">Placas ativas por tipo de veículo</span>
+          <p class="hint">Conte só os veículos com mensalidade ativa e deixe em branco os tipos que a associação não protege.</p>
           <div class="tipos" id="tipos"></div>
           <div class="total-line"><span>Total de placas ativas</span><span id="totPlacas">–</span></div>
         </div>
         <div class="field">
-          <label for="placas12">E há 12 meses, quantas placas eram? <span class="opt">(opcional)</span></label>
-          <p class="hint">Com esse número, a ferramenta mostra se a carteira está crescendo ou encolhendo.</p>
+          <label for="placas12">Placas de 12 meses atrás <span class="opt">(opcional)</span></label>
+          <p class="hint">Mostra se a carteira está crescendo ou encolhendo.</p>
           <div class="input"><input id="placas12" inputmode="numeric" data-kind="int"><span class="suf">placas</span></div>
         </div>
         <div class="field">
-          <label for="fipeMax">FIPE do veículo mais caro protegido</label>
-          <p class="hint">Como a perda total desse veículo sairia do caixa de uma só vez, o valor dele entra no cálculo da reserva.</p>
+          <label for="fipeMax">FIPE do veículo mais caro</label>
+          <p class="hint">A perda total dele entra no cálculo da reserva.</p>
           <div class="input"><span class="pre">R$</span><input id="fipeMax" inputmode="decimal" data-kind="money"></div>
         </div>
         <div class="field wide">
           <div class="subcard" id="detBase">
-            <div class="subcard-h"><h3>Perfil da carteira <span class="opt">(opcional)</span></h3><p>Quanto mais itens preencher, mais preciso fica o diagnóstico. A ferramenta usa esses dados para dar uma nota de 0 a 100 à <span class="term" tabindex="0" data-g="qualidade">qualidade da carteira</span>.</p></div>
+            <div class="subcard-h"><h3>Perfil da carteira <span class="opt">(opcional)</span></h3><p>Quanto mais preencher, mais precisa fica a nota da <span class="term" tabindex="0" data-g="qualidade">qualidade da carteira</span>.</p></div>
               <div class="qbgrid">
                 <div class="field"><label for="anoMedio">Ano médio dos veículos</label><div class="input compact"><input id="anoMedio" inputmode="numeric" data-kind="ano" placeholder="Ex.: 2015"></div></div>
                 <div class="field"><label for="pctRastreador">Têm rastreador</label><div class="input compact"><input id="pctRastreador" inputmode="decimal" data-kind="pct"><span class="suf">%</span></div></div>
-                <div class="field"><label for="pctVistoria">Entraram com vistoria</label><div class="input compact"><input id="pctVistoria" inputmode="decimal" data-kind="pct"><span class="suf">%</span></div></div>
-                <div class="field"><label for="pctApp">Rodam com aplicativo</label><div class="input compact"><input id="pctApp" inputmode="decimal" data-kind="pct"><span class="suf">%</span></div></div>
+                <div class="field"><label for="pctVistoria">Entraram com vistoria <button type="button" class="info" data-g="vistoria" aria-label="O que conta como vistoria?">?</button></label><div class="input compact"><input id="pctVistoria" inputmode="decimal" data-kind="pct"><span class="suf">%</span></div></div>
+                <div class="field"><label for="pctApp">Rodam com aplicativo <button type="button" class="info" data-g="aplicativo" aria-label="O que conta como aplicativo?">?</button></label><div class="input compact"><input id="pctApp" inputmode="decimal" data-kind="pct"><span class="suf">%</span></div></div>
                 <div class="field"><label for="cancel12">Canceladas em 12 meses</label><div class="input compact"><input id="cancel12" inputmode="numeric" data-kind="int"><span class="suf">placas</span></div></div>
               </div>
-              <p class="hint">Considere como vistoria a que foi feita com fotos na entrada e, como aplicativo, o uso em Uber, 99, entregas ou outro trabalho.</p>
               <p class="calcline" id="qbOut">–</p>
           </div>
         </div>
@@ -966,11 +991,11 @@ body.modal-on{overflow:hidden}
 
     <!-- PASSO 2 -->
     <section class="step" aria-labelledby="h2s">
-      <div class="step-head"><span class="step-num">2</span><div><h2 id="h2s">Faturamento</h2><p>Quanto entra por mês, quanto fica com a administração e quanto deixa de ser pago.</p></div></div>
-      <div class="fields">
+      <div class="step-head"><span class="step-num">2</span><div><h2 id="h2s">Faturamento</h2><p>Quanto entra, quanto fica com a administração e quanto não é pago.</p></div></div>
+      <div class="fields f3">
         <div class="field">
-          <label for="ticket">Mensalidade média por placa (ticket médio) <button type="button" class="info" data-g="ticket" aria-label="O que é ticket médio?">?</button></label>
-          <p class="hint">É o valor que, em média, cada associado paga por mês.</p>
+          <label for="ticket">Mensalidade média por placa <button type="button" class="info" data-g="ticket" aria-label="O que é ticket médio?">?</button></label>
+          <p class="hint">Quanto cada associado paga, em média, por mês.</p>
           <div class="input"><span class="pre">R$</span><input id="ticket" inputmode="decimal" data-kind="money"><span class="suf">/mês</span></div>
           <details class="help" id="helpTicket">
             <summary>Não sei calcular</summary>
@@ -986,8 +1011,8 @@ body.modal-on{overflow:hidden}
           </details>
         </div>
         <div class="field">
-          <label for="admPct" data-lfor="admModo" data-pct="admPct" data-brl="admValor">Quanto da mensalidade fica com a administração da associação? <button type="button" class="info" data-g="taxaAdm" aria-label="O que é taxa de administração?">?</button></label>
-          <p class="hint">Inclui tudo o que não é pagamento de evento, como salários, aluguel, sistema, comissão de vendedores e marketing.<span data-ufor="admModo" data-u="brl"> Informe o total gasto em um mês.</span></p>
+          <label for="admPct" data-lfor="admModo" data-pct="admPct" data-brl="admValor">Quanto fica com a administração? <button type="button" class="info" data-g="taxaAdm" aria-label="O que é taxa de administração?">?</button></label>
+          <p class="hint">Tudo o que não é evento: salários, aluguel, sistema, comissões e marketing.<span data-ufor="admModo" data-u="brl"> Informe o total do mês.</span></p>
           <div class="input unit">
             <span class="pre" data-ufor="admModo" data-u="brl">R$</span>
             <input id="admPct" inputmode="decimal" data-kind="pct" data-ufor="admModo" data-u="pct">
@@ -998,7 +1023,7 @@ body.modal-on{overflow:hidden}
         </div>
         <div class="field">
           <label for="inad" data-lfor="inadModo" data-pct="inad" data-brl="inadValor">Quanto deixa de ser pago? <button type="button" class="info" data-g="inadimplencia" aria-label="O que é inadimplência?">?</button></label>
-          <p class="hint"><span data-ufor="inadModo" data-u="pct">Informe quantos boletos, de cada 100, ficam sem pagamento: se 8 de cada 100 atrasam ou não são pagos, coloque 8.</span><span data-ufor="inadModo" data-u="brl">Informe quanto, em reais, deixou de ser pago em um mês normal.</span></p>
+          <p class="hint"><span data-ufor="inadModo" data-u="pct">Se 8 de cada 100 boletos não são pagos, coloque 8.</span><span data-ufor="inadModo" data-u="brl">Quanto deixou de ser pago em um mês normal.</span></p>
           <div class="input unit">
             <span class="pre" data-ufor="inadModo" data-u="brl">R$</span>
             <input id="inad" inputmode="decimal" data-kind="pct" data-ufor="inadModo" data-u="pct">
@@ -1012,27 +1037,27 @@ body.modal-on{overflow:hidden}
 
     <!-- PASSO 3 -->
     <section class="step" aria-labelledby="h3s">
-      <div class="step-head"><span class="step-num">3</span><div><h2 id="h3s">Dinheiro que sai com eventos</h2><p>É com esses números que a ferramenta calcula a <span class="term" tabindex="0" data-g="sinistralidade">sinistralidade</span>, o indicador mais importante do diagnóstico.</p></div></div>
+      <div class="step-head"><span class="step-num">3</span><div><h2 id="h3s">Dinheiro que sai com eventos</h2><p>Com esses números a ferramenta calcula a <span class="term" tabindex="0" data-g="sinistralidade">sinistralidade</span>, o indicador mais importante.</p></div></div>
       <div class="fields">
         <div class="field">
-          <label for="eventos12">Quanto a associação pagou de eventos nos últimos 12 meses?</label>
-          <p class="hint">Some tudo o que o fundo pagou: perdas totais, roubos e furtos, consertos em oficina, danos a terceiros, vidros e guinchos.</p>
+          <label for="eventos12">Eventos pagos em 12 meses</label>
+          <p class="hint">Perdas totais, roubos, consertos, terceiros, vidros e guinchos.</p>
           <div class="input"><span class="pre">R$</span><input id="eventos12" inputmode="decimal" data-kind="money"></div>
           <p class="hint" id="ev12note" hidden>Usando a soma dos 12 meses preenchidos abaixo.</p>
         </div>
         <div class="field">
-          <label for="recup12">Quanto voltou para o caixa? <button type="button" class="info" data-g="salvados" aria-label="O que é salvado?">?</button> <span class="opt">(se não souber, deixe 0)</span></label>
-          <p class="hint">Inclua a venda de carcaças (salvados), o que foi recebido de terceiros culpados e as cotas de participação (franquias) pagas pelos associados.</p>
+          <label for="recup12">O que voltou para o caixa <span class="opt">(opcional)</span> <button type="button" class="info" data-g="salvados" aria-label="O que é salvado?">?</button></label>
+          <p class="hint">Salvados vendidos, valores de terceiros e franquias.</p>
           <div class="input"><span class="pre">R$</span><input id="recup12" inputmode="decimal" data-kind="money"></div>
         </div>
         <div class="field">
-          <label for="receita12">Quanto a associação arrecadou nos últimos 12 meses?</label>
-          <p class="hint">Use o que os associados de fato pagaram. Se deixar em branco, a ferramenta estima esse valor a partir da mensalidade, das placas e da inadimplência.</p>
-          <div class="input"><span class="pre">R$</span><input id="receita12" inputmode="decimal" data-kind="money" placeholder="vazio = estimar"></div>
+          <label for="receita12">Arrecadação em 12 meses <span class="opt">(opcional)</span></label>
+          <p class="hint">O que foi de fato pago. Em branco, a ferramenta estima.</p>
+          <div class="input"><span class="pre">R$</span><input id="receita12" inputmode="decimal" data-kind="money" placeholder="em branco = estimar"></div>
         </div>
         <div class="field">
-          <label for="qtdEventos">Quantos eventos foram pagos em 12 meses? <span class="opt">(opcional)</span></label>
-          <p class="hint">Conte as indenizações e os consertos pagos no período.</p>
+          <label for="qtdEventos">Quantidade de eventos em 12 meses <span class="opt">(opcional)</span></label>
+          <p class="hint">Indenizações e consertos pagos.</p>
           <div class="input"><input id="qtdEventos" inputmode="numeric" data-kind="int"><span class="suf">eventos</span></div>
         </div>
         <div class="field wide">
@@ -1069,21 +1094,28 @@ body.modal-on{overflow:hidden}
 
     <!-- PASSO 4 -->
     <section class="step" aria-labelledby="h4s">
-      <div class="step-head"><span class="step-num">4</span><div><h2 id="h4s">Reserva e rateio</h2><p>Quanto a associação já tem guardado e como a conta dos eventos é dividida hoje.</p></div></div>
+      <div class="step-head"><span class="step-num">4</span><div><h2 id="h4s">Reserva e rateio</h2><p>O que já está guardado e como a associação cobra hoje.</p></div></div>
       <div class="fields">
         <div class="field">
-          <label for="reserva">Quanto dinheiro está guardado hoje só para eventos? <button type="button" class="info" data-g="reserva" aria-label="O que é reserva?">?</button></label>
-          <p class="hint">Considere só o fundo de reserva, sem o dinheiro da administração.</p>
+          <label for="reserva">Reserva guardada hoje <button type="button" class="info" data-g="reserva" aria-label="O que é reserva?">?</button></label>
+          <p class="hint">Só o dinheiro para eventos, sem o da administração.</p>
           <div class="input"><span class="pre">R$</span><input id="reserva" inputmode="decimal" data-kind="money"></div>
         </div>
         <div class="field">
-          <label for="pendentes">Quanto a associação deve de eventos já avisados e ainda não pagos? <button type="button" class="info" data-g="pel" aria-label="O que é PEL?">?</button></label>
-          <p class="hint">Por exemplo, carros na oficina esperando pagamento, indenizações em análise e perdas totais na fila.</p>
+          <label for="pendentes">Eventos avisados e ainda não pagos <button type="button" class="info" data-g="pel" aria-label="O que é PEL?">?</button></label>
+          <p class="hint">Oficinas a pagar, indenizações em análise e perdas totais na fila.</p>
           <div class="input"><span class="pre">R$</span><input id="pendentes" inputmode="decimal" data-kind="money"></div>
         </div>
         <div class="field wide">
-          <label for="rateioModo">Como vocês cobram hoje?</label>
-          <div class="input"><select id="rateioModo">
+          <span class="lbl" id="lblCobra">Como vocês cobram hoje?</span>
+          <div class="cobra" role="radiogroup" aria-labelledby="lblCobra">
+            <label class="cb"><input type="radio" name="cobra" value="fixo"><span><b>Valor fixo</b><small>Sem guardar reserva</small></span></label>
+            <label class="cb"><input type="radio" name="cobra" value="fixoReserva"><span><b>Valor fixo com reserva</b><small>Parte do valor é guardada</small></span></label>
+            <label class="cb"><input type="radio" name="cobra" value="variavel"><span><b>Rateio variável</b><small>O boleto muda todo mês</small></span></label>
+            <label class="cb"><input type="radio" name="cobra" value="misto"><span><b>Misto</b><small>Valor fixo e rateio extra quando falta</small></span></label>
+            <label class="cb"><input type="radio" name="cobra" value="regra"><span><b>Boleto em 3 partes</b><small>Administração, rateio e estabilização</small></span></label>
+          </div>
+          <div class="input" hidden><select id="rateioModo" tabindex="-1" aria-hidden="true">
             <option value="fixo">Valor fixo todo mês, sem guardar reserva</option>
             <option value="fixoReserva">Valor fixo todo mês, com parte guardada em reserva</option>
             <option value="variavel">Rateio variável: divide a conta do mês depois (boleto muda todo mês)</option>
@@ -1096,7 +1128,8 @@ body.modal-on{overflow:hidden}
 
     <!-- PASSO 5 -->
     <section class="step" aria-labelledby="h5s">
-      <div class="step-head"><span class="step-num">5</span><div><h2 id="h5s">Papéis e organização</h2><p>Responda com sinceridade: “não sei” conta como “não” na nota, mas vira uma tarefa no seu plano.</p></div></div>
+      <div class="step-head"><span class="step-num">5</span><div><h2 id="h5s">Papéis e organização</h2><p>Responda sim, não ou não sei. O que faltar vira tarefa no seu plano.</p></div></div>
+      <p class="docs-count" id="docsCount"></p>
       <div class="docs" id="docs"></div>
     </section>
 
@@ -1562,6 +1595,9 @@ const GLOS = {
   teto:{t:'Teto da reserva', d:'Pela regra nova, a reserva do grupo não pode passar de 3 meses de contribuições; quando passa, o boleto tem que baixar.'},
   reserva:{t:'Reserva', d:'É o dinheiro guardado só para eventos, que permite atravessar meses ruins e perdas totais caras.'},
   prazo90:{t:'Prazo de 90 dias', d:'A Resolução CNSP 491/2026 (art. 22) dá no máximo 90 dias para regular e pagar cada evento, por isso vale conferir no regulamento a partir de quando esse prazo começa a contar.'},
+  fipeMedia:{t:'FIPE média', d:'Some a FIPE de todos os veículos do tipo e divida pelo número de placas. Se não tiver esse número, use o valor de um veículo típico da carteira.'},
+  vistoria:{t:'Vistoria', d:'Conte os veículos que entraram com vistoria feita com fotos.'},
+  aplicativo:{t:'Aplicativo', d:'Conte os veículos usados em Uber, 99, entregas ou outro trabalho.'},
   administradora:{t:'Administradora', d:'É a empresa autorizada pela SUSEP que vai cuidar dos grupos das associações. Até 30/09/2026, nenhuma havia sido autorizada.'}
 };
 const gi = k => `<button type="button" class="info" data-g="${k}" aria-label="O que é ${GLOS[k].t}?">?</button>`;
@@ -1675,17 +1711,18 @@ const BAR_E = {bar:'evExBar', msg:'evExMsg', ex:'evExemplo', clr:'evClear', txt:
 let modoP = 'vazio', modoR = 'vazio', modoE = 'vazio';
 
 /* ======================= MONTAR CAMPOS REPETIDOS ======================= */
-$('tipos').innerHTML = TIPOS.map(t => `
+$('tipos').innerHTML = `<div class="trow thead" aria-hidden="true"><span></span><span>Placas</span><span>FIPE média <button type="button" class="info" data-g="fipeMedia" aria-label="Como calcular a FIPE média?" tabindex="-1">?</button></span></div>` + TIPOS.map(t => `
   <div class="trow">
     <span class="tn">${t.n}</span>
-    <div class="field"><label for="tp_${t.id}_placas" class="hint">Placas</label><div class="input compact"><input id="tp_${t.id}_placas" inputmode="numeric" data-kind="int"></div></div>
-    <div class="field"><label for="tp_${t.id}_fipe" class="hint">FIPE média</label><div class="input compact"><span class="pre">R$</span><input id="tp_${t.id}_fipe" inputmode="decimal" data-kind="money"></div></div>
+    <div class="input compact"><input id="tp_${t.id}_placas" inputmode="numeric" data-kind="int" aria-label="Placas de ${t.n.toLowerCase()}" placeholder="0"></div>
+    <div class="input compact"><span class="pre">R$</span><input id="tp_${t.id}_fipe" inputmode="decimal" data-kind="money" aria-label="FIPE média de ${t.n.toLowerCase()}"></div>
   </div>`).join('');
 $('tipoEv').innerHTML = TIPOS.map(t => `<div class="field"><label for="tp_${t.id}_ev" class="hint">${t.n}</label><div class="input compact"><span class="pre">R$</span><input id="tp_${t.id}_ev" inputmode="decimal" data-kind="money"></div></div>`).join('');
 $('meses').innerHTML = MESES_LBL.map((m,i) => `<div class="field"><label for="mes_${i}" class="hint">${m}</label><div class="input compact"><span class="pre">R$</span><input id="mes_${i}" inputmode="decimal" data-kind="money"></div></div>`).join('');
+DOCS.forEach(d => GLOS['doc_' + d.id] = {t:d.t, d:d.d + (d.ref ? ' Base: ' + d.ref + '.' : '')});
 $('docs').innerHTML = DOCS.map(d => `
   <div class="doc">
-    <div class="dt" id="dl_${d.id}"><b>${d.q}</b><span>${d.d}</span>${d.ref ? ` <span class="law-ref">${d.ref}</span>` : ''}</div>
+    <div class="dt" id="dl_${d.id}"><b>${d.q} <button type="button" class="info" data-g="doc_${d.id}" aria-label="Saiba mais">?</button></b></div>
     <div class="seg" role="radiogroup" aria-labelledby="dl_${d.id}">
       <input type="radio" name="doc_${d.id}" id="doc_${d.id}_sim" value="sim"><label for="doc_${d.id}_sim">Sim</label>
       <input type="radio" name="doc_${d.id}" id="doc_${d.id}_nao" value="nao"><label for="doc_${d.id}_nao">Não</label>
@@ -2117,6 +2154,8 @@ function render(){
 
   // campos que aceitam % ou R$
   syncUnits();
+  document.querySelectorAll('input[name="cobra"]').forEach(x => x.checked = x.value === $('rateioModo').value);
+  if($('docsCount')){ const nd = DOCS.filter(d => (s.docs || {})[d.id]).length; $('docsCount').innerHTML = `<b>${nd} de ${DOCS.length}</b> respondidas${nd === DOCS.length ? ' · tudo pronto' : ''}`; $('docsCount').classList.toggle('done', nd === DOCS.length); }
   $('inadEq').innerHTML = !ok(r.faturado) || !r.inadInformada ? '' : r.inadModo === 'brl'
     ? `${brl(r.inadValor)} de ${brl(r.faturado)} cobrados no mês = <b>${pct(r.inad, 1)}</b>.`
     : `${pct(r.inad, 1)} de ${brl(r.faturado)} cobrados no mês = <b>${brl(r.inad * r.faturado)}</b> por mês.`;
@@ -2165,7 +2204,7 @@ function render(){
   kpi('kInad', r.tInad, pct(r.inad,0), 'ideal até 5%');
   kpi('kDocs', r.tDocs, `${r.docsSim} de ${DOCS.length}`, '');
   kpi('kBase', r.tQb, isFinite(r.qb) ? r.qb + ' de 100' : '–', isFinite(r.qb) ? r.qbTxt : 'preencha o perfil');
-  $('qbOut').innerHTML = isFinite(r.qb) ? `Qualidade da carteira: <b>${r.qb} de 100 (${r.qbTxt})</b>, com ${r.qbItens.length} de 8 itens. O detalhe fica no Diagnóstico completo.` : `Preencha pelo menos 3 itens para ver a qualidade da carteira (${r.qbItens.length} de 8 até agora).`;
+  $('qbOut').innerHTML = isFinite(r.qb) ? `Qualidade da carteira: <b>${r.qb} de 100 (${r.qbTxt})</b>, com ${r.qbItens.length} de 8 itens.` : `Preencha pelo menos 3 itens para ver a nota (${r.qbItens.length} de 8 até agora).`;
 
   // veredito
   const pr = r.incompleto ? r.faltando : prioridades(r);
@@ -2901,6 +2940,7 @@ function markMine(){
   if(modoP === 'meu') return;
   modoP = 'meu'; isExample = false; modoBarra(BAR_P, modoP);
 }
+document.querySelectorAll('input[name="cobra"]').forEach(x => x.addEventListener('change', () => { $('rateioModo').value = x.value; }));
 function syncUnits(){
   document.querySelectorAll('select.usel').forEach(sel => {
     const m = sel.value;
