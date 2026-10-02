@@ -825,6 +825,17 @@ body.modal-on{overflow:hidden}
 .faixa-msg.tone-warn{background:var(--warn-soft)}
 .faixa-msg.tone-bad{background:var(--bad-soft)}
 
+.input.unit .usel{flex:none;width:auto;min-width:0;border:0;border-left:1px solid var(--line);background:var(--sunk) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%2311A594' stroke-width='1.8' fill='none' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat right 10px center;-webkit-appearance:none;appearance:none;padding:0 28px 0 12px;font-size:.95rem;font-weight:700;color:var(--accent);cursor:pointer}
+.input.unit .usel:hover{background-color:var(--accent-soft)}
+.input.unit .usel:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+.ueq:empty{display:none}
+.qbgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,190px),1fr));gap:14px 16px}
+.qbgrid .field{gap:6px}
+.qbgrid label{font-weight:600;font-size:.92rem;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.propsim{border:1px solid var(--line);border-radius:12px;padding:18px;background:var(--surface);margin-bottom:16px;display:grid;gap:14px}
+.propsim-h{margin:0;display:grid;gap:4px}
+.propsim-h span{color:var(--muted);font-size:.93rem}
+
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
 </head>
@@ -890,13 +901,14 @@ body.modal-on{overflow:hidden}
           <details class="help plus" id="detBase" open>
             <summary>Qualidade da carteira (opcional: quanto mais preencher, melhor o diagnóstico)</summary>
             <div class="help-body">
-              <div class="mini">
-                <div class="field"><label for="anoMedio" class="hint">Ano médio dos veículos</label><div class="input compact"><input id="anoMedio" inputmode="numeric" data-kind="ano" placeholder="Ex.: 2015"></div></div>
-                <div class="field"><label for="pctRastreador" class="hint">Com rastreador</label><div class="input compact"><input id="pctRastreador" inputmode="decimal" data-kind="pct"><span class="suf">%</span></div></div>
-                <div class="field"><label for="pctVistoria" class="hint">Entraram com vistoria com fotos</label><div class="input compact"><input id="pctVistoria" inputmode="decimal" data-kind="pct"><span class="suf">%</span></div></div>
-                <div class="field"><label for="pctApp" class="hint">Usados para aplicativo ou trabalho</label><div class="input compact"><input id="pctApp" inputmode="decimal" data-kind="pct"><span class="suf">%</span></div></div>
-                <div class="field"><label for="cancel12" class="hint">Placas canceladas em 12 meses</label><div class="input compact"><input id="cancel12" inputmode="numeric" data-kind="int"><span class="suf">placas</span></div></div>
+              <div class="qbgrid">
+                <div class="field"><label for="anoMedio">Ano médio dos veículos</label><div class="input compact"><input id="anoMedio" inputmode="numeric" data-kind="ano" placeholder="Ex.: 2015"></div></div>
+                <div class="field"><label for="pctRastreador">Têm rastreador</label><div class="input compact"><input id="pctRastreador" inputmode="decimal" data-kind="pct"><span class="suf">%</span></div></div>
+                <div class="field"><label for="pctVistoria">Entraram com vistoria</label><div class="input compact"><input id="pctVistoria" inputmode="decimal" data-kind="pct"><span class="suf">%</span></div></div>
+                <div class="field"><label for="pctApp">Rodam com aplicativo</label><div class="input compact"><input id="pctApp" inputmode="decimal" data-kind="pct"><span class="suf">%</span></div></div>
+                <div class="field"><label for="cancel12">Canceladas em 12 meses</label><div class="input compact"><input id="cancel12" inputmode="numeric" data-kind="int"><span class="suf">placas</span></div></div>
               </div>
+              <p class="hint">Vistoria: com fotos na entrada. Aplicativo: Uber, 99, entregas ou outro trabalho.</p>
               <p class="calcline" id="qbOut">–</p>
             </div>
           </details>
@@ -906,7 +918,7 @@ body.modal-on{overflow:hidden}
 
     <!-- PASSO 2 -->
     <section class="step" aria-labelledby="h2s">
-      <div class="step-head"><span class="step-num">2</span><div><h2 id="h2s">Dinheiro que entra</h2><p>Mensalidade, parte da administração e quem não paga.</p></div></div>
+      <div class="step-head"><span class="step-num">2</span><div><h2 id="h2s">Faturamento</h2><p>Mensalidade, parte da administração e quem não paga.</p></div></div>
       <div class="fields">
         <div class="field">
           <label for="ticket">Mensalidade média por placa (ticket médio) <button type="button" class="info" data-g="ticket" aria-label="O que é ticket médio?">?</button></label>
@@ -926,37 +938,26 @@ body.modal-on{overflow:hidden}
           </details>
         </div>
         <div class="field">
-          <label for="admPct">Quanto da mensalidade fica com a administração? <button type="button" class="info" data-g="taxaAdm" aria-label="O que é taxa de administração?">?</button></label>
-          <p class="hint">Salários, aluguel, sistema, comissão de vendedor, marketing. Tudo que não é pagar evento.</p>
-          <div class="input"><input id="admPct" inputmode="decimal" data-kind="pct"><span class="suf">%</span></div>
-          <details class="help" id="helpAdm">
-            <summary>Não sei calcular</summary>
-            <div class="help-body">
-              <p>Some os <b>gastos da administração em um mês</b> e divida pelo <b>total arrecadado no mês</b>. Multiplique por 100.</p>
-              <div class="mini">
-                <div class="field"><label for="hAdmGasto" class="hint">Gastos da administração no mês</label><div class="input compact"><span class="pre">R$</span><input id="hAdmGasto" inputmode="decimal" data-kind="money" data-help="1"></div></div>
-                <div class="field"><label for="hAdmArrec" class="hint">Total arrecadado no mês</label><div class="input compact"><span class="pre">R$</span><input id="hAdmArrec" inputmode="decimal" data-kind="money" data-help="1"></div></div>
-              </div>
-              <p class="calcline" id="hAdmOut">Preencha os dois campos.</p>
-              <button type="button" class="btn small" id="useAdm" disabled>Usar este valor</button>
-            </div>
-          </details>
+          <label for="admPct" data-lfor="admModo" data-pct="admPct" data-brl="admValor">Quanto da mensalidade fica com a administração da associação? <button type="button" class="info" data-g="taxaAdm" aria-label="O que é taxa de administração?">?</button></label>
+          <p class="hint">Salários, aluguel, sistema, comissão de vendedor, marketing. Tudo que não é pagar evento. <span data-ufor="admModo" data-u="brl">Coloque o total gasto em um mês.</span></p>
+          <div class="input unit">
+            <span class="pre" data-ufor="admModo" data-u="brl">R$</span>
+            <input id="admPct" inputmode="decimal" data-kind="pct" data-ufor="admModo" data-u="pct">
+            <input id="admValor" inputmode="decimal" data-kind="money" data-ufor="admModo" data-u="brl">
+            <select id="admModo" class="usel" aria-label="Unidade: % ou R$" title="Trocar entre % e R$"><option value="pct">%</option><option value="brl">R$/mês</option></select>
+          </div>
+          <p class="hint ueq" id="admEq"></p>
         </div>
         <div class="field">
-          <span class="lbl" id="lblInad">Quanto deixa de ser pago? <button type="button" class="info" data-g="inadimplencia" aria-label="O que é inadimplência?">?</button></span>
-          <div class="seg" role="radiogroup" aria-labelledby="lblInad">
-            <input type="radio" name="inadModo" id="inadModo_pct" value="pct" checked><label for="inadModo_pct">Em %</label>
-            <input type="radio" name="inadModo" id="inadModo_brl" value="brl"><label for="inadModo_brl">Em R$ por mês</label>
+          <label for="inad" data-lfor="inadModo" data-pct="inad" data-brl="inadValor">Quanto deixa de ser pago? <button type="button" class="info" data-g="inadimplencia" aria-label="O que é inadimplência?">?</button></label>
+          <p class="hint"><span data-ufor="inadModo" data-u="pct">De cada 100 boletos, quantos não são pagos? Se 8 de cada 100 atrasam ou não pagam, coloque 8.</span><span data-ufor="inadModo" data-u="brl">Quanto, em reais, deixou de ser pago em um mês normal.</span></p>
+          <div class="input unit">
+            <span class="pre" data-ufor="inadModo" data-u="brl">R$</span>
+            <input id="inad" inputmode="decimal" data-kind="pct" data-ufor="inadModo" data-u="pct">
+            <input id="inadValor" inputmode="decimal" data-kind="money" data-ufor="inadModo" data-u="brl">
+            <select id="inadModo" class="usel" aria-label="Unidade: % ou R$" title="Trocar entre % e R$"><option value="pct">%</option><option value="brl">R$/mês</option></select>
           </div>
-          <div class="inad-box" id="inadPctBox">
-            <label class="hint" for="inad">De cada 100 boletos, quantos não são pagos? Se 8 de cada 100 atrasam ou não pagam, coloque 8.</label>
-            <div class="input"><input id="inad" inputmode="decimal" data-kind="pct"><span class="suf">%</span></div>
-          </div>
-          <div class="inad-box" id="inadBrlBox" hidden>
-            <label class="hint" for="inadValor">Quanto, em reais, deixou de ser pago em um mês normal.</label>
-            <div class="input"><span class="pre">R$</span><input id="inadValor" inputmode="decimal" data-kind="money"><span class="suf">/mês</span></div>
-            <p class="hint" id="inadEq"></p>
-          </div>
+          <p class="hint ueq" id="inadEq"></p>
         </div>
       </div>
     </section>
@@ -1022,7 +1023,7 @@ body.modal-on{overflow:hidden}
 
     <!-- PASSO 4 -->
     <section class="step" aria-labelledby="h4s">
-      <div class="step-head"><span class="step-num">4</span><div><h2 id="h4s">Reserva e rateio</h2><p>O colchão para os meses ruins e como a conta é dividida hoje.</p></div></div>
+      <div class="step-head"><span class="step-num">4</span><div><h2 id="h4s">Reserva e rateio</h2><p>O que já está guardado e como a conta é dividida hoje.</p></div></div>
       <div class="fields">
         <div class="field">
           <label for="reserva">Quanto dinheiro está guardado hoje só para eventos? <button type="button" class="info" data-g="reserva" aria-label="O que é reserva?">?</button></label>
@@ -1033,19 +1034,6 @@ body.modal-on{overflow:hidden}
           <label for="pendentes">Quanto a associação deve de eventos já avisados e ainda não pagos? <button type="button" class="info" data-g="pel" aria-label="O que é PEL?">?</button></label>
           <p class="hint">Carro na oficina esperando pagamento, indenização em análise, fila de perda total.</p>
           <div class="input"><span class="pre">R$</span><input id="pendentes" inputmode="decimal" data-kind="money"></div>
-        </div>
-        <div class="field wide">
-          <label for="nivelRes">Quantos meses de eventos guardar como colchão?</label>
-          <p class="hint">Além do colchão, a meta sempre inclui o que já se deve de eventos, 1 mês de eventos ainda não avisados e uma perda total do veículo mais caro.</p>
-          <div class="input"><select id="nivelRes">
-            <option value="auto">Automático: 6 meses (até 800 placas), 4 meses (até 3.000) ou 3 meses (acima)</option>
-            <option value="2">2 meses (mínimo)</option>
-            <option value="3">3 meses</option>
-            <option value="4">4 meses</option>
-            <option value="6">6 meses</option>
-            <option value="9">9 meses</option>
-            <option value="12">12 meses (bem conservador)</option>
-          </select></div>
         </div>
         <div class="field wide">
           <label for="rateioModo">Como vocês cobram hoje?</label>
@@ -1083,23 +1071,7 @@ body.modal-on{overflow:hidden}
         <div class="choice"><input type="radio" name="caminho" id="cam_encerrar" value="encerrar"><label for="cam_encerrar"><b>Encerrar as atividades</b><span>A lei deixa a associação cadastrada optar por encerrar. O prazo para essa opção vence por volta de <b>1º/11/2026</b>.</span></label></div>
         <div class="choice"><input type="radio" name="caminho" id="cam_ns" value="naosei"><label for="cam_ns"><b>Ainda não sei</b><span>A ferramenta olha o seu tamanho e os seus números e sugere o caminho mais realista.</span></label></div>
       </div>
-      <div class="fields">
-        <div class="field">
-          <label for="taxaSim">Quanto a administradora vai cobrar de taxa? <button type="button" class="info" data-g="administradora" aria-label="O que é administradora?">?</button></label>
-          <p class="hint">A regra <b>não tem teto nem percentual fixo</b>. Use a proposta que você recebeu. Sem proposta, deixe 25% só para simular.</p>
-          <div class="input"><input id="taxaSim" inputmode="decimal" data-kind="pct"><span class="suf">% do boleto</span></div>
-        </div>
-        <div class="field">
-          <label for="repasseSim">Quanto dessa taxa volta para a associação?</label>
-          <p class="hint">É a remuneração da associação pelo trabalho de apoio. Tem que estar escrita no contrato. Sem proposta, deixe 80% só para simular: 25% de taxa com 80% de repasse = 5% do boleto para a administradora e 20% para a associação.</p>
-          <div class="input"><input id="repasseSim" inputmode="decimal" data-kind="pct"><span class="suf">% da taxa</span></div>
-        </div>
-        <div class="field">
-          <label for="custoAssoc">Quanto vai custar por mês a estrutura da associação? <span class="opt">(opcional)</span></label>
-          <p class="hint">Equipe, aluguel, vendas e atendimento que continuam com a associação. Vazio = igual ao gasto de hoje.</p>
-          <div class="input"><span class="pre">R$</span><input id="custoAssoc" inputmode="decimal" data-kind="money" placeholder="vazio = igual a hoje"><span class="suf">/mês</span></div>
-        </div>
-      </div>
+
       <div class="cta-mini">
         <div><b>Quer que um especialista revise o resultado com você?</b><span>Você escolhe a administradora. A GestiHub te ajuda a chegar preparado.</span></div>
         <div class="cta-btns"><button type="button" class="btn" data-ajuda="fim do diagnóstico">Quero ajuda</button><a class="btn ghost" href="#resultado">Pular e ver o resultado</a></div>
@@ -1244,6 +1216,38 @@ body.modal-on{overflow:hidden}
 
   <section id="repasse">
     <div class="sec-head"><p class="kicker">A associação no modelo novo</p><h2>Quanto a associação precisa receber para sobreviver</h2><p>A associação só recebe o que estiver escrito no contrato com a administradora.</p></div>
+    <div class="propsim" id="propSim">
+      <p class="propsim-h"><b>Simule a proposta da administradora</b><span>Serve para ver se o que volta para a associação paga a estrutura que ela vai manter. Use os números da proposta que você recebeu. Sem proposta, deixe 25% de taxa e 80% de repasse: 5% do boleto fica com a administradora e 20% volta para a associação.</span></p>
+      <div class="fields">
+        <div class="field">
+          <label for="taxaSim" data-lfor="taxaModo" data-pct="taxaSim" data-brl="taxaValor">Taxa da administradora <button type="button" class="info" data-g="administradora" aria-label="O que é administradora?">?</button></label>
+          <p class="hint">A regra não tem teto nem percentual fixo.</p>
+          <div class="input unit">
+            <span class="pre" data-ufor="taxaModo" data-u="brl">R$</span>
+            <input id="taxaSim" inputmode="decimal" data-kind="pct" data-ufor="taxaModo" data-u="pct">
+            <input id="taxaValor" inputmode="decimal" data-kind="money" data-ufor="taxaModo" data-u="brl">
+            <select id="taxaModo" class="usel" aria-label="Unidade: % ou R$" title="Trocar entre % e R$"><option value="pct">% do boleto</option><option value="brl">R$ por placa</option></select>
+          </div>
+          <p class="hint ueq" id="taxaEq"></p>
+        </div>
+        <div class="field">
+          <label for="repasseSim" data-lfor="repasseModo" data-pct="repasseSim" data-brl="repasseValor">Quanto da taxa volta para a associação</label>
+          <p class="hint">É a remuneração da associação. Tem que estar no contrato.</p>
+          <div class="input unit">
+            <span class="pre" data-ufor="repasseModo" data-u="brl">R$</span>
+            <input id="repasseSim" inputmode="decimal" data-kind="pct" data-ufor="repasseModo" data-u="pct">
+            <input id="repasseValor" inputmode="decimal" data-kind="money" data-ufor="repasseModo" data-u="brl">
+            <select id="repasseModo" class="usel" aria-label="Unidade: % ou R$" title="Trocar entre % e R$"><option value="pct">% da taxa</option><option value="brl">R$ por placa</option></select>
+          </div>
+          <p class="hint ueq" id="repEq"></p>
+        </div>
+        <div class="field">
+          <label for="custoAssoc">Custo da estrutura da associação <span class="opt">(opcional)</span></label>
+          <p class="hint">Equipe, aluguel, vendas e atendimento que continuam com ela. Vazio = igual ao gasto de hoje.</p>
+          <div class="input"><span class="pre">R$</span><input id="custoAssoc" inputmode="decimal" data-kind="money" placeholder="igual a hoje"><span class="suf">/mês</span></div>
+        </div>
+      </div>
+    </div>
     <div class="tiles" id="repTiles"></div>
     <div class="vizgrid"><article class="viz wide" id="vzRep"></article></div>
     <div class="cta-mini">
@@ -1547,7 +1551,7 @@ const EXEMPLO = {
   docs:{susep:'sim',estatuto:'nao',atas:'sim',regulamento:'sim',coberturas:'ns',base:'sim',historico:'ns',processos:'nao',contabil:'sim',vendedores:'nao',prestacao:'nao',reclamacao:'nao',lgpd:'nao',sistema:'sim'}
 };
 
-const FIELDS = ['nome','placas12','fipeMax','anoMedio','pctRastreador','pctVistoria','pctApp','cancel12','ticket','admPct','inad','inadValor','eventos12','recup12','receita12','qtdEventos','sinDireto','reserva','pendentes','nivelRes','rateioModo','taxaSim','repasseSim','custoAssoc']
+const FIELDS = ['nome','placas12','fipeMax','anoMedio','pctRastreador','pctVistoria','pctApp','cancel12','ticket','admPct','admModo','admValor','inad','inadModo','inadValor','eventos12','recup12','receita12','qtdEventos','sinDireto','reserva','pendentes','rateioModo','taxaSim','taxaModo','taxaValor','repasseSim','repasseModo','repasseValor','custoAssoc']
   .concat(TIPOS.flatMap(t => ['tp_'+t.id+'_placas','tp_'+t.id+'_fipe','tp_'+t.id+'_ev']))
   .concat(Array.from({length:12}, (_,i) => 'mes_'+i));
 const KEY = 'raioxSusep.v3';
@@ -1645,7 +1649,6 @@ function readState(){
   FIELDS.forEach(k => s[k] = $(k).value);
   s.contaSep = radio('contaSep');
   s.caminho = radio('caminho');
-  s.inadModo = radio('inadModo') || 'pct';
   s.modelo = radio('modelo') || 'fixo';
   s.docs = {};
   DOCS.forEach(d => s.docs[d.id] = radio('doc_'+d.id));
@@ -1655,7 +1658,6 @@ function writeState(s){
   FIELDS.forEach(k => { $(k).value = s[k] ?? ($(k).tagName === 'SELECT' ? $(k).options[0].value : ''); });
   setRadio('contaSep', s.contaSep || '');
   setRadio('caminho', s.caminho || '');
-  setRadio('inadModo', s.inadModo || 'pct');
   setRadio('modelo', s.modelo || 'fixo');
   DOCS.forEach(d => setRadio('doc_'+d.id, (s.docs||{})[d.id] || ''));
 }
@@ -1680,6 +1682,10 @@ function calc(s){
   r.ticket = num(s.ticket);
   r.a = isFinite(num(s.admPct)) ? Math.min(num(s.admPct), 90)/100 : NaN;
   r.inadModo = s.inadModo === 'brl' ? 'brl' : 'pct';
+  r.admModo = s.admModo === 'brl' ? 'brl' : 'pct';
+  r.admValor = num(s.admValor);
+  r.taxaModo = s.taxaModo === 'brl' ? 'brl' : 'pct';
+  r.repModo = s.repasseModo === 'brl' ? 'brl' : 'pct';
   r.inadValor = num(s.inadValor);
   r.faturado = ok(r.ticket) && ok(r.placas) ? r.ticket * r.placas : NaN;
   if(r.inadModo === 'brl'){
@@ -1712,6 +1718,7 @@ function calc(s){
   r.receitaEstimada = !ok(r.receita12In);
   r.receitaMes = ok(r.receita12In) ? r.receita12In/12 : (ok(r.ticket) && ok(r.placas) ? r.ticket * r.pagantes : NaN);
   r.receitaAno = r.receitaMes * 12;
+  if(r.admModo === 'brl') r.a = isFinite(r.admValor) && ok(r.receitaMes) ? Math.min(Math.max(r.admValor, 0) / r.receitaMes, .9) : NaN;
   r.eventosLiq = ok(r.eventos12) ? Math.max(0, r.eventos12 - r.recup12) : NaN;
   r.liqFator = ok(r.eventos12) ? r.eventosLiq / r.eventos12 : 1;
 
@@ -1759,8 +1766,14 @@ function calc(s){
     r.ticketCerto = r.admR + r.rateioR + r.estabR;
     r.ticketManut = r.admR + r.rateioR * (1 + REG.folga);
     r.grupoR = r.rateioR + r.estabR;
-    r.novoBoleto = r.grupoR / (1 - r.x);
-    r.novoTaxaR = r.novoBoleto * r.x;
+    if(r.taxaModo === 'brl' && isFinite(num(s.taxaValor))){
+      r.novoTaxaR = Math.max(0, num(s.taxaValor));
+      r.novoBoleto = r.grupoR + r.novoTaxaR;
+      r.x = r.novoTaxaR / r.novoBoleto;
+    } else {
+      r.novoBoleto = r.grupoR / (1 - r.x);
+      r.novoTaxaR = r.novoBoleto * r.x;
+    }
     r.taxaMesNova = r.novoTaxaR * r.pagantes;
     // por tipo de veículo
     const todosEv = ativos.length > 1 && ativos.every(t => ok(t.ev));
@@ -1784,7 +1797,11 @@ function calc(s){
     r.resMesesG = r.contribGrupoMes > 0 ? r.livre / r.contribGrupoMes : NaN;
     r.tetoG = 3 * r.contribGrupoMes;
     // repasse
-    r.repasseMes = r.taxaMesNova * r.rep;
+    if(r.repModo === 'brl' && isFinite(num(s.repasseValor))){
+      r.repPlaca = Math.min(Math.max(0, num(s.repasseValor)), r.novoTaxaR);
+      r.rep = r.novoTaxaR > 0 ? r.repPlaca / r.novoTaxaR : 0;
+    } else r.repPlaca = r.novoTaxaR * r.rep;
+    r.repasseMes = r.repPlaca * r.pagantes;
     r.custoAssoc = ok(num(s.custoAssoc)) ? num(s.custoAssoc) : r.admMes;
     r.custoInformado = ok(num(s.custoAssoc));
     r.cobRepasse = r.custoAssoc > 0 ? r.repasseMes / r.custoAssoc : NaN;
@@ -2050,10 +2067,20 @@ function render(){
   const r = calc(s);
   R = r;
 
-  // inadimplência: % ou R$
-  $('inadPctBox').hidden = r.inadModo === 'brl';
-  $('inadBrlBox').hidden = r.inadModo !== 'brl';
-  $('inadEq').innerHTML = r.inadModo !== 'brl' ? '' : !ok(r.faturado) ? 'Preencha as placas (passo 1) e a mensalidade acima para converter em %.' : isFinite(r.inadValor) ? `${brl(r.inadValor)} de ${brl(r.faturado)} cobrados no mês = <b>${pct(r.inad, 1)}</b> de inadimplência.` : `Cobrança do mês: ${brl(r.faturado)} (mensalidade × placas).`;
+  // campos que aceitam % ou R$
+  syncUnits();
+  $('inadEq').innerHTML = !ok(r.faturado) || !r.inadInformada ? '' : r.inadModo === 'brl'
+    ? `${brl(r.inadValor)} de ${brl(r.faturado)} cobrados no mês = <b>${pct(r.inad, 1)}</b>.`
+    : `${pct(r.inad, 1)} de ${brl(r.faturado)} cobrados no mês = <b>${brl(r.inad * r.faturado)}</b> por mês.`;
+  $('admEq').innerHTML = !isFinite(r.a) || !ok(r.receitaMes) ? '' : r.admModo === 'brl'
+    ? `${brl(r.admValor)} de ${brl(r.receitaMes)} de faturamento = <b>${pct(r.a, 1)}</b>.`
+    : `${pct(r.a, 1)} de ${brl(r.receitaMes)} de faturamento = <b>${brl(r.a * r.receitaMes)}</b> por mês.`;
+  $('taxaEq').innerHTML = !isFinite(r.novoTaxaR) ? '' : r.taxaModo === 'brl'
+    ? `${brl(r.novoTaxaR, true)} de um boleto de ${brl(r.novoBoleto, true)} = <b>${pct(r.x, 1)}</b>.`
+    : `= <b>${brl(r.novoTaxaR, true)}</b> por placa, num boleto de ${brl(r.novoBoleto, true)}.`;
+  $('repEq').innerHTML = !isFinite(r.repasseMes) ? '' : r.repModo === 'brl'
+    ? `${brl(r.repPlaca, true)} de ${brl(r.novoTaxaR, true)} de taxa = <b>${pct(r.rep, 0)}</b>. Por mês: ${brl(r.repasseMes)}.`
+    : `= <b>${brl(r.repPlaca, true)}</b> por placa. Por mês: ${brl(r.repasseMes)}.`;
 
   // passo 1 e 3
   $('totPlacas').textContent = ok(r.placas) ? int(r.placas) + ' placas' : '–';
@@ -2148,7 +2175,7 @@ function renderR3(r){
       <span class="r3-n">2</span>
       <p class="r3-k">Guardar todo mês</p>
       <p class="r3-v">${guarda ? brlShort(r.guardarMes) : 'Nada a mais'}</p>
-      <p class="r3-s">${guarda ? `Por ${REG.horizonte} meses, até juntar ${brlShort(r.metaReserva)}. Já está dentro do boleto acima.` : 'A reserva já está na meta.'}</p>
+      <p class="r3-s">${guarda ? `Por ${REG.horizonte} meses, até juntar ${brlShort(r.metaReserva)}, com ${r.colchaoPorPior ? '2 vezes o seu pior mês' : r.nMeses + ' meses de eventos'} de colchão. Já está dentro do boleto acima.` : 'A reserva já está na meta.'}</p>
     </article>
     <article class="r3-item tone-${pr.length ? 'bad' : 'ok'}">
       <span class="r3-n">3</span>
@@ -2162,8 +2189,8 @@ function renderVisao(r){
   const sobraT = !isFinite(r.sobraMes) ? 'none' : r.sobraMes >= (r.guardarMes || 0) ? 'ok' : r.sobraMes >= 0 ? 'warn' : 'bad';
   $('tiles').innerHTML = [
     tileHTML('Entra por mês', brlShort(r.receitaMes), r.receitaEstimada ? 'estimado pela mensalidade' : 'média de 12 meses'),
-    tileHTML('Sai com eventos', brlShort(r.eventosMes), isFinite(r.sin) ? pct(r.sin) + ' do que entra' : ''),
-    tileHTML('Fica com a administração', brlShort(r.admMes), isFinite(r.a) ? pct(r.a,0) + ' do que entra' : ''),
+    tileHTML('Sai com eventos', brlShort(r.eventosMes), isFinite(r.sin) ? pct(r.sin) + ' do faturamento' : ''),
+    tileHTML('Fica com a administração', brlShort(r.admMes), isFinite(r.a) ? pct(r.a,0) + ' do faturamento' : ''),
     tileHTML(r.sobraMes < 0 ? 'Falta por mês' : 'Sobra por mês', brlShort(Math.abs(r.sobraMes)), isFinite(r.guardarMes) ? `<b>${r.sobraMes >= r.guardarMes ? 'cobre' : 'não cobre'}</b> os ${brlShort(r.guardarMes)} que o plano pede` : '', sobraT),
     tileHTML('A reserva livre cobre', dec1(r.mesesCobertos) + (r.mesesCobertos === 1 ? ' mês' : ' meses'), 'de eventos, depois de pagar o que já se deve', r.tRes)
   ].join('');
@@ -2200,6 +2227,7 @@ function renderVisao(r){
     const mx = Math.max(r.metaReserva, r.reserva);
     vr.innerHTML = `<div><h3>Quanto precisa ter guardado, e por quê</h3></div>
       <p class="read">Meta de <b>${brlShort(r.metaReserva)}</b>. Hoje tem <b>${brlShort(r.reserva)}</b>, que é ${pct(r.reserva / r.metaReserva, 0)} da meta.</p>
+      <p class="note"><b>Colchão: ${r.colchaoPorPior ? '2 vezes o seu pior mês' : r.nMeses + ' meses de eventos'}.</b> ${r.colchaoPorPior ? `Dois meses iguais ao seu pior mês somam mais do que ${r.nMeses} meses normais, então a conta usa o pior mês.` : r.placas < 800 ? 'Com menos de 800 placas, um mês ruim ou uma perda total pesa muito no caixa.' : r.placas < 3000 ? 'Entre 800 e 3.000 placas, 4 meses seguram uma sequência de meses ruins.' : 'Acima de 3.000 placas, os meses ruins se diluem na carteira.'}</p>
       <div class="rows">
         ${comp.map(c => rowbar(c[0], c[1] / mx, brlShort(c[1]), '--s-res', `${brl(c[1])}\n${c[0]}`)).join('')}
         ${rowbar('<b>Meta total</b>', r.metaReserva / mx, `<b>${brlShort(r.metaReserva)}</b>`, '--s-res')}
@@ -2293,7 +2321,7 @@ function renderRateio(r){
           <div class="boleto-h"><b>Com administradora cobrando ${pct(r.x,0)}</b><span class="tot">${brl(r.novoBoleto,true)}</span></div>
           ${segBoleto(r.novoTaxaR, fx ? 0 : r.rateioR, fx ? r.estabFixa : r.estabR, 'Taxa', mx)}
           ${legBoleto(r.novoTaxaR, fx ? 0 : r.rateioR, fx ? r.estabFixa : r.estabR, 'Taxa', fx)}
-          <p class="hint">Simulação: a taxa é calculada sobre o boleto inteiro, mas só ela fica com a administradora. Rateio e estabilização vão para a conta do grupo. Troque a taxa no passo 6.</p>
+          <p class="hint">Simulação: a taxa é calculada sobre o boleto inteiro, mas só ela fica com a administradora. Rateio e estabilização vão para a conta do grupo. Troque a taxa em “Simule a proposta da administradora”, mais abaixo.</p>
         </div>
       </div>
       <details class="more"><summary>Como a conta é feita</summary><div>
@@ -2492,11 +2520,11 @@ function renderSim(){
 /* ---------- repasse ---------- */
 function renderRepasse(r){
   const Tl = $('repTiles'), V = $('vzRep');
-  if(!isFinite(r.repasseMes)){ Tl.innerHTML = ''; V.innerHTML = '<div><h3>Repasse e estrutura</h3></div><div class="empty">Preencha os passos 1 a 3 e a taxa no passo 6.</div>'; return; }
+  if(!isFinite(r.repasseMes)){ Tl.innerHTML = ''; V.innerHTML = '<div><h3>Repasse e estrutura</h3></div><div class="empty">Preencha os passos 1 a 3.</div>'; return; }
   const dif = r.repasseMes - r.custoAssoc;
   const t = r.cobRepasse >= 1 ? 'ok' : r.cobRepasse >= .7 ? 'warn' : 'bad';
   Tl.innerHTML = [
-    tileHTML('Hoje fica com a administração', brlShort(r.admMes), `${pct(r.a,0)} do que entra`),
+    tileHTML('Hoje fica com a administração', brlShort(r.admMes), `${pct(r.a,0)} do faturamento`),
     tileHTML('A administradora vai receber', brlShort(r.taxaMesNova), `taxa de ${pct(r.x,0)} do boleto novo`),
     tileHTML('Volta para a associação', brlShort(r.repasseMes), `${pct(r.rep,0)} da taxa`),
     tileHTML(dif >= 0 ? 'Sobra para a associação' : 'Falta para a associação', brlShort(Math.abs(dif)), `por mês, contra uma estrutura de <b>${brlShort(r.custoAssoc)}</b>`, t)
@@ -2823,6 +2851,14 @@ function markMine(){
   if(modoP === 'meu') return;
   modoP = 'meu'; isExample = false; modoBarra(BAR_P, modoP);
 }
+function syncUnits(){
+  document.querySelectorAll('select.usel').forEach(sel => {
+    const m = sel.value;
+    document.querySelectorAll(`[data-ufor="${sel.id}"]`).forEach(el => el.hidden = el.dataset.u !== m);
+    const lb = document.querySelector(`label[data-lfor="${sel.id}"]`);
+    if(lb) lb.htmlFor = m === 'brl' ? lb.dataset.brl : lb.dataset.pct;
+  });
+}
 function fmtField(el){
   const k = el.dataset.kind; if(!k || k === 'ano') return;
   const n = num(el.value); if(!isFinite(n)) return;
@@ -2839,24 +2875,22 @@ function helpers(){
   const t = ok(a) && ok(p) ? a/p : NaN;
   $('hTicketOut').innerHTML = isFinite(t) ? `${brl(a,true)} ÷ ${int(p)} placas = <b>${brl(t,true)}</b> por placa` : 'Preencha os dois campos.';
   $('useTicket').disabled = !isFinite(t); $('useTicket').dataset.v = isFinite(t) ? t.toFixed(2) : '';
-  const g = num($('hAdmGasto').value), ar = num($('hAdmArrec').value);
-  const ap = ok(g) && ok(ar) ? g/ar : NaN;
-  $('hAdmOut').innerHTML = isFinite(ap) ? `${brl(g)} ÷ ${brl(ar)} × 100 = <b>${pct(ap)}</b>` : 'Preencha os dois campos.';
-  $('useAdm').disabled = !isFinite(ap); $('useAdm').dataset.v = isFinite(ap) ? (ap*100).toFixed(1) : '';
 }
 $('useTicket').addEventListener('click', () => { const v = parseFloat($('useTicket').dataset.v); if(isFinite(v)){ $('ticket').value = v.toLocaleString('pt-BR',{maximumFractionDigits:2}); markMine(); render(); $('helpTicket').open = false; $('ticket').focus(); } });
-$('useAdm').addEventListener('click', () => { const v = parseFloat($('useAdm').dataset.v); if(isFinite(v)){ $('admPct').value = v.toLocaleString('pt-BR',{maximumFractionDigits:1}); markMine(); render(); $('helpAdm').open = false; $('admPct').focus(); } });
 
 function simReset(){ simInadTocado = false; $('simBoleto').value = 0; $('simEv').value = 0; $('simAdm').value = 0; }
 ['simBoleto','simInad','simEv','simAdm'].forEach(id => $(id).addEventListener('input', () => { if(id === 'simInad') simInadTocado = true; renderSim(); }));
 $('simReset').addEventListener('click', () => { simReset(); renderSim(); });
 document.querySelectorAll('input[name="modelo"]').forEach(x => x.addEventListener('change', render));
+$('propSim').addEventListener('input', () => { markMine(); render(); });
+$('propSim').addEventListener('change', () => { markMine(); render(); });
+$('propSim').addEventListener('focusout', e => { if(e.target.matches('input[data-kind]')) fmtField(e.target); });
 document.querySelectorAll('input[name="tpl"]').forEach(x => x.addEventListener('change', renderTpl));
 
 const VAZIO_P = {docs:{}, taxaSim:'25', repasseSim:'80', nivelRes:'auto', modelo:'fixo'};
 function limparP(){
   writeState(VAZIO_P); doneTasks = {};
-  ['hArrecMes','hPlacasMes','hAdmGasto','hAdmArrec'].forEach(id => $(id).value = '');
+  ['hArrecMes','hPlacasMes'].forEach(id => $(id).value = '');
   renderRateio.oc = {}; simReset();
 }
 let clearArmed = false;
@@ -2910,7 +2944,7 @@ window.addEventListener('resize', () => {
 /* ======================= ABAS E PASSOS ======================= */
 const TABS = ['preencher','resultado','boleto','plano','entenda','regras'];
 const STEPS = [...document.querySelectorAll('#f > .step')];
-const STEP_LBL = ['Sua associação','Dinheiro que entra','Eventos','Reserva e rateio','Papéis','Caminho'];
+const STEP_LBL = ['Sua associação','Faturamento','Eventos','Reserva e rateio','Papéis','Caminho'];
 let tabAtual = 'preencher', passo = 1;
 function lembrar(){ try{ localStorage.setItem(KEY + '.nav', JSON.stringify({tab:tabAtual, passo})); }catch(e){} }
 function subirAte(el){ const top = el.getBoundingClientRect().top + window.scrollY - 70; if(window.scrollY > top) window.scrollTo({top}); }
