@@ -1114,6 +1114,18 @@ body[data-view="inicio"] .fab-help{display:none!important}
 .lp-final p{max-width:54ch;font-size:1.08rem}
 .lp-final .cta-btns{margin-top:12px}
 
+/* capa inteira escura: as cores do tema são trocadas só dentro dela */
+body[data-view="inicio"]{background:#12131C}
+#view-inicio{background:#12131C;color:#FFFFFF;--bg:#12131C;--surface:#1A1C27;--sunk:rgba(255,255,255,.07);--ink:#FFFFFF;--muted:#AEB6C4;--line:rgba(255,255,255,.1);--accent:#39D0B8;--accent-ink:#12131C;--accent-soft:rgba(57,208,184,.14);--bad:#FF8373;--bad-soft:rgba(255,131,115,.16);--warn:#F3B451;--warn-soft:rgba(243,180,81,.16);--ok:#52C98F;--ok-soft:rgba(82,201,143,.16);--grid:rgba(255,255,255,.08)}
+#view-inicio .bx,#view-inicio .steps3 li,#view-inicio .faq details{background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.025));box-shadow:none}
+#view-inicio .bx:hover{box-shadow:0 22px 44px -24px rgba(0,0,0,.8)}
+#view-inicio .bx-vis,#view-inicio .bx-score{background:rgba(0,0,0,.22)}
+#view-inicio .btn:not(.btn-glow):not(.ghost-light){background:linear-gradient(180deg,#19B9A6,#0E9483);border-color:transparent;color:#FFFFFF}
+#view-inicio .lp-dark{background:radial-gradient(800px 400px at 100% 0,rgba(57,208,184,.12),transparent 60%),#161823;border-block:1px solid rgba(255,255,255,.06)}
+#view-inicio .lp-final{background:linear-gradient(180deg,#1A1C27,#12131C);border:1px solid rgba(255,255,255,.08)}
+#view-inicio .linkbtn{color:#39D0B8}
+footer.sitefoot{background:#12131C;border-top:1px solid rgba(255,255,255,.06)}
+.sitehead{background:rgba(18,19,28,.92)}
 .rv{opacity:0;transform:translateY(18px);transition:opacity .6s ease,transform .6s ease}
 .rv.in{opacity:1;transform:none}
 @media (prefers-reduced-motion:reduce){.rv{opacity:1;transform:none;transition:none}.bx,.btn-glow{transition:none}}
@@ -1149,6 +1161,26 @@ body[data-view="inicio"] .fab-help{display:none!important}
 .kc-s b{color:var(--ink)}
 .kc-bar{height:8px;border-radius:999px;background:var(--sunk);overflow:hidden}
 .kc-bar i{display:block;height:100%;border-radius:999px;background:var(--tone,var(--accent))}
+.flow{--n:4;list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(var(--n),minmax(0,1fr));gap:44px}
+.flow li{position:relative;background:var(--surface);border:1px solid var(--line);border-top:4px solid var(--sev,var(--accent));border-radius:18px;padding:18px 20px 20px;display:grid;gap:8px;align-content:start;box-shadow:0 1px 2px rgba(16,24,40,.04)}
+.flow li:not(:last-child)::after{content:"";position:absolute;top:50%;right:-36px;width:28px;height:28px;margin-top:-14px;border-radius:50%;background:var(--surface) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M5 12h13M13 6l6 6-6 6' stroke='%2311A594' stroke-width='2.2' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/16px no-repeat;border:1px solid var(--line);z-index:1}
+.flow .sev-alta{--sev:var(--bad);--sev-bg:var(--bad-soft)}
+.flow .sev-media{--sev:var(--warn);--sev-bg:var(--warn-soft)}
+.flow .sev-baixa{--sev:var(--accent);--sev-bg:var(--accent-soft)}
+.flow .sev-ok{--sev:var(--ok);--sev-bg:var(--ok-soft)}
+.fl-step{display:flex;align-items:center;gap:8px;font-size:.76rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--sev,var(--muted))}
+.fl-step i{font-style:normal;width:28px;height:28px;border-radius:9px;display:grid;place-items:center;font:700 .95rem var(--f-display);background:var(--sev-bg,var(--sunk));color:var(--sev,var(--ink))}
+.flow li b{font:600 1.05rem/1.3 var(--f-display)}
+.flow li p{color:var(--muted);font-size:.92rem;line-height:1.45}
+.flow li.goal{background:#12131C;border-color:#12131C;border-top-color:#39D0B8;--sev:#39D0B8;--sev-bg:rgba(57,208,184,.16)}
+.flow li.goal b{color:#FFFFFF}
+.flow li.goal p{color:#AEB6C4}
+.flow-more{margin-top:14px;color:var(--muted)}
+.flow-more a{color:var(--accent);font-weight:700}
+@media (max-width:900px){
+  .flow{grid-template-columns:minmax(0,1fr);gap:36px}
+  .flow li:not(:last-child)::after{top:auto;bottom:-33px;right:auto;left:50%;margin:0 0 0 -14px;transform:rotate(90deg)}
+}
 .prio-list{list-style:none;margin:0;padding:0;display:grid;gap:10px;counter-reset:pl}
 .prio-list li{counter-increment:pl;display:flex;gap:16px;align-items:flex-start;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:16px 18px}
 .prio-list li::before{content:counter(pl);flex:none;width:34px;height:34px;border-radius:10px;display:grid;place-items:center;font:700 1rem var(--f-display);background:var(--sunk);color:var(--ink)}
@@ -1585,8 +1617,9 @@ body[data-view="inicio"] .fab-help{display:none!important}
   </section>
 
   <section id="prioridades">
-    <div class="sec-head"><p class="kicker">Por onde começar</p><h2>O que resolver primeiro</h2><p>Em ordem de urgência. Cada item já está no plano mais abaixo.</p></div>
-    <ol class="prio-list" id="prioList"></ol>
+    <div class="sec-head"><p class="kicker">Por onde começar</p><h2>O que resolver primeiro</h2><p>Siga nesta ordem. Cada etapa já está no plano mais abaixo, com as tarefas.</p></div>
+    <ol class="flow" id="prioList"></ol>
+    <p class="flow-more" id="prioMais" hidden></p>
   </section>
 
   <section id="boleto-resumo">
@@ -1596,16 +1629,6 @@ body[data-view="inicio"] .fab-help{display:none!important}
 
   <section id="sec-plano">
     <div class="sec-head"><p class="kicker">Plano até 07/05/2028</p><h2>O que fazer, mês a mês</h2><p>O caminho até 07/05/2028. Toque em cada fase para ver as tarefas e marque o que já fez.</p></div>
-        <div class="caminho-sel">
-      <p class="modsel-q">Qual caminho a associação vai seguir? <span class="opt">O plano muda conforme a escolha.</span></p>
-      <div class="choices" role="radiogroup" aria-label="Caminho da associação">
-        <div class="choice"><input type="radio" name="caminho" id="cam_contratar" value="contratar"><label for="cam_contratar"><b>Contratar uma administradora autorizada</b><span>A associação continua existindo e uma empresa autorizada pela SUSEP cuida da parte técnica. É o caminho que a lei desenhou para a maioria.</span></label></div>
-        <div class="choice"><input type="radio" name="caminho" id="cam_propria" value="propria"><label for="cam_propria"><b>Montar uma administradora (S.A.)</b><span>Capital mínimo de R$ 1,3 a 4 milhões. Atenção: a associação, seus diretores e parentes <b>não podem ser donos</b> da administradora que ela contrata.</span></label></div>
-        <div class="choice"><input type="radio" name="caminho" id="cam_coop" value="cooperativa"><label for="cam_coop"><b>Virar cooperativa de seguros</b><span>Deixa de ser proteção veicular e vira seguro de verdade (Res. CNSP 492/2026). Cooperativa de seguros não pode fazer proteção patrimonial mutualista.</span></label></div>
-        <div class="choice"><input type="radio" name="caminho" id="cam_encerrar" value="encerrar"><label for="cam_encerrar"><b>Encerrar as atividades</b><span>A lei deixa a associação cadastrada optar por encerrar. O prazo para essa opção vence por volta de <b>1º/11/2026</b>.</span></label></div>
-        <div class="choice"><input type="radio" name="caminho" id="cam_ns" value="naosei"><label for="cam_ns"><b>Ainda não sei</b><span>A ferramenta olha o seu tamanho e os seus números e sugere o caminho mais realista.</span></label></div>
-      </div>
-    </div>
     <div id="saveBox"></div>
     <div class="timeline" id="timeline"></div>
     <div class="cta-mini">
@@ -2587,9 +2610,16 @@ function renderHead(r){
       <article class="kc tone-${r.tTicket}"><span class="kc-k">Boleto médio certo</span><b class="kc-v">${brl(r.ticketCerto, true)}</b>
         <span class="kc-s">Hoje a associação cobra ${brl(r.ticket, true)}${dif > .5 ? `: faltam <b>${brl(dif, true)}</b> por placa.` : ', o que já cobre a conta.'}</span></article>`;
     // prioridades com o porquê
-    $('prioList').innerHTML = pr.length ? pr.slice(0, 4).map(x => `<li class="sev-${x.sev >= 2.5 ? 'alta' : x.sev >= 1.8 ? 'media' : 'baixa'}"><div><b>${x.t}</b><p>${x.d}</p></div></li>`).join('')
-      + (pr.length > 4 ? `<li class="prio-mais"><a href="#plano">Mais ${pr.length - 4} ${pr.length - 4 === 1 ? 'ponto' : 'pontos'} no plano →</a></li>` : '')
-      : '<li class="prio-ok"><div><b>Nada urgente</b><p>Siga o plano até 07/05/2028 para manter a associação em dia.</p></div></li>';
+    // por onde começar: as 3 primeiras prioridades em fluxo, terminando na meta
+    const SEV = x => x.sev >= 2.5 ? ['alta', 'Urgente'] : x.sev >= 1.8 ? ['media', 'Importante'] : ['baixa', 'Ajuste'];
+    const top3 = pr.slice(0, 3);
+    const nos = (top3.length ? top3.map((x, i) => { const [c, l] = SEV(x); return `<li class="sev-${c}"><span class="fl-step"><i>${i + 1}</i>${l}</span><b>${x.t}</b><p>${x.d}</p></li>`; })
+      : ['<li class="sev-ok"><span class="fl-step"><i>✓</i>Em dia</span><b>Nada urgente</b><p>Siga o plano para manter a associação em ordem.</p></li>'])
+      .concat(`<li class="goal"><span class="fl-step"><i>★</i>Meta</span><b>Contrato com administradora autorizada</b><p>Até 07/05/2028, com a reserva montada e os papéis em ordem.</p></li>`);
+    $('prioList').style.setProperty('--n', nos.length);
+    $('prioList').innerHTML = nos.join('');
+    $('prioMais').hidden = pr.length <= 3;
+    $('prioMais').innerHTML = pr.length > 3 ? `Depois disso, mais ${pr.length - 3} ${pr.length - 3 === 1 ? 'ponto' : 'pontos'} para ajustar. <a href="#plano">Ver no plano →</a>` : '';
     // boleto resumido
     const fx = r.modelo === 'fixo';
     if(isFinite(r.ticketCerto)){
@@ -3498,6 +3528,9 @@ document.querySelectorAll('.fields > .field').forEach(fl => {
 /* ======================= NAVEGAÇÃO: capa → diagnóstico → resultado ======================= */
 const reduzMov = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
 // quem chega pelo "Calcular agora" não vê a faixa do exemplo: ela só aparece com o exemplo aberto ou com números já preenchidos
+// no site, o caminho é sempre contratar administradora
+const _readState = readState;
+readState = () => { const s = _readState(); s.caminho = 'contratar'; return s; };
 const _modoBarra = modoBarra;
 modoBarra = (c, m) => { _modoBarra(c, m); if(c === BAR_P) $('exbar').hidden = m === 'vazio'; };
 const VIEWS = {inicio:'view-inicio', diagnostico:'tab-preencher', resultado:'view-resultado'};
