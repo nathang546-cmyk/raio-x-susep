@@ -95,7 +95,7 @@ a.chip:hover{border-color:var(--accent)}
 .fields{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px 22px}
 .field{display:flex;flex-direction:column;gap:6px;min-width:0}
 .field.wide{grid-column:1/-1}
-.field>label,.field>.lbl{font-weight:700;font-size:1.02rem}
+.field>label,.field>.lbl,.fhead>label,.fhead>.lbl{font-weight:700;font-size:1.02rem}
 .hint{color:var(--muted);font-size:.93rem}
 .opt{font-weight:400;color:var(--muted);font-size:.9rem}
 .input{display:flex;align-items:stretch;border:1.5px solid var(--line);border-radius:10px;background:var(--surface);overflow:hidden;min-height:52px}
@@ -657,7 +657,7 @@ h1,h2,h3{letter-spacing:-.01em;font-weight:600}
 .lead-txt img{height:16px;width:auto}
 .lead-form{background:var(--surface);color:var(--ink);border-radius:12px;padding:18px;display:grid;gap:12px;min-width:0}
 .lead-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px}
-.lead-form .field>label{font-size:.92rem}
+.lead-form .field>label,.lead-form .fhead>label{font-size:.92rem}
 .lead-form .check{font-weight:500;font-size:.92rem;align-items:flex-start}
 .lead-form .check input{margin-top:2px}
 .lead-form textarea{width:100%;min-height:170px;border:1px solid var(--line);border-radius:10px;padding:10px;font:.9rem/1.5 var(--f-body);background:var(--sunk);color:var(--ink);resize:vertical}
@@ -835,6 +835,19 @@ body.modal-on{overflow:hidden}
 .propsim{border:1px solid var(--line);border-radius:12px;padding:18px;background:var(--surface);margin-bottom:16px;display:grid;gap:14px}
 .propsim-h{margin:0;display:grid;gap:4px}
 .propsim-h span{color:var(--muted);font-size:.93rem}
+
+.fhead,.ftail,.fall{display:flex;flex-direction:column;gap:6px;min-width:0}
+@supports (grid-template-rows:subgrid){
+  .fields>.field.aligned{display:grid;grid-row:span 3;grid-template-rows:subgrid;row-gap:6px}
+  .fields>.field.aligned>.fall{grid-row:1/-1}
+}
+.destline{display:flex;flex-wrap:wrap;gap:4px 14px;margin:-2px 0 0;font-size:.85rem;color:var(--muted)}
+.destline span{display:inline-flex;align-items:center;gap:6px}
+.destline b{color:var(--ink)}
+.destline i{width:10px;height:10px;border-radius:2px;display:inline-block}
+.destline i.d-adm{background:var(--s-adm)}
+.destline i.d-assoc{background:transparent;border:2px solid var(--s-adm)}
+.destline i.d-grupo{background:var(--accent)}
 
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
@@ -1299,9 +1312,9 @@ body.modal-on{overflow:hidden}
     <div class="vizgrid" style="margin-top:0">
       <article class="viz"><h3>O boleto vem separado em 3 partes</h3>
         <div class="hstack"><i style="flex:38.92 1 0;background:var(--s-adm)"></i><i style="flex:92.03 1 0;background:var(--s-ev)"></i><i style="flex:33.68 1 0;background:var(--s-res)"></i></div>
-        <div class="dest"><span style="flex:38.92 1 0">Administradora</span><span style="flex:125.71 1 0">Grupo · CNPJ próprio</span></div>
+        <p class="destline">Vai para: <span><i class="d-adm"></i>Administradora <b>R$ 7,78</b></span><span><i class="d-assoc"></i>Associação <b>R$ 31,14</b></span><span><i class="d-grupo"></i>Grupo, CNPJ próprio <b>R$ 125,71</b></span></p>
         <div class="ent-parts">
-          <div><span class="sw" style="background:var(--s-adm)"></span><b>Taxa de administração · R$ 38,92</b><p><b>Vai para a administradora.</b> É a receita dela: paga equipe, sistema e o repasse da associação. Não entra no rateio.</p></div>
+          <div><span class="sw" style="background:var(--s-adm)"></span><b>Taxa de administração · R$ 38,92</b><p><b>Dividida entre administradora e associação.</b> A administradora fica com um valor por placa, combinado no contrato (no exemplo, R$ 7,78). O restante (R$ 31,14) volta para a conta da associação e paga equipe, aluguel, vendas e atendimento. Não entra no rateio.</p></div>
           <div><span class="sw" style="background:var(--s-ev)"></span><b><span class="term" tabindex="0" data-g="rateio">Rateio</span> · R$ 92,03</b><p><b>Vai para a conta do grupo.</b> Paga os eventos do período.</p></div>
           <div><span class="sw" style="background:var(--s-res)"></span><b><span class="term" tabindex="0" data-g="estabilizacao">Estabilização</span> · R$ 33,68</b><p><b>Vai para a conta do grupo.</b> Vira a reserva do grupo e segura o boleto nos meses ruins. Não é da administradora: ela só administra.</p></div>
         </div>
@@ -1492,7 +1505,7 @@ const REG = {
 const GLOS = {
   sinistralidade:{t:'Sinistralidade', d:'De cada R$ 100 que entram, quanto sai para pagar eventos (batidas, roubos, perdas totais). Ex.: 66% = R$ 66 de cada R$ 100.'},
   ticket:{t:'Ticket médio', d:'O valor médio da mensalidade por placa: total arrecadado no mês dividido pelo número de placas.'},
-  taxaAdm:{t:'Taxa de administração', d:'A parte do boleto que paga equipe, sistema, aluguel e vendas. Não entra no rateio dos eventos.'},
+  taxaAdm:{t:'Taxa de administração', d:'A parte do boleto que não vai para eventos. Na regra nova, a administradora fica com um valor por placa e o restante volta para a associação, para pagar equipe, aluguel, sistema e vendas. Não entra no rateio.'},
   inadimplencia:{t:'Inadimplência', d:'Associados que não pagaram o boleto. Ex.: 8% = 8 de cada 100.'},
   fipe:{t:'FIPE', d:'Tabela com o preço médio de mercado de cada veículo. É a base para saber quanto cada associado paga.'},
   rateio:{t:'Rateio', d:'Dividir entre todos os associados do grupo o custo dos eventos do período.'},
@@ -2298,8 +2311,8 @@ function caminhoCard(r){
 }
 
 const legBoleto = (a, b, c, la, fixo) => `<div class="legend">${sw('--s-adm', la, brl(a,true))}${sw('--s-ev', gt('rateio', 'Rateio'), fixo ? 'R$ 0 · só se faltar' : brl(b,true))}${sw('--s-res', gt('estabilizacao', fixo ? 'Estabilização fixa' : 'Estabilização'), brl(c,true))}</div>`;
-const destBoleto = (a, b, c, tot) => { const t = Math.max(tot || 0, a + b + c); return `<div class="dest"><span style="flex:${(a / t * 100).toFixed(2)} 1 0">Administradora</span><span style="flex:${((b + c) / t * 100).toFixed(2)} 1 0">Grupo · CNPJ próprio</span>${t > (a + b + c) * 1.001 ? `<i style="flex:${((t - a - b - c) / t * 100).toFixed(2)} 1 0"></i>` : ''}</div>`; };
-const segBoleto = (a, b, c, la, tot) => hstack([{v:a, c:'--s-adm', tip:`${brl(a,true)}\n${la}`}, {v:b, c:'--s-ev', tip:`${brl(b,true)}\nRateio dos eventos`}, {v:c, c:'--s-res', tip:`${brl(c,true)}\nEstabilização (reserva)`}], tot) + destBoleto(a, b, c, tot);
+const destBoleto = (adm, assoc, grupo) => `<p class="destline">Vai para: ${adm > .005 ? `<span><i class="d-adm"></i>Administradora <b>${brl(adm,true)}</b></span>` : ''}<span><i class="d-assoc"></i>Associação <b>${brl(assoc,true)}</b></span><span><i class="d-grupo"></i>Grupo, CNPJ próprio <b>${brl(grupo,true)}</b></span></p>`;
+const segBoleto = (a, b, c, la, tot) => hstack([{v:a, c:'--s-adm', tip:`${brl(a,true)}\n${la}`}, {v:b, c:'--s-ev', tip:`${brl(b,true)}\nRateio dos eventos`}, {v:c, c:'--s-res', tip:`${brl(c,true)}\nEstabilização (reserva)`}], tot);
 
 function renderRateio(r){
   const F = $('formula'), T = $('vzTipos');
@@ -2315,13 +2328,15 @@ function renderRateio(r){
           <div class="boleto-h"><b>Boleto médio certo, com a estrutura de hoje</b><span class="tot">${brl(r.ticketCerto,true)}</span></div>
           ${segBoleto(r.admR, fx ? 0 : r.rateioR, fx ? r.estabFixa : r.estabR, 'Administração', mx)}
           ${legBoleto(r.admR, fx ? 0 : r.rateioR, fx ? r.estabFixa : r.estabR, 'Administração', fx)}
+          ${destBoleto(0, r.admR, r.grupoR)}
           <p class="hint">Hoje vocês cobram ${brl(r.ticket,true)}.</p>
         </div>
         <div>
-          <div class="boleto-h"><b>Com administradora cobrando ${pct(r.x,0)}</b><span class="tot">${brl(r.novoBoleto,true)}</span></div>
+          <div class="boleto-h"><b>Com administradora: taxa de ${pct(r.x,0)}</b><span class="tot">${brl(r.novoBoleto,true)}</span></div>
           ${segBoleto(r.novoTaxaR, fx ? 0 : r.rateioR, fx ? r.estabFixa : r.estabR, 'Taxa', mx)}
           ${legBoleto(r.novoTaxaR, fx ? 0 : r.rateioR, fx ? r.estabFixa : r.estabR, 'Taxa', fx)}
-          <p class="hint">Simulação: a taxa é calculada sobre o boleto inteiro, mas só ela fica com a administradora. Rateio e estabilização vão para a conta do grupo. Troque a taxa em “Simule a proposta da administradora”, mais abaixo.</p>
+          ${destBoleto(r.novoTaxaR - r.repPlaca, r.repPlaca, r.grupoR)}
+          <p class="hint">Da taxa de ${brl(r.novoTaxaR,true)}, a administradora fica com ${brl(r.novoTaxaR - r.repPlaca,true)} por placa e ${brl(r.repPlaca,true)} voltam para a conta da associação. Rateio e estabilização vão para a conta do grupo. Troque os valores em “Simule a proposta da administradora”, mais abaixo.</p>
         </div>
       </div>
       <details class="more"><summary>Como a conta é feita</summary><div>
@@ -2380,7 +2395,7 @@ function renderRateio(r){
   const M = [
     {id:'fixo', h:'Valor fixo, sem apurar o custo real', tone:'bad', tag:'Não vale na regra nova', p:['O associado paga sempre o mesmo, e a conta real dos eventos não é apurada.','Mês ruim vira dívida com oficina e fila de indenização.','A lei manda ratear as despesas reais do período, e o contrato tem que avisar que o valor pode subir.']},
     {id:'variavel', h:'Só rateio depois (pós-pago puro)', tone:'warn', tag:'Incompleto', p:['Divide a conta depois que os eventos aconteceram.','O boleto muda muito de um mês para outro e a inadimplência sobe.','A regra nova exige também a contribuição de estabilização, fixa, todo mês.']},
-    {id:'regra', h:'Boleto em 3 partes', tone:'ok', tag:'É o que a regra exige', p:['<b>Taxa de administração:</b> fica com a administradora. A taxa de quem não paga não pode ser jogada para os outros.','<b>Rateio:</b> custo real dos eventos, apurado a cada período de até 3 meses, com relatório do atuário.','<b>Estabilização:</b> valor fixo mensal, definido no contrato. Sobra vira patrimônio do grupo; falta é coberta por ele.','A estabilização pode ficar perto do custo médio (boleto fixo) ou ser pequena (boleto que varia). As duas formas valem.','Cada um paga conforme o valor protegido e o risco do seu veículo.','Quem sai paga só o período em que ficou e recebe a sua parte do patrimônio em até 20 dias.']}
+    {id:'regra', h:'Boleto em 3 partes', tone:'ok', tag:'É o que a regra exige', p:['<b>Taxa de administração:</b> a administradora fica com um valor por placa e o restante volta para a associação, como estiver no contrato. Não entra no rateio. A taxa de quem não paga não pode ser jogada para os outros.','<b>Rateio:</b> custo real dos eventos, apurado a cada período de até 3 meses, com relatório do atuário.','<b>Estabilização:</b> valor fixo mensal, definido no contrato. Sobra vira patrimônio do grupo; falta é coberta por ele.','A estabilização pode ficar perto do custo médio (boleto fixo) ou ser pequena (boleto que varia). As duas formas valem.','Cada um paga conforme o valor protegido e o risco do seu veículo.','Quem sai paga só o período em que ficou e recebe a sua parte do patrimônio em até 20 dias.']}
   ];
   $('models').innerHTML = '<details class="more"><summary>Os 3 jeitos de cobrar: qual a regra aceita</summary><div class="models">' + M.map(m => `<article class="model tone-${m.tone} ${m.id==='regra'?'rec':''}">
     <span class="tag">${m.tag}</span>
@@ -2525,8 +2540,8 @@ function renderRepasse(r){
   const t = r.cobRepasse >= 1 ? 'ok' : r.cobRepasse >= .7 ? 'warn' : 'bad';
   Tl.innerHTML = [
     tileHTML('Hoje fica com a administração', brlShort(r.admMes), `${pct(r.a,0)} do faturamento`),
-    tileHTML('A administradora vai receber', brlShort(r.taxaMesNova), `taxa de ${pct(r.x,0)} do boleto novo`),
-    tileHTML('Volta para a associação', brlShort(r.repasseMes), `${pct(r.rep,0)} da taxa`),
+    tileHTML('Fica com a administradora', brlShort(r.taxaMesNova - r.repasseMes), `${brl(r.novoTaxaR - r.repPlaca,true)} por placa`),
+    tileHTML('Volta para a associação', brlShort(r.repasseMes), `${brl(r.repPlaca,true)} por placa · ${pct(r.rep,0)} da taxa`),
     tileHTML(dif >= 0 ? 'Sobra para a associação' : 'Falta para a associação', brlShort(Math.abs(dif)), `por mês, contra uma estrutura de <b>${brlShort(r.custoAssoc)}</b>`, t)
   ].join('');
   const mx = Math.max(r.custoAssoc, r.repasseMes);
@@ -2939,6 +2954,20 @@ window.addEventListener('resize', () => {
   if(!R || window.innerWidth === lastW) return;
   lastW = window.innerWidth; clearTimeout(rzT);
   rzT = setTimeout(() => { chartMeses(R); renderSim(); chartDoze(R); }, 150);
+});
+
+/* título e explicação em cima; a caixa de digitar fica na mesma altura dos vizinhos */
+document.querySelectorAll('.fields > .field').forEach(fl => {
+  const kids = [...fl.children];
+  const i = kids.findIndex(k => k.classList.contains('input'));
+  if(i < 0){ const all = document.createElement('div'); all.className = 'fall'; kids.forEach(k => all.appendChild(k)); fl.append(all); }
+  else {
+    const head = document.createElement('div'), body = document.createElement('div'), tail = document.createElement('div');
+    head.className = 'fhead'; body.className = 'fbody'; tail.className = 'ftail';
+    kids.slice(0, i).forEach(k => head.appendChild(k)); body.appendChild(kids[i]); kids.slice(i + 1).forEach(k => tail.appendChild(k));
+    fl.append(head, body, tail);
+  }
+  fl.classList.add('aligned');
 });
 
 /* ======================= ABAS E PASSOS ======================= */
