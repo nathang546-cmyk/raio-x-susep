@@ -837,6 +837,8 @@ body.modal-on{overflow:hidden}
 .propsim-h span{color:var(--muted);font-size:.93rem}
 
 .fhead,.ftail,.fall{display:flex;flex-direction:column;gap:6px;min-width:0}
+.fbody{min-width:0}
+.input input{width:0}
 @supports (grid-template-rows:subgrid){
   .fields>.field.aligned{display:grid;grid-row:span 3;grid-template-rows:subgrid;row-gap:6px}
   .fields>.field.aligned>.fall{grid-row:1/-1}
@@ -1311,14 +1313,14 @@ body.modal-on{overflow:hidden}
     <div class="sec-head"><p class="kicker">Parte 1</p><h2>O rateio</h2></div>
     <div class="vizgrid" style="margin-top:0">
       <article class="viz"><h3>O boleto vem separado em 3 partes</h3>
-        <div class="hstack"><i style="flex:38.92 1 0;background:var(--s-adm)"></i><i style="flex:92.03 1 0;background:var(--s-ev)"></i><i style="flex:33.68 1 0;background:var(--s-res)"></i></div>
-        <p class="destline">Vai para: <span><i class="d-adm"></i>Administradora <b>R$ 7,78</b></span><span><i class="d-assoc"></i>Associação <b>R$ 31,14</b></span><span><i class="d-grupo"></i>Grupo, CNPJ próprio <b>R$ 125,71</b></span></p>
+        <div class="hstack"><i style="flex:38.92 1 0;background:var(--s-adm)"></i><i style="flex:91.98 1 0;background:var(--s-ev)"></i><i style="flex:37.04 1 0;background:var(--s-res)"></i></div>
+        <p class="destline">Vai para: <span><i class="d-adm"></i>Administradora <b>R$ 7,78</b></span><span><i class="d-assoc"></i>Associação <b>R$ 31,14</b></span><span><i class="d-grupo"></i>Grupo, CNPJ próprio <b>R$ 129,02</b></span></p>
         <div class="ent-parts">
           <div><span class="sw" style="background:var(--s-adm)"></span><b>Taxa de administração · R$ 38,92</b><p><b>Dividida entre administradora e associação.</b> A administradora fica com um valor por placa, combinado no contrato (no exemplo, R$ 7,78). O restante (R$ 31,14) volta para a conta da associação e paga equipe, aluguel, vendas e atendimento. Não entra no rateio.</p></div>
-          <div><span class="sw" style="background:var(--s-ev)"></span><b><span class="term" tabindex="0" data-g="rateio">Rateio</span> · R$ 92,03</b><p><b>Vai para a conta do grupo.</b> Paga os eventos do período.</p></div>
-          <div><span class="sw" style="background:var(--s-res)"></span><b><span class="term" tabindex="0" data-g="estabilizacao">Estabilização</span> · R$ 33,68</b><p><b>Vai para a conta do grupo.</b> Vira a reserva do grupo e segura o boleto nos meses ruins. Não é da administradora: ela só administra.</p></div>
+          <div><span class="sw" style="background:var(--s-ev)"></span><b><span class="term" tabindex="0" data-g="rateio">Rateio</span> · R$ 91,98</b><p><b>Vai para a conta do grupo.</b> Paga os eventos do período.</p></div>
+          <div><span class="sw" style="background:var(--s-res)"></span><b><span class="term" tabindex="0" data-g="estabilizacao">Estabilização</span> · R$ 37,04</b><p><b>Vai para a conta do grupo.</b> Vira a reserva do grupo e segura o boleto nos meses ruins. Não é da administradora: ela só administra.</p></div>
         </div>
-        <p class="note">O grupo tem CNPJ próprio e dinheiro separado da associação e da administradora. Se a administradora quebrar, esse dinheiro não entra na falência (LC 213, arts. 88-E e 88-G). Valores de exemplo, de uma associação com 1.250 placas.</p>
+        <p class="note">O grupo tem CNPJ próprio e dinheiro separado da associação e da administradora. Se a administradora quebrar, esse dinheiro não entra na falência (LC 213, arts. 88-E e 88-G). Valores de exemplo, de uma associação com faturamento de R$ 120 mil por mês (938 placas).</p>
       </article>
       <article class="viz"><h3>Como o rateio é calculado, passo a passo</h3>
         <ol class="ent-steps">
@@ -1553,13 +1555,13 @@ const DOCS = [
 
 const EXEMPLO = {
   nome:'Associação Exemplo',
-  tp_carros_placas:'1.000', tp_carros_fipe:'45.000', tp_carros_ev:'1.010.000',
-  tp_motos_placas:'200', tp_motos_fipe:'14.000', tp_motos_ev:'150.000',
-  tp_pesados_placas:'50', tp_pesados_fipe:'190.000', tp_pesados_ev:'180.000',
-  placas12:'1.100', fipeMax:'210.000',
-  ticket:'139', admPct:'28', inad:'8', eventos12:'1.340.000', recup12:'70.000', receita12:'', qtdEventos:'190', sinDireto:'', anoMedio:'2014', pctRastreador:'35', pctVistoria:'80', pctApp:'12', cancel12:'180',
-  mes_0:'92.000', mes_1:'118.000', mes_2:'85.000', mes_3:'140.000', mes_4:'101.000', mes_5:'96.000', mes_6:'171.000', mes_7:'88.000', mes_8:'109.000', mes_9:'124.000', mes_10:'97.000', mes_11:'119.000',
-  reserva:'90.000', pendentes:'48.000', nivelRes:'auto', rateioModo:'misto', contaSep:'nao', caminho:'contratar',
+  tp_carros_placas:'750', tp_carros_fipe:'45.000', tp_carros_ev:'757.500',
+  tp_motos_placas:'150', tp_motos_fipe:'14.000', tp_motos_ev:'112.500',
+  tp_pesados_placas:'38', tp_pesados_fipe:'190.000', tp_pesados_ev:'135.000',
+  placas12:'825', fipeMax:'210.000',
+  ticket:'139', admPct:'28', inad:'8', eventos12:'1.005.000', recup12:'52.500', receita12:'1.440.000', qtdEventos:'143', sinDireto:'', anoMedio:'2014', pctRastreador:'35', pctVistoria:'80', pctApp:'12', cancel12:'135',
+  mes_0:'69.000', mes_1:'88.500', mes_2:'63.750', mes_3:'105.000', mes_4:'75.750', mes_5:'72.000', mes_6:'128.250', mes_7:'66.000', mes_8:'81.750', mes_9:'93.000', mes_10:'72.750', mes_11:'89.250',
+  reserva:'67.500', pendentes:'36.000', nivelRes:'auto', rateioModo:'misto', contaSep:'nao', caminho:'contratar',
   taxaSim:'25', repasseSim:'80', custoAssoc:'', modelo:'fixo',
   docs:{susep:'sim',estatuto:'nao',atas:'sim',regulamento:'sim',coberturas:'ns',base:'sim',historico:'ns',processos:'nao',contabil:'sim',vendedores:'nao',prestacao:'nao',reclamacao:'nao',lgpd:'nao',sistema:'sim'}
 };
