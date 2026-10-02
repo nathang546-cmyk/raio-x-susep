@@ -936,6 +936,16 @@ body[data-view="inicio"] .fab-help{display:none!important}
 .hero-foot{position:absolute;left:0;right:0;bottom:4px;text-align:center;font-size:.78rem;color:#6E7686}
 @media (max-width:560px){.hero-foot{display:none}.hero-vis{padding-bottom:40px}.chip-a{left:-6px;bottom:10px}.chip-b{right:-6px;top:4px}}
 
+.hero-in{grid-template-columns:minmax(0,1fr)!important;justify-items:center;text-align:center}
+.hero-txt{display:grid;justify-items:center;max-width:860px}
+.hero h1{max-width:none;font-size:clamp(2.5rem,6.4vw,4.6rem)}
+.hero-lede{max-width:44ch;font-size:clamp(1.1rem,1.7vw,1.3rem)}
+.hero-ctas,.hero-trust{justify-content:center}
+.hero{padding:96px 0 104px}
+.qchips{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-top:44px;max-width:760px}
+.qchips span{display:inline-flex;align-items:center;gap:8px;padding:9px 16px 9px 12px;border-radius:999px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);color:#D6DCE5;font-size:.92rem;font-weight:500}
+.qchips span::before{content:"";width:8px;height:8px;border-radius:50%;background:#F3B451;box-shadow:0 0 0 3px rgba(243,180,81,.18)}
+@media (max-width:560px){.hero{padding:64px 0 72px}.qchips{margin-top:32px}.qchips span{font-size:.86rem}}
 .worries{max-width:480px;padding:0;display:grid;gap:14px}
 .w-k{font:600 .82rem var(--f-display);letter-spacing:.1em;text-transform:uppercase;color:#39D0B8}
 .wlist{list-style:none;margin:0;padding:0;display:grid;gap:10px}
@@ -1137,25 +1147,21 @@ body[data-view="inicio"] .fab-help{display:none!important}
       <div class="hero-txt">
         <p class="hero-badge"><span class="dot-live" aria-hidden="true"></span>Regra nova da SUSEP · LC 213/2025 e Res. CNSP 491/2026</p>
         <h1>Sua associação está pronta para a <span class="grad">SUSEP</span>?</h1>
-        <p class="hero-lede">Boleto que vai subir, caixa que não cobre uma perda total, repasse que não paga a estrutura. Descubra em 5 minutos onde a sua associação está exposta e o que fazer até <b>07/05/2028</b>.</p>
+        <p class="hero-lede">Descubra em 5 minutos onde a sua associação está exposta e o que fazer até <b>07/05/2028</b>.</p>
         <div class="hero-ctas">
           <a class="btn big btn-glow" href="#diagnostico" id="heroGo">Calcular agora <span aria-hidden="true">→</span></a>
           <button type="button" class="btn big ghost-light" id="heroEx">Ver um exemplo</button>
         </div>
         <ul class="hero-trust"><li>Grátis</li><li>Sem cadastro</li><li>Seus números ficam no seu aparelho</li></ul>
+        <div class="qchips" aria-label="Perguntas que o Raio-X responde">
+          <span>“Quanto o boleto vai subir?”</span>
+          <span>“O caixa aguenta uma perda total?”</span>
+          <span>“A associação sobrevive com o repasse?”</span>
+          <span>“A diretoria responde se faltar dinheiro?”</span>
+        </div>
         <p class="hero-resume" id="heroResume" hidden>Você já começou um diagnóstico neste aparelho. <a href="#resultado">Ver meu resultado →</a></p>
       </div>
 
-      <div class="hero-vis worries rv" aria-label="O que preocupa a diretoria">
-        <p class="w-k">O que tira o sono da diretoria</p>
-        <ul class="wlist">
-          <li><span class="w-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 2h12v20l-3-2-3 2-3-2-3 2V2z"/><path d="M9 7h6M9 11h6"/></svg></span><div><b>“Quanto o boleto vai subir?”</b><small>Veja o boleto certo de cada tipo de veículo antes de sentar com a administradora.</small></div></li>
-          <li><span class="w-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 17h14l-1.5-6.5A2 2 0 0 0 15.6 9H8.4a2 2 0 0 0-1.9 1.5L5 17z"/><circle cx="8" cy="18" r="1.6"/><circle cx="16" cy="18" r="1.6"/></svg></span><div><b>“O caixa aguenta uma perda total?”</b><small>A reserva é calculada com o veículo mais caro da carteira e os eventos em aberto.</small></div></li>
-          <li><span class="w-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 21h18M5 21V10l7-6 7 6v11"/><path d="M10 21v-6h4v6"/></svg></span><div><b>“A associação sobrevive só com o repasse?”</b><small>Simule a taxa e o repasse e veja se pagam a estrutura que vocês têm hoje.</small></div></li>
-          <li><span class="w-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 4.5-3.4 8.3-8 9-4.6-.7-8-4.5-8-9V6l8-3z"/><path d="M12 8v5M12 16h.01"/></svg></span><div><b>“A diretoria responde se faltar dinheiro?”</b><small>Pela lei, os diretores respondem junto se faltar provisão. O plano mostra o que arrumar primeiro.</small></div></li>
-        </ul>
-        <p class="w-foot">O Raio-X responde as quatro com os números da sua associação.</p>
-      </div>
     </div>
   </section>
 
