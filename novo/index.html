@@ -1284,7 +1284,7 @@ body[data-view="inicio"] .fab-help{display:none!important}
 
     <!-- PASSO 1 -->
     <section class="step" aria-labelledby="h1s">
-      <div class="step-head"><span class="step-num">1</span><div><h2 id="h1s">Sua associação</h2><p>Quantas placas de cada tipo e quanto elas valem.</p></div></div>
+      <div class="step-head"><span class="step-num">1</span><div><h2 id="h1s">Sua associação</h2><p>Comece pelo tamanho da carteira: quantas placas a associação protege em cada tipo de veículo e quanto elas valem.</p></div></div>
       <div class="fields">
         <div class="field wide">
           <label for="nome">Nome da associação <span class="opt">(opcional)</span></label>
@@ -1292,18 +1292,18 @@ body[data-view="inicio"] .fab-help{display:none!important}
         </div>
         <div class="field wide">
           <span class="lbl">Placas ativas por tipo de veículo <button type="button" class="info" data-g="fipe" aria-label="O que é FIPE?">?</button></span>
-          <p class="hint">Conte só os veículos com mensalidade ativa. Se só trabalha com carro, preencha só a linha de carros. A FIPE média é a soma da FIPE de todos dividida pelo número de placas; se não souber, use o valor de um veículo “típico”.</p>
+          <p class="hint">Considere apenas os veículos com mensalidade ativa e preencha só as linhas dos tipos com que a associação trabalha. Para a FIPE média, some a FIPE de todos os veículos do tipo e divida pelo número de placas; se não tiver esse número, use o valor de um veículo típico da carteira.</p>
           <div class="tipos" id="tipos"></div>
           <div class="total-line"><span>Total de placas ativas</span><span id="totPlacas">–</span></div>
         </div>
         <div class="field">
           <label for="placas12">E há 12 meses, quantas placas eram? <span class="opt">(opcional)</span></label>
-          <p class="hint">Serve para ver se a carteira está crescendo ou encolhendo.</p>
+          <p class="hint">Com esse número, a ferramenta mostra se a carteira está crescendo ou encolhendo.</p>
           <div class="input"><input id="placas12" inputmode="numeric" data-kind="int"><span class="suf">placas</span></div>
         </div>
         <div class="field">
           <label for="fipeMax">FIPE do veículo mais caro protegido</label>
-          <p class="hint">Uma perda total dele sai de uma vez só do caixa. Entra na conta da reserva.</p>
+          <p class="hint">Como a perda total desse veículo sairia do caixa de uma só vez, o valor dele entra no cálculo da reserva.</p>
           <div class="input"><span class="pre">R$</span><input id="fipeMax" inputmode="decimal" data-kind="money"></div>
         </div>
         <div class="field wide">
@@ -1317,7 +1317,7 @@ body[data-view="inicio"] .fab-help{display:none!important}
                 <div class="field"><label for="pctApp">Rodam com aplicativo</label><div class="input compact"><input id="pctApp" inputmode="decimal" data-kind="pct"><span class="suf">%</span></div></div>
                 <div class="field"><label for="cancel12">Canceladas em 12 meses</label><div class="input compact"><input id="cancel12" inputmode="numeric" data-kind="int"><span class="suf">placas</span></div></div>
               </div>
-              <p class="hint">Vistoria: com fotos na entrada. Aplicativo: Uber, 99, entregas ou outro trabalho.</p>
+              <p class="hint">Considere como vistoria a que foi feita com fotos na entrada e, como aplicativo, o uso em Uber, 99, entregas ou outro trabalho.</p>
               <p class="calcline" id="qbOut">–</p>
             </div>
           </details>
@@ -1327,11 +1327,11 @@ body[data-view="inicio"] .fab-help{display:none!important}
 
     <!-- PASSO 2 -->
     <section class="step" aria-labelledby="h2s">
-      <div class="step-head"><span class="step-num">2</span><div><h2 id="h2s">Faturamento</h2><p>Mensalidade, parte da administração e quem não paga.</p></div></div>
+      <div class="step-head"><span class="step-num">2</span><div><h2 id="h2s">Faturamento</h2><p>Quanto entra por mês, quanto fica com a administração e quanto deixa de ser pago.</p></div></div>
       <div class="fields">
         <div class="field">
           <label for="ticket">Mensalidade média por placa (ticket médio) <button type="button" class="info" data-g="ticket" aria-label="O que é ticket médio?">?</button></label>
-          <p class="hint">Quanto, em média, cada associado paga por mês.</p>
+          <p class="hint">É o valor que, em média, cada associado paga por mês.</p>
           <div class="input"><span class="pre">R$</span><input id="ticket" inputmode="decimal" data-kind="money"><span class="suf">/mês</span></div>
           <details class="help" id="helpTicket">
             <summary>Não sei calcular</summary>
@@ -1348,7 +1348,7 @@ body[data-view="inicio"] .fab-help{display:none!important}
         </div>
         <div class="field">
           <label for="admPct" data-lfor="admModo" data-pct="admPct" data-brl="admValor">Quanto da mensalidade fica com a administração da associação? <button type="button" class="info" data-g="taxaAdm" aria-label="O que é taxa de administração?">?</button></label>
-          <p class="hint">Salários, aluguel, sistema, comissão de vendedor, marketing. Tudo que não é pagar evento. <span data-ufor="admModo" data-u="brl">Coloque o total gasto em um mês.</span></p>
+          <p class="hint">Inclui tudo o que não é pagamento de evento, como salários, aluguel, sistema, comissão de vendedores e marketing.<span data-ufor="admModo" data-u="brl"> Informe o total gasto em um mês.</span></p>
           <div class="input unit">
             <span class="pre" data-ufor="admModo" data-u="brl">R$</span>
             <input id="admPct" inputmode="decimal" data-kind="pct" data-ufor="admModo" data-u="pct">
@@ -1359,7 +1359,7 @@ body[data-view="inicio"] .fab-help{display:none!important}
         </div>
         <div class="field">
           <label for="inad" data-lfor="inadModo" data-pct="inad" data-brl="inadValor">Quanto deixa de ser pago? <button type="button" class="info" data-g="inadimplencia" aria-label="O que é inadimplência?">?</button></label>
-          <p class="hint"><span data-ufor="inadModo" data-u="pct">De cada 100 boletos, quantos não são pagos? Se 8 de cada 100 atrasam ou não pagam, coloque 8.</span><span data-ufor="inadModo" data-u="brl">Quanto, em reais, deixou de ser pago em um mês normal.</span></p>
+          <p class="hint"><span data-ufor="inadModo" data-u="pct">Informe quantos boletos, de cada 100, ficam sem pagamento: se 8 de cada 100 atrasam ou não são pagos, coloque 8.</span><span data-ufor="inadModo" data-u="brl">Informe quanto, em reais, deixou de ser pago em um mês normal.</span></p>
           <div class="input unit">
             <span class="pre" data-ufor="inadModo" data-u="brl">R$</span>
             <input id="inad" inputmode="decimal" data-kind="pct" data-ufor="inadModo" data-u="pct">
@@ -1373,27 +1373,27 @@ body[data-view="inicio"] .fab-help{display:none!important}
 
     <!-- PASSO 3 -->
     <section class="step" aria-labelledby="h3s">
-      <div class="step-head"><span class="step-num">3</span><div><h2 id="h3s">Dinheiro que sai com eventos</h2><p>Daqui sai o índice de <span class="term" tabindex="0" data-g="sinistralidade">sinistralidade</span>, o número mais importante de todos.</p></div></div>
+      <div class="step-head"><span class="step-num">3</span><div><h2 id="h3s">Dinheiro que sai com eventos</h2><p>É com esses números que a ferramenta calcula a <span class="term" tabindex="0" data-g="sinistralidade">sinistralidade</span>, o indicador mais importante do diagnóstico.</p></div></div>
       <div class="fields">
         <div class="field">
           <label for="eventos12">Quanto a associação pagou de eventos nos últimos 12 meses?</label>
-          <p class="hint">Some tudo: perda total, roubo e furto, conserto em oficina, danos a terceiros, vidros, guincho pago pelo fundo.</p>
+          <p class="hint">Some tudo o que o fundo pagou: perdas totais, roubos e furtos, consertos em oficina, danos a terceiros, vidros e guinchos.</p>
           <div class="input"><span class="pre">R$</span><input id="eventos12" inputmode="decimal" data-kind="money"></div>
           <p class="hint" id="ev12note" hidden>Usando a soma dos 12 meses preenchidos abaixo.</p>
         </div>
         <div class="field">
           <label for="recup12">Quanto voltou para o caixa? <button type="button" class="info" data-g="salvados" aria-label="O que é salvado?">?</button> <span class="opt">(se não souber, deixe 0)</span></label>
-          <p class="hint">Venda de carcaça (salvado), dinheiro recebido do terceiro culpado, cota de participação (franquia) paga pelo associado.</p>
+          <p class="hint">Inclua a venda de carcaças (salvados), o que foi recebido de terceiros culpados e as cotas de participação (franquias) pagas pelos associados.</p>
           <div class="input"><span class="pre">R$</span><input id="recup12" inputmode="decimal" data-kind="money"></div>
         </div>
         <div class="field">
           <label for="receita12">Quanto a associação arrecadou nos últimos 12 meses?</label>
-          <p class="hint">O que os associados pagaram de verdade. Se deixar em branco, a gente estima com a mensalidade, as placas e a inadimplência.</p>
+          <p class="hint">Use o que os associados de fato pagaram. Se deixar em branco, a ferramenta estima esse valor a partir da mensalidade, das placas e da inadimplência.</p>
           <div class="input"><span class="pre">R$</span><input id="receita12" inputmode="decimal" data-kind="money" placeholder="vazio = estimar"></div>
         </div>
         <div class="field">
           <label for="qtdEventos">Quantos eventos foram pagos em 12 meses? <span class="opt">(opcional)</span></label>
-          <p class="hint">Número de indenizações ou consertos que vocês pagaram.</p>
+          <p class="hint">Conte as indenizações e os consertos pagos no período.</p>
           <div class="input"><input id="qtdEventos" inputmode="numeric" data-kind="int"><span class="suf">eventos</span></div>
         </div>
         <div class="field wide">
@@ -1405,16 +1405,16 @@ body[data-view="inicio"] .fab-help{display:none!important}
             <summary>Como esse número é calculado? / Já sei o meu índice</summary>
             <div class="help-body">
               <p><b>Índice de sinistralidade</b> = (eventos pagos − o que voltou) ÷ arrecadação × 100.</p>
-              <p>Quer dizer: <b>de cada R$ 100 que entram, quantos reais saem para pagar evento.</b> Use sempre 12 meses, porque um mês sozinho engana: tem mês bom e mês ruim.</p>
+              <p>Em outras palavras, <b>de cada R$ 100 que entram, quantos reais saem para pagar eventos.</b> Use sempre 12 meses, porque um mês isolado engana: há meses bons e meses ruins.</p>
               <p class="calcline" id="sinCalc">–</p>
-              <div class="field"><label for="sinDireto" class="hint">Se o contador ou o sistema já calculou o índice, coloque aqui. Ele passa a valer no lugar da conta acima.</label>
+              <div class="field"><label for="sinDireto" class="hint">Se o contador ou o sistema já calculou o índice, informe aqui, e ele passa a valer no lugar da conta acima.</label>
                 <div class="input narrow"><input id="sinDireto" inputmode="decimal" data-kind="pct"><span class="suf">%</span></div></div>
             </div>
           </details>
           <details class="help plus" id="detMeses">
             <summary>Preencher mês a mês (recomendado: mostra o mês ruim e melhora a conta da reserva)</summary>
             <div class="help-body">
-              <p>Quanto foi pago de eventos em cada mês. Com os 12 meses preenchidos, a soma passa a valer no campo de cima.</p>
+              <p>Informe quanto foi pago de eventos em cada mês. Quando os 12 meses estiverem preenchidos, a soma passa a valer no campo de cima.</p>
               <div class="meses" id="meses"></div>
               <p class="calcline" id="mesesOut">–</p>
             </div>
@@ -1422,7 +1422,7 @@ body[data-view="inicio"] .fab-help{display:none!important}
           <details class="help plus" id="detTipoEv">
             <summary>Sei quanto cada tipo de veículo gastou (opcional: deixa o boleto por tipo mais justo)</summary>
             <div class="help-body">
-              <p>Eventos pagos em 12 meses, separados por tipo. Se deixar vazio, a conta divide pelo valor (FIPE) dos veículos.</p>
+              <p>Informe os eventos pagos em 12 meses, separados por tipo de veículo. Se deixar em branco, a conta divide o custo pelo valor (FIPE) dos veículos.</p>
               <div class="mini" id="tipoEv"></div>
             </div>
           </details>
@@ -1432,16 +1432,16 @@ body[data-view="inicio"] .fab-help{display:none!important}
 
     <!-- PASSO 4 -->
     <section class="step" aria-labelledby="h4s">
-      <div class="step-head"><span class="step-num">4</span><div><h2 id="h4s">Reserva e rateio</h2><p>O que já está guardado e como a conta é dividida hoje.</p></div></div>
+      <div class="step-head"><span class="step-num">4</span><div><h2 id="h4s">Reserva e rateio</h2><p>Quanto a associação já tem guardado e como a conta dos eventos é dividida hoje.</p></div></div>
       <div class="fields">
         <div class="field">
           <label for="reserva">Quanto dinheiro está guardado hoje só para eventos? <button type="button" class="info" data-g="reserva" aria-label="O que é reserva?">?</button></label>
-          <p class="hint">Fundo de reserva. Não conte o dinheiro da administração.</p>
+          <p class="hint">Considere só o fundo de reserva, sem o dinheiro da administração.</p>
           <div class="input"><span class="pre">R$</span><input id="reserva" inputmode="decimal" data-kind="money"></div>
         </div>
         <div class="field">
           <label for="pendentes">Quanto a associação deve de eventos já avisados e ainda não pagos? <button type="button" class="info" data-g="pel" aria-label="O que é PEL?">?</button></label>
-          <p class="hint">Carro na oficina esperando pagamento, indenização em análise, fila de perda total.</p>
+          <p class="hint">Por exemplo, carros na oficina esperando pagamento, indenizações em análise e perdas totais na fila.</p>
           <div class="input"><span class="pre">R$</span><input id="pendentes" inputmode="decimal" data-kind="money"></div>
         </div>
         <div class="field wide">
@@ -1466,7 +1466,7 @@ body[data-view="inicio"] .fab-help{display:none!important}
 
     <!-- PASSO 5 -->
     <section class="step" aria-labelledby="h5s">
-      <div class="step-head"><span class="step-num">5</span><div><h2 id="h5s">Papéis e organização</h2><p>Responda com sinceridade. “Não sei” conta como “não”, mas vira tarefa no seu plano.</p></div></div>
+      <div class="step-head"><span class="step-num">5</span><div><h2 id="h5s">Papéis e organização</h2><p>Responda com sinceridade: “não sei” conta como “não” na nota, mas vira uma tarefa no seu plano.</p></div></div>
       <div class="docs" id="docs"></div>
     </section>
 
@@ -1906,29 +1906,29 @@ const REG = {
 };
 /* glossário: explicação simples de cada termo técnico (aparece ao tocar no "?") */
 const GLOS = {
-  sinistralidade:{t:'Sinistralidade', d:'De cada R$ 100 que entram, quanto sai para pagar eventos (batidas, roubos, perdas totais). Ex.: 66% = R$ 66 de cada R$ 100.'},
-  ticket:{t:'Ticket médio', d:'O valor médio da mensalidade por placa: total arrecadado no mês dividido pelo número de placas.'},
-  taxaAdm:{t:'Taxa de administração', d:'A parte do boleto que não vai para eventos. Na regra nova, a administradora fica com um valor por placa e o restante volta para a associação, para pagar equipe, aluguel, sistema e vendas. Não entra no rateio.'},
-  inadimplencia:{t:'Inadimplência', d:'Associados que não pagaram o boleto. Ex.: 8% = 8 de cada 100.'},
-  fipe:{t:'FIPE', d:'Tabela com o preço médio de mercado de cada veículo. É a base para saber quanto cada associado paga.'},
-  rateio:{t:'Rateio', d:'Dividir entre todos os associados do grupo o custo dos eventos do período.'},
-  estabilizacao:{t:'Estabilização', d:'Valor fixo cobrado todo mês, definido no contrato. Vai para a conta do grupo e forma a reserva. Se ficar perto do custo médio dos eventos, o boleto fica fixo e o rateio só entra quando falta dinheiro.'},
-  pel:{t:'PEL · eventos a pagar', d:'Provisão de Eventos a Liquidar. Dinheiro separado para eventos já avisados e ainda não pagos. Ex.: carro na oficina esperando pagamento.'},
-  peona:{t:'PEONA · eventos não avisados', d:'Provisão de Eventos Ocorridos e Não Avisados. Dinheiro separado para eventos que já aconteceram, mas que o associado ainda não avisou. Ex.: batida no dia 30 avisada só no dia 5.'},
-  provisao:{t:'Provisão', d:'Dinheiro separado para pagar eventos que já aconteceram. Não é sobra: já tem dono.'},
-  patrimonio:{t:'Reserva do grupo', d:'Também chamada de patrimônio do grupo. É o que sobrou dos meses bons, guardado para os meses ruins. Pela regra, não pode passar de 3 meses de contribuições.'},
-  salvados:{t:'Salvados', d:'O que sobra do veículo depois de uma perda total (a carcaça). Quando é vendido, o dinheiro volta para o grupo.'},
-  ressarcimento:{t:'Ressarcimento', d:'Dinheiro que o terceiro culpado pelo acidente, ou o seguro dele, devolve ao grupo.'},
-  franquia:{t:'Cota de participação', d:'A parte do conserto que o próprio associado paga. Também chamada de franquia.'},
-  resseguro:{t:'Resseguro', d:'Proteção que o grupo compra para eventos muito caros, como a perda total de um caminhão.'},
-  porMil:{t:'Por R$ 1.000 de FIPE', d:'Quanto cada um paga para cada R$ 1.000 do valor do veículo. Ex.: R$ 0,12 por mil num carro de R$ 45.000 = R$ 5,40.'},
-  rateioExtra:{t:'Rateio extra', d:'Valor cobrado a mais quando o custo do período passa da estabilização e da parte da reserva que você decidiu usar.'},
-  inadNaoRec:{t:'Inadimplência que não vai voltar', d:'Contribuições que não foram pagas e não vão ser. Pela regra, entram na conta de quem paga.'},
-  qualidade:{t:'Qualidade da carteira', d:'Nota de 0 a 100 que mostra se os veículos da carteira têm perfil de pouco ou de muito evento: idade, valor, rastreador, vistoria, uso e cancelamentos. É uma referência prática da ferramenta, não um número oficial.'},
-  teto:{t:'Teto da reserva', d:'Pela regra nova, a reserva do grupo não pode passar de 3 meses de contribuições. Se passar, o boleto tem que baixar.'},
-  reserva:{t:'Reserva', d:'Dinheiro guardado só para eventos, para aguentar meses ruins e perdas totais caras.'},
-  prazo90:{t:'Prazo de 90 dias', d:'A Resolução CNSP 491/2026 (art. 22) dá no máximo 90 dias para regular e pagar cada evento. Confira no regulamento a partir de quando o prazo começa a contar.'},
-  administradora:{t:'Administradora', d:'Empresa autorizada pela SUSEP que vai cuidar dos grupos das associações. Até 30/09/2026 nenhuma foi autorizada.'}
+  sinistralidade:{t:'Sinistralidade', d:'Mostra quanto, de cada R$ 100 que entram, sai para pagar eventos como batidas, roubos e perdas totais. Assim, 66% significa R$ 66 de cada R$ 100.'},
+  ticket:{t:'Ticket médio', d:'É o valor médio da mensalidade por placa, ou seja, o total arrecadado no mês dividido pelo número de placas.'},
+  taxaAdm:{t:'Taxa de administração', d:'É a parte do boleto que não vai para eventos. Na regra nova, a administradora fica com um valor por placa e o restante volta para a associação, que paga com ele equipe, aluguel, sistema e vendas. Por isso, a taxa não entra no rateio.'},
+  inadimplencia:{t:'Inadimplência', d:'É a parte dos associados que não pagou o boleto: uma inadimplência de 8% significa que 8 de cada 100 não pagaram.'},
+  fipe:{t:'FIPE', d:'É a tabela com o preço médio de mercado de cada veículo, usada como base para definir quanto cada associado paga.'},
+  rateio:{t:'Rateio', d:'É a divisão, entre todos os associados do grupo, do custo dos eventos do período.'},
+  estabilizacao:{t:'Estabilização', d:'É um valor fixo, definido no contrato, cobrado todo mês e depositado na conta do grupo para formar a reserva. Quando ele fica perto do custo médio dos eventos, o boleto se mantém fixo e o rateio só entra se faltar dinheiro.'},
+  pel:{t:'PEL · eventos a pagar', d:'A Provisão de Eventos a Liquidar é o dinheiro separado para eventos já avisados que ainda não foram pagos, como um carro na oficina esperando pagamento.'},
+  peona:{t:'PEONA · eventos não avisados', d:'A Provisão de Eventos Ocorridos e Não Avisados é o dinheiro separado para eventos que já aconteceram, mas que o associado ainda não comunicou, como uma batida no dia 30 avisada só no dia 5.'},
+  provisao:{t:'Provisão', d:'É o dinheiro separado para pagar eventos que já aconteceram. Por isso não é sobra: ele já tem destino.'},
+  patrimonio:{t:'Reserva do grupo', d:'Também chamada de patrimônio do grupo, é o que sobrou dos meses bons e fica guardado para os meses ruins. Pela regra, ela não pode passar de 3 meses de contribuições.'},
+  salvados:{t:'Salvados', d:'É o que sobra do veículo depois de uma perda total, a carcaça. Quando ela é vendida, o dinheiro volta para o grupo.'},
+  ressarcimento:{t:'Ressarcimento', d:'É o dinheiro que o terceiro culpado pelo acidente, ou o seguro dele, devolve ao grupo.'},
+  franquia:{t:'Cota de participação', d:'É a parte do conserto que o próprio associado paga, também chamada de franquia.'},
+  resseguro:{t:'Resseguro', d:'É a proteção que o grupo contrata para eventos muito caros, como a perda total de um caminhão.'},
+  porMil:{t:'Por R$ 1.000 de FIPE', d:'Mostra quanto cada associado paga para cada R$ 1.000 do valor do veículo. Com R$ 0,12 por mil, por exemplo, um carro de R$ 45.000 paga R$ 5,40.'},
+  rateioExtra:{t:'Rateio extra', d:'É o valor cobrado a mais quando o custo do período passa do que entrou de estabilização e da parte da reserva que a associação decidiu usar.'},
+  inadNaoRec:{t:'Inadimplência que não vai voltar', d:'São as contribuições que não foram pagas e não serão recuperadas. Pela regra, esse valor entra na conta de quem paga.'},
+  qualidade:{t:'Qualidade da carteira', d:'É uma nota de 0 a 100 que indica se a carteira tem perfil de poucos ou de muitos eventos, considerando idade e valor dos veículos, rastreador, vistoria, uso e cancelamentos. Trata-se de uma referência prática da ferramenta, e não de um número oficial.'},
+  teto:{t:'Teto da reserva', d:'Pela regra nova, a reserva do grupo não pode passar de 3 meses de contribuições; quando passa, o boleto tem que baixar.'},
+  reserva:{t:'Reserva', d:'É o dinheiro guardado só para eventos, que permite atravessar meses ruins e perdas totais caras.'},
+  prazo90:{t:'Prazo de 90 dias', d:'A Resolução CNSP 491/2026 (art. 22) dá no máximo 90 dias para regular e pagar cada evento, por isso vale conferir no regulamento a partir de quando esse prazo começa a contar.'},
+  administradora:{t:'Administradora', d:'É a empresa autorizada pela SUSEP que vai cuidar dos grupos das associações. Até 30/09/2026, nenhuma havia sido autorizada.'}
 };
 const gi = k => `<button type="button" class="info" data-g="${k}" aria-label="O que é ${GLOS[k].t}?">?</button>`;
 const gt = (k, txt) => `<span class="term" tabindex="0" data-g="${k}">${txt}</span>`;
@@ -1939,19 +1939,19 @@ const TIPOS = [
 ];
 const DOCS = [
   {id:'susep',      q:'A associação fez o cadastro na SUSEP até 15/07/2025 e ele está ativo?', t:'Cadastro na SUSEP ativo', d:'Na certidão da SUSEP, o status tem que aparecer como “em regularização”, com o diretor responsável com mandato em dia.', ref:'Res. SUSEP 49/2025', w:3},
-  {id:'estatuto',   q:'O estatuto diz como o grupo é formado e quem escolhe e troca a administradora?', t:'Estatuto com a regra da administradora', d:'A lei exige isso no estatuto.', ref:'LC 213, art. 88-E', w:3},
-  {id:'atas',       q:'As atas estão registradas e o mandato da diretoria está em dia?', t:'Atas registradas e mandato em dia', d:'Mandato vencido pode suspender o cadastro na SUSEP.', ref:'Res. SUSEP 49/2025', w:2},
+  {id:'estatuto',   q:'O estatuto diz como o grupo é formado e quem escolhe e troca a administradora?', t:'Estatuto com a regra da administradora', d:'É uma exigência da lei, e por isso precisa estar escrita no estatuto.', ref:'LC 213, art. 88-E', w:3},
+  {id:'atas',       q:'As atas estão registradas e o mandato da diretoria está em dia?', t:'Atas registradas e mandato em dia', d:'Isso importa porque um mandato vencido pode suspender o cadastro na SUSEP.', ref:'Res. SUSEP 49/2025', w:2},
   {id:'regulamento',q:'Existe um regulamento por escrito para o associado?', t:'Regulamento por escrito', d:'É o contrato do associado: coberturas, exclusões, cota de participação (franquia), regra do rateio e pagamento de evento em até 90 dias.', ref:'Res. CNSP 491, arts. 22 e 38–45', w:2},
-  {id:'coberturas', q:'A associação oferece só as coberturas que a regra permite?', t:'Só as coberturas permitidas', d:'Dano ao veículo, dano material a terceiros e assistência (guincho etc.). Nada de auxílio-funeral, acidentes pessoais ou proteção de celular.', ref:'Res. CNSP 491, art. 13', w:2},
-  {id:'base',       q:'A base de associados está completa e dá para exportar?', t:'Base de associados completa', d:'CPF, telefone, endereço, veículo e coberturas de cada um. A administradora vai pedir.', ref:'Res. CNSP 491, arts. 9 e 39', w:2},
-  {id:'historico',  q:'Tem o histórico de eventos pagos e em aberto dos últimos 24 a 36 meses?', t:'Histórico de eventos de 24 a 36 meses', d:'Data, placa, tipo, valor pago e valor recuperado. É a primeira coisa que o atuário pede.', ref:'', w:3},
-  {id:'processos',  q:'Tem a lista dos processos na Justiça?', t:'Lista de processos na Justiça', d:'Ações de associados e de terceiros, com valor e situação.', ref:'Res. CNSP 491, art. 9', w:1},
-  {id:'contabil',   q:'A contabilidade separa o dinheiro do fundo do dinheiro da administração?', t:'Contabilidade separando fundo e administração', d:'Balanço com o dinheiro dos associados separado.', ref:'', w:2},
-  {id:'vendedores', q:'Tem o cadastro dos vendedores e de quanto cada um ganha?', t:'Cadastro dos vendedores e da remuneração', d:'A regra exige registro dos intermediários e da remuneração.', ref:'Res. CNSP 491, arts. 26–28', w:1},
-  {id:'prestacao',  q:'A associação presta contas aos associados?', t:'Prestação de contas aos associados', d:'Quanto entrou, quanto saiu com evento e quanto ficou com a administração.', ref:'', w:1},
-  {id:'reclamacao', q:'Existe um canal de reclamação com registro?', t:'Canal de reclamação com registro', d:'Protocolo e prazo de resposta.', ref:'', w:1},
-  {id:'lgpd',       q:'Os dados dos associados estão protegidos (LGPD)?', t:'Proteção dos dados (LGPD)', d:'Termo de consentimento e controle de quem acessa.', ref:'Res. CNSP 491, art. 48', w:1},
-  {id:'sistema',    q:'Já possui sistema para gestão?', t:'Sistema de gestão', d:'Não só planilha e WhatsApp. Precisa gerar relatório do rateio, histórico de eventos, balancetes e DRE.', ref:'', w:1}
+  {id:'coberturas', q:'A associação oferece só as coberturas que a regra permite?', t:'Só as coberturas permitidas', d:'A regra permite dano ao veículo, dano material a terceiros e assistência, como guincho; ficam de fora auxílio-funeral, acidentes pessoais e proteção de celular.', ref:'Res. CNSP 491, art. 13', w:2},
+  {id:'base',       q:'A base de associados está completa e dá para exportar?', t:'Base de associados completa', d:'Ela precisa ter CPF, telefone, endereço, veículo e coberturas de cada associado, porque a administradora vai pedir esses dados.', ref:'Res. CNSP 491, arts. 9 e 39', w:2},
+  {id:'historico',  q:'Tem o histórico de eventos pagos e em aberto dos últimos 24 a 36 meses?', t:'Histórico de eventos de 24 a 36 meses', d:'Com data, placa, tipo, valor pago e valor recuperado de cada evento, que é a primeira coisa que o atuário pede.', ref:'', w:3},
+  {id:'processos',  q:'Tem a lista dos processos na Justiça?', t:'Lista de processos na Justiça', d:'Inclua as ações de associados e de terceiros, com o valor e a situação de cada uma.', ref:'Res. CNSP 491, art. 9', w:1},
+  {id:'contabil',   q:'A contabilidade separa o dinheiro do fundo do dinheiro da administração?', t:'Contabilidade separando fundo e administração', d:'O balanço precisa mostrar o dinheiro dos associados separado do restante.', ref:'', w:2},
+  {id:'vendedores', q:'Tem o cadastro dos vendedores e de quanto cada um ganha?', t:'Cadastro dos vendedores e da remuneração', d:'A regra exige o registro dos intermediários e de quanto cada um recebe.', ref:'Res. CNSP 491, arts. 26–28', w:1},
+  {id:'prestacao',  q:'A associação presta contas aos associados?', t:'Prestação de contas aos associados', d:'Mostrando quanto entrou, quanto saiu com eventos e quanto ficou com a administração.', ref:'', w:1},
+  {id:'reclamacao', q:'Existe um canal de reclamação com registro?', t:'Canal de reclamação com registro', d:'Cada reclamação precisa ter protocolo e prazo de resposta.', ref:'', w:1},
+  {id:'lgpd',       q:'Os dados dos associados estão protegidos (LGPD)?', t:'Proteção dos dados (LGPD)', d:'Isso inclui o termo de consentimento e o controle de quem acessa os dados.', ref:'Res. CNSP 491, art. 48', w:1},
+  {id:'sistema',    q:'Já possui sistema para gestão?', t:'Sistema de gestão', d:'Não basta planilha e WhatsApp: o sistema precisa gerar o relatório do rateio, o histórico de eventos, os balancetes e a DRE.', ref:'', w:1}
 ];
 
 const EXEMPLO = {
