@@ -1031,6 +1031,8 @@ body[data-view="inicio"] .fab-help{display:none!important}
 .lp-cta{display:flex;justify-content:center;margin-top:36px}
 
 .lp-dark{margin-top:96px;padding-block:96px;background:radial-gradient(800px 400px at 100% 0,rgba(57,208,184,.14),transparent 60%),#12131C}
+.lp-head .tl-count{display:inline-flex;align-items:center;gap:10px;margin-top:6px;padding:10px 18px;border-radius:999px;background:rgba(57,208,184,.1);border:1px solid rgba(57,208,184,.3);color:#D6DCE5!important;font-size:1rem!important}
+.tl-count b{font:700 1.25rem var(--f-display);color:#39D0B8}
 .tl{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;position:relative}
 .tl::before{content:"";position:absolute;left:0;right:0;top:9px;height:2px;background:rgba(255,255,255,.12)}
 .tl li{position:relative;display:grid;gap:4px;padding-top:32px;color:#AEB6C4}
@@ -1218,6 +1220,7 @@ body[data-view="inicio"] .fab-help{display:none!important}
       <div class="lp-head rv on-dark">
         <p class="pill-k">Por que agora</p>
         <h2>O prazo já está correndo</h2>
+        <p class="tl-count" id="tlCount">Faltam <b>19 meses</b> para o prazo final de 07/05/2028</p>
         <p>Quem chegar com os números em ordem escolhe a administradora. Quem deixar para depois aceita o que sobrar.</p>
       </div>
       <ol class="tl rv" id="tl">
@@ -3516,6 +3519,9 @@ $('stNext').addEventListener('click', () => passo < STEPS.length ? showStep(pass
     const pr = prioridades(x).slice(0, 3);
     if(pr.length) $('bxPrio').innerHTML = pr.map(p => `<li>${p.t}</li>`).join('');
   }catch(e){}
+  // contagem até o prazo: recalculada pela data de quem abre a página
+  const mf = mesesAte(REG.prazoFinal), df = Math.ceil((REG.prazoFinal - new Date()) / 864e5);
+  $('tlCount').innerHTML = df <= 0 ? 'O prazo final de <b>07/05/2028</b> chegou' : mf >= 2 ? `Faltam <b>${mf} meses</b> para o prazo final de 07/05/2028` : `Faltam <b>${df} dias</b> para o prazo final de 07/05/2028`;
   // linha do tempo: o que já passou e o próximo marco
   const hoje = new Date(); let prox = null;
   document.querySelectorAll('#tl li').forEach((li, i, all) => {
