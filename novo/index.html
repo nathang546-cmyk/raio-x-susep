@@ -165,7 +165,7 @@ details.help>summary::before{content:"?";display:inline-grid;place-items:center;
 details.help.plus>summary::before{content:"+"}
 details.help[open]>summary{border-bottom:1px solid var(--line)}
 details.help[open]{box-shadow:0 8px 24px -16px rgba(16,24,40,.35)}
-.subcard{border:1px solid var(--line);border-radius:14px;background:var(--bg);padding:18px;display:flex;flex-direction:column;gap:14px}
+.subcard{border:1px solid color-mix(in srgb,var(--accent) 18%,var(--line));border-radius:14px;background:color-mix(in srgb,var(--accent) 7%,var(--sunk));padding:18px;display:flex;flex-direction:column;gap:14px}
 .subcard-h{display:grid;gap:4px}
 .subcard-h h3{font-size:1.08rem}
 .subcard-h p{color:var(--muted);font-size:.93rem}
@@ -569,6 +569,7 @@ h1,h2,h3{letter-spacing:-.02em}
 .term:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .info{display:inline-grid;place-items:center;width:19px;height:19px;border-radius:50%;border:0;background:var(--accent-soft);color:var(--accent);font:700 .72rem/1 var(--f-body);cursor:pointer;vertical-align:2px;margin-left:4px;padding:0;flex:none}
 .info:hover,.info:focus-visible{background:var(--accent);color:var(--accent-ink)}
+.info{font:700 .8rem/1 Georgia,"Times New Roman",serif!important;font-style:normal}
 #tip{max-width:300px}
 /* rateio do mês */
 .exbar.slim{display:flex;align-items:center;justify-content:space-between;gap:8px 16px;flex-wrap:wrap;padding:8px 14px;border-radius:10px;margin-bottom:16px}
@@ -915,10 +916,13 @@ body.modal-on{overflow:hidden}
   .fields>.field.aligned{display:grid;grid-row:span 3;grid-template-rows:subgrid;row-gap:6px}
   .fields>.field.aligned>.fall{grid-row:1/-1}
 }
-.destline{display:flex;flex-wrap:wrap;gap:4px 14px;margin:-2px 0 0;font-size:.85rem;color:var(--muted)}
-.destline span{display:inline-flex;align-items:center;gap:6px}
-.destline b{color:var(--ink)}
-.destline i{width:10px;height:10px;border-radius:2px;display:inline-block}
+.destline{display:grid;gap:8px;margin:2px 0 0}
+.dl-k{font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.dl-items{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:8px}
+.dl-items>div{display:grid;grid-template-columns:auto 1fr;align-items:center;column-gap:8px;background:var(--sunk);border-radius:10px;padding:8px 12px}
+.dl-items small{font-size:.8rem;color:var(--muted)}
+.dl-items b{grid-column:2;font-size:1.02rem;color:var(--ink);font-variant-numeric:tabular-nums}
+.destline i{width:10px;height:10px;border-radius:3px;display:inline-block}
 .destline i.d-adm{background:var(--s-adm)}
 .destline i.d-assoc{background:transparent;border:2px solid var(--s-adm)}
 .destline i.d-grupo{background:var(--accent)}
@@ -968,6 +972,11 @@ body[data-view="inicio"] .fab-help{display:none!important}
 .btn-glow.apertado{transform:scale(.97)}
 .onda{position:absolute;width:12px;height:12px;margin:-6px 0 0 -6px;border-radius:50%;background:rgba(255,255,255,.55);pointer-events:none;animation:onda .5s ease-out forwards}
 @keyframes onda{to{transform:scale(28);opacity:0}}
+.st-next{animation:stNext .38s cubic-bezier(.2,.7,.2,1) both}
+.st-prev{animation:stPrev .38s cubic-bezier(.2,.7,.2,1) both}
+@keyframes stNext{from{opacity:0;transform:translateX(32px)}to{opacity:1;transform:none}}
+@keyframes stPrev{from{opacity:0;transform:translateX(-32px)}to{opacity:1;transform:none}}
+@media (min-width:760px){#f>.step{min-height:600px}}
 .v-in{animation:vIn .45s cubic-bezier(.2,.7,.2,1) both}
 @keyframes vIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
 .btn-glow:hover{transform:translateY(-1px);box-shadow:0 14px 36px -8px rgba(17,165,148,.8),inset 0 1px 0 rgba(255,255,255,.25)!important}
@@ -1446,8 +1455,8 @@ body[data-view="inicio"] .hero{padding-top:160px}
               <div class="qbgrid">
                 <div class="field"><label for="anoMedio">Ano médio dos veículos</label><div class="input compact"><input id="anoMedio" inputmode="numeric" data-kind="ano" placeholder="Ex.: 2015"></div></div>
                 <div class="field"><label for="pctRastreador">Têm rastreador</label><div class="input compact"><input id="pctRastreador" inputmode="decimal" data-kind="pct"><span class="suf">%</span></div></div>
-                <div class="field"><label for="pctVistoria">Entraram com vistoria <button type="button" class="info" data-g="vistoria" aria-label="O que conta como vistoria?">?</button></label><div class="input compact"><input id="pctVistoria" inputmode="decimal" data-kind="pct"><span class="suf">%</span></div></div>
-                <div class="field"><label for="pctApp">Rodam com aplicativo <button type="button" class="info" data-g="aplicativo" aria-label="O que conta como aplicativo?">?</button></label><div class="input compact"><input id="pctApp" inputmode="decimal" data-kind="pct"><span class="suf">%</span></div></div>
+                <div class="field"><label for="pctVistoria">Entraram com vistoria <button type="button" class="info" data-g="vistoria" aria-label="O que conta como vistoria?">i</button></label><div class="input compact"><input id="pctVistoria" inputmode="decimal" data-kind="pct"><span class="suf">%</span></div></div>
+                <div class="field"><label for="pctApp">Rodam com aplicativo <button type="button" class="info" data-g="aplicativo" aria-label="O que conta como aplicativo?">i</button></label><div class="input compact"><input id="pctApp" inputmode="decimal" data-kind="pct"><span class="suf">%</span></div></div>
                 <div class="field"><label for="cancel12">Canceladas em 12 meses</label><div class="input compact"><input id="cancel12" inputmode="numeric" data-kind="int"><span class="suf">placas</span></div></div>
               </div>
               <p class="calcline" id="qbOut">–</p>
@@ -1461,7 +1470,7 @@ body[data-view="inicio"] .hero{padding-top:160px}
       <div class="step-head"><span class="step-num">2</span><div><h2 id="h2s">Faturamento</h2><p>Quanto entra, quanto fica com a administração e quanto não é pago.</p></div></div>
       <div class="fields f3">
         <div class="field">
-          <label for="ticket">Mensalidade média por placa <button type="button" class="info" data-g="ticket" aria-label="O que é ticket médio?">?</button></label>
+          <label for="ticket">Mensalidade média por placa <button type="button" class="info" data-g="ticket" aria-label="O que é ticket médio?">i</button></label>
           <p class="hint">Quanto cada associado paga, em média, por mês.</p>
           <div class="input"><span class="pre">R$</span><input id="ticket" inputmode="decimal" data-kind="money"><span class="suf">/mês</span></div>
           <details class="help" id="helpTicket">
@@ -1478,7 +1487,7 @@ body[data-view="inicio"] .hero{padding-top:160px}
           </details>
         </div>
         <div class="field">
-          <label for="admPct" data-lfor="admModo" data-pct="admPct" data-brl="admValor">Quanto fica com a administração? <button type="button" class="info" data-g="taxaAdm" aria-label="O que é taxa de administração?">?</button></label>
+          <label for="admPct" data-lfor="admModo" data-pct="admPct" data-brl="admValor">Quanto fica com a administração? <button type="button" class="info" data-g="taxaAdm" aria-label="O que é taxa de administração?">i</button></label>
           <p class="hint">Tudo o que não é evento: salários, aluguel, sistema, comissões e marketing.<span data-ufor="admModo" data-u="brl"> Informe o total do mês.</span></p>
           <div class="input unit">
             <span class="pre" data-ufor="admModo" data-u="brl">R$</span>
@@ -1489,7 +1498,7 @@ body[data-view="inicio"] .hero{padding-top:160px}
           <p class="hint ueq" id="admEq"></p>
         </div>
         <div class="field">
-          <label for="inad" data-lfor="inadModo" data-pct="inad" data-brl="inadValor">Quanto deixa de ser pago? <button type="button" class="info" data-g="inadimplencia" aria-label="O que é inadimplência?">?</button></label>
+          <label for="inad" data-lfor="inadModo" data-pct="inad" data-brl="inadValor">Quanto deixa de ser pago? <button type="button" class="info" data-g="inadimplencia" aria-label="O que é inadimplência?">i</button></label>
           <p class="hint"><span data-ufor="inadModo" data-u="pct">Se 8 de cada 100 boletos não são pagos, coloque 8.</span><span data-ufor="inadModo" data-u="brl">Quanto deixou de ser pago em um mês normal.</span></p>
           <div class="input unit">
             <span class="pre" data-ufor="inadModo" data-u="brl">R$</span>
@@ -1513,7 +1522,7 @@ body[data-view="inicio"] .hero{padding-top:160px}
           <p class="hint" id="ev12note" hidden>Usando a soma dos 12 meses preenchidos abaixo.</p>
         </div>
         <div class="field">
-          <label for="recup12">O que voltou para o caixa <span class="opt">(opcional)</span> <button type="button" class="info" data-g="salvados" aria-label="O que é salvado?">?</button></label>
+          <label for="recup12">O que voltou para o caixa <span class="opt">(opcional)</span> <button type="button" class="info" data-g="salvados" aria-label="O que é salvado?">i</button></label>
           <p class="hint">Salvados vendidos, valores de terceiros e franquias.</p>
           <div class="input"><span class="pre">R$</span><input id="recup12" inputmode="decimal" data-kind="money"></div>
         </div>
@@ -1564,12 +1573,12 @@ body[data-view="inicio"] .hero{padding-top:160px}
       <div class="step-head"><span class="step-num">4</span><div><h2 id="h4s">Reserva e rateio</h2><p>O que já está guardado e como a associação cobra hoje.</p></div></div>
       <div class="fields">
         <div class="field">
-          <label for="reserva">Reserva guardada hoje <button type="button" class="info" data-g="reserva" aria-label="O que é reserva?">?</button></label>
+          <label for="reserva">Reserva guardada hoje <button type="button" class="info" data-g="reserva" aria-label="O que é reserva?">i</button></label>
           <p class="hint">Só o dinheiro para eventos, sem o da administração.</p>
           <div class="input"><span class="pre">R$</span><input id="reserva" inputmode="decimal" data-kind="money"></div>
         </div>
         <div class="field">
-          <label for="pendentes">Eventos avisados e ainda não pagos <button type="button" class="info" data-g="pel" aria-label="O que é PEL?">?</button></label>
+          <label for="pendentes">Eventos avisados e ainda não pagos <button type="button" class="info" data-g="pel" aria-label="O que é PEL?">i</button></label>
           <p class="hint">Oficinas a pagar, indenizações em análise e perdas totais na fila.</p>
           <div class="input"><span class="pre">R$</span><input id="pendentes" inputmode="decimal" data-kind="money"></div>
         </div>
@@ -1698,7 +1707,7 @@ body[data-view="inicio"] .hero{padding-top:160px}
     <section id="rateio">
       <div class="sec-head"><p class="kicker">Boleto e rateio</p><h2>Como fica o boleto do jeito certo</h2><p>O boleto vem em 3 partes. Cada um paga conforme o valor e o risco do veículo.</p></div>
       <div class="modsel">
-        <p class="modsel-q">Como a estabilização vai ser usada? <button type="button" class="info" data-g="estabilizacao" aria-label="O que é estabilização?">?</button></p>
+        <p class="modsel-q">Como a estabilização vai ser usada? <button type="button" class="info" data-g="estabilizacao" aria-label="O que é estabilização?">i</button></p>
         <div class="choices" role="radiogroup" aria-label="Modelo de boleto">
           <div class="choice"><input type="radio" name="modelo" id="mod_fixo" value="fixo" checked><label for="mod_fixo"><b>Boleto fixo</b><span>A estabilização cobre o custo médio dos eventos. O rateio só entra se a reserva não der conta. Quando a reserva enche, o boleto baixa.</span></label></div>
           <div class="choice"><input type="radio" name="modelo" id="mod_var" value="variavel"><label for="mod_var"><b>Boleto que varia</b><span>A estabilização é pequena. O rateio cobra o custo real de cada período, então o boleto sobe e desce.</span></label></div>
@@ -1763,7 +1772,7 @@ body[data-view="inicio"] .hero{padding-top:160px}
         <p class="propsim-h"><b>Simule a proposta da administradora</b><span>Serve para ver se o que volta para a associação paga a estrutura que ela vai manter. Use os números da proposta que você recebeu. Sem proposta, deixe 25% de taxa e 80% de repasse: 5% do boleto fica com a administradora e 20% volta para a associação.</span></p>
         <div class="fields">
           <div class="field">
-            <label for="taxaSim" data-lfor="taxaModo" data-pct="taxaSim" data-brl="taxaValor">Taxa da administradora <button type="button" class="info" data-g="administradora" aria-label="O que é administradora?">?</button></label>
+            <label for="taxaSim" data-lfor="taxaModo" data-pct="taxaSim" data-brl="taxaValor">Taxa da administradora <button type="button" class="info" data-g="administradora" aria-label="O que é administradora?">i</button></label>
             <p class="hint">A regra não tem teto nem percentual fixo.</p>
             <div class="input unit">
               <span class="pre" data-ufor="taxaModo" data-u="brl">R$</span>
@@ -1815,7 +1824,7 @@ body[data-view="inicio"] .hero{padding-top:160px}
       <div class="vizgrid" style="margin-top:0">
         <article class="viz"><h3>O boleto vem separado em 3 partes</h3>
           <div class="hstack"><i style="flex:17.55 1 0;background:var(--s-adm)"></i><i style="flex:33.37 1 0;background:var(--s-ev)"></i><i style="flex:19.28 1 0;background:var(--s-res)"></i></div>
-          <p class="destline">Vai para: <span><i class="d-adm"></i>Administradora <b>R$ 3,51</b></span><span><i class="d-assoc"></i>Associação <b>R$ 14,04</b></span><span><i class="d-grupo"></i>Grupo, CNPJ próprio <b>R$ 52,65</b></span></p>
+          <div class="destline"><span class="dl-k">Para onde vai cada parte</span><div class="dl-items"><div><i class="d-adm"></i><small>Administradora</small><b>R$ 3,51</b></div><div><i class="d-assoc"></i><small>Associação</small><b>R$ 14,04</b></div><div><i class="d-grupo"></i><small>Conta do grupo</small><b>R$ 52,65</b></div></div></div>
           <div class="ent-parts">
             <div><span class="sw" style="background:var(--s-adm)"></span><b>Taxa de administração · R$ 17,55</b><p><b>Dividida entre administradora e associação.</b> A administradora fica com um valor por placa, combinado no contrato (no exemplo, R$ 3,51). O restante (R$ 14,04) volta para a conta da associação e paga equipe, aluguel, vendas e atendimento. Não entra no rateio.</p></div>
             <div><span class="sw" style="background:var(--s-ev)"></span><b><span class="term" tabindex="0" data-g="rateio">Rateio</span> · R$ 33,37</b><p><b>Vai para a conta do grupo.</b> Paga os eventos do período.</p></div>
@@ -1960,7 +1969,7 @@ body[data-view="inicio"] .hero{padding-top:160px}
       <div class="law" id="law"></div>
     </section>
     </div></details>
-    <details class="det" id="dTpl"><summary><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2h9l5 5v15H6z"/><path d="M14 2v6h6M9 13h8M9 17h6"/></svg><span class="det-a">Modelos de texto prontos</span><span class="det-f">Fechar</span><small>pauta de assembleia, comunicado aos associados e cláusula do estatuto, já com os seus números</small></summary><div class="det-body">
+    <div hidden>
     <section id="modelos">
       <div class="sec-head"><p class="kicker">Modelos prontos</p><h2>Textos para copiar e adaptar</h2><p>Já vêm com os seus números. Mostre ao advogado antes de usar.</p></div>
       <div class="tpl">
@@ -1973,7 +1982,7 @@ body[data-view="inicio"] .hero{padding-top:160px}
         <div class="copyrow"><button type="button" class="btn" id="tplCopy">Copiar texto</button><span class="ok-msg" id="tplMsg" aria-live="polite"></span></div>
       </div>
     </section>
-    </div></details>
+    </div>
     <details class="det" id="dShare"><summary><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12v8h16v-8M12 3v12M7 8l5-5 5 5"/></svg><span class="det-a">Resumo em texto para a diretoria</span><span class="det-f">Fechar</span><small>para copiar e colar no WhatsApp ou no e-mail</small></summary><div class="det-body">
     <section class="share" id="compartilhar">
       <h2>Mande o resumo para a diretoria</h2>
@@ -2076,7 +2085,7 @@ const GLOS = {
   aplicativo:{t:'Aplicativo', d:'Conte os veículos usados em Uber, 99, entregas ou outro trabalho.'},
   administradora:{t:'Administradora', d:'É a empresa autorizada pela SUSEP que vai cuidar dos grupos das associações. Até 30/09/2026, nenhuma havia sido autorizada.'}
 };
-const gi = k => `<button type="button" class="info" data-g="${k}" aria-label="O que é ${GLOS[k].t}?">?</button>`;
+const gi = k => `<button type="button" class="info" data-g="${k}" aria-label="O que é ${GLOS[k].t}?">i</button>`;
 const gt = (k, txt) => `<span class="term" tabindex="0" data-g="${k}">${txt}</span>`;
 const TIPOS = [
   {id:'carros', n:'Carros', um:'carro'},
@@ -2187,7 +2196,7 @@ const BAR_E = {bar:'evExBar', msg:'evExMsg', ex:'evExemplo', clr:'evClear', txt:
 let modoP = 'vazio', modoR = 'vazio', modoE = 'vazio';
 
 /* ======================= MONTAR CAMPOS REPETIDOS ======================= */
-$('tipos').innerHTML = `<div class="trow thead" aria-hidden="true"><span></span><span>Placas</span><span>FIPE média <button type="button" class="info" data-g="fipeMedia" aria-label="Como calcular a FIPE média?" tabindex="-1">?</button></span></div>` + TIPOS.map(t => `
+$('tipos').innerHTML = `<div class="trow thead" aria-hidden="true"><span></span><span>Placas</span><span>FIPE média <button type="button" class="info" data-g="fipeMedia" aria-label="Como calcular a FIPE média?" tabindex="-1">i</button></span></div>` + TIPOS.map(t => `
   <div class="trow">
     <span class="tn">${t.n}</span>
     <div class="input compact"><input id="tp_${t.id}_placas" inputmode="numeric" data-kind="int" aria-label="Placas de ${t.n.toLowerCase()}" placeholder="0"></div>
@@ -2198,7 +2207,7 @@ $('meses').innerHTML = MESES_LBL.map((m,i) => `<div class="field"><label for="me
 DOCS.forEach(d => GLOS['doc_' + d.id] = {t:d.t, d:d.d + (d.ref ? ' Base: ' + d.ref + '.' : '')});
 $('docs').innerHTML = DOCS.map(d => `
   <div class="doc">
-    <div class="dt" id="dl_${d.id}"><b>${d.q} <button type="button" class="info" data-g="doc_${d.id}" aria-label="Saiba mais">?</button></b></div>
+    <div class="dt" id="dl_${d.id}"><b>${d.q} <button type="button" class="info" data-g="doc_${d.id}" aria-label="Saiba mais">i</button></b></div>
     <div class="seg" role="radiogroup" aria-labelledby="dl_${d.id}">
       <input type="radio" name="doc_${d.id}" id="doc_${d.id}_sim" value="sim"><label for="doc_${d.id}_sim">Sim</label>
       <input type="radio" name="doc_${d.id}" id="doc_${d.id}_nao" value="nao"><label for="doc_${d.id}_nao">Não</label>
@@ -2909,7 +2918,7 @@ function caminhoCard(r){
 }
 
 const legBoleto = (a, b, c, la, fixo) => `<div class="legend">${sw('--s-adm', la, brl(a,true))}${sw('--s-ev', gt('rateio', 'Rateio'), fixo ? 'R$ 0 · só se faltar' : brl(b,true))}${sw('--s-res', gt('estabilizacao', fixo ? 'Estabilização fixa' : 'Estabilização'), brl(c,true))}</div>`;
-const destBoleto = (adm, assoc, grupo) => `<p class="destline">Vai para: ${adm > .005 ? `<span><i class="d-adm"></i>Administradora <b>${brl(adm,true)}</b></span>` : ''}<span><i class="d-assoc"></i>Associação <b>${brl(assoc,true)}</b></span><span><i class="d-grupo"></i>Grupo, CNPJ próprio <b>${brl(grupo,true)}</b></span></p>`;
+const destBoleto = (adm, assoc, grupo) => `<div class="destline"><span class="dl-k">Para onde vai cada parte</span><div class="dl-items">${adm > .005 ? `<div><i class="d-adm"></i><small>Administradora</small><b>${brl(adm,true)}</b></div>` : ''}<div><i class="d-assoc"></i><small>Associação</small><b>${brl(assoc,true)}</b></div><div><i class="d-grupo"></i><small>Conta do grupo</small><b>${brl(grupo,true)}</b></div></div></div>`;
 const segBoleto = (a, b, c, la, tot) => hstack([{v:a, c:'--s-adm', tip:`${brl(a,true)}\n${la}`}, {v:b, c:'--s-ev', tip:`${brl(b,true)}\nRateio dos eventos`}, {v:c, c:'--s-res', tip:`${brl(c,true)}\nEstabilização (reserva)`}], tot);
 
 function renderRateio(r){
@@ -3583,7 +3592,7 @@ const STEPS = [...document.querySelectorAll('#f > .step')];
 const STEP_LBL = ['Sua associação','Faturamento','Eventos','Reserva e rateio','Papéis'];
 let viewAtual = 'inicio', passo = 1;
 function lembrar(){ try{ localStorage.setItem(KEY + '.nav', JSON.stringify({view:viewAtual, passo})); }catch(e){} }
-function subirAte(el){ const top = el.getBoundingClientRect().top + window.scrollY - 80; if(window.scrollY > top) window.scrollTo({top}); }
+function subirAte(el){ const top = el.getBoundingClientRect().top + window.scrollY - 80; if(window.scrollY > top) window.scrollTo({top, behavior: reduzMov ? 'auto' : 'smooth'}); }
 function showView(v){
   if(!VIEWS[v]) v = 'inicio';
   const mudou = v !== viewAtual;
@@ -3652,8 +3661,14 @@ document.querySelectorAll('.mais > details').forEach(d => d.addEventListener('to
 
 $('stepper').innerHTML = STEPS.map((_, i) => '<button type="button" data-step="' + (i + 1) + '" aria-label="Passo ' + (i + 1) + ': ' + STEP_LBL[i] + '" title="Passo ' + (i + 1) + ': ' + STEP_LBL[i] + '"><span class="pl">' + STEP_LBL[i] + '</span></button>').join('');
 function showStep(k, rolar){
+  const antes = passo;
   passo = Math.max(1, Math.min(STEPS.length, k));
   STEPS.forEach((el, i) => el.hidden = i + 1 !== passo);
+  if(rolar !== false && !reduzMov && antes !== passo){
+    const el = STEPS[passo - 1];
+    el.classList.remove('st-next', 'st-prev'); void el.offsetWidth;
+    el.classList.add(passo > antes ? 'st-next' : 'st-prev');
+  }
   $('stepper').querySelectorAll('button').forEach((b, i) => { b.classList.toggle('feito', i + 1 < passo); if(i + 1 === passo) b.setAttribute('aria-current', 'step'); else b.removeAttribute('aria-current'); });
   $('stPrev').style.visibility = passo === 1 ? 'hidden' : 'visible';
   $('stCount').textContent = 'Passo ' + passo + ' de ' + STEPS.length;
