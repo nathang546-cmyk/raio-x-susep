@@ -924,6 +924,10 @@ body.modal-on{overflow:hidden}
 @keyframes abre{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:none}}
 #tip:not([hidden]){animation:tipIn .18s ease-out}
 @keyframes tipIn{from{opacity:0;transform:translateY(5px) scale(.96)}to{opacity:1;transform:none}}
+/* celular: caixas do perfil alinhadas e barra de progresso fácil de tocar */
+.qbgrid .field{display:flex;flex-direction:column;justify-content:space-between}
+@media (max-width:760px){.prog-bar button{padding-block:10px;margin-block:-10px}}
+
 @media (prefers-reduced-motion:reduce){.det[open]>.det-body,#tip:not([hidden]){animation:none}}
 
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
