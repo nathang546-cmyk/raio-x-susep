@@ -118,7 +118,9 @@ a.chip:hover{border-color:var(--accent)}
 .docs-count{margin:-8px 0 0;color:var(--muted);font-size:.92rem}
 .docs-count b{color:var(--ink)}
 .docs-count.done b{color:var(--ok)}
-.doc .dt b{display:flex!important;align-items:center;gap:8px}
+.doc .dt b{display:block!important}
+.doc .dt b .info{vertical-align:2px;margin-left:6px}
+.doc .dt b .nw{white-space:nowrap;color:inherit!important;font-size:inherit!important}
 .field{display:flex;flex-direction:column;gap:6px;min-width:0}
 .field.wide{grid-column:1/-1}
 .field>label,.field>.lbl,.fhead>label,.fhead>.lbl{font-weight:700;font-size:1.02rem}
@@ -1741,7 +1743,7 @@ $('meses').innerHTML = MESES_LBL.map((m,i) => `<div class="field"><label for="me
 DOCS.forEach(d => GLOS['doc_' + d.id] = {t:d.t, d:d.d + (d.ref ? ' Base: ' + d.ref + '.' : '')});
 $('docs').innerHTML = DOCS.map(d => `
   <div class="doc">
-    <div class="dt" id="dl_${d.id}"><b>${d.q} <button type="button" class="info" data-g="doc_${d.id}" aria-label="Saiba mais">i</button></b></div>
+    <div class="dt" id="dl_${d.id}"><b>${d.q.replace(/\s(\S+)$/, ' <span class="nw">$1')} <button type="button" class="info" data-g="doc_${d.id}" aria-label="Saiba mais">i</button></span></b></div>
     <div class="seg" role="radiogroup" aria-labelledby="dl_${d.id}">
       <input type="radio" name="doc_${d.id}" id="doc_${d.id}_sim" value="sim"><label for="doc_${d.id}_sim">Sim</label>
       <input type="radio" name="doc_${d.id}" id="doc_${d.id}_nao" value="nao"><label for="doc_${d.id}_nao">Não</label>
