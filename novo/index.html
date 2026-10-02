@@ -1151,14 +1151,13 @@ body[data-view="inicio"] .fab-help{display:none!important}
     <div class="hero-grid" aria-hidden="true"></div>
     <div class="wrap hero-in">
       <div class="hero-txt">
-        <p class="hero-badge"><span class="dot-live" aria-hidden="true"></span>Regra nova da SUSEP · LC 213/2025 e Res. CNSP 491/2026</p>
         <h1>Sua associação está pronta para a <span class="grad">SUSEP</span>?</h1>
         <p class="hero-lede">Descubra em 5 minutos onde a sua associação está exposta e o que fazer até <b>07/05/2028</b>.</p>
         <div class="hero-ctas">
           <a class="btn big btn-glow" href="#diagnostico" id="heroGo">Calcular agora <span aria-hidden="true">→</span></a>
           <button type="button" class="btn big ghost-light" id="heroEx">Ver um exemplo</button>
         </div>
-        <ul class="hero-trust"><li>Grátis</li><li>Sem cadastro</li><li>Seus números ficam no seu aparelho</li></ul>
+        <ul class="hero-trust"><li>Grátis</li><li>Sem cadastro</li><li>Seus dados não são enviados a ninguém</li></ul>
         <div class="qchips" aria-label="Perguntas que o Raio-X responde">
           <span>“Quanto o boleto vai subir?”</span>
           <span>“O caixa aguenta uma perda total?”</span>
@@ -3389,6 +3388,9 @@ document.querySelectorAll('.fields > .field').forEach(fl => {
 
 /* ======================= NAVEGAÇÃO: capa → diagnóstico → resultado ======================= */
 const reduzMov = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+// quem chega pelo "Calcular agora" não vê a faixa do exemplo: ela só aparece com o exemplo aberto ou com números já preenchidos
+const _modoBarra = modoBarra;
+modoBarra = (c, m) => { _modoBarra(c, m); if(c === BAR_P) $('exbar').hidden = m === 'vazio'; };
 const VIEWS = {inicio:'view-inicio', diagnostico:'tab-preencher', resultado:'view-resultado'};
 const ALIAS = {'':'inicio', preencher:'diagnostico', boleto:'rateio', plano:'sec-plano', especialista:'lead', entenda:'dEnt', regras:'dAdm', simulador:'dSim', repasse:'dRep'};
 const STEPS = [...document.querySelectorAll('#f > .step')];
