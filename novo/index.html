@@ -1760,20 +1760,20 @@ const TIPOS = [
   {id:'pesados', n:'Caminhões e pesados', um:'caminhão'}
 ];
 const DOCS = [
-  {id:'susep',      t:'Cadastro na SUSEP feito até 15/07/2025 e ativo', d:'Status “em regularização” na certidão da SUSEP. Diretor responsável com mandato em dia no sistema.', ref:'Res. SUSEP 49/2025', w:3},
-  {id:'estatuto',   t:'Estatuto diz como o grupo é formado e quem escolhe e troca a administradora', d:'A lei exige isso no estatuto.', ref:'LC 213, art. 88-E', w:3},
-  {id:'atas',       t:'Atas registradas e diretoria com mandato em dia', d:'Mandato vencido pode suspender o cadastro na SUSEP.', ref:'Res. SUSEP 49/2025', w:2},
-  {id:'regulamento',t:'Regulamento (contrato do associado) por escrito', d:'Coberturas, exclusões, cota de participação (franquia), regra do rateio e pagamento de evento em até 90 dias.', ref:'Res. CNSP 491, arts. 22 e 38–45', w:2},
-  {id:'coberturas', t:'Só oferece o que a regra permite', d:'Dano ao veículo, dano material a terceiros e assistência (guincho etc.). Nada de auxílio-funeral, acidentes pessoais ou proteção de celular.', ref:'Res. CNSP 491, art. 13', w:2},
-  {id:'base',       t:'Base de associados completa e fácil de exportar', d:'CPF, telefone, endereço, veículo e coberturas de cada um. A administradora vai pedir.', ref:'Res. CNSP 491, arts. 9 e 39', w:2},
-  {id:'historico',  t:'Histórico de eventos pagos e em aberto (24 a 36 meses)', d:'Data, placa, tipo, valor pago e valor recuperado. É a primeira coisa que o atuário pede.', ref:'', w:3},
-  {id:'processos',  t:'Lista de processos na Justiça', d:'Ações de associados e de terceiros, com valor e situação.', ref:'Res. CNSP 491, art. 9', w:1},
-  {id:'contabil',   t:'Contabilidade separando o fundo e a administração', d:'Balanço com o dinheiro dos associados separado.', ref:'', w:2},
-  {id:'vendedores', t:'Cadastro dos vendedores e de quanto cada um ganha', d:'A regra exige registro dos intermediários e da remuneração.', ref:'Res. CNSP 491, arts. 26–28', w:1},
-  {id:'prestacao',  t:'Prestação de contas aos associados', d:'Quanto entrou, quanto saiu com evento, quanto ficou com a administração.', ref:'', w:1},
-  {id:'reclamacao', t:'Canal de reclamação com registro', d:'Protocolo e prazo de resposta.', ref:'', w:1},
-  {id:'lgpd',       t:'Cuidado com os dados dos associados (LGPD)', d:'Termo de consentimento e controle de quem acessa.', ref:'Res. CNSP 491, art. 48', w:1},
-  {id:'sistema',    t:'Sistema de gestão', d:'Não só planilha e WhatsApp. Precisa gerar relatório do rateio e histórico de eventos.', ref:'', w:1}
+  {id:'susep',      q:'A associação fez o cadastro na SUSEP até 15/07/2025 e ele está ativo?', t:'Cadastro na SUSEP ativo', d:'Na certidão da SUSEP, o status tem que aparecer como “em regularização”, com o diretor responsável com mandato em dia.', ref:'Res. SUSEP 49/2025', w:3},
+  {id:'estatuto',   q:'O estatuto diz como o grupo é formado e quem escolhe e troca a administradora?', t:'Estatuto com a regra da administradora', d:'A lei exige isso no estatuto.', ref:'LC 213, art. 88-E', w:3},
+  {id:'atas',       q:'As atas estão registradas e o mandato da diretoria está em dia?', t:'Atas registradas e mandato em dia', d:'Mandato vencido pode suspender o cadastro na SUSEP.', ref:'Res. SUSEP 49/2025', w:2},
+  {id:'regulamento',q:'Existe um regulamento por escrito para o associado?', t:'Regulamento por escrito', d:'É o contrato do associado: coberturas, exclusões, cota de participação (franquia), regra do rateio e pagamento de evento em até 90 dias.', ref:'Res. CNSP 491, arts. 22 e 38–45', w:2},
+  {id:'coberturas', q:'A associação oferece só as coberturas que a regra permite?', t:'Só as coberturas permitidas', d:'Dano ao veículo, dano material a terceiros e assistência (guincho etc.). Nada de auxílio-funeral, acidentes pessoais ou proteção de celular.', ref:'Res. CNSP 491, art. 13', w:2},
+  {id:'base',       q:'A base de associados está completa e dá para exportar?', t:'Base de associados completa', d:'CPF, telefone, endereço, veículo e coberturas de cada um. A administradora vai pedir.', ref:'Res. CNSP 491, arts. 9 e 39', w:2},
+  {id:'historico',  q:'Tem o histórico de eventos pagos e em aberto dos últimos 24 a 36 meses?', t:'Histórico de eventos de 24 a 36 meses', d:'Data, placa, tipo, valor pago e valor recuperado. É a primeira coisa que o atuário pede.', ref:'', w:3},
+  {id:'processos',  q:'Tem a lista dos processos na Justiça?', t:'Lista de processos na Justiça', d:'Ações de associados e de terceiros, com valor e situação.', ref:'Res. CNSP 491, art. 9', w:1},
+  {id:'contabil',   q:'A contabilidade separa o dinheiro do fundo do dinheiro da administração?', t:'Contabilidade separando fundo e administração', d:'Balanço com o dinheiro dos associados separado.', ref:'', w:2},
+  {id:'vendedores', q:'Tem o cadastro dos vendedores e de quanto cada um ganha?', t:'Cadastro dos vendedores e da remuneração', d:'A regra exige registro dos intermediários e da remuneração.', ref:'Res. CNSP 491, arts. 26–28', w:1},
+  {id:'prestacao',  q:'A associação presta contas aos associados?', t:'Prestação de contas aos associados', d:'Quanto entrou, quanto saiu com evento e quanto ficou com a administração.', ref:'', w:1},
+  {id:'reclamacao', q:'Existe um canal de reclamação com registro?', t:'Canal de reclamação com registro', d:'Protocolo e prazo de resposta.', ref:'', w:1},
+  {id:'lgpd',       q:'Os dados dos associados estão protegidos (LGPD)?', t:'Proteção dos dados (LGPD)', d:'Termo de consentimento e controle de quem acessa.', ref:'Res. CNSP 491, art. 48', w:1},
+  {id:'sistema',    q:'Já possui sistema para gestão?', t:'Sistema de gestão', d:'Não só planilha e WhatsApp. Precisa gerar relatório do rateio, histórico de eventos, balancetes e DRE.', ref:'', w:1}
 ];
 
 const EXEMPLO = {
@@ -1873,7 +1873,7 @@ $('tipoEv').innerHTML = TIPOS.map(t => `<div class="field"><label for="tp_${t.id
 $('meses').innerHTML = MESES_LBL.map((m,i) => `<div class="field"><label for="mes_${i}" class="hint">${m}</label><div class="input compact"><span class="pre">R$</span><input id="mes_${i}" inputmode="decimal" data-kind="money"></div></div>`).join('');
 $('docs').innerHTML = DOCS.map(d => `
   <div class="doc">
-    <div class="dt" id="dl_${d.id}"><b>${d.t}</b><span>${d.d}</span>${d.ref ? ` <span class="law-ref">${d.ref}</span>` : ''}</div>
+    <div class="dt" id="dl_${d.id}"><b>${d.q}</b><span>${d.d}</span>${d.ref ? ` <span class="law-ref">${d.ref}</span>` : ''}</div>
     <div class="seg" role="radiogroup" aria-labelledby="dl_${d.id}">
       <input type="radio" name="doc_${d.id}" id="doc_${d.id}_sim" value="sim"><label for="doc_${d.id}_sim">Sim</label>
       <input type="radio" name="doc_${d.id}" id="doc_${d.id}_nao" value="nao"><label for="doc_${d.id}_nao">Não</label>
@@ -2849,7 +2849,7 @@ function renderPlano(r){
   if(falta('vendedores')) f3.push(task('vendedores','Cadastrar vendedores e o quanto cada um ganha','A regra nova exige esse registro.'));
   if(falta('reclamacao')) f3.push(task('reclamacao','Criar canal de reclamação com protocolo','Com prazo de resposta e registro de como foi resolvido.'));
   if(falta('lgpd')) f3.push(task('lgpd','Organizar a proteção de dados (LGPD)','Termo de consentimento e controle de quem acessa os dados.'));
-  if(falta('sistema')) f3.push(task('sistema','Adotar um sistema de gestão','Que gere relatório do rateio e histórico de eventos.'));
+  if(falta('sistema')) f3.push(task('sistema','Adotar um sistema de gestão','Que gere relatório do rateio, histórico de eventos, balancetes e DRE.'));
   if(r.tConc === 'bad' || r.tConc === 'warn') f3.push(task('limite','Colocar limite de FIPE no regulamento','Evita que um veículo caro sozinho estoure o mês.'));
   if(cam === 'contratar' && isFinite(r.cobRepasse) && r.cobRepasse < 1) f3.push(task('estrutura','Ajustar a estrutura da associação ao repasse','Ver quais funções passam para a administradora e o que sai da folha. Negociar o repasse mínimo por placa.'));
   if(cam === 'contratar') f3.push(task('negociar','Negociar o contrato com a administradora escolhida','Taxa por escrito, quanto fica para a associação, onde fica o dinheiro do grupo, como trocar de administradora. Leve a um advogado antes de assinar.'));
