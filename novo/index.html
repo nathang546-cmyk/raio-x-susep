@@ -1074,6 +1074,8 @@ body[data-view="inicio"] .fab-help{display:none!important}
 .bx:hover{transform:translateY(-3px);box-shadow:0 22px 44px -24px rgba(16,24,40,.35);border-color:color-mix(in srgb,var(--accent) 35%,var(--line))}
 .bx-a,.bx-d{grid-template-columns:minmax(0,1fr)}
 @media (min-width:700px){.bx-a{grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);align-items:center}}
+/* card 1: o gráfico cresce para ocupar a altura do card, sem sobra embaixo */
+@media (min-width:700px){.bx-a{align-items:stretch!important;align-content:stretch!important}.bx-a .bx-txt{align-self:center}.bx-a .bx-vis{display:flex;flex-direction:column;height:100%}.bx-a .area{flex:1 1 auto;height:auto;min-height:110px}}
 .bx-d{grid-template-columns:minmax(0,1fr)!important;align-content:start!important}
 .bx-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
 .bx-stats div{display:grid;gap:2px;background:var(--bg);border-radius:12px;padding:12px 14px}
