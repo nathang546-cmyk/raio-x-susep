@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="Calcule grátis quanto a sua associação de proteção veicular precisa ter guardado até 07/05/2028, o boleto certo e o plano de 18 meses para a regra nova da SUSEP (LC 213/2025 e Res. CNSP 491/2026).">
+<meta name="description" content="Calcule grátis quanto a sua associação de proteção veicular precisa ter guardado até 07/05/2028, o boleto certo e o plano até o prazo da regra nova da SUSEP (LC 213/2025 e Res. CNSP 491/2026).">
 <meta name="theme-color" content="#171823">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="pt_BR">
@@ -1280,6 +1280,19 @@ body[data-view="inicio"] .hero{padding-top:160px}
 #rhKpis .hm-como-k{color:var(--accent)}
 #rhKpis .hm-como b{color:var(--ink)}
 #rhKpis .hm-como li::before{background:var(--accent-soft);color:var(--accent)}
+#rhNota{display:none!important}
+.rxh-verd{color:var(--ink);font-size:1.02rem;line-height:1.5;max-width:68ch}
+.rx-cta{display:flex;align-items:center;justify-content:space-between;gap:12px 20px;flex-wrap:wrap;background:var(--accent-soft);border:1px solid color-mix(in srgb,var(--accent) 30%,var(--line));border-radius:18px;padding:16px 20px}
+.rx-cta>div{display:grid;gap:2px;min-width:0;flex:1 1 280px}
+.rx-cta b{font:600 1.02rem var(--f-display)}
+.rx-cta span{color:var(--muted);font-size:.92rem}
+@media (max-width:560px){.rx-cta .btn{flex:1 1 100%}}
+.rh-acts .btn-wa{background:var(--accent)!important;border-color:var(--accent)!important;color:var(--accent-ink)!important}
+.plan-first{background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--bad);border-radius:14px;padding:14px 18px;margin-bottom:18px;display:grid;gap:8px}
+.pf-k{font:700 .78rem var(--f-display);text-transform:uppercase;letter-spacing:.08em;color:var(--bad)}
+.plan-first ol{margin:0;padding-left:1.2em;display:grid;gap:6px}
+.plan-first li b{display:block;font-size:.98rem}
+.plan-first li span{color:var(--muted);font-size:.88rem}
 .rkpis{display:grid;gap:16px}
 .rx-hoje{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:20px;align-items:center;border-radius:22px;padding:24px 26px;color:#AEB6C4;background:radial-gradient(700px 300px at 100% 0,rgba(57,208,184,.18),transparent 60%),#12131C}
 .rxh-txt{display:grid;gap:12px;min-width:0}
@@ -1419,8 +1432,6 @@ body[data-view="inicio"] .hero{padding-top:160px}
 
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
-</head>
-<body>
 
 <a class="skip" href="#conteudo">Pular para o conteúdo</a>
 <header class="sitehead">
@@ -1808,7 +1819,7 @@ body[data-view="inicio"] .hero{padding-top:160px}
     </div>
   </section>
 
-  <section id="prioridades">
+  <section id="prioridades" class="so-calc" hidden>
     <div class="sec-head"><p class="kicker">Por onde começar</p><h2>O que resolver primeiro</h2><p>Siga nesta ordem. Cada etapa já está no plano mais abaixo, com as tarefas.</p></div>
     <ol class="flow" id="prioList"></ol>
     <p class="flow-more" id="prioMais" hidden></p>
@@ -1818,6 +1829,7 @@ body[data-view="inicio"] .hero{padding-top:160px}
 
   <section id="sec-plano">
     <div class="sec-head"><p class="kicker">Plano até 07/05/2028</p><h2>O que fazer, mês a mês</h2><p>O caminho até 07/05/2028. Toque em cada fase para ver as tarefas e marque o que já fez.</p></div>
+    <div class="plan-first" id="planFirst" hidden></div>
     <div id="saveBox"></div>
     <div class="timeline" id="timeline"></div>
     <div class="cta-mini">
@@ -2786,13 +2798,16 @@ function renderHead(r){
   $('rhNota').textContent = 'Nota ' + r.score + ' de 100 · ' + r.statusTxt;
   tone($('rhNota'), r.tScore);
   const pr = r.incompleto ? [] : prioridades(r);
-  ['prioridades', 'boleto-resumo'].forEach(id => $(id).hidden = r.incompleto);
+  $('boleto-resumo').hidden = r.incompleto;
   if(r.incompleto || !isFinite(r.metaReserva)){
+    $('rhVerdict').hidden = false;
     $('rhVerdict').innerHTML = 'Preencha os passos 1 a 3 do diagnóstico para ver o resultado. <a href="#diagnostico">Ir para o diagnóstico →</a>';
     $('rhKpis').innerHTML = '';
   } else {
     const verd = r.score >= 75 ? 'A associação está bem encaminhada.' : r.score >= 50 ? 'A associação tem base para chegar lá, mas precisa agir nos próximos meses.' : 'A associação precisa começar agora: do jeito que está, não chega pronta ao prazo.';
-    $('rhVerdict').innerHTML = verd + (pr.length ? ` Ponto mais urgente: <b>${pr[0].t.charAt(0).toLowerCase() + pr[0].t.slice(1)}</b>.` : '');
+    const verdTxt = verd + (pr.length ? ` Ponto mais urgente: <b>${pr[0].t.charAt(0).toLowerCase() + pr[0].t.slice(1)}</b>.` : '');
+    $('rhVerdict').innerHTML = ''; $('rhVerdict').hidden = true;
+    void (pr.length ? ` Ponto mais urgente: <b>${pr[0].t.charAt(0).toLowerCase() + pr[0].t.slice(1)}</b>.` : '');
     // retrato da associação + "Hoje" × "Em 07/05/2028" + "Como chegar"
     const nomeA = ($('nome').value || '').trim() || 'A sua associação';
     const guarda = r.guardarMes > .5, dif = r.ticketCerto - r.ticket, N = REG.horizonte;
@@ -2804,6 +2819,7 @@ function renderHead(r){
       <div class="rx-hoje">
         <div class="rxh-txt">
           <span class="rxh-k">${esc(nomeA)}</span>
+          <p class="rxh-verd">${verdTxt}</p>
           <div class="rxh-chips">
             <span><b>${int(r.placas)}</b> placas</span>
             <span><b>${brlShort(r.receitaMes)}</b> de faturamento por mês</span>
@@ -2842,7 +2858,14 @@ function renderHead(r){
           <li><b>${papOk ? 'Manter os papéis em dia' : 'Resolver ' + r.docsFalta.length + ' papéis'}</b><span>${papOk ? 'Revisar a cada 6 meses' : 'Já estão no plano, em ordem'}</span></li>
           <li><b>Escolher a administradora</b><span>Comparar propostas quando saírem as autorizações</span></li>
         </ol>
+      </div>
+      <div class="rx-cta">
+        <div><b>Quer ajuda para cumprir esse caminho?</b><span>Um especialista revisa os seus números com você e monta o passo a passo junto.</span></div>
+        <button type="button" class="btn" data-ajuda="resultado: como chegar">Quero uma reunião</button>
       </div>`;
+    // plano: começa pelas 3 prioridades
+    $('planFirst').innerHTML = pr.length ? `<span class="pf-k">Comece por</span><ol>${pr.slice(0, 3).map(x => `<li><b>${x.t}</b><span>${x.d}</span></li>`).join('')}</ol>` : '';
+    $('planFirst').hidden = !pr.length;
     // prioridades com o porquê
     // por onde começar: as 3 primeiras prioridades em fluxo, terminando na meta
     const SEV = x => x.sev >= 2.5 ? ['alta', 'Urgente'] : x.sev >= 1.8 ? ['media', 'Importante'] : ['baixa', 'Ajuste'];
@@ -3423,7 +3446,7 @@ function renderPlano(r){
   $('timeline').innerHTML = P.filter(p => p.L.length).map((p, i) => `
     <div class="phase">
       <div class="when"><b>${mesesTxt(p.a, p.b)}</b><span>${p.a === p.b ? mesLabel(p.a-1+off) : mesLabel(p.a-1+off) + ' a ' + mesLabel(p.b-1+off)}</span></div>
-      <div class="phase-body"><details class="phase-d" ${i === 0 ? 'open' : ''}><summary><h3>${p.h}</h3><span class="cnt">${p.L.length} tarefas</span></summary><ul class="tasks">${p.L.join('')}</ul></details></div>
+      <div class="phase-body"><details class="phase-d"><summary><h3>${p.h}</h3><span class="cnt">${p.L.length} tarefas</span></summary><ul class="tasks">${p.L.join('')}</ul></details></div>
     </div>`).join('') + `
     <div class="phase final">
       <div class="when"><b>07/05/2028</b><span>prazo da regra</span></div>
@@ -3975,5 +3998,6 @@ document.querySelectorAll('input[name="caminho"]').forEach(x => x.addEventListen
   if(!irPara(h, false)) showView('inicio');
 })();
 </script>
+
 </body>
 </html>
