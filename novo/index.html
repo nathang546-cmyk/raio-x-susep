@@ -1230,6 +1230,32 @@ body[data-view="inicio"] .hero{padding-top:160px}
 .rh-acts{display:flex;flex-wrap:wrap;gap:10px}
 .rh-verdict{font-size:clamp(1.05rem,1.6vw,1.2rem);line-height:1.5;max-width:70ch;color:var(--ink)}
 .rh-verdict a{color:var(--accent);font-weight:700}
+.jor{display:grid;gap:14px;background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:20px 22px;box-shadow:0 1px 2px rgba(16,24,40,.05)}
+.jor-hoje{display:grid;gap:10px;padding-bottom:16px;border-bottom:1px solid var(--line)}
+.jor-k{font:700 .8rem var(--f-display);text-transform:uppercase;letter-spacing:.08em;color:var(--accent)}
+.jor-chips{display:flex;flex-wrap:wrap;gap:8px}
+.jor-chips span{background:var(--bg);border:1px solid var(--line);border-radius:999px;padding:6px 12px;font-size:.9rem;color:var(--muted)}
+.jor-chips b{color:var(--ink)}
+.jor-rows{display:grid;gap:4px}
+.jr{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.8fr) minmax(0,1.6fr) minmax(0,.9fr);grid-template-areas:"n h b m" "n c c c";align-items:center;column-gap:16px;row-gap:2px;padding:12px 0;border-top:1px solid var(--line)}
+.jr:first-child{border-top:0}
+.jr-n{grid-area:n;font:600 1rem var(--f-display);align-self:start;padding-top:2px}
+.jr-h{grid-area:h;font:700 1.05rem var(--f-display);color:var(--muted)}
+.jr-m{grid-area:m;font:700 1.05rem var(--f-display);text-align:right}
+.jr-h small,.jr-m small{display:block;font:600 .7rem var(--f-body);text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.jr-bar{grid-area:b;height:10px;border-radius:999px;background:var(--sunk);overflow:hidden;position:relative}
+.jr-bar i{display:block;height:100%;border-radius:999px;background:var(--tone,var(--accent))}
+.jr-c{grid-area:c;font-size:.9rem;color:var(--muted)}
+.jr-c b{color:var(--ink)}
+.jor-obj{display:flex;gap:12px;align-items:flex-start;background:#12131C;color:#C9D2DA;border-radius:14px;padding:14px 16px}
+.jor-obj b{color:#FFFFFF}
+.jor-alvo{flex:none;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:rgba(57,208,184,.16);color:#39D0B8;font-size:1.1rem}
+@media (max-width:640px){
+  .jor{padding:16px}
+  .jor-chips{gap:6px}
+  .jor-chips span{font-size:.8rem;padding:5px 10px}
+  .jr{grid-template-columns:minmax(0,1fr) minmax(0,1fr);grid-template-areas:"n n" "h m" "b b" "c c";row-gap:6px}
+}
 .kpi3{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,250px),1fr));gap:14px}
 .kc{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:20px 22px;display:grid;gap:8px;align-content:start;position:relative;overflow:hidden}
 .kc::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--tone,var(--line))}
@@ -1699,7 +1725,7 @@ body[data-view="inicio"] .hero{padding-top:160px}
       <span class="pill" id="rhNota" hidden>–</span>
     </div>
     <p class="rh-verdict" id="rhVerdict"></p>
-    <div class="kpi3" id="rhKpis"></div>
+    <div class="jor" id="rhKpis"></div>
     <div class="rh-acts">
       <a class="btn small btn-wa" id="rhWa" href="https://wa.me/" target="_blank" rel="noopener">Mandar o resumo no WhatsApp</a>
       <button type="button" class="btn small ghost" id="rhPrint">Imprimir ou salvar PDF</button>
@@ -2695,17 +2721,42 @@ function renderHead(r){
   } else {
     const verd = r.score >= 75 ? 'A associação está bem encaminhada.' : r.score >= 50 ? 'A associação tem base para chegar lá, mas precisa agir nos próximos meses.' : 'A associação precisa começar agora: do jeito que está, não chega pronta ao prazo.';
     $('rhVerdict').innerHTML = verd + (pr.length ? ` Ponto mais urgente: <b>${pr[0].t.charAt(0).toLowerCase() + pr[0].t.slice(1)}</b>.` : '');
-    // os três números: o único lugar onde aparecem
-    const f = Math.max(0, Math.min(1, r.reserva / r.metaReserva));
+    // trilha: onde a associação está hoje e onde precisa chegar em 07/05/2028
+    const nomeA = ($('nome').value || '').trim() || 'A sua associação';
     const guarda = r.guardarMes > .5, dif = r.ticketCerto - r.ticket;
+    const lim = isFinite(r.limite) ? r.limite : .65;
+    const linha = (tom, nome, hoje, meta, frac, como) => `<div class="jr tone-${tom}">
+        <span class="jr-n">${nome}</span>
+        <span class="jr-h"><small>Hoje</small>${hoje}</span>
+        <div class="jr-bar" aria-hidden="true"><i style="width:${Math.max(3, Math.min(1, frac) * 100).toFixed(0)}%"></i></div>
+        <span class="jr-m"><small>Em 07/05/2028</small>${meta}</span>
+        <p class="jr-c">${como}</p>
+      </div>`;
+    const fRes = r.metaReserva > 0 ? r.reserva / r.metaReserva : 1;
     $('rhKpis').innerHTML = `
-      <article class="kc tone-${r.tRes}"><span class="kc-k">Reserva até 07/05/2028</span><b class="kc-v">${brlShort(r.metaReserva)}</b>
-        <div class="kc-bar" aria-hidden="true"><i style="width:${Math.max(3, f * 100).toFixed(0)}%"></i></div>
-        <span class="kc-s">Hoje tem ${brlShort(r.reserva)}, que é ${pct(f, 0)} da meta.</span></article>
-      <article class="kc tone-${guarda ? 'warn' : 'ok'}"><span class="kc-k">Guardar por mês</span><b class="kc-v">${guarda ? brlShort(r.guardarMes) : 'Nada a mais'}</b>
-        <span class="kc-s">${guarda ? `Nos ${REG.horizonte} meses que faltam, o que dá ${brl(r.guardarMes / (r.pagantes || 1), true)} por placa. ${REG.horizonte > 6 ? `Se começar só daqui a 3 meses, sobe para ${brlShort(r.faltaReserva / (REG.horizonte - 3))}.` : ''}` : 'A reserva já está na meta.'}</span></article>
-      <article class="kc tone-${r.tTicket}"><span class="kc-k">Boleto médio certo</span><b class="kc-v">${brl(r.ticketCerto, true)}</b>
-        <span class="kc-s">Hoje a associação cobra ${brl(r.ticket, true)}${dif > .5 ? `: faltam <b>${brl(dif, true)}</b> por placa.` : ', o que já cobre a conta.'}</span></article>`;
+      <div class="jor-hoje">
+        <span class="jor-k">${esc(nomeA)} hoje</span>
+        <div class="jor-chips">
+          <span><b>${int(r.placas)}</b> placas</span>
+          <span><b>${brlShort(r.receitaMes)}</b> de faturamento por mês</span>
+          <span>mensalidade de <b>${brl(r.ticket, true)}</b></span>
+          <span><b>${pct(r.sin, 0)}</b> vai para eventos</span>
+          <span><b>${pct(r.inad, 0)}</b> de inadimplência</span>
+        </div>
+      </div>
+      <div class="jor-rows">
+        ${linha(r.tRes, 'Reserva para eventos', brlShort(r.reserva), brlShort(r.metaReserva), fRes,
+          guarda ? `Guardar <b>${brlShort(r.guardarMes)} por mês</b> nos ${REG.horizonte} meses que faltam.` : 'Meta atingida. Agora é manter.')}
+        ${linha(r.tTicket, 'Mensalidade média', brl(r.ticket, true), brl(r.ticketCerto, true), dif > .5 ? r.ticket / r.ticketCerto : 1,
+          dif > .5 ? `Ajustar em <b>${brl(dif, true)} por placa</b>, conforme o tipo de veículo.` : 'Já paga a conta. Manter e separar o boleto nas 3 partes.')}
+        ${linha(r.tSin, 'Parte que vai para eventos', pct(r.sin, 0), 'até ' + pct(lim, 0), r.sin <= lim ? 1 : lim / r.sin,
+          r.sin <= lim ? 'Dentro do limite. Manter o controle mês a mês.' : 'Acima do limite: rever a mensalidade ou reduzir eventos.')}
+        ${linha(r.tDocs, 'Papéis e organização', r.docsSim + ' de ' + DOCS.length, DOCS.length + ' de ' + DOCS.length, r.docsSim / DOCS.length,
+          r.docsFalta.length ? `Resolver <b>${r.docsFalta.length} pendências</b>. Elas já estão no plano.` : 'Tudo em dia.')}
+        ${linha('bad', 'Administradora', 'Sem contrato', 'Contrato assinado', 0,
+          'Comparar propostas assim que saírem as primeiras autorizações da SUSEP.')}
+      </div>
+      <div class="jor-obj"><span class="jor-alvo" aria-hidden="true">◎</span><p><b>Objetivo até 07/05/2028:</b> chegar com <b>${brlShort(r.metaReserva)}</b> de reserva, mensalidade média de <b>${brl(r.ticketCerto, true)}</b>, os ${DOCS.length} papéis em dia e contrato com uma administradora autorizada.</p></div>`;
     // prioridades com o porquê
     // por onde começar: as 3 primeiras prioridades em fluxo, terminando na meta
     const SEV = x => x.sev >= 2.5 ? ['alta', 'Urgente'] : x.sev >= 1.8 ? ['media', 'Importante'] : ['baixa', 'Ajuste'];
