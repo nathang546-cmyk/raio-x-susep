@@ -1261,6 +1261,25 @@ body[data-view="inicio"] .hero{padding-top:160px}
   .hm-como ol{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
 @media (max-width:480px){.hm-como ol{grid-template-columns:minmax(0,1fr)}.hm-c{padding:16px}}
+/* topo do resultado com cores calmas: tudo claro, só o verde da marca como destaque */
+#rhKpis .rx-hoje{background:var(--surface);border:1px solid var(--line);color:var(--muted);box-shadow:0 1px 2px rgba(16,24,40,.05)}
+#rhKpis .rxh-k{color:var(--accent)}
+#rhKpis .rxh-chips span{background:var(--bg);border-color:var(--line);color:var(--muted)}
+#rhKpis .rxh-chips b{color:var(--ink)}
+#rhKpis .rx-hoje .ring-big::before{background:var(--surface)}
+#rhKpis .rx-hoje .ring-big b{color:var(--ink)}
+#rhKpis .rx-hoje .ring-big small{color:var(--muted)}
+#rhKpis .rxh-st{color:var(--ink)}
+#rhKpis .hm-hoje .hm-l .hm-v{color:var(--ink)!important}
+#rhKpis .hm-meta{background:color-mix(in srgb,var(--accent) 6%,var(--surface));border:1px solid color-mix(in srgb,var(--accent) 30%,var(--line));box-shadow:none}
+#rhKpis .hm-meta .hm-v{color:var(--accent)}
+#rhKpis .hm-meta .hm-v small{color:var(--muted)}
+#rhKpis .hm-meta .hm-tag{background:var(--accent-soft);color:var(--accent)}
+#rhKpis .hm-seta{background:var(--surface);color:var(--accent);border:1px solid var(--line);box-shadow:none}
+#rhKpis .hm-como{background:var(--surface);border:1px solid var(--line);color:var(--muted)}
+#rhKpis .hm-como-k{color:var(--accent)}
+#rhKpis .hm-como b{color:var(--ink)}
+#rhKpis .hm-como li::before{background:var(--accent-soft);color:var(--accent)}
 .rkpis{display:grid;gap:16px}
 .rx-hoje{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:20px;align-items:center;border-radius:22px;padding:24px 26px;color:#AEB6C4;background:radial-gradient(700px 300px at 100% 0,rgba(57,208,184,.18),transparent 60%),#12131C}
 .rxh-txt{display:grid;gap:12px;min-width:0}
