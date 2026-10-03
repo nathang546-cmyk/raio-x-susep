@@ -1033,6 +1033,15 @@ body[data-view="inicio"] .fab-help{display:none!important}
 .hero-lede{max-width:44ch;font-size:clamp(1.1rem,1.7vw,1.3rem)}
 .hero-ctas,.hero-trust{justify-content:center}
 .hero{padding:96px 0 104px}
+.hero-urg{margin-top:32px;display:inline-flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:8px 14px;padding:8px 8px 8px 16px;border-radius:999px;background:rgba(243,180,81,.07);border:1px solid rgba(243,180,81,.26);color:#C9D0DA;font:500 .92rem/1.4 var(--f-body);cursor:pointer;transition:border-color .2s,background .2s}
+.hero-urg:hover{background:rgba(243,180,81,.11);border-color:rgba(243,180,81,.5)}
+.hero-urg .hu-txt b{color:#F3B451;font-weight:700}
+.hu-dot{flex:none;width:8px;height:8px;border-radius:50%;background:#F3B451;box-shadow:0 0 0 0 rgba(243,180,81,.5);animation:hu-pulse 2.4s ease-out infinite}
+@keyframes hu-pulse{0%{box-shadow:0 0 0 0 rgba(243,180,81,.5)}70%,100%{box-shadow:0 0 0 8px rgba(243,180,81,0)}}
+.hu-cta{white-space:nowrap;padding:7px 14px;border-radius:999px;background:rgba(57,208,184,.14);color:#39D0B8;font-weight:700;transition:background .2s,color .2s}
+.hero-urg:hover .hu-cta{background:#11A594;color:#FFFFFF}
+@media (max-width:560px){.hero-urg{border-radius:18px;padding:14px 16px;font-size:.88rem;flex-direction:column;gap:10px}.hu-dot{display:none}.hu-cta{width:100%;text-align:center}}
+@media (prefers-reduced-motion:reduce){.hu-dot{animation:none}}
 .qchips{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-top:44px;max-width:760px}
 .qchips span{display:inline-flex;align-items:center;gap:8px;padding:9px 16px 9px 12px;border-radius:999px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);color:#D6DCE5;font-size:.92rem;font-weight:500}
 .qchips span::before{content:"";width:8px;height:8px;border-radius:50%;background:#F3B451;box-shadow:0 0 0 3px rgba(243,180,81,.18)}
@@ -1465,6 +1474,7 @@ body[data-view="inicio"] .hero{padding-top:160px}
           <span>“A associação sobrevive com o repasse?”</span>
           <span>“A diretoria responde se faltar dinheiro?”</span>
         </div>
+        <button type="button" class="hero-urg" data-ajuda="capa: prazo"><span class="hu-dot" aria-hidden="true"></span><span class="hu-txt"><b id="heroFalta">Faltam 19 meses.</b> Não deixe para a última hora, pode não dar tempo.</span><span class="hu-cta">Fale com um especialista <span aria-hidden="true">→</span></span></button>
         <p class="hero-resume" id="heroResume" hidden>Você já começou um diagnóstico neste aparelho. <a href="#resultado">Ver meu resultado →</a></p>
       </div>
 
@@ -3944,6 +3954,7 @@ $('stNext').addEventListener('click', () => passo < STEPS.length ? showStep(pass
   }catch(e){}
   // contagem até o prazo: recalculada pela data de quem abre a página
   const mf = mesesAte(REG.prazoFinal), df = Math.ceil((REG.prazoFinal - new Date()) / 864e5);
+  $('heroFalta').textContent = df <= 0 ? 'O prazo chegou.' : mf >= 2 ? `Faltam ${mf} meses.` : `Faltam ${df} dias.`;
   $('tlCount').innerHTML = df <= 0 ? 'O prazo final de <b>07/05/2028</b> chegou' : mf >= 2 ? `Faltam <b>${mf} meses</b> para o prazo final de 07/05/2028` : `Faltam <b>${df} dias</b> para o prazo final de 07/05/2028`;
   // linha do tempo: o que já passou e o próximo marco
   const hoje = new Date(); let prox = null;
