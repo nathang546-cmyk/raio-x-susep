@@ -1043,6 +1043,13 @@ body[data-view="inicio"] .fab-help{display:none!important}
 .hero-urg:hover .hu-cta{background:#11A594;color:#FFFFFF}
 @media (max-width:560px){.hero-urg{border-radius:18px;padding:14px 16px;font-size:.88rem;flex-direction:column;gap:10px}.hu-dot{display:none}.hu-cta{width:100%;text-align:center}}
 @media (prefers-reduced-motion:reduce){.hu-dot{animation:none}}
+.hero-q{display:inline-flex;align-items:center;gap:10px;margin:0;padding:8px 16px 8px 12px;border-radius:999px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);color:#D6DCE5;font:500 .95rem var(--f-body)}
+.hq-dot{flex:none;width:8px;height:8px;border-radius:50%;background:#F3B451;box-shadow:0 0 0 3px rgba(243,180,81,.18)}
+#heroQ{display:inline-block;transition:opacity .35s,transform .35s}
+#heroQ.sai{opacity:0;transform:translateY(-6px)}
+.bx-q{display:flex;align-items:flex-start;gap:8px;margin:0;font-weight:600;font-style:italic;color:var(--ink);font-size:.95rem}
+.bx-q::before{content:"";flex:none;width:8px;height:8px;margin-top:.45em;border-radius:50%;background:#F3B451;box-shadow:0 0 0 3px rgba(243,180,81,.18)}
+@media (max-width:560px){.hero-q{font-size:.85rem}}
 .qchips{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-top:44px;max-width:760px}
 #respostas .qchips{margin:4px 0 2px}
 #respostas .qchips span{background:var(--surface);border-color:var(--line);color:var(--ink);box-shadow:0 1px 2px rgba(16,24,40,.05)}
@@ -1476,6 +1483,7 @@ body[data-view="inicio"] .hero{padding-top:160px}
     <div class="hero-grid" aria-hidden="true"></div>
     <div class="wrap hero-in">
       <div class="hero-txt">
+        <p class="hero-q"><span class="hq-dot" aria-hidden="true"></span><span id="heroQ">“Quanto o boleto vai subir?”</span></p>
         <h1>Sua associação está pronta para a <span class="grad">SUSEP</span>?</h1>
         <p class="hero-lede">Descubra em 5 minutos onde a sua associação está exposta e o que fazer até <b>07/05/2028</b>.</p>
         <div class="hero-ctas">
@@ -1493,18 +1501,12 @@ body[data-view="inicio"] .hero{padding-top:160px}
   <section class="wrap lp-sec" id="respostas">
     <div class="lp-head rv">
       <p class="pill-k">O que você recebe</p>
-      <h2>Três respostas que a diretoria precisa ter antes de 2028</h2>
-      <div class="qchips" aria-label="Perguntas que o Raio-X responde">
-        <span>“Quanto o boleto vai subir?”</span>
-        <span>“O caixa aguenta uma perda total?”</span>
-        <span>“A associação sobrevive com o repasse?”</span>
-        <span>“A diretoria responde se faltar dinheiro?”</span>
-      </div>
+      <h2>As respostas que a diretoria precisa ter antes de 2028</h2>
       <p>Tudo calculado com os números da sua associação. Abaixo, o exemplo de uma associação com faturamento de R$ 120 mil por mês.</p>
     </div>
     <div class="bento">
       <article class="bx bx-a rv">
-        <div class="bx-txt"><span class="bx-n">01</span><h3>Quanto guardar</h3><p>A reserva total até 07/05/2028 e quanto separar por mês. Conta os eventos em aberto, os ainda não avisados e uma perda total do veículo mais caro.</p></div>
+        <div class="bx-txt"><span class="bx-n">01</span><p class="bx-q">“O caixa aguenta uma perda total?”</p><h3>Quanto guardar</h3><p>A reserva total até 07/05/2028 e quanto separar por mês. Conta os eventos em aberto, os ainda não avisados e uma perda total do veículo mais caro.</p></div>
         <div class="bx-vis">
           <div class="bx-big"><b id="bxMeta">R$ 263 mil</b><span>de reserva até 2028</span></div>
           <svg class="area" id="bxArea" viewBox="0 0 320 120" preserveAspectRatio="none" aria-hidden="true"></svg>
@@ -1512,7 +1514,7 @@ body[data-view="inicio"] .hero{padding-top:160px}
         </div>
       </article>
       <article class="bx bx-b rv">
-        <div class="bx-txt"><span class="bx-n">02</span><h3>Quanto cobrar</h3><p>O boleto certo de cada tipo de veículo, separado em taxa, rateio e estabilização, da forma que a SUSEP exige.</p></div>
+        <div class="bx-txt"><span class="bx-n">02</span><p class="bx-q">“Quanto o boleto vai subir?”</p><h3>Quanto cobrar</h3><p>O boleto certo de cada tipo de veículo, separado em taxa, rateio e estabilização, da forma que a SUSEP exige.</p></div>
         <div class="bx-vis">
           <div class="bx-big"><b id="bxBoleto">R$ 131,49</b><span>boleto médio certo</span></div>
           <div class="stackbar" id="bxStack"><i style="flex:86 1 0;background:var(--s-adm)"></i><i style="flex:33 1 0;background:var(--s-ev)"></i><i style="flex:19 1 0;background:var(--s-res)"></i></div>
@@ -1520,7 +1522,7 @@ body[data-view="inicio"] .hero{padding-top:160px}
         </div>
       </article>
       <article class="bx bx-c rv">
-        <div class="bx-txt"><span class="bx-n">03</span><h3>O que fazer</h3><p>Um plano mês a mês até 07/05/2028, com as tarefas de cada fase até a escolha da administradora.</p></div>
+        <div class="bx-txt"><span class="bx-n">03</span><p class="bx-q">“A diretoria responde se faltar dinheiro?”</p><h3>O que fazer</h3><p>Um plano mês a mês até 07/05/2028, com as tarefas de cada fase até a escolha da administradora.</p></div>
         <ol class="phases" id="bxFases">
           <li class="ok"><span>Começo</span><b>Arrumar a casa</b></li>
           <li><span>Depois</span><b>Acertar o dinheiro e as exigências</b></li>
@@ -1529,7 +1531,7 @@ body[data-view="inicio"] .hero{padding-top:160px}
         </ol>
       </article>
       <article class="bx bx-d rv">
-        <div class="bx-txt"><span class="bx-n">04</span><h3>E o que resolver primeiro</h3><p>Nota de preparo de 0 a 100, os principais indicadores e as prioridades em ordem, para a diretoria saber por onde começar.</p></div>
+        <div class="bx-txt"><span class="bx-n">04</span><p class="bx-q">“A associação sobrevive com o repasse?”</p><h3>E o que resolver primeiro</h3><p>Nota de preparo de 0 a 100, os principais indicadores e as prioridades em ordem, para a diretoria saber por onde começar.</p></div>
         <div class="bx-score">
           <span class="ring-big" id="bxRing" style="--p:63"><b id="bxNota">63</b><small>de 100</small></span>
           <ul class="prio" id="bxPrio"><li>Reserva muito baixa</li><li>Dinheiro dos associados misturado</li><li>Estatuto sem a regra da administradora</li></ul>
@@ -3974,6 +3976,16 @@ $('stNext').addEventListener('click', () => passo < STEPS.length ? showStep(pass
   }catch(e){}
   // contagem até o prazo: recalculada pela data de quem abre a página
   const mf = mesesAte(REG.prazoFinal), df = Math.ceil((REG.prazoFinal - new Date()) / 864e5);
+  // capa: as perguntas da diretoria, uma por vez
+  if(!reduzMov){
+    const HQ = ['“Quanto o boleto vai subir?”', '“O caixa aguenta uma perda total?”', '“A associação sobrevive com o repasse?”', '“A diretoria responde se faltar dinheiro?”'];
+    let hq = 0;
+    setInterval(() => {
+      if(document.hidden || $('view-inicio').hidden) return;
+      const el = $('heroQ'); el.classList.add('sai');
+      setTimeout(() => { hq = (hq + 1) % HQ.length; el.textContent = HQ[hq]; el.classList.remove('sai'); }, 350);
+    }, 3200);
+  }
   $('heroFalta').textContent = df <= 0 ? 'O prazo chegou.' : mf >= 2 ? `Faltam ${mf} meses.` : `Faltam ${df} dias.`;
   $('tlCount').innerHTML = df <= 0 ? 'O prazo final de <b>07/05/2028</b> chegou' : mf >= 2 ? `Faltam <b>${mf} meses</b> para o prazo final de 07/05/2028` : `Faltam <b>${df} dias</b> para o prazo final de 07/05/2028`;
   // linha do tempo: o que já passou e o próximo marco
