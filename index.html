@@ -1147,7 +1147,7 @@ body.modal-on{overflow:hidden}
 
     <!-- PASSO 5 -->
     <section class="step" aria-labelledby="h5s">
-      <div class="step-head"><span class="step-num">5</span><div><h2 id="h5s">Papéis e organização</h2><p>Responda sim, não ou não sei. O que faltar vira tarefa no seu plano.</p></div></div>
+      <div class="step-head"><span class="step-num">5</span><div><h2 id="h5s">Exigências da regra nova</h2><p>Responda sim, não ou não sei. O que faltar vira tarefa no seu plano.</p></div></div>
       <p class="docs-count" id="docsCount"></p>
       <div class="docs" id="docs"></div>
     </section>
@@ -1193,7 +1193,7 @@ body.modal-on{overflow:hidden}
         <div class="kpi" id="kTicket"><span class="dot"></span><dt>Boleto certo</dt><dd>–</dd></div>
         <div class="kpi" id="kRes"><span class="dot"></span><dt><span class="term" tabindex="0" data-g="reserva">Reserva</span></dt><dd>–</dd></div>
         <div class="kpi" id="kInad"><span class="dot"></span><dt><span class="term" tabindex="0" data-g="inadimplencia">Inadimplência</span></dt><dd>–</dd></div>
-        <div class="kpi" id="kDocs"><span class="dot"></span><dt>Papéis em dia</dt><dd>–</dd></div>
+        <div class="kpi" id="kDocs"><span class="dot"></span><dt>Exigências cumpridas</dt><dd>–</dd></div>
         <div class="kpi" id="kBase"><span class="dot"></span><dt><span class="term" tabindex="0" data-g="qualidade">Qualidade da carteira</span></dt><dd>–</dd></div>
       </dl>
       <a class="btn" href="#resultado">Ver resultado completo</a>
@@ -1525,7 +1525,7 @@ body.modal-on{overflow:hidden}
     <div class="admchips" id="admList"></div>
     <p class="note" style="margin-top:14px">Estar na lista não é autorização. Antes de assinar, confira na <a href="https://www.gov.br/susep/pt-br/assuntos/protecao-patrimonial-mutualista/associacoes-de-protecao-patrimonial-mutualista" target="_blank" rel="noopener">página da SUSEP</a>. Fonte da lista: <a href="https://www.gov.br/susep/pt-br/central-de-conteudos/noticias/2026/agosto/susep-conclui-recebimento-de-solicitacoes-para-analise-prioritaria-de-administradoras-de-protecao-patrimonial-mutualista" target="_blank" rel="noopener">SUSEP, 06/08/2026</a>.</p>
     <div class="cta-mini">
-      <div><b>São 64 projetos na fila. Quem escolhe é a associação.</b><span>Chegue com números, rateio e papéis prontos para comparar propostas de igual para igual.</span></div>
+      <div><b>São 64 projetos na fila. Quem escolhe é a associação.</b><span>Chegue com números, rateio e exigências em dia para comparar propostas de igual para igual.</span></div>
       <div class="cta-btns"><button type="button" class="btn" data-ajuda="lista de administradoras">Quero me preparar</button></div>
     </div>
   </section>
@@ -1976,7 +1976,7 @@ function calc(s){
   const P = {ok:1, warn:.55, bad:.12, none:0};
   r.parts = [
     {n:'Sinistralidade', max:24, got:24 * P[r.tSin]},
-    {n:'Papéis e organização', max:24, got:24 * r.docsPct},
+    {n:'Exigências e organização', max:24, got:24 * r.docsPct},
     {n:'Reserva', max:18, got:18 * (isFinite(r.coberturaRes) ? r.coberturaRes : 0)},
     {n:'Boleto cobre a conta', max:10, got:10 * P[r.tTicket]},
     {n:'Inadimplência', max:8, got:8 * P[r.tInad]},
@@ -2031,7 +2031,7 @@ function prioridades(r){
   if(r.tRes === 'warn') L.push({sev:1.8, t:'Reserva abaixo da meta', d:`Guarde ${brlShort(r.guardarMes)} por mês para chegar a ${brlShort(r.metaReserva)} em ${REG.horizonte} meses.`});
   if(isFinite(r.cobRepasse) && r.cobRepasse < .9 && r.caminhoFinal === 'contratar') L.push({sev:1.75, t:'O repasse não paga a estrutura da associação', d:`Na simulação, a associação receberia ${brlShort(r.repasseMes)} por mês para uma estrutura que custa ${brlShort(r.custoAssoc)}.`});
   if(r.tConc === 'bad') L.push({sev:1.7, t:'Veículo caro demais para o caixa', d:`Uma perda total do mais caro (${brlShort(r.fipeMax)}) come ${pct(r.concentr,0)} do dinheiro de eventos de um mês.`});
-  if(r.tDocs !== 'ok') L.push({sev: r.tDocs==='bad'?2.2:1.5, t:`Faltam ${r.docsFalta.length} papéis`, d:'Sem papel em ordem, nenhuma administradora séria assina contrato.'});
+  if(r.tDocs !== 'ok') L.push({sev: r.tDocs==='bad'?2.2:1.5, t:`Faltam ${r.docsFalta.length} exigências`, d:'Sem isso em ordem, nenhuma administradora séria assina contrato.'});
   if(r.tInad === 'warn') L.push({sev:1.2, t:'Inadimplência pedindo atenção', d:`${pct(r.inad,0)}. O ideal é ficar abaixo de 5%.`});
   if(r.rateioModo === 'fixo') L.push({sev:1.4, t:'Cobrança fixa sem reserva', d:'Quando vier um mês ruim, não tem de onde tirar.'});
   return L.sort((a,b) => b.sev - a.sev);
@@ -2375,7 +2375,7 @@ function renderCards(r){
     porte + (isFinite(r.cresc) ? ` ${r.cresc>=0?'Cresceu':'Encolheu'} ${pct(Math.abs(r.cresc),0)} em 12 meses.` : ''),
     (isFinite(r.freq) ? `A cada 100 placas, ${Math.round(r.freq*100)} tiveram evento pago no ano, com custo médio de ${brl(r.custoMedioEv)}. ` : '') + 'A regra não tem número mínimo fixo de placas: o atuário calcula o mínimo de cada grupo.',
     isFinite(r.cresc) && r.cresc < 0 ? 'Descubra por que estão saindo.' : ''));
-  C.push(card(r.tDocs, 'Papéis', `${r.docsSim} <small>de ${DOCS.length} em dia</small>`,
+  C.push(card(r.tDocs, 'Exigências', `${r.docsSim} <small>de ${DOCS.length} em dia</small>`,
     r.docsFalta.length ? `Faltam ${r.docsFalta.length}. Viraram tarefas no plano.` : 'Tudo em ordem.',
     r.docsFalta.length ? 'Faltam: ' + r.docsFalta.map(d => d.t.charAt(0).toLowerCase() + d.t.slice(1)).join('; ') + '.' : '',
     '',
@@ -2720,7 +2720,7 @@ function renderPlano(r){
   const FZ = fasesPlano(REG.horizonte);
   const P = [
     {...FZ[0], h:'Arrumar a casa', L:f1},
-    {...FZ[1], h:'Acertar o dinheiro e os papéis', L:f2},
+    {...FZ[1], h:'Acertar o dinheiro e as exigências', L:f2},
     {...FZ[2], h:'Profissionalizar', L:f3},
     {...FZ[3], h:'Entrar na regra', L:f4}
   ];
@@ -2773,7 +2773,7 @@ function renderResumo(s, r, pr){
     `Com administradora a ${pct(r.x,0)}: ${brl(r.novoBoleto,true)} (repasse cobre ${pct(r.cobRepasse,0)} da estrutura)`,
     `Reserva: ${brlShort(r.reserva)} de ${brlShort(r.metaReserva)} → guardar ${brlShort(r.guardarMes)}/mês por ${REG.horizonte} meses`,
     `Inadimplência: ${pct(r.inad,0)}`,
-    `Papéis em dia: ${r.docsSim} de ${DOCS.length}`,
+    `Exigências cumpridas: ${r.docsSim} de ${DOCS.length}`,
     ...(isFinite(r.qb) ? [`Qualidade da carteira: ${r.qb}/100 (${r.qbTxt})`] : []),
     `Caminho: ${cam}${!r.caminho || r.caminho==='naosei' ? ' (sugerido)' : ''}`,
     `Prazo final SUSEP: 07/05/2028`,
@@ -3102,7 +3102,7 @@ document.querySelectorAll('.fields > .field').forEach(fl => {
 /* ======================= ABAS E PASSOS ======================= */
 const TABS = ['preencher','resultado','boleto','plano','entenda','regras'];
 const STEPS = [...document.querySelectorAll('#f > .step')];
-const STEP_LBL = ['Sua associação','Faturamento','Eventos','Reserva e rateio','Papéis','Caminho'];
+const STEP_LBL = ['Sua associação','Faturamento','Eventos','Reserva e rateio','Exigências','Caminho'];
 let tabAtual = 'preencher', passo = 1;
 function lembrar(){ try{ localStorage.setItem(KEY + '.nav', JSON.stringify({tab:tabAtual, passo})); }catch(e){} }
 function subirAte(el){ const top = el.getBoundingClientRect().top + window.scrollY - 70; if(window.scrollY > top) window.scrollTo({top}); }
