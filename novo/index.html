@@ -1073,7 +1073,13 @@ body[data-view="inicio"] .fab-help{display:none!important}
 .bx{position:relative;background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:28px;display:grid;gap:22px;align-content:space-between;overflow:hidden;box-shadow:0 1px 2px rgba(16,24,40,.04);transition:transform .2s,box-shadow .2s,border-color .2s}
 .bx:hover{transform:translateY(-3px);box-shadow:0 22px 44px -24px rgba(16,24,40,.35);border-color:color-mix(in srgb,var(--accent) 35%,var(--line))}
 .bx-a,.bx-d{grid-template-columns:minmax(0,1fr)}
-@media (min-width:700px){.bx-a,.bx-d{grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);align-items:center}}
+@media (min-width:700px){.bx-a{grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);align-items:center}}
+.bx-d{grid-template-columns:minmax(0,1fr)!important;align-content:start!important}
+.bx-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.bx-stats div{display:grid;gap:2px;background:var(--bg);border-radius:12px;padding:12px 14px}
+.bx-stats span{font-size:.8rem;color:var(--muted);font-weight:600}
+.bx-stats b{font:700 1.3rem var(--f-display)}
+@media (max-width:480px){.bx-stats{grid-template-columns:minmax(0,1fr)}}
 .bx-txt{display:grid;gap:10px;align-content:start}
 .bx-n{font:700 .8rem var(--f-display);color:var(--accent);letter-spacing:.08em}
 .bx h3{font:700 1.45rem/1.15 var(--f-display);letter-spacing:-.02em}
@@ -1203,7 +1209,11 @@ body[data-view="inicio"] .hero{padding-top:160px}
 
 /* resultado */
 .rhead{display:grid;gap:16px}
-.rh-ex{display:flex;flex-wrap:wrap;align-items:center;gap:10px 16px;background:var(--warn-soft);border-radius:12px;padding:12px 16px}
+.rh-ex{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:10px 10px 10px 12px;box-shadow:0 1px 2px rgba(16,24,40,.05)}
+.rh-ex-tag{background:#12131C;color:#39D0B8;font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:5px 11px;border-radius:999px}
+.rh-ex-txt{flex:1;min-width:180px;color:var(--muted);font-size:.93rem}
+.rh-ex .btn{margin-left:auto}
+@media (max-width:560px){.rh-ex .btn{flex:1 1 100%}}
 .rh-top{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap}
 .rh-top h1{font:700 clamp(1.7rem,3.6vw,2.4rem)/1.15 var(--f-display);margin-top:4px}
 .rh-top .pill{font-size:1rem;padding:8px 14px}
@@ -1361,7 +1371,7 @@ body[data-view="inicio"] .hero{padding-top:160px}
         <div class="bx-vis">
           <div class="bx-big"><b id="bxBoleto">R$ 138,83</b><span>boleto médio certo</span></div>
           <div class="stackbar" id="bxStack"><i style="flex:86 1 0;background:var(--s-adm)"></i><i style="flex:33 1 0;background:var(--s-ev)"></i><i style="flex:19 1 0;background:var(--s-res)"></i></div>
-          <ul class="stack-leg" id="bxStackLeg"><li><i style="background:var(--s-adm)"></i>Taxa</li><li><i style="background:var(--s-ev)"></i>Rateio</li><li><i style="background:var(--s-res)"></i>Estabilização</li></ul>
+          <ul class="stack-leg" id="bxStackLeg"><li><i style="background:var(--s-adm)"></i>Taxa administrativa</li><li><i style="background:var(--s-ev)"></i>Rateio</li><li><i style="background:var(--s-res)"></i>Estabilização</li></ul>
         </div>
       </article>
       <article class="bx bx-c rv">
@@ -1374,10 +1384,15 @@ body[data-view="inicio"] .hero{padding-top:160px}
         </ol>
       </article>
       <article class="bx bx-d rv">
-        <div class="bx-txt"><span class="bx-n">04</span><h3>E o que resolver primeiro</h3><p>Nota de preparo de 0 a 100 e as prioridades em ordem, para a diretoria saber por onde começar.</p></div>
+        <div class="bx-txt"><span class="bx-n">04</span><h3>E o que resolver primeiro</h3><p>Nota de preparo de 0 a 100, os principais indicadores e as prioridades em ordem, para a diretoria saber por onde começar.</p></div>
         <div class="bx-score">
           <span class="ring-big" id="bxRing" style="--p:58"><b id="bxNota">58</b><small>de 100</small></span>
           <ul class="prio" id="bxPrio"><li>Reserva muito baixa</li><li>Dinheiro dos associados misturado</li><li>Estatuto sem a regra da administradora</li></ul>
+        </div>
+        <div class="bx-stats">
+          <div><span>Sinistralidade</span><b id="bxSin">24%</b></div>
+          <div><span>Inadimplência</span><b id="bxInad">8%</b></div>
+          <div><span>Qualidade da carteira</span><b id="bxQb">68/100</b></div>
         </div>
       </article>
     </div>
@@ -1672,7 +1687,7 @@ body[data-view="inicio"] .hero{padding-top:160px}
 
 <div class="wrap results view" id="view-resultado" data-view="resultado" hidden>
   <section class="rhead" id="resultado-topo">
-    <div class="rh-ex" id="rhEx" hidden><span>Estes são números de <b>exemplo</b>.</span> <a class="btn small" href="#diagnostico" id="rhMeus">Calcular com os números da minha associação</a></div>
+    <div class="rh-ex" id="rhEx" hidden><span class="rh-ex-tag">Exemplo</span><span class="rh-ex-txt">Associação fictícia, com faturamento de R$ 120 mil por mês.</span><a class="btn small" href="#diagnostico" id="rhMeus">Calcular com os meus números →</a></div>
     <div class="rh-top">
       <div>
         <p class="kicker">Resultado do diagnóstico</p>
@@ -3750,7 +3765,7 @@ $('stNext').addEventListener('click', () => passo < STEPS.length ? showStep(pass
       <polygon points="0,${H} ${pts.join(' ')} ${W},${H}" fill="url(#gArea)"/>
       <polyline points="${pts.join(' ')}" fill="none" style="stroke:var(--accent)" stroke-width="3" stroke-linecap="round" vector-effect="non-scaling-stroke"/>`;
     // 02: as 3 partes do boleto
-    const partes = [['Taxa', x.admR, '--s-adm'], ['Rateio', x.rateioR, '--s-ev'], ['Estabilização', x.estabR, '--s-res']];
+    const partes = [['Taxa administrativa', x.admR, '--s-adm'], ['Rateio', x.rateioR, '--s-ev'], ['Estabilização', x.estabR, '--s-res']];
     $('bxBoleto').textContent = brl(x.ticketCerto, true);
     $('bxStack').innerHTML = partes.map(p => `<i style="flex:${p[1].toFixed(2)} 1 0;background:var(${p[2]})"></i>`).join('');
     $('bxStackLeg').innerHTML = partes.map(p => `<li><i style="background:var(${p[2]})"></i>${p[0]}<b>${brl(p[1], true)}</b></li>`).join('');
@@ -3759,6 +3774,7 @@ $('stNext').addEventListener('click', () => passo < STEPS.length ? showStep(pass
     document.querySelectorAll('#bxFases li span').forEach((sp, i) => sp.textContent = mesesTxt(FZ[i].a, FZ[i].b));
     // +: nota e prioridades
     $('bxNota').textContent = x.score;
+    $('bxSin').textContent = pct(x.sin, 0); $('bxInad').textContent = pct(x.inad, 0); $('bxQb').textContent = isFinite(x.qb) ? x.qb + '/100' : '–';
     const pr = prioridades(x).slice(0, 3);
     if(pr.length) $('bxPrio').innerHTML = pr.map(p => `<li>${p.t}</li>`).join('');
   }catch(e){}
