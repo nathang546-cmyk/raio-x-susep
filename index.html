@@ -725,7 +725,8 @@ h1,h2,h3{letter-spacing:-.01em;font-weight:600}
 .lead-form .check{font-weight:500;font-size:.92rem;align-items:flex-start}
 .lead-form .check input{margin-top:2px}
 .lead-form textarea{width:100%;min-height:170px;border:1px solid var(--line);border-radius:10px;padding:10px;font:.9rem/1.5 var(--f-body);background:var(--sunk);color:var(--ink);resize:vertical}
-#leadWa{background:#25D366;border-color:#25D366;color:#0B2E1A}
+#leadWa{width:100%;justify-content:center}
+.lead-ok{background:var(--ok-soft);color:var(--ok);border-radius:10px;padding:10px 12px;font-weight:600}
 .err{color:var(--bad);font-weight:700}
 .ghcard{background:#171823;color:#C9D2DA;border-radius:12px;padding:14px 16px;display:grid;gap:10px}
 .ghcard img{height:15px;width:auto}
@@ -1542,8 +1543,8 @@ body.modal-on{overflow:hidden}
     <button type="button" class="ajuda-x" id="ajudaFechar" aria-label="Fechar">×</button>
     <div class="ajuda-head">
       <img src="GHLOGO" alt="GestiHub" width="94" height="16">
-      <h2 id="ajudaTit">Fale com um especialista</h2>
-      <p>Escolha, não seja escolhido. Conte quem você é: a mensagem vai pronta para o WhatsApp da GestiHub, com o seu resultado.</p>
+      <h2 id="ajudaTit">Agende uma reunião com um especialista</h2>
+      <p>Deixe seus dados e a GestiHub entra em contato para marcar a reunião. O seu Raio-X vai junto, para a conversa já começar pelos seus números.</p>
     </div>
     <form class="lead-form" id="leadForm" novalidate autocomplete="on">
       <div class="lead-grid">
@@ -1553,10 +1554,10 @@ body.modal-on{overflow:hidden}
         <div class="field"><label for="leadAssoc">Associação</label><div class="input compact text"><input id="leadAssoc" autocomplete="organization"></div></div>
         <div class="field" style="grid-column:1/-1"><label for="leadCidade">Cidade e estado</label><div class="input compact text"><input id="leadCidade" autocomplete="address-level2" placeholder="Ex.: Belo Horizonte/MG"></div></div>
       </div>
-      <label class="check"><input type="checkbox" id="leadOk"> <span>Autorizo enviar este resumo à GestiHub para entrarem em contato comigo. <a href="https://www.gestihub.com.br/politica-de-privacidade.html" target="_blank" rel="noopener">Política de privacidade</a></span></label>
-      <div class="copyrow"><a class="btn" id="leadWa" href="https://wa.me/551151785642" target="_blank" rel="noopener">Enviar pelo WhatsApp</a><span class="err" id="leadErr" aria-live="polite"></span></div>
-      <p class="hint">Abre o WhatsApp da GestiHub, (11) 5178-5642, com a mensagem pronta. Nada é enviado até você apertar enviar lá.</p>
-      <p class="ok-msg" id="leadDone" hidden>Pronto! Se o WhatsApp não abriu, toque de novo em “Enviar pelo WhatsApp”.</p>
+      <label class="check"><input type="checkbox" id="leadOk"> <span>Autorizo a GestiHub a entrar em contato comigo e a receber o resumo do meu Raio-X. <a href="https://www.gestihub.com.br/politica-de-privacidade.html" target="_blank" rel="noopener">Política de privacidade</a></span></label>
+      <div class="copyrow"><button type="button" class="btn big" id="leadWa">Quero uma reunião</button><span class="err" id="leadErr" aria-live="polite"></span></div>
+      <p class="hint" id="leadComo">Seus dados vão só para a GestiHub. A reunião é gratuita e online.</p>
+      <p class="ok-msg lead-ok" id="leadDone" hidden></p>
       <details class="more" hidden><summary>Ver ou copiar a mensagem</summary><div><textarea id="leadMsg" readonly aria-label="Mensagem para a GestiHub"></textarea><div class="copyrow"><button type="button" class="btn small" id="leadCopy">Copiar mensagem</button><span class="ok-msg" id="leadCopyMsg" aria-live="polite"></span></div></div></details>
     </form>
   </div>
@@ -2850,7 +2851,7 @@ function leadMsg(){
   const tel = $('leadTel').value.trim();
   const nome = $('leadNome').value.trim(), cargo = $('leadCargo').value, assoc = $('leadAssoc').value.trim() || $('nome').value.trim(), cid = $('leadCidade').value.trim();
   const linhas = [
-    'Olá, GestiHub! Usei o Raio-X SUSEP e quero ajuda para organizar a minha associação para a regra da SUSEP.',
+    'Olá, GestiHub! Usei o Raio-X SUSEP e quero agendar uma reunião com um especialista.',
     '',
     'Nome: ' + (nome || '-') + (cargo ? ' (' + cargo + ')' : ''),
     'Telefone: ' + (tel || '-'),
@@ -2912,6 +2913,14 @@ $('leadTel').addEventListener('input', e => {
 $('leadForm').addEventListener('input', leadUpd);
 $('leadForm').addEventListener('change', leadUpd);
 $('leadForm').addEventListener('submit', e => e.preventDefault());
+/* Envio do pedido de reunião.
+   Hoje: abre o WhatsApp da GestiHub com o pedido pronto.
+   Próximo passo: trocar o corpo desta função por um envio direto ao CRM da GestiHub (fetch/POST) e
+   mostrar a confirmação "Pedido recebido" sem depender do WhatsApp. */
+function enviarLead(msg){
+  window.open(waLink(msg), '_blank', 'noopener');
+  return {pronto:false, aviso:'Abrimos o WhatsApp da GestiHub com o seu pedido. Toque em enviar lá para concluir: um especialista responde para marcar a reunião.'};
+}
 $('leadWa').addEventListener('click', e => {
   const semNome = !$('leadNome').value.trim(), semTel = !telValido($('leadTel').value), semOk = !$('leadOk').checked;
   if(semNome || semTel || semOk){
@@ -2922,6 +2931,8 @@ $('leadWa').addEventListener('click', e => {
   }
   $('leadErr').textContent = '';
   leadUpd();
+  const res = enviarLead($('leadMsg').value);
+  $('leadDone').textContent = res.pronto ? 'Pedido recebido! Um especialista vai entrar em contato pelo telefone informado para marcar a reunião.' : res.aviso;
   $('leadDone').hidden = false;
 });
 $('leadCopy').addEventListener('click', () => copiar($('leadMsg'), $('leadCopyMsg')));
