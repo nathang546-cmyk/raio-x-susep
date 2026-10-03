@@ -1034,7 +1034,8 @@ body[data-view="inicio"] .fab-help{display:none!important}
 .hero-ctas,.hero-trust{justify-content:center}
 .hero{padding:96px 0 104px}
 .hero-urg{margin-top:32px;display:inline-flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:8px 14px;padding:8px 8px 8px 16px;border-radius:999px;background:rgba(243,180,81,.07);border:1px solid rgba(243,180,81,.26);color:#C9D0DA;font:500 .92rem/1.4 var(--f-body);cursor:pointer;transition:border-color .2s,background .2s}
-.hero-urg:hover{background:rgba(243,180,81,.11);border-color:rgba(243,180,81,.5)}
+.hero-urg{background:rgba(57,208,184,.07)!important;border-color:rgba(57,208,184,.4)!important;box-shadow:0 0 0 1px rgba(57,208,184,.12),0 0 28px 2px rgba(17,165,148,.35),0 0 64px 8px rgba(17,165,148,.16)}
+.hero-urg:hover{background:rgba(57,208,184,.11)!important;border-color:rgba(57,208,184,.6)!important;box-shadow:0 0 0 1px rgba(57,208,184,.2),0 0 34px 4px rgba(17,165,148,.5),0 0 80px 12px rgba(17,165,148,.22)}
 .hero-urg .hu-txt b{color:#F3B451;font-weight:700}
 .hu-dot{flex:none;width:8px;height:8px;border-radius:50%;background:#F3B451;box-shadow:0 0 0 0 rgba(243,180,81,.5);animation:hu-pulse 2.4s ease-out infinite}
 @keyframes hu-pulse{0%{box-shadow:0 0 0 0 rgba(243,180,81,.5)}70%,100%{box-shadow:0 0 0 8px rgba(243,180,81,0)}}
@@ -1293,15 +1294,26 @@ body[data-view="inicio"] .hero{padding-top:160px}
 .rxh-verd{color:var(--ink);font-size:1.02rem;line-height:1.5;max-width:68ch}
 .rx-cta{display:flex;align-items:center;justify-content:space-between;gap:12px 20px;flex-wrap:wrap;background:var(--accent-soft);border:1px solid color-mix(in srgb,var(--accent) 30%,var(--line));border-radius:18px;padding:16px 20px}
 .rx-cta{padding:20px 24px!important;background:linear-gradient(135deg,var(--accent-soft),var(--surface))!important;border-color:color-mix(in srgb,var(--accent) 45%,var(--line))!important}
-.rx-cta-t{display:grid;gap:6px;min-width:0;flex:1 1 320px}
+.rx-cta{align-items:center!important;gap:18px 28px!important}
+.rx-cta-t{display:grid;gap:8px;min-width:0;flex:1 1 420px}
+.rx-cta-k{font:700 .76rem var(--f-display);text-transform:uppercase;letter-spacing:.08em;color:var(--accent)}
 .rx-cta-t b{font:700 1.15rem/1.35 var(--f-display);color:var(--ink)}
 .rx-cta-t>span{color:var(--muted);font-size:.95rem;line-height:1.5;max-width:62ch}
-.rx-cta-l{list-style:none;margin:4px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:6px 16px}
+.rx-cta-l{list-style:none;margin:6px 0 0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.rx-cta-l li{display:grid!important;gap:2px;align-content:start;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 12px 10px 36px!important}
+.rx-cta-l li::before{content:"✓"!important;left:12px!important;top:11px!important;width:16px;height:16px;border-radius:50%;background:var(--accent);color:#FFFFFF;display:grid;place-items:center;font-size:.62rem!important}
+.rx-cta-l li b{font:600 .95rem var(--f-display)!important;color:var(--ink)}
+.rx-cta-l li span{font-weight:400;color:var(--muted);font-size:.85rem;line-height:1.4}
+.rx-cta-b{display:grid;justify-items:center;gap:6px;flex:0 0 auto}
+.rx-cta-b small{color:var(--muted);font-size:.8rem}
+@media (max-width:860px){.rx-cta-l{grid-template-columns:minmax(0,1fr)}.rx-cta-b{flex:1 1 100%}.rx-cta-b .btn{width:100%}}
 .rx-cta-l li{font-size:.88rem;font-weight:600;color:var(--accent-strong,#0B7F72);padding-left:20px;position:relative}
 .rx-cta-l li::before{content:"✓";position:absolute;left:0;top:0;font-weight:700}
 @media (max-width:560px){.rx-cta .btn{flex:1 1 100%}}
 .rh-acts .btn-wa{background:transparent!important;border:1.5px solid var(--accent)!important;color:var(--accent)!important}
 .rh-acts .btn-wa:hover{background:var(--accent-soft)!important}
+#saveBox{display:none!important}
+#timeline .phase:first-child .phase-d>summary h3::after{content:"Comece aqui";display:inline-block;margin-left:10px;vertical-align:4px;padding:3px 10px;border-radius:999px;background:var(--accent);color:#FFFFFF;font:700 .7rem var(--f-display);letter-spacing:.04em;text-transform:uppercase}
 .plan-first{background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--bad);border-radius:14px;padding:14px 18px;margin-bottom:18px;display:grid;gap:8px}
 .pf-k{font:700 .78rem var(--f-display);text-transform:uppercase;letter-spacing:.08em;color:var(--bad)}
 .plan-first ol{margin:0;padding-left:1.2em;display:grid;gap:6px}
@@ -1508,7 +1520,7 @@ body[data-view="inicio"] .hero{padding-top:160px}
         <div class="bx-txt"><span class="bx-n">03</span><h3>O que fazer</h3><p>Um plano mês a mês até 07/05/2028, com as tarefas de cada fase até a escolha da administradora.</p></div>
         <ol class="phases" id="bxFases">
           <li class="ok"><span>Começo</span><b>Arrumar a casa</b></li>
-          <li><span>Depois</span><b>Acertar o dinheiro e os papéis</b></li>
+          <li><span>Depois</span><b>Acertar o dinheiro e as exigências</b></li>
           <li><span>Em seguida</span><b>Profissionalizar</b></li>
           <li><span>Até 07/05/2028</span><b>Entrar na regra</b></li>
         </ol>
@@ -1776,7 +1788,7 @@ body[data-view="inicio"] .hero{padding-top:160px}
 
     <!-- PASSO 5 -->
     <section class="step" aria-labelledby="h5s">
-      <div class="step-head"><span class="step-num">5</span><div><h2 id="h5s">Papéis e organização</h2><p>Responda sim, não ou não sei. O que faltar vira tarefa no seu plano.</p></div></div>
+      <div class="step-head"><span class="step-num">5</span><div><h2 id="h5s">Exigências da regra nova</h2><p>Responda sim, não ou não sei. O que faltar vira tarefa no seu plano.</p></div></div>
       <p class="docs-count" id="docsCount"></p>
       <div class="docs" id="docs"></div>
     </section>
@@ -1806,7 +1818,7 @@ body[data-view="inicio"] .hero{padding-top:160px}
         <div class="kpi" id="kTicket"><span class="dot"></span><dt>Boleto certo</dt><dd>–</dd></div>
         <div class="kpi" id="kRes"><span class="dot"></span><dt><span class="term" tabindex="0" data-g="reserva">Reserva</span></dt><dd>–</dd></div>
         <div class="kpi" id="kInad"><span class="dot"></span><dt><span class="term" tabindex="0" data-g="inadimplencia">Inadimplência</span></dt><dd>–</dd></div>
-        <div class="kpi" id="kDocs"><span class="dot"></span><dt>Papéis em dia</dt><dd>–</dd></div>
+        <div class="kpi" id="kDocs"><span class="dot"></span><dt>Exigências cumpridas</dt><dd>–</dd></div>
         <div class="kpi" id="kBase"><span class="dot"></span><dt><span class="term" tabindex="0" data-g="qualidade">Qualidade da carteira</span></dt><dd>–</dd></div>
       </dl>
       <a class="btn" href="#resultado">Ver resultado completo</a>
@@ -1842,8 +1854,7 @@ body[data-view="inicio"] .hero{padding-top:160px}
   <div hidden><div id="boleto-resumo"><div id="bolResumo"></div></div></div>
 
   <section id="sec-plano">
-    <div class="sec-head"><p class="kicker">Plano até 07/05/2028</p><h2>O que fazer, mês a mês</h2><p>O caminho até 07/05/2028. Toque em cada fase para ver as tarefas e marque o que já fez.</p></div>
-    <div class="plan-first" id="planFirst" hidden></div>
+    <div class="sec-head"><p class="kicker">Seu plano</p><h2>Passo a passo até 07/05/2028</h2><p>4 fases. Toque em uma para ver as tarefas.</p></div>
     <div id="saveBox"></div>
     <div class="timeline" id="timeline"></div>
   </section>
@@ -2594,7 +2605,7 @@ function calc(s){
   const P = {ok:1, warn:.55, bad:.12, none:0};
   r.parts = [
     {n:'Sinistralidade', max:24, got:24 * P[r.tSin]},
-    {n:'Papéis e organização', max:24, got:24 * r.docsPct},
+    {n:'Exigências e organização', max:24, got:24 * r.docsPct},
     {n:'Reserva', max:18, got:18 * (isFinite(r.coberturaRes) ? r.coberturaRes : 0)},
     {n:'Boleto cobre a conta', max:10, got:10 * P[r.tTicket]},
     {n:'Inadimplência', max:8, got:8 * P[r.tInad]},
@@ -2649,7 +2660,7 @@ function prioridades(r){
   if(r.tRes === 'warn') L.push({sev:1.8, t:'Reserva abaixo da meta', d:`Guarde ${brlShort(r.guardarMes)} por mês para chegar a ${brlShort(r.metaReserva)} em ${REG.horizonte} meses.`});
   if(isFinite(r.cobRepasse) && r.cobRepasse < .9 && r.caminhoFinal === 'contratar') L.push({sev:1.75, t:'O repasse não paga a estrutura da associação', d:`Na simulação, a associação receberia ${brlShort(r.repasseMes)} por mês para uma estrutura que custa ${brlShort(r.custoAssoc)}.`});
   if(r.tConc === 'bad') L.push({sev:1.7, t:'Veículo caro demais para o caixa', d:`Uma perda total do mais caro (${brlShort(r.fipeMax)}) come ${pct(r.concentr,0)} do dinheiro de eventos de um mês.`});
-  if(r.tDocs !== 'ok') L.push({sev: r.tDocs==='bad'?2.2:1.5, t:`Faltam ${r.docsFalta.length} papéis`, d:'Sem papel em ordem, nenhuma administradora séria assina contrato.'});
+  if(r.tDocs !== 'ok') L.push({sev: r.tDocs==='bad'?2.2:1.5, t:`Faltam ${r.docsFalta.length} exigências`, d:'Sem isso em ordem, nenhuma administradora séria assina contrato.'});
   if(r.tInad === 'warn') L.push({sev:1.2, t:'Inadimplência pedindo atenção', d:`${pct(r.inad,0)}. O ideal é ficar abaixo de 5%.`});
   if(r.rateioModo === 'fixo') L.push({sev:1.4, t:'Cobrança fixa sem reserva', d:'Quando vier um mês ruim, não tem de onde tirar.'});
   return L.sort((a,b) => b.sev - a.sev);
@@ -2812,8 +2823,14 @@ function renderHead(r){
     const resOk = !guarda, mensOk = dif <= .5, papOk = !r.docsFalta.length;
     const lin = (rot, val, sub, st) => `<li class="hm-l${st ? ' ' + st : ''}"><span class="hm-r">${rot}</span><span class="hm-v"><span class="hm-vv">${val}</span><small>${sub || '&nbsp;'}</small></span></li>`;
     const ic = okk => okk ? '<i class="hm-ok" aria-label="em dia">✓</i>' : '';
-    const faltas = [guarda ? brlShort(r.faltaReserva) + ' de reserva' : '', mensOk ? '' : brl(dif, true) + ' por placa na mensalidade', papOk ? '' : r.docsFalta.length + (r.docsFalta.length > 1 ? ' papéis' : ' papel')].filter(Boolean);
-    const ctaTit = faltas.length ? (faltas.length === 1 && papOk === false && r.docsFalta.length === 1 ? 'Falta ' : 'Faltam ') + (faltas.length > 1 ? faltas.slice(0, -1).join(', ') + ' e ' + faltas.at(-1) : faltas[0]) + ' para chegar lá.' : 'A associação está no caminho. Falta escolher bem a administradora.';
+    const nEx = r.docsFalta.length;
+    const faltas = [guarda ? brlShort(r.faltaReserva) + ' de reserva' : '', mensOk ? '' : brl(dif, true) + ' por placa na mensalidade', papOk ? '' : nEx + (nEx > 1 ? ' exigências pendentes' : ' exigência pendente')].filter(Boolean);
+    const ctaTit = faltas.length ? (faltas.length === 1 && !papOk && nEx === 1 ? 'Falta ' : 'Faltam ') + (faltas.length > 1 ? faltas.slice(0, -1).join(', ') + ' e ' + faltas.at(-1) : faltas[0]) + '.' : 'A associação está no caminho. Falta escolher bem a administradora.';
+    const vale = [
+      guarda ? ['Reserva montada', 'Plano para juntar ' + brlShort(r.faltaReserva) + ' até 07/05/2028'] : mensOk ? ['Boleto em 3 partes', 'Taxa, rateio e estabilização, como a SUSEP exige'] : ['Mensalidade certa', 'Valor ajustado por tipo de veículo'],
+      papOk ? ['Pronta para a administradora', 'Números e documentos organizados para negociar'] : ['Exigências resolvidas', 'Estatuto, regulamento e registros em ordem'],
+      ['Gestão no sistema', 'Eventos, rateio e prestação de contas fechados todo mês']
+    ];
     $('rhKpis').innerHTML = `
       <div class="rx-hoje">
         <div class="rxh-txt">
@@ -2834,7 +2851,7 @@ function renderHead(r){
           <ul>
             ${lin('Reserva para eventos', brlShort(r.reserva), 'guardada hoje', resOk ? 'ok' : 'falta')}
             ${lin('Mensalidade média', brl(r.ticket, true), 'cobrada hoje', mensOk ? 'ok' : 'falta')}
-            ${lin('Papéis em dia', r.docsSim + ' de ' + DOCS.length, papOk ? 'tudo em ordem' : r.docsFalta.length + ' pendentes', papOk ? 'ok' : 'falta')}
+            ${lin('Exigências cumpridas', r.docsSim + ' de ' + DOCS.length, papOk ? 'tudo em ordem' : r.docsFalta.length + ' pendentes', papOk ? 'ok' : 'falta')}
             ${lin('Administradora', 'Sem contrato', 'nenhuma autorizada ainda', 'falta')}
           </ul>
         </article>
@@ -2844,7 +2861,7 @@ function renderHead(r){
           <ul>
             ${lin('Reserva para eventos', ic(resOk) + brlShort(r.metaReserva), resOk ? 'já atingida' : 'faltam ' + brlShort(r.faltaReserva))}
             ${lin('Mensalidade média', ic(mensOk) + (mensOk ? brl(r.ticket, true) : brl(r.ticketCerto, true)), mensOk ? 'já cobre o mínimo de ' + brl(r.ticketCerto, true) : 'mais ' + brl(dif, true) + ' por placa')}
-            ${lin('Papéis em dia', ic(papOk) + DOCS.length + ' de ' + DOCS.length, papOk ? 'tudo em ordem' : 'faltam ' + r.docsFalta.length)}
+            ${lin('Exigências cumpridas', ic(papOk) + DOCS.length + ' de ' + DOCS.length, papOk ? 'tudo em ordem' : 'faltam ' + r.docsFalta.length)}
             ${lin('Administradora', 'Contrato assinado', 'com empresa autorizada pela SUSEP')}
           </ul>
         </article>
@@ -2854,25 +2871,25 @@ function renderHead(r){
         <ol>
           <li><b>${guarda ? 'Guardar ' + brlShort(r.guardarMes) + ' por mês' : 'Manter a reserva'}</b><span>${guarda ? brl(r.guardarMes / (r.pagantes || 1), true) + ' por placa, nos ' + N + ' meses que faltam' : 'Ela já cobre a meta'}</span></li>
           <li><b>${mensOk ? 'Separar o boleto em 3 partes' : 'Ajustar a mensalidade'}</b><span>${mensOk ? 'Taxa, rateio e estabilização, como a SUSEP exige' : 'Mais ' + brl(dif, true) + ' por placa, conforme o veículo'}</span></li>
-          <li><b>${papOk ? 'Manter os papéis em dia' : 'Resolver ' + r.docsFalta.length + ' papéis'}</b><span>${papOk ? 'Revisar a cada 6 meses' : 'Já estão no plano, em ordem'}</span></li>
+          <li><b>${papOk ? 'Manter as exigências em dia' : 'Cumprir ' + r.docsFalta.length + ' exigências'}</b><span>${papOk ? 'Revisar a cada 6 meses' : 'Já estão no plano, em ordem'}</span></li>
           <li><b>Escolher a administradora</b><span>Comparar propostas quando saírem as autorizações</span></li>
         </ol>
       </div>
       <div class="rx-cta">
-        <div class="rx-cta-t"><b>${ctaTit}</b><span>Em 30 minutos, um especialista revisa os números com você, ajusta o plano e mostra o sistema da GestiHub que faz esse controle todo mês.</span>
-          <ul class="rx-cta-l"><li>Revisão dos seus números</li><li>Plano ajustado à associação</li><li>Demonstração do sistema</li></ul></div>
-        <button type="button" class="btn big" data-ajuda="resultado: como chegar">Quero uma reunião</button>
+        <div class="rx-cta-t">
+          <span class="rx-cta-k">A GestiHub leva a sua associação até lá</span>
+          <b>${ctaTit}</b>
+          <ul class="rx-cta-l">${vale.map(v => `<li><b>${v[0]}</b><span>${v[1]}</span></li>`).join('')}</ul>
+        </div>
+        <div class="rx-cta-b"><button type="button" class="btn big" data-ajuda="resultado: como chegar">Quero uma reunião</button><small>30 minutos com um especialista</small></div>
       </div>`;
-    // plano: começa pelas 3 prioridades
-    $('planFirst').innerHTML = pr.length ? `<span class="pf-k">Comece por</span><ol>${pr.slice(0, 3).map(x => `<li><b>${x.t}</b><span>${x.d}</span></li>`).join('')}</ol>` : '';
-    $('planFirst').hidden = !pr.length;
     // prioridades com o porquê
     // por onde começar: as 3 primeiras prioridades em fluxo, terminando na meta
     const SEV = x => x.sev >= 2.5 ? ['alta', 'Urgente'] : x.sev >= 1.8 ? ['media', 'Importante'] : ['baixa', 'Ajuste'];
     const top3 = pr.slice(0, 3);
     const nos = (top3.length ? top3.map((x, i) => { const [c, l] = SEV(x); return `<li class="sev-${c}"><span class="fl-step"><i>${i + 1}</i>${l}</span><b>${x.t}</b><p>${x.d}</p></li>`; })
       : ['<li class="sev-ok"><span class="fl-step"><i>✓</i>Em dia</span><b>Nada urgente</b><p>Siga o plano para manter a associação em ordem.</p></li>'])
-      .concat(`<li class="goal"><span class="fl-step"><i>★</i>Meta</span><b>Contrato com administradora autorizada</b><p>Até 07/05/2028, com a reserva montada e os papéis em ordem.</p></li>`);
+      .concat(`<li class="goal"><span class="fl-step"><i>★</i>Meta</span><b>Contrato com administradora autorizada</b><p>Até 07/05/2028, com a reserva montada e as exigências cumpridas.</p></li>`);
     $('prioList').style.setProperty('--n', nos.length);
     $('prioList').innerHTML = nos.join('');
     $('prioMais').hidden = pr.length <= 3;
@@ -3094,7 +3111,7 @@ function renderCards(r){
     porte + (isFinite(r.cresc) ? ` ${r.cresc>=0?'Cresceu':'Encolheu'} ${pct(Math.abs(r.cresc),0)} em 12 meses.` : ''),
     (isFinite(r.freq) ? `A cada 100 placas, ${Math.round(r.freq*100)} tiveram evento pago no ano, com custo médio de ${brl(r.custoMedioEv)}. ` : '') + 'A regra não tem número mínimo fixo de placas: o atuário calcula o mínimo de cada grupo.',
     isFinite(r.cresc) && r.cresc < 0 ? 'Descubra por que estão saindo.' : ''));
-  C.push(card(r.tDocs, 'Papéis', `${r.docsSim} <small>de ${DOCS.length} em dia</small>`,
+  C.push(card(r.tDocs, 'Exigências', `${r.docsSim} <small>de ${DOCS.length} em dia</small>`,
     r.docsFalta.length ? `Faltam ${r.docsFalta.length}. Viraram tarefas no plano.` : 'Tudo em ordem.',
     r.docsFalta.length ? 'Faltam: ' + r.docsFalta.map(d => d.t.charAt(0).toLowerCase() + d.t.slice(1)).join('; ') + '.' : '',
     '',
@@ -3439,7 +3456,7 @@ function renderPlano(r){
   const FZ = fasesPlano(REG.horizonte);
   const P = [
     {...FZ[0], h:'Arrumar a casa', L:f1},
-    {...FZ[1], h:'Acertar o dinheiro e os papéis', L:f2},
+    {...FZ[1], h:'Acertar o dinheiro e as exigências', L:f2},
     {...FZ[2], h:'Profissionalizar', L:f3},
     {...FZ[3], h:'Entrar na regra', L:f4}
   ];
@@ -3492,7 +3509,7 @@ function renderResumo(s, r, pr){
     `Com administradora a ${pct(r.x,0)}: ${brl(r.novoBoleto,true)} (repasse cobre ${pct(r.cobRepasse,0)} da estrutura)`,
     `Reserva: ${brlShort(r.reserva)} de ${brlShort(r.metaReserva)} → guardar ${brlShort(r.guardarMes)}/mês por ${REG.horizonte} meses`,
     `Inadimplência: ${pct(r.inad,0)}`,
-    `Papéis em dia: ${r.docsSim} de ${DOCS.length}`,
+    `Exigências cumpridas: ${r.docsSim} de ${DOCS.length}`,
     ...(isFinite(r.qb) ? [`Qualidade da carteira: ${r.qb}/100 (${r.qbTxt})`] : []),
     `Caminho: ${cam}${!r.caminho || r.caminho==='naosei' ? ' (sugerido)' : ''}`,
     `Prazo final SUSEP: 07/05/2028`,
@@ -3829,7 +3846,7 @@ modoBarra = (c, m) => { _modoBarra(c, m); if(c === BAR_P) $('exbar').hidden = m 
 const VIEWS = {inicio:'view-inicio', diagnostico:'tab-preencher', resultado:'view-resultado'};
 const ALIAS = {'':'inicio', preencher:'diagnostico', boleto:'dBol', rateio:'dBol', plano:'sec-plano', especialista:'lead', entenda:'dEnt', regras:'dAdm', simulador:'dSim', repasse:'dRep'};
 const STEPS = [...document.querySelectorAll('#f > .step')];
-const STEP_LBL = ['Sua associação','Faturamento','Eventos','Reserva e rateio','Papéis'];
+const STEP_LBL = ['Sua associação','Faturamento','Eventos','Reserva e rateio','Exigências'];
 let viewAtual = 'inicio', passo = 1;
 function lembrar(){ try{ localStorage.setItem(KEY + '.nav', JSON.stringify({view:viewAtual, passo})); }catch(e){} }
 function subirAte(el){ const top = el.getBoundingClientRect().top + window.scrollY - 80; if(window.scrollY > top) window.scrollTo({top, behavior: reduzMov ? 'auto' : 'smooth'}); }
