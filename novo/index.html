@@ -1044,6 +1044,9 @@ body[data-view="inicio"] .fab-help{display:none!important}
 @media (max-width:560px){.hero-urg{border-radius:18px;padding:14px 16px;font-size:.88rem;flex-direction:column;gap:10px}.hu-dot{display:none}.hu-cta{width:100%;text-align:center}}
 @media (prefers-reduced-motion:reduce){.hu-dot{animation:none}}
 .qchips{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-top:44px;max-width:760px}
+#respostas .qchips{margin:4px 0 2px}
+#respostas .qchips span{background:var(--surface);border-color:var(--line);color:var(--ink);box-shadow:0 1px 2px rgba(16,24,40,.05)}
+.hero-urg{margin-top:40px!important}
 .qchips span{display:inline-flex;align-items:center;gap:8px;padding:9px 16px 9px 12px;border-radius:999px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);color:#D6DCE5;font-size:.92rem;font-weight:500}
 .qchips span::before{content:"";width:8px;height:8px;border-radius:50%;background:#F3B451;box-shadow:0 0 0 3px rgba(243,180,81,.18)}
 @media (max-width:560px){.hero{padding:64px 0 72px}.qchips{margin-top:32px}.qchips span{font-size:.86rem}}
@@ -1480,12 +1483,6 @@ body[data-view="inicio"] .hero{padding-top:160px}
           <button type="button" class="btn big ghost-light" id="heroEx">Ver um exemplo</button>
         </div>
         <ul class="hero-trust"><li>Grátis</li><li>Sem cadastro</li><li>Seus dados não são enviados a ninguém</li></ul>
-        <div class="qchips" aria-label="Perguntas que o Raio-X responde">
-          <span>“Quanto o boleto vai subir?”</span>
-          <span>“O caixa aguenta uma perda total?”</span>
-          <span>“A associação sobrevive com o repasse?”</span>
-          <span>“A diretoria responde se faltar dinheiro?”</span>
-        </div>
         <button type="button" class="hero-urg" data-ajuda="capa: prazo"><span class="hu-dot" aria-hidden="true"></span><span class="hu-txt"><b id="heroFalta">Faltam 19 meses.</b> Não deixe para a última hora, pode não dar tempo.</span><span class="hu-cta">Fale com um especialista <span aria-hidden="true">→</span></span></button>
         <p class="hero-resume" id="heroResume" hidden>Você já começou um diagnóstico neste aparelho. <a href="#resultado">Ver meu resultado →</a></p>
       </div>
@@ -1497,6 +1494,12 @@ body[data-view="inicio"] .hero{padding-top:160px}
     <div class="lp-head rv">
       <p class="pill-k">O que você recebe</p>
       <h2>Três respostas que a diretoria precisa ter antes de 2028</h2>
+      <div class="qchips" aria-label="Perguntas que o Raio-X responde">
+        <span>“Quanto o boleto vai subir?”</span>
+        <span>“O caixa aguenta uma perda total?”</span>
+        <span>“A associação sobrevive com o repasse?”</span>
+        <span>“A diretoria responde se faltar dinheiro?”</span>
+      </div>
       <p>Tudo calculado com os números da sua associação. Abaixo, o exemplo de uma associação com faturamento de R$ 120 mil por mês.</p>
     </div>
     <div class="bento">
