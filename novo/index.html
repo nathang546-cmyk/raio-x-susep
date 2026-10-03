@@ -1230,6 +1230,37 @@ body[data-view="inicio"] .hero{padding-top:160px}
 .rh-acts{display:flex;flex-wrap:wrap;gap:10px}
 .rh-verdict{font-size:clamp(1.05rem,1.6vw,1.2rem);line-height:1.5;max-width:70ch;color:var(--ink)}
 .rh-verdict a{color:var(--accent);font-weight:700}
+.hm{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:14px;align-items:stretch}
+.hm-c{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:20px 22px;display:grid;gap:10px;align-content:start}
+.hm-meta{border:1.5px solid var(--accent);box-shadow:0 0 0 4px var(--accent-soft)}
+.hm-c h3{margin:0}
+.hm-tag{display:inline-flex;padding:5px 12px;border-radius:999px;font:700 .78rem var(--f-display);text-transform:uppercase;letter-spacing:.08em;background:var(--sunk);color:var(--muted)}
+.hm-meta .hm-tag{background:var(--accent);color:var(--accent-ink)}
+.hm-c ul{list-style:none;margin:0;padding:0;display:grid}
+.hm-l{display:flex;justify-content:space-between;align-items:center;gap:12px;min-height:62px;padding:10px 0;border-top:1px solid var(--line)}
+.hm-l:first-child{border-top:0}
+.hm-r{color:var(--muted);font-size:.95rem}
+.hm-v{text-align:right;font:700 1.15rem var(--f-display);display:grid;justify-items:end;gap:1px}
+.hm-vv{display:inline-flex;align-items:center;white-space:nowrap}
+.hm-l{min-height:66px!important}
+.hm-v small{font:500 .8rem var(--f-body);color:var(--muted)}
+.hm-hoje .hm-l.falta .hm-v{color:var(--bad)}
+.hm-hoje .hm-l.ok .hm-v{color:var(--ok)}
+.hm-ok{font-style:normal;display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;background:var(--ok-soft);color:var(--ok);font-size:.75rem;margin-right:6px;vertical-align:2px}
+.hm-seta{align-self:center;width:44px;height:44px;border-radius:50%;display:grid;place-items:center;background:var(--accent);color:var(--accent-ink);font:700 1.2rem var(--f-display);box-shadow:0 8px 18px -8px rgba(17,165,148,.7)}
+.hm-como{background:#12131C;color:#AEB6C4;border-radius:20px;padding:18px 22px;display:grid;gap:12px}
+.hm-como-k{font:700 .8rem var(--f-display);text-transform:uppercase;letter-spacing:.08em;color:#39D0B8}
+.hm-como ol{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;counter-reset:hc}
+.hm-como li{counter-increment:hc;display:grid;gap:4px;align-content:start;padding-left:40px;position:relative}
+.hm-como li::before{content:counter(hc);position:absolute;left:0;top:0;width:28px;height:28px;border-radius:9px;display:grid;place-items:center;background:rgba(57,208,184,.16);color:#39D0B8;font:700 .9rem var(--f-display)}
+.hm-como b{color:#FFFFFF;font-size:.98rem;line-height:1.3}
+.hm-como span{font-size:.85rem;line-height:1.4}
+@media (max-width:860px){
+  .hm{grid-template-columns:minmax(0,1fr)}
+  .hm-seta{justify-self:center;transform:rotate(90deg);width:38px;height:38px}
+  .hm-como ol{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:480px){.hm-como ol{grid-template-columns:minmax(0,1fr)}.hm-c{padding:16px}}
 .rkpis{display:grid;gap:16px}
 .rx-hoje{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:20px;align-items:center;border-radius:22px;padding:24px 26px;color:#AEB6C4;background:radial-gradient(700px 300px at 100% 0,rgba(57,208,184,.18),transparent 60%),#12131C}
 .rxh-txt{display:grid;gap:12px;min-width:0}
@@ -2743,66 +2774,55 @@ function renderHead(r){
   } else {
     const verd = r.score >= 75 ? 'A associação está bem encaminhada.' : r.score >= 50 ? 'A associação tem base para chegar lá, mas precisa agir nos próximos meses.' : 'A associação precisa começar agora: do jeito que está, não chega pronta ao prazo.';
     $('rhVerdict').innerHTML = verd + (pr.length ? ` Ponto mais urgente: <b>${pr[0].t.charAt(0).toLowerCase() + pr[0].t.slice(1)}</b>.` : '');
-    // retrato da associação hoje + 4 blocos no estilo da capa
+    // retrato da associação + "Hoje" × "Em 07/05/2028" + "Como chegar"
     const nomeA = ($('nome').value || '').trim() || 'A sua associação';
-    const guarda = r.guardarMes > .5, dif = r.ticketCerto - r.ticket;
+    const guarda = r.guardarMes > .5, dif = r.ticketCerto - r.ticket, N = REG.horizonte;
     const corN = n => n >= 75 ? '#16A06A' : n >= 50 ? '#D99A1E' : '#D9482B';
-    const N = REG.horizonte, W = 320, H = 120, topo = Math.max(r.metaReserva, r.reserva) * 1.12;
-    const px = k => (k / N * W).toFixed(1), py = v => (H - v / topo * H).toFixed(1);
-    const pts = Array.from({length:N + 1}, (_, k) => px(k) + ',' + py(Math.min(r.metaReserva, r.reserva + r.guardarMes * k)));
-    const partes = [['Taxa administrativa', r.admR, '--s-adm'], ['Rateio', r.modelo === 'fixo' ? 0 : r.rateioR, '--s-ev'], ['Estabilização', r.modelo === 'fixo' ? r.estabFixa : r.estabR, '--s-res']];
-    const FZ = fasesPlano(N), NOMES_F = ['Arrumar a casa', 'Acertar o dinheiro e os papéis', 'Profissionalizar', 'Entrar na regra'];
-    const pDocs = r.docsSim / DOCS.length;
+    const resOk = !guarda, mensOk = dif <= .5, papOk = !r.docsFalta.length;
+    const lin = (rot, val, sub, st) => `<li class="hm-l${st ? ' ' + st : ''}"><span class="hm-r">${rot}</span><span class="hm-v"><span class="hm-vv">${val}</span><small>${sub || '&nbsp;'}</small></span></li>`;
+    const ic = okk => okk ? '<i class="hm-ok" aria-label="em dia">✓</i>' : '';
     $('rhKpis').innerHTML = `
       <div class="rx-hoje">
         <div class="rxh-txt">
-          <span class="rxh-k">${esc(nomeA)} hoje</span>
+          <span class="rxh-k">${esc(nomeA)}</span>
           <div class="rxh-chips">
             <span><b>${int(r.placas)}</b> placas</span>
             <span><b>${brlShort(r.receitaMes)}</b> de faturamento por mês</span>
-            <span>mensalidade de <b>${brl(r.ticket, true)}</b></span>
             <span><b>${pct(r.sin, 0)}</b> vai para eventos</span>
             <span><b>${pct(r.inad, 0)}</b> de inadimplência</span>
           </div>
-          <p class="rxh-obj"><b>Objetivo até 07/05/2028:</b> ter <b>${brlShort(r.metaReserva)}</b> de reserva, cobrar em média <b>${brl(r.ticketCerto, true)}</b> por placa, deixar os ${DOCS.length} papéis em dia e assinar com uma administradora autorizada.</p>
         </div>
         <div class="rxh-nota"><span class="ring-big" style="--p:${r.score};--rc:${corN(r.score)}"><b>${r.score}</b><small>de 100</small></span><span class="rxh-st">${r.statusTxt}</span></div>
       </div>
-      <div class="bento rbento">
-        <article class="bx bx-a">
-          <div class="bx-txt"><span class="bx-n">01 · Reserva</span><h3>${guarda ? 'Guardar ' + brlShort(r.guardarMes) + ' por mês' : 'Reserva na meta'}</h3><p>${guarda ? `Para sair de <b>${brlShort(r.reserva)}</b> e chegar a <b>${brlShort(r.metaReserva)}</b> até 07/05/2028, nos ${N} meses que faltam. Dá ${brl(r.guardarMes / (r.pagantes || 1), true)} por placa.` : `A associação já tem ${brlShort(r.reserva)}, o que cobre a meta de ${brlShort(r.metaReserva)}. Agora é manter.`}</p></div>
-          <div class="bx-vis">
-            <div class="bx-big"><b>${brlShort(r.metaReserva)}</b><span>de reserva até 07/05/2028 · hoje ${brlShort(r.reserva)}</span></div>
-            <svg class="area" viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" aria-hidden="true"><defs><linearGradient id="gAreaR" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:var(--accent);stop-opacity:.35"/><stop offset="1" style="stop-color:var(--accent);stop-opacity:0"/></linearGradient></defs><line x1="0" x2="${W}" y1="${py(r.metaReserva)}" y2="${py(r.metaReserva)}" style="stroke:var(--muted)" stroke-width="1.5" stroke-dasharray="5 5" vector-effect="non-scaling-stroke"/><polygon points="0,${H} ${pts.join(' ')} ${W},${H}" fill="url(#gAreaR)"/><polyline points="${pts.join(' ')}" fill="none" style="stroke:var(--accent)" stroke-width="3" stroke-linecap="round" vector-effect="non-scaling-stroke"/></svg>
-            <div class="bx-legend"><span><i class="lg-a"></i>Reserva crescendo</span><span><i class="lg-b"></i>Meta</span></div>
-          </div>
+      <div class="hm">
+        <article class="hm-c hm-hoje">
+          <h3><span class="hm-tag">Hoje</span></h3>
+          <ul>
+            ${lin('Reserva para eventos', brlShort(r.reserva), 'guardada hoje', resOk ? 'ok' : 'falta')}
+            ${lin('Mensalidade média', brl(r.ticket, true), 'cobrada hoje', mensOk ? 'ok' : 'falta')}
+            ${lin('Papéis em dia', r.docsSim + ' de ' + DOCS.length, papOk ? 'tudo em ordem' : r.docsFalta.length + ' pendentes', papOk ? 'ok' : 'falta')}
+            ${lin('Administradora', 'Sem contrato', 'nenhuma autorizada ainda', 'falta')}
+          </ul>
         </article>
-        <article class="bx bx-b">
-          <div class="bx-txt"><span class="bx-n">02 · Mensalidade</span><h3>${dif > .5 ? 'Ajustar ' + brl(dif, true) + ' por placa' : 'Já paga a conta'}</h3><p>Hoje a associação cobra ${brl(r.ticket, true)}. ${dif > .5 ? 'O valor certo, já separado como a SUSEP exige, é este:' : 'Mantenha e separe o boleto nas 3 partes que a SUSEP exige:'}</p></div>
-          <div class="bx-vis">
-            <div class="bx-big"><b>${brl(r.ticketCerto, true)}</b><span>mensalidade média certa</span></div>
-            <div class="stackbar">${partes.filter(p => p[1] > .005).map(p => `<i style="flex:${p[1].toFixed(2)} 1 0;background:var(${p[2]})"></i>`).join('')}</div>
-            <ul class="stack-leg">${partes.map(p => `<li><i style="background:var(${p[2]})"></i>${p[0]}<b>${p[1] > .005 ? brl(p[1], true) : 'R$ 0 · só se faltar'}</b></li>`).join('')}</ul>
-            ${r.ativos.length > 1 ? `<ul class="stack-leg rb-tipos">${r.ativos.map(t => `<li>${t.n}<b>${brl(t.boleto, true)}</b></li>`).join('')}</ul>` : ''}
-          </div>
+        <span class="hm-seta" aria-hidden="true">→</span>
+        <article class="hm-c hm-meta">
+          <h3><span class="hm-tag">Em 07/05/2028</span></h3>
+          <ul>
+            ${lin('Reserva para eventos', ic(resOk) + brlShort(r.metaReserva), resOk ? 'já atingida' : 'faltam ' + brlShort(r.faltaReserva))}
+            ${lin('Mensalidade média', ic(mensOk) + (mensOk ? brl(r.ticket, true) : brl(r.ticketCerto, true)), mensOk ? 'já cobre o mínimo de ' + brl(r.ticketCerto, true) : 'mais ' + brl(dif, true) + ' por placa')}
+            ${lin('Papéis em dia', ic(papOk) + DOCS.length + ' de ' + DOCS.length, papOk ? 'tudo em ordem' : 'faltam ' + r.docsFalta.length)}
+            ${lin('Administradora', 'Contrato assinado', 'com empresa autorizada pela SUSEP')}
+          </ul>
         </article>
-        <article class="bx bx-c">
-          <div class="bx-txt"><span class="bx-n">03 · Plano</span><h3>${N} meses, 4 fases</h3><p>O caminho até 07/05/2028. As tarefas de cada fase estão no plano mais abaixo.</p></div>
-          <ol class="phases">${FZ.map((f, i) => `<li class="${i === 0 ? 'ok' : ''}"><span>${mesesTxt(f.a, f.b)}</span><b>${NOMES_F[i]}</b></li>`).join('')}</ol>
-          <a class="rb-link" href="#plano">Ver as tarefas →</a>
-        </article>
-        <article class="bx bx-d">
-          <div class="bx-txt"><span class="bx-n">04 · Organização</span><h3>${r.docsFalta.length ? r.docsFalta.length + ' papéis para resolver' : 'Papéis em dia'}</h3><p>O que a administradora e a SUSEP vão pedir. ${r.docsFalta.length ? 'Os pendentes já viraram tarefas no plano.' : 'Mantenha tudo atualizado.'}</p></div>
-          <div class="bx-score">
-            <span class="ring-big" style="--p:${Math.round(pDocs * 100)};--rc:${corN(pDocs * 100)}"><b>${r.docsSim}</b><small>de ${DOCS.length}</small></span>
-            <ul class="prio rb-pend">${r.docsFalta.slice(0, 3).map(d => `<li>${d.t}</li>`).join('') || '<li>Nenhuma pendência</li>'}</ul>
-          </div>
-          <div class="bx-stats">
-            <div><span>Vai para eventos</span><b>${pct(r.sin, 0)}</b></div>
-            <div><span>Inadimplência</span><b>${pct(r.inad, 0)}</b></div>
-            <div><span>Qualidade da carteira</span><b>${isFinite(r.qb) ? r.qb + '/100' : '–'}</b></div>
-          </div>
-        </article>
+      </div>
+      <div class="hm-como">
+        <span class="hm-como-k">Como chegar</span>
+        <ol>
+          <li><b>${guarda ? 'Guardar ' + brlShort(r.guardarMes) + ' por mês' : 'Manter a reserva'}</b><span>${guarda ? brl(r.guardarMes / (r.pagantes || 1), true) + ' por placa, nos ' + N + ' meses que faltam' : 'Ela já cobre a meta'}</span></li>
+          <li><b>${mensOk ? 'Separar o boleto em 3 partes' : 'Ajustar a mensalidade'}</b><span>${mensOk ? 'Taxa, rateio e estabilização, como a SUSEP exige' : 'Mais ' + brl(dif, true) + ' por placa, conforme o veículo'}</span></li>
+          <li><b>${papOk ? 'Manter os papéis em dia' : 'Resolver ' + r.docsFalta.length + ' papéis'}</b><span>${papOk ? 'Revisar a cada 6 meses' : 'Já estão no plano, em ordem'}</span></li>
+          <li><b>Escolher a administradora</b><span>Comparar propostas quando saírem as autorizações</span></li>
+        </ol>
       </div>`;
     // prioridades com o porquê
     // por onde começar: as 3 primeiras prioridades em fluxo, terminando na meta
