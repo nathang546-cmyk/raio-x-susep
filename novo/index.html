@@ -1875,7 +1875,8 @@ body[data-view="inicio"] .hero{padding-top:160px}
     <div class="rkpis" id="rhKpis"></div>
     <div class="rh-acts">
       <a class="btn small btn-wa" id="rhWa" href="https://wa.me/" target="_blank" rel="noopener">Mandar o resumo no WhatsApp</a>
-      <button type="button" class="btn small ghost" id="rhPrint">Baixar relatório em imagem</button>
+      <button type="button" class="btn small ghost" id="rhPrint">Baixar relatório em PDF</button>
+      <button type="button" class="btn small ghost" id="rhImg">Baixar em imagem</button>
       <a class="btn small ghost" href="#diagnostico">Editar respostas</a>
     </div>
   </section>
@@ -4082,11 +4083,12 @@ $('stNext').addEventListener('click', () => passo < STEPS.length ? showStep(pass
 })();
 $('heroEx').addEventListener('click', () => { $('btnExemplo').click(); irPara('resultado'); });
 // relatório do resultado em imagem (1240 x 1460), enxuto: frase, 4 números, boleto novo, próximos passos e contato
-async function resumoImagem(){
+async function desenhaRelatorio(escala){
   const r = R; if(!r || r.incompleto) return null;
-  try{ await Promise.all(['700 48px Poppins', '600 28px Poppins', '400 26px "Public Sans"', '600 26px "Public Sans"', '700 26px "Public Sans"'].map(f => document.fonts.load(f))); }catch(e){}
-  const W = 1240, H = 1460, M = 90, CW = W - 2 * M, c = document.createElement('canvas'); c.width = W; c.height = H;
-  const g = c.getContext('2d');
+  const espera = (pr, ms) => Promise.race([pr, new Promise(ok => setTimeout(ok, ms))]);
+  try{ await espera(Promise.all(['700 48px Poppins', '600 28px Poppins', '400 26px "Public Sans"', '600 26px "Public Sans"', '700 26px "Public Sans"'].map(f => document.fonts.load(f))), 1500); }catch(e){}
+  const W = 1240, H = 1460, M = 90, CW = W - 2 * M, c = document.createElement('canvas'); c.width = W * escala; c.height = H * escala;
+  const g = c.getContext('2d'); g.scale(escala, escala);
   const TINTA = '#12131C', CINZA = '#5B6472', CLARO = '#8C94A3', LINHA = '#E3E8EE', VERDE = '#0B7F72', VERDE_C = '#39D0B8';
   const fP = (w, s) => `${w} ${s}px Poppins, "Segoe UI", sans-serif`, fB = (w, s) => `${w} ${s}px "Public Sans", "Segoe UI", sans-serif`;
   const espaco = v => { try{ g.letterSpacing = v; }catch(e){} };
@@ -4100,7 +4102,7 @@ async function resumoImagem(){
   };
   const rotulo = (s, x, y, cor) => { espaco('2.5px'); txt(s, x, y, fB(700, 17), cor || CLARO); espaco('0px'); };
   const secao = (s, y) => { espaco('3px'); const w = txt(s, M, y, fB(700, 18), VERDE); espaco('0px'); g.fillStyle = LINHA; g.fillRect(M + w + 24, y - 6, CW - w - 24, 2); };
-  const logo = async sel => { const el = document.querySelector(sel); if(!el) return null; const im = new Image(); im.src = el.src; try{ await im.decode(); }catch(e){ return null; } return im; };
+  const logo = async sel => { const el = document.querySelector(sel); if(!el) return null; const im = new Image(); im.src = el.src; try{ await espera(im.decode(), 1500); }catch(e){} return im.complete && im.naturalWidth ? im : null; };
   const [logoB, logoC] = await Promise.all([logo('.gh-logo'), logo('.gh-logo-cor')]);
   const desenhaLogo = (im, xDir, y, h) => { if(!im) return; const w = im.naturalWidth * h / im.naturalHeight; g.drawImage(im, xDir - w, y, w, h); };
 
@@ -4182,16 +4184,44 @@ async function resumoImagem(){
   const w1 = txt('WhatsApp (11) 5178-5642', M, yf + 110, fB(700, 22), VERDE_C);
   txt('·   gestihub.com.br', M + w1 + 14, yf + 110, fB(600, 22), '#FFFFFF');
   desenhaLogo(logoB, W - M, yf + 58, 40);
-  return new Promise(ok => c.toBlob(b => ok(b), 'image/png'));
+  return c;
 }
-$('rhPrint').addEventListener('click', async () => {
-  const b = $('rhPrint'), antes = b.textContent;
-  b.disabled = true; b.textContent = 'Gerando a imagem…';
+// imagem pronta para o WhatsApp
+async function resumoImagem(){ const c = await desenhaRelatorio(1); return c && new Promise(ok => c.toBlob(b => ok(b), 'image/png')); }
+// PDF de uma página com a mesma arte, em resolução dobrada (sem biblioteca: a página só leva a imagem)
+function pdfDeJpeg(jpg, wPx, hPx){
+  const wPt = 595.28, hPt = +(wPt * hPx / wPx).toFixed(2), enc = new TextEncoder(), partes = [], offs = [];
+  let tam = 0;
+  const poe = x => { const b = typeof x === 'string' ? enc.encode(x) : x; partes.push(b); tam += b.length; };
+  const obj = (n, corpo) => { offs[n] = tam; poe(n + ' 0 obj\n'); corpo(); poe('\nendobj\n'); };
+  poe('%PDF-1.4\n%âãÏÓ\n');
+  obj(1, () => poe('<< /Type /Catalog /Pages 2 0 R >>'));
+  obj(2, () => poe('<< /Type /Pages /Kids [3 0 R] /Count 1 >>'));
+  obj(3, () => poe(`<< /Type /Page /Parent 2 0 R /MediaBox [0 0 ${wPt} ${hPt}] /Resources << /XObject << /Im0 4 0 R >> >> /Contents 5 0 R >>`));
+  obj(4, () => { poe(`<< /Type /XObject /Subtype /Image /Width ${wPx} /Height ${hPx} /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length ${jpg.length} >>\nstream\n`); poe(jpg); poe('\nendstream'); });
+  const desenho = `q ${wPt} 0 0 ${hPt} 0 0 cm /Im0 Do Q`;
+  obj(5, () => poe(`<< /Length ${desenho.length} >>\nstream\n${desenho}\nendstream`));
+  obj(6, () => poe('<< /Title (Raio-X SUSEP - Relatorio de adequacao) /Producer (Raio-X SUSEP por GestiHub) >>'));
+  const xref = tam;
+  let x = 'xref\n0 7\n0000000000 65535 f \n';
+  for(let i = 1; i <= 6; i++) x += String(offs[i]).padStart(10, '0') + ' 00000 n \n';
+  poe(x + `trailer\n<< /Size 7 /Root 1 0 R /Info 6 0 R >>\nstartxref\n${xref}\n%%EOF\n`);
+  return new Blob(partes, {type: 'application/pdf'});
+}
+async function resumoPdf(){
+  const c = await desenhaRelatorio(2); if(!c) return null;
+  const jpg = await new Promise(ok => c.toBlob(b => ok(b), 'image/jpeg', .92));
+  return pdfDeJpeg(new Uint8Array(await jpg.arrayBuffer()), c.width, c.height);
+}
+// no celular abre o compartilhar (dá para mandar direto no WhatsApp); no computador baixa o arquivo
+async function entregarRelatorio(botao, gera, ext, tipo, pronto){
+  const antes = botao.textContent;
+  botao.disabled = true; botao.textContent = 'Gerando…';
   try{
-    const blob = await resumoImagem(); if(!blob) throw new Error('sem resultado');
+    const blob = await gera(); if(!blob) throw new Error('sem resultado');
     const nomeA = ($('nome').value || '').trim() || 'associacao';
-    const arq = 'raio-x-susep-' + nomeA.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') + '.png';
-    const file = new File([blob], arq, {type: 'image/png'});
+    const arq = 'raio-x-susep-' + nomeA.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') + '.' + ext;
+    const file = new File([blob], arq, {type: tipo});
     const toque = window.matchMedia && matchMedia('(pointer: coarse)').matches;
     if(toque && navigator.canShare && navigator.canShare({files: [file]})){
       try{ await navigator.share({files: [file], title: 'Raio-X SUSEP'}); }catch(e){}
@@ -4200,10 +4230,12 @@ $('rhPrint').addEventListener('click', async () => {
       document.body.appendChild(a); a.click();
       setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 1500);
     }
-    b.textContent = 'Imagem pronta ✓';
-  }catch(e){ b.textContent = 'Não deu para gerar. Tente de novo'; }
-  setTimeout(() => { b.textContent = antes; b.disabled = false; }, 2500);
-});
+    botao.textContent = pronto;
+  }catch(e){ botao.textContent = 'Não deu para gerar. Tente de novo'; }
+  setTimeout(() => { botao.textContent = antes; botao.disabled = false; }, 2500);
+}
+$('rhPrint').addEventListener('click', () => entregarRelatorio($('rhPrint'), resumoPdf, 'pdf', 'application/pdf', 'PDF pronto ✓'));
+$('rhImg').addEventListener('click', () => entregarRelatorio($('rhImg'), resumoImagem, 'png', 'image/png', 'Imagem pronta ✓'));
 // o caminho agora fica no plano, fora do formulário
 document.querySelectorAll('input[name="caminho"]').forEach(x => x.addEventListener('change', () => { markMine(); render(); }));
 // quem sai do exemplo para calcular começa com o formulário vazio
