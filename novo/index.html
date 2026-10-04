@@ -1531,9 +1531,9 @@ body[data-view="inicio"] .hero{padding-top:160px}
     </div>
     <div class="bento">
       <article class="bx bx-a rv">
-        <div class="bx-txt"><span class="bx-n">01</span><p class="bx-q">“O caixa aguenta uma perda total?”</p><h3>Quanto guardar</h3><p>O mínimo que a SUSEP exige e o recomendado para pagar uma perda total sem rateio extra. E quanto separar por mês até 07/05/2028.</p></div>
+        <div class="bx-txt"><span class="bx-n">01</span><p class="bx-q">“O caixa aguenta uma perda total?”</p><h3>Quanto guardar</h3><p>Quanto ter guardado até 07/05/2028 para pagar os meses ruins e uma perda total sem rateio extra. E quanto separar por mês.</p></div>
         <div class="bx-vis">
-          <div class="bx-big"><b id="bxMeta">R$ 263 mil</b><span>recomendado até 2028 · a SUSEP exige <b id="bxMin">R$ 24 mil</b></span></div>
+          <div class="bx-big"><b id="bxMeta">R$ 263 mil</b><span>de reserva até 2028</span></div>
           <svg class="area" id="bxArea" viewBox="0 0 320 120" preserveAspectRatio="none" aria-hidden="true"></svg>
           <div class="bx-legend"><span><i class="lg-a"></i>Reserva guardando <b id="bxGuardar">R$ 10 mil</b>/mês</span><span><i class="lg-b"></i>Meta</span></div>
         </div>
@@ -1609,7 +1609,7 @@ body[data-view="inicio"] .hero{padding-top:160px}
     <div class="faq rv">
       <details><summary>O que muda para as associações de proteção veicular?</summary><p>A Lei Complementar 213/2025 colocou a proteção veicular sob a fiscalização da SUSEP. As associações cadastradas precisam passar a operar com uma administradora autorizada. O dinheiro dos associados fica num grupo com CNPJ próprio, separado da associação.</p></details>
       <details><summary>Até quando a associação tem que se adequar?</summary><p>O prazo para apresentar o contrato com uma administradora autorizada é 07/05/2028 (Resolução CNSP 491/2026). Se as primeiras autorizações saírem tarde, o prazo passa a ser 6 meses depois delas. A opção de encerrar as atividades vence por volta de 1º/11/2026.</p></details>
-      <details><summary>Por que a associação precisa ter reserva?</summary><p>A SUSEP exige guardar o valor dos eventos já devidos e dos que aconteceram e ainda não foram avisados. Isso é o mínimo. O recomendado é ter também o suficiente para pagar uma perda total da maior cobertura sem rateio extra, até porque as administradoras podem pedir mais que o mínimo para receber o grupo. E no dia da mudança, os eventos antigos ainda precisam ser pagos com o dinheiro da associação.</p></details>
+      <details><summary>Por que a associação precisa ter reserva?</summary><p>Para nunca precisar de rateio extra. O mínimo da SUSEP só cobre os eventos já devidos; com só ele, uma perda total vira centenas de reais por placa. A reserva certa paga os meses ruins e uma perda total da maior cobertura, e as administradoras devem pedir mais que o mínimo para receber o grupo.</p></details>
       <details><summary>O boleto vai mudar todo mês?</summary><p>Depende do contrato. Se a estabilização ficar perto do custo médio dos eventos, o boleto fica fixo e o rateio só entra quando a reserva não dá conta. A ferramenta mostra os dois jeitos lado a lado.</p></details>
       <details><summary>Onde ficam os meus dados?</summary><p>Só no navegador do seu aparelho. Nada é enviado para a GestiHub nem para ninguém, a não ser que você mesmo mande pelo WhatsApp.</p></details>
       <details><summary>A ferramenta substitui atuário, advogado ou contador?</summary><p>Não. Ela organiza os números e mostra o caminho. O cálculo oficial do rateio é feito pela administradora, com o atuário.</p></details>
@@ -1660,7 +1660,7 @@ body[data-view="inicio"] .hero{padding-top:160px}
         </div>
         <div class="field">
           <label for="fipeMax">Maior cobertura (FIPE do veículo mais caro)</label>
-          <p class="hint">A reserva recomendada aguenta uma perda total dele sem rateio extra.</p>
+          <p class="hint">A reserva vai aguentar uma perda total dele sem rateio extra.</p>
           <div class="input"><span class="pre">R$</span><input id="fipeMax" inputmode="decimal" data-kind="money"></div>
         </div>
         <div class="field wide">
@@ -2501,8 +2501,8 @@ function calc(s){
   r.sobraMes = isFinite(r.fundoMes) && isFinite(r.eventosMes) ? r.fundoMes - r.eventosMes : NaN;
   if(isFinite(r.fundoMes) && r.mesesN){ r.mesesAcima = r.meses.filter(v => isFinite(v) && v * r.liqFator > r.fundoMes).length; }
 
-  // reserva: o exigido pela SUSEP (eventos devidos + ainda não avisados) + o recomendado para o mês ruim:
-  // o maior entre um colchão de dois meses ruins e uma perda total da maior cobertura (uma PT é o que faz o mês ruim, então não soma).
+  // reserva: o exigido pela SUSEP (eventos devidos + ainda não avisados) + colchão para meses ruins + uma perda total da maior cobertura.
+  // O objetivo é nunca precisar de rateio extra: com só o exigido, uma perda total vira centenas de reais por placa.
   // A mensalidade de cada mês já paga os eventos de um mês normal; a reserva só cobre o que passa disso.
   r.fatorOsc = !ok(r.placas) ? .5 : r.placas < 800 ? .75 : r.placas < 3000 ? .5 : .35;   // carteira menor oscila mais
   if(isFinite(r.eventosMes)){
@@ -2513,7 +2513,7 @@ function calc(s){
     r.colchao = r.colchaoPorPior ? Math.max(porPior, .25 * r.eventosMes) : porPorte;
     r.ptRes = ok(r.fipeMax) ? r.fipeMax : 0;
     r.minReserva = r.pendentes + r.naoAvisados;
-    r.grave = Math.max(r.colchao, r.ptRes);
+    r.grave = r.colchao + r.ptRes;
     r.metaReserva = r.minReserva + r.grave;
     r.faltaReserva = Math.max(0, r.metaReserva - r.reserva);
     r.guardarMes = r.faltaReserva / REG.horizonte;
@@ -2902,12 +2902,6 @@ function renderHead(r){
           </ul>
         </article>
       </div>
-      <div class="hm-faixa">
-        <span class="hf-k">Reserva</span>
-        <span><small>Exigido pela SUSEP</small><b>${brlShort(r.minReserva)}</b></span>
-        <span class="hf-rec"><small>Recomendado</small><b>${brlShort(r.metaReserva)}</b><em>A administradora pode pedir mais que o mínimo</em></span>
-        <span><small>Máximo da regra, após 2028</small><b>${isFinite(r.maxReserva) ? brlShort(r.maxReserva) : '–'}</b>${r.passaTeto ? '<em>Acima disso: limite de retenção e seguro</em>' : ''}</span>
-      </div>
       <div class="hm-como">
         <span class="hm-como-k">Como chegar</span>
         <ol>
@@ -3107,18 +3101,19 @@ function renderVisao(r){
     const comp = [
       ['Exigido pela SUSEP: eventos que já se deve', r.pendentes],
       ['Exigido pela SUSEP: eventos que já aconteceram e ainda não foram avisados (estimativa: 10 dias)', r.naoAvisados],
-      [r.ptRes >= r.colchao ? 'Recomendado: uma perda total da maior cobertura, paga sem rateio extra' : 'Recomendado: colchão para dois meses ruins seguidos', r.grave]
+      ['Colchão para meses ruins', r.colchao],
+      ['Uma perda total da maior cobertura, paga sem rateio extra', r.ptRes]
     ];
     const mx = Math.max(r.metaReserva, r.reserva);
     vr.innerHTML = `<div><h3>Quanto precisa ter guardado, e por quê</h3></div>
-      <p class="read">A SUSEP exige <b>${brlShort(r.minReserva)}</b>. O recomendado é <b>${brlShort(r.metaReserva)}</b>, porque a administradora pode pedir mais que o mínimo para receber o grupo. Hoje tem <b>${brlShort(r.reserva)}</b>, que é ${pct(r.reserva / r.metaReserva, 0)} do recomendado.</p>
+      <p class="read">Meta de <b>${brlShort(r.metaReserva)}</b> até 07/05/2028, para pagar meses ruins e uma perda total sem rateio extra. Hoje tem <b>${brlShort(r.reserva)}</b>, que é ${pct(r.reserva / r.metaReserva, 0)} da meta.</p>
       <p class="note"><b>Colchão para meses ruins.</b> A mensalidade de cada mês já paga um mês normal, então o colchão cobre só o que passa da média. ${r.colchaoPorPior ? 'Pelos seus 12 meses: duas vezes o quanto o seu pior mês passou da média.' : `Sem os 12 meses preenchidos, a conta usa ${pct(r.fatorOsc, 0)} de um mês de eventos, a oscilação comum numa carteira ${r.placas < 800 ? 'pequena' : r.placas < 3000 ? 'média' : 'grande'}. Preencha mês a mês para um valor mais preciso.`}</p>
       <div class="rows">
         ${comp.map(c => rowbar(c[0], c[1] / mx, brlShort(c[1]), '--s-res', `${brl(c[1])}\n${c[0]}`)).join('')}
-        ${rowbar('<b>Meta recomendada</b>', r.metaReserva / mx, `<b>${brlShort(r.metaReserva)}</b>`, '--s-res')}
+        ${rowbar('<b>Meta</b>', r.metaReserva / mx, `<b>${brlShort(r.metaReserva)}</b>`, '--s-res')}
         ${rowbar('<b>Guardado hoje</b>', r.reserva / mx, `<b>${brlShort(r.reserva)}</b>`, '--s-mute')}
       </div>
-      <details class="more"><summary>Por que guardar esse valor?</summary><div><p class="note">O mínimo da SUSEP só cobre os eventos que já se deve. Uma perda total da maior cobertura não cabe nele, e nenhum associado aceita um rateio extra de centenas de reais. Por isso o recomendado guarda o bastante para pagar uma perda total, ou dois meses ruins seguidos, direto da reserva. As administradoras podem exigir mais que o mínimo para receber o grupo, e no dia da mudança os eventos antigos ainda precisam ser pagos com o dinheiro antigo.</p>
+      <details class="more"><summary>Por que guardar esse valor?</summary><div><p class="note">O mínimo da SUSEP só cobre os eventos que já se deve. Com só ele, uma perda total vira um rateio extra de centenas de reais por placa, e associado sai da associação. Por isso a meta guarda o bastante para pagar os meses ruins e uma perda total direto da reserva. As administradoras devem pedir mais que o mínimo para receber o grupo, e no dia da mudança os eventos antigos ainda precisam ser pagos com o dinheiro antigo.</p>
       ${r.passaTeto ? `<p class="note"><b>Atenção para depois da mudança:</b> na regra nova, o patrimônio do grupo não pode passar de 3 meses de arrecadação do grupo (para vocês, uns ${brlShort(r.tetoG)}). Uma perda total da maior cobertura passa disso, então a parte de cima vai precisar de limite de retenção e seguro, negociados com a administradora. Até mudar, guardar o valor cheio é o que protege.</p>` : ''}</div></details>`;
   } else vr.innerHTML = '<div><h3>Quanto precisa ter guardado, e por quê</h3></div><div class="empty">Preencha os passos 1 a 4.</div>';
 }
@@ -3137,7 +3132,7 @@ function renderCards(r){
     isFinite(r.difTicket) && r.difTicket > .5 ? 'Aprove o reajuste em assembleia e avise os associados com 30 dias. Teste valores menores no simulador.' : ''));
   C.push(card(r.tRes, gt('reserva', 'Reserva'), brlShort(r.reserva) + (isFinite(r.metaReserva) ? ` <small>de ${brlShort(r.metaReserva)}</small>` : ''),
     isFinite(r.guardarMes) ? (r.guardarMes > 0 ? `Guardar ${brlShort(r.guardarMes)} por mês, por ${REG.horizonte} meses.` : 'Meta atingida.') : 'Falta preencher eventos e arrecadação.',
-    isFinite(r.metaReserva) ? `Hoje o dinheiro livre cobre ${dec1(r.mesesCobertos)} mês(es) de eventos. A SUSEP exige os eventos devidos e os ainda não avisados. O recomendado soma a isso uma perda total da maior cobertura ou dois meses ruins, o que for maior.` : '',
+    isFinite(r.metaReserva) ? `Hoje o dinheiro livre cobre ${dec1(r.mesesCobertos)} mês(es) de eventos. A meta soma os eventos devidos, os ainda não avisados, um colchão para meses ruins e uma perda total da maior cobertura, para nunca precisar de rateio extra.` : '',
     isFinite(r.guardarMes) && r.guardarMes > 0 ? 'Transferência automática para uma conta separada, todo mês, sem mexer.' : '',
     `<div class="bar" aria-hidden="true"><i style="width:${isFinite(r.coberturaRes)?Math.round(r.coberturaRes*100):0}%"></i></div>`));
   C.push(card(r.tInad, gt('inadimplencia', 'Inadimplência'), pct(r.inad,0),
@@ -4030,7 +4025,6 @@ $('stNext').addEventListener('click', () => passo < STEPS.length ? showStep(pass
     $('bxRing').style.setProperty('--p', x.score); $('bxRing').style.setProperty('--rc', corNota(x.score));
     // 01: reserva crescendo até a meta
     $('bxMeta').textContent = brlShort(x.metaReserva);
-    $('bxMin').textContent = brlShort(x.minReserva);
     $('bxGuardar').textContent = brlShort(x.guardarMes);
     const N = REG.horizonte, W = 320, H = 120, top = x.metaReserva * 1.12;
     const px = k => (k / N * W).toFixed(1), py = v => (H - v / top * H).toFixed(1);
