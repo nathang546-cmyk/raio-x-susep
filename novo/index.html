@@ -1050,6 +1050,19 @@ body[data-view="inicio"] .fab-help{display:none!important}
 .bx-q{display:flex;align-items:flex-start;gap:8px;margin:0;font-weight:600;font-style:italic;color:var(--ink);font-size:.95rem}
 .bx-q::before{content:"";flex:none;width:8px;height:8px;margin-top:.45em;border-radius:50%;background:#F3B451;box-shadow:0 0 0 3px rgba(243,180,81,.18)}
 @media (max-width:560px){.hero-q{font-size:.85rem}}
+.exsize{display:inline-flex;align-items:center;gap:4px;padding:4px;border-radius:999px;background:var(--surface);border:1px solid var(--line);box-shadow:0 1px 2px rgba(16,24,40,.05)}
+.exsize button{border:0;background:transparent;font:700 .95rem var(--f-display);color:var(--muted);padding:9px 18px;border-radius:999px;cursor:pointer;transition:background .2s,color .2s}
+.exsize button:hover{color:var(--ink);background:var(--sunk)}
+.exsize button[aria-checked="true"]{background:var(--accent);color:#FFFFFF;box-shadow:0 6px 14px -8px rgba(17,165,148,.8)}
+.exsize>span{font-size:.88rem;color:var(--muted);padding:0 12px 0 6px}
+.exsize-sub{font-size:.92rem!important}
+.exsize-sub b{color:var(--ink)}
+.rh-ex .exsize{box-shadow:none;background:var(--bg)}
+.rh-ex .exsize button{padding:6px 12px;font-size:.85rem}
+.rh-ex .rh-ex-txt{flex:0 1 auto;min-width:0}
+.rh-ex-txt.rh-ex-fat{flex:0 1 auto}
+.rh-ex-fat b{color:var(--ink)}
+@media (max-width:560px){.exsize button{padding:8px 11px;font-size:.88rem}.exsize>span{padding:0 8px 0 2px;font-size:.8rem}.rh-ex .exsize{order:2;width:100%;justify-content:space-between}.rh-ex-fat{order:3}.rh-ex .btn{order:4;width:100%;justify-content:center}}
 .qchips{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-top:44px;max-width:760px}
 #respostas .qchips{margin:4px 0 2px}
 #respostas .qchips span{background:var(--surface);border-color:var(--line);color:var(--ink);box-shadow:0 1px 2px rgba(16,24,40,.05)}
@@ -1487,7 +1500,7 @@ body[data-view="inicio"] .hero{padding-top:160px}
         <h1>Sua associação está pronta para a <span class="grad">SUSEP</span>?</h1>
         <p class="hero-lede">Descubra em 5 minutos onde a sua associação está exposta e o que fazer até <b>07/05/2028</b>.</p>
         <div class="hero-ctas">
-          <a class="btn big btn-glow" href="#diagnostico" id="heroGo">Calcular agora <span aria-hidden="true">→</span></a>
+          <a class="btn big btn-glow" href="#diagnostico" id="heroGo">Simular agora <span aria-hidden="true">→</span></a>
           <button type="button" class="btn big ghost-light" id="heroEx">Ver um exemplo</button>
         </div>
         <ul class="hero-trust"><li>Grátis</li><li>Sem cadastro</li><li>Seus dados não são enviados a ninguém</li></ul>
@@ -1502,7 +1515,9 @@ body[data-view="inicio"] .hero{padding-top:160px}
     <div class="lp-head rv">
       <p class="pill-k">O que você recebe</p>
       <h2>As respostas que a diretoria precisa ter antes de 2028</h2>
-      <p>Tudo calculado com os números da sua associação. Abaixo, o exemplo de uma associação com faturamento de R$ 120 mil por mês.</p>
+      <p>Tudo calculado com os números da sua associação. Escolha um exemplo do tamanho da sua:</p>
+      <div class="exsize" role="radiogroup" aria-label="Tamanho da associação do exemplo" data-exsize="capa"><button type="button" role="radio" data-n="500" aria-checked="false">500</button><button type="button" role="radio" data-n="1000" aria-checked="true">1.000</button><button type="button" role="radio" data-n="2000" aria-checked="false">2.000</button><button type="button" role="radio" data-n="5000" aria-checked="false">5.000</button><span>placas</span></div>
+      <p class="exsize-sub">Associação com faturamento de <b class="exFat">R$ 128 mil</b> por mês, na mesma proporção em todos os tamanhos.</p>
     </div>
     <div class="bento">
       <article class="bx bx-a rv">
@@ -1543,7 +1558,7 @@ body[data-view="inicio"] .hero{padding-top:160px}
         </div>
       </article>
     </div>
-    <div class="lp-cta rv"><a class="btn big" href="#diagnostico">Calcular com os números da minha associação →</a></div>
+    <div class="lp-cta rv"><a class="btn big" href="#diagnostico">Simular com os números da minha associação →</a></div>
   </section>
 
   <section class="lp-dark">
@@ -1597,7 +1612,7 @@ body[data-view="inicio"] .hero{padding-top:160px}
       <img src="GHLOGO" alt="GestiHub" width="94" height="16">
       <h2>Escolha, não seja escolhido.</h2>
       <p>Associação com os números em ordem compara propostas e fica com a melhor. Em 5 minutos você sabe quanto precisa guardar.</p>
-      <div class="cta-btns center"><a class="btn big btn-glow" href="#diagnostico">Calcular agora →</a><button type="button" class="btn big ghost-light" data-ajuda="capa do site">Falar com especialista</button></div>
+      <div class="cta-btns center"><a class="btn big btn-glow" href="#diagnostico">Simular agora →</a><button type="button" class="btn big ghost-light" data-ajuda="capa do site">Falar com especialista</button></div>
     </div>
   </section>
 </div>
@@ -1833,7 +1848,7 @@ body[data-view="inicio"] .hero{padding-top:160px}
 
 <div class="wrap results view" id="view-resultado" data-view="resultado" hidden>
   <section class="rhead" id="resultado-topo">
-    <div class="rh-ex" id="rhEx" hidden><span class="rh-ex-tag">Exemplo</span><span class="rh-ex-txt">Associação fictícia, com faturamento de R$ 120 mil por mês.</span><a class="btn small" href="#diagnostico" id="rhMeus">Calcular com os meus números →</a></div>
+    <div class="rh-ex" id="rhEx" hidden><span class="rh-ex-tag">Exemplo</span><span class="rh-ex-txt">Associação fictícia com</span><div class="exsize" role="radiogroup" aria-label="Tamanho da associação do exemplo" data-exsize="resultado"><button type="button" role="radio" data-n="500" aria-checked="false">500</button><button type="button" role="radio" data-n="1000" aria-checked="true">1.000</button><button type="button" role="radio" data-n="2000" aria-checked="false">2.000</button><button type="button" role="radio" data-n="5000" aria-checked="false">5.000</button><span>placas</span></div><span class="rh-ex-txt rh-ex-fat">e <b class="exFat">R$ 128 mil</b> de faturamento por mês.</span><a class="btn small" href="#diagnostico" id="rhMeus">Simular com os meus números →</a></div>
     <div class="rh-top">
       <div>
         <p class="kicker">Resultado do diagnóstico</p>
@@ -2829,7 +2844,7 @@ function renderHead(r){
     const lin = (rot, val, sub, st) => `<li class="hm-l${st ? ' ' + st : ''}"><span class="hm-r">${rot}</span><span class="hm-v"><span class="hm-vv">${val}</span><small>${sub || '&nbsp;'}</small></span></li>`;
     const ic = okk => okk ? '<i class="hm-ok" aria-label="em dia">✓</i>' : '';
     const nEx = r.docsFalta.length;
-    const faltas = [guarda ? brlShort(r.faltaReserva) + ' de reserva' : '', mensOk ? '' : brl(dif, true) + ' por placa na mensalidade', papOk ? '' : nEx + (nEx > 1 ? ' exigências pendentes' : ' exigência pendente')].filter(Boolean);
+    const faltas = [guarda ? brlShort(r.faltaReserva) + ' de reserva' : '', dif <= r.ticket * .03 ? '' : brl(dif, true) + ' por placa na mensalidade', papOk ? '' : nEx + (nEx > 1 ? ' exigências pendentes' : ' exigência pendente')].filter(Boolean);
     const ctaTit = faltas.length ? (faltas.length === 1 && !papOk && nEx === 1 ? 'Falta ' : 'Faltam ') + (faltas.length > 1 ? faltas.slice(0, -1).join(', ') + ' e ' + faltas.at(-1) : faltas[0]) + '.' : 'A associação está no caminho. Falta escolher bem a administradora.';
     const vale = [
       guarda ? ['Reserva montada', 'Plano para juntar ' + brlShort(r.faltaReserva) + ' até 07/05/2028'] : mensOk ? ['Boleto em 3 partes', 'Taxa, rateio e estabilização, como a SUSEP exige'] : ['Mensalidade certa', 'Valor ajustado por tipo de veículo'],
@@ -3842,6 +3857,35 @@ document.querySelectorAll('.fields > .field').forEach(fl => {
 
 /* ======================= NAVEGAÇÃO: capa → diagnóstico → resultado ======================= */
 const reduzMov = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+// exemplos de 500, 1.000, 2.000 e 5.000 placas: a mesma associação, na mesma proporção
+const EX_BASE = {...EXEMPLO}, EX_PLACAS = 938;
+const exNum = v => num(v) || 0, exFmt = v => Math.round(v).toLocaleString('pt-BR');
+function exemploDe(n){
+  const k = n / EX_PLACAS, r50 = v => Math.round(exNum(v) * k / 50) * 50;
+  const e = {...EX_BASE, tp_carros_placas: exFmt(n * .8), tp_motos_placas: exFmt(n * .16), tp_pesados_placas: exFmt(n * .04),
+    placas12: exFmt(exNum(EX_BASE.placas12) * k), qtdEventos: exFmt(exNum(EX_BASE.qtdEventos) * k), cancel12: exFmt(exNum(EX_BASE.cancel12) * k),
+    recup12: exFmt(r50(EX_BASE.recup12)), receita12: exFmt(r50(EX_BASE.receita12)), reserva: exFmt(r50(EX_BASE.reserva)), pendentes: exFmt(r50(EX_BASE.pendentes))};
+  let soma = 0;
+  for(let i = 0; i < 12; i++){ const v = r50(EX_BASE['mes_' + i]); e['mes_' + i] = exFmt(v); soma += v; }
+  const car = r50(EX_BASE.tp_carros_ev), mot = r50(EX_BASE.tp_motos_ev);
+  e.tp_carros_ev = exFmt(car); e.tp_motos_ev = exFmt(mot); e.tp_pesados_ev = exFmt(soma - car - mot); e.eventos12 = exFmt(soma);
+  // a reserva de hoje fica em 1/4 da meta em todos os tamanhos, para a comparação ser justa
+  try{ e.reserva = exFmt(Math.round(calc(e).metaReserva * .25 / 500) * 500); }catch(err){}
+  return e;
+}
+let exN = 1000;
+function usarExemplo(n){
+  exN = n; Object.assign(EXEMPLO, exemploDe(n));
+  document.querySelectorAll('.exsize button').forEach(b => b.setAttribute('aria-checked', String(+b.dataset.n === n)));
+  document.querySelectorAll('.exFat').forEach(b => b.textContent = brlShort(exNum(EXEMPLO.receita12) / 12));
+}
+usarExemplo(1000);
+document.addEventListener('click', e => {
+  const b = e.target.closest && e.target.closest('.exsize button'); if(!b) return;
+  usarExemplo(+b.dataset.n);
+  if(window.pintaCapa) pintaCapa();
+  if(b.closest('[data-exsize="resultado"]') && modoP === 'exemplo') $('btnExemplo').click();
+});
 // quem chega pelo "Calcular agora" não vê a faixa do exemplo: ela só aparece com o exemplo aberto ou com números já preenchidos
 // no site, o caminho é sempre contratar administradora
 const _readState = readState;
@@ -3947,7 +3991,7 @@ $('stNext').addEventListener('click', () => passo < STEPS.length ? showStep(pass
 /* capa: exemplo ao vivo, gráficos, linha do tempo e animação ao rolar */
 (function capa(){
   const corNota = n => n >= 75 ? '#16A06A' : n >= 50 ? '#D99A1E' : '#D9482B';
-  try{
+  function pintaCapa(){ try{
     const x = calc(EXEMPLO);
     $('bxRing').style.setProperty('--p', x.score); $('bxRing').style.setProperty('--rc', corNota(x.score));
     // 01: reserva crescendo até a meta
@@ -3973,7 +4017,8 @@ $('stNext').addEventListener('click', () => passo < STEPS.length ? showStep(pass
     $('bxSin').textContent = pct(x.sin, 0); $('bxInad').textContent = pct(x.inad, 0); $('bxQb').textContent = isFinite(x.qb) ? x.qb + '/100' : '–';
     const pr = prioridades(x).slice(0, 3);
     if(pr.length) $('bxPrio').innerHTML = pr.map(p => `<li>${p.t}</li>`).join('');
-  }catch(e){}
+  }catch(e){} }
+  pintaCapa(); window.pintaCapa = pintaCapa;
   // contagem até o prazo: recalculada pela data de quem abre a página
   const mf = mesesAte(REG.prazoFinal), df = Math.ceil((REG.prazoFinal - new Date()) / 864e5);
   // capa: as perguntas da diretoria, uma por vez
