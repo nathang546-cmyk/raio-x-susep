@@ -988,8 +988,8 @@ body.modal-on{overflow:hidden}
           <div class="input"><input id="placas12" inputmode="numeric" data-kind="int"><span class="suf">placas</span></div>
         </div>
         <div class="field">
-          <label for="fipeMax">FIPE do veículo mais caro</label>
-          <p class="hint">A perda total dele entra no cálculo da reserva.</p>
+          <label for="fipeMax">Maior cobertura (FIPE do veículo mais caro)</label>
+          <p class="hint">A reserva recomendada aguenta uma perda total dele sem rateio extra.</p>
           <div class="input"><span class="pre">R$</span><input id="fipeMax" inputmode="decimal" data-kind="money"></div>
         </div>
         <div class="field wide">
@@ -1842,7 +1842,8 @@ function calc(s){
   r.sobraMes = isFinite(r.fundoMes) && isFinite(r.eventosMes) ? r.fundoMes - r.eventosMes : NaN;
   if(isFinite(r.fundoMes) && r.mesesN){ r.mesesAcima = r.meses.filter(v => isFinite(v) && v * r.liqFator > r.fundoMes).length; }
 
-  // reserva: dívidas de eventos + eventos ainda não avisados + colchão para meses ruins + uma perda total do mais caro.
+  // reserva: o exigido pela SUSEP (eventos devidos + ainda não avisados) + o recomendado para o mês ruim:
+  // o maior entre um colchão de dois meses ruins e uma perda total da maior cobertura (uma PT é o que faz o mês ruim, então não soma).
   // A mensalidade de cada mês já paga os eventos de um mês normal; a reserva só cobre o que passa disso.
   r.fatorOsc = !ok(r.placas) ? .5 : r.placas < 800 ? .75 : r.placas < 3000 ? .5 : .35;   // carteira menor oscila mais
   if(isFinite(r.eventosMes)){
@@ -1852,14 +1853,16 @@ function calc(s){
     r.colchaoPorPior = r.mesesN >= 6;
     r.colchao = r.colchaoPorPior ? Math.max(porPior, .25 * r.eventosMes) : porPorte;
     r.ptRes = ok(r.fipeMax) ? r.fipeMax : 0;
-    r.metaReserva = r.pendentes + r.naoAvisados + r.colchao + r.ptRes;
+    r.minReserva = r.pendentes + r.naoAvisados;
+    r.grave = Math.max(r.colchao, r.ptRes);
+    r.metaReserva = r.minReserva + r.grave;
     r.faltaReserva = Math.max(0, r.metaReserva - r.reserva);
     r.guardarMes = r.faltaReserva / REG.horizonte;
     r.mesesCobertos = r.eventosMes > 0 ? Math.max(0, r.reserva - r.pendentes) / r.eventosMes : NaN;
     r.coberturaRes = r.metaReserva > 0 ? Math.min(1, r.reserva / r.metaReserva) : NaN;
     r.tetoRegra = isFinite(r.fundoMes) ? 3 * r.fundoMes : NaN;
-    r.passaTeto = isFinite(r.tetoRegra) && (r.colchao + r.ptRes) > r.tetoRegra;
-  } else { r.naoAvisados = r.colchao = r.metaReserva = r.faltaReserva = r.guardarMes = r.mesesCobertos = r.coberturaRes = r.tetoRegra = NaN; r.ptRes = 0; }
+    r.passaTeto = false;
+  } else { r.minReserva = r.grave = r.maxReserva = NaN; r.naoAvisados = r.colchao = r.metaReserva = r.faltaReserva = r.guardarMes = r.mesesCobertos = r.coberturaRes = r.tetoRegra = NaN; r.ptRes = 0; }
   r.tRes = !isFinite(r.coberturaRes) ? 'none' : r.coberturaRes >= .9 ? 'ok' : r.coberturaRes >= .4 ? 'warn' : 'bad';
 
   r.modelo = s.modelo === 'variavel' ? 'variavel' : 'fixo';
@@ -1902,6 +1905,9 @@ function calc(s){
     r.livre = Math.max(0, r.reserva - r.pendentes);
     r.resMesesG = r.contribGrupoMes > 0 ? r.livre / r.contribGrupoMes : NaN;
     r.tetoG = 3 * r.contribGrupoMes;
+    // máximo da regra depois da mudança: provisões + patrimônio de até 3 meses de arrecadação do grupo (art. 69 § 6º)
+    r.maxReserva = isFinite(r.minReserva) ? r.minReserva + r.tetoG : NaN;
+    r.passaTeto = isFinite(r.grave) && r.grave > r.tetoG;
     // repasse
     if(r.repModo === 'brl' && isFinite(num(s.repasseValor))){
       r.repPlaca = Math.min(Math.max(0, num(s.repasseValor)), r.novoTaxaR);
@@ -2327,22 +2333,21 @@ function renderVisao(r){
   const vr = $('vzRes');
   if(isFinite(r.metaReserva)){
     const comp = [
-      ['Eventos que já se deve', r.pendentes],
-      ['Eventos que já aconteceram e ainda não foram avisados (estimativa: 10 dias)', r.naoAvisados],
-      ['Colchão para meses ruins', r.colchao],
-      ['Uma perda total do veículo mais caro', r.ptRes]
+      ['Exigido pela SUSEP: eventos que já se deve', r.pendentes],
+      ['Exigido pela SUSEP: eventos que já aconteceram e ainda não foram avisados (estimativa: 10 dias)', r.naoAvisados],
+      [r.ptRes >= r.colchao ? 'Recomendado: uma perda total da maior cobertura, paga sem rateio extra' : 'Recomendado: colchão para dois meses ruins seguidos', r.grave]
     ];
     const mx = Math.max(r.metaReserva, r.reserva);
     vr.innerHTML = `<div><h3>Quanto precisa ter guardado, e por quê</h3></div>
-      <p class="read">Meta de <b>${brlShort(r.metaReserva)}</b>. Hoje tem <b>${brlShort(r.reserva)}</b>, que é ${pct(r.reserva / r.metaReserva, 0)} da meta.</p>
+      <p class="read">A SUSEP exige <b>${brlShort(r.minReserva)}</b>. O recomendado é <b>${brlShort(r.metaReserva)}</b>, porque a administradora pode pedir mais que o mínimo para receber o grupo. Hoje tem <b>${brlShort(r.reserva)}</b>, que é ${pct(r.reserva / r.metaReserva, 0)} do recomendado.</p>
       <p class="note"><b>Colchão para meses ruins.</b> A mensalidade de cada mês já paga um mês normal, então o colchão cobre só o que passa da média. ${r.colchaoPorPior ? 'Pelos seus 12 meses: duas vezes o quanto o seu pior mês passou da média.' : `Sem os 12 meses preenchidos, a conta usa ${pct(r.fatorOsc, 0)} de um mês de eventos, a oscilação comum numa carteira ${r.placas < 800 ? 'pequena' : r.placas < 3000 ? 'média' : 'grande'}. Preencha mês a mês para um valor mais preciso.`}</p>
       <div class="rows">
         ${comp.map(c => rowbar(c[0], c[1] / mx, brlShort(c[1]), '--s-res', `${brl(c[1])}\n${c[0]}`)).join('')}
-        ${rowbar('<b>Meta total</b>', r.metaReserva / mx, `<b>${brlShort(r.metaReserva)}</b>`, '--s-res')}
+        ${rowbar('<b>Meta recomendada</b>', r.metaReserva / mx, `<b>${brlShort(r.metaReserva)}</b>`, '--s-res')}
         ${rowbar('<b>Guardado hoje</b>', r.reserva / mx, `<b>${brlShort(r.reserva)}</b>`, '--s-mute')}
       </div>
-      <details class="more"><summary>Por que guardar esse valor?</summary><div><p class="note">Numa carteira ${ok(r.placas) && r.placas < 3000 ? 'deste tamanho' : 'como esta'}, uma perda total cara ou dois meses ruins seguidos esvaziam um fundo pequeno. E no dia da mudança para a administradora, os eventos antigos ainda precisam ser pagos com o dinheiro antigo.</p>
-      ${r.passaTeto ? `<p class="note"><b>Atenção para depois da mudança:</b> na regra nova, o patrimônio do grupo não pode passar de 3 meses de contribuições (para vocês, uns ${brlShort(r.tetoRegra)}). O que passar disso tem que voltar como boleto mais baixo. Lá, o risco de perda total grande é coberto por limite de valor por veículo e resseguro, não por um fundo maior. Até mudar, guardar mais é o que protege.</p>` : ''}</div></details>`;
+      <details class="more"><summary>Por que guardar esse valor?</summary><div><p class="note">O mínimo da SUSEP só cobre os eventos que já se deve. Uma perda total da maior cobertura não cabe nele, e nenhum associado aceita um rateio extra de centenas de reais. Por isso o recomendado guarda o bastante para pagar uma perda total, ou dois meses ruins seguidos, direto da reserva. As administradoras podem exigir mais que o mínimo para receber o grupo, e no dia da mudança os eventos antigos ainda precisam ser pagos com o dinheiro antigo.</p>
+      ${r.passaTeto ? `<p class="note"><b>Atenção para depois da mudança:</b> na regra nova, o patrimônio do grupo não pode passar de 3 meses de arrecadação do grupo (para vocês, uns ${brlShort(r.tetoG)}). Uma perda total da maior cobertura passa disso, então a parte de cima vai precisar de limite de retenção e seguro, negociados com a administradora. Até mudar, guardar o valor cheio é o que protege.</p>` : ''}</div></details>`;
   } else vr.innerHTML = '<div><h3>Quanto precisa ter guardado, e por quê</h3></div><div class="empty">Preencha os passos 1 a 4.</div>';
 }
 
@@ -2360,7 +2365,7 @@ function renderCards(r){
     isFinite(r.difTicket) && r.difTicket > .5 ? 'Aprove o reajuste em assembleia e avise os associados com 30 dias. Teste valores menores no simulador.' : ''));
   C.push(card(r.tRes, gt('reserva', 'Reserva'), brlShort(r.reserva) + (isFinite(r.metaReserva) ? ` <small>de ${brlShort(r.metaReserva)}</small>` : ''),
     isFinite(r.guardarMes) ? (r.guardarMes > 0 ? `Guardar ${brlShort(r.guardarMes)} por mês, por ${REG.horizonte} meses.` : 'Meta atingida.') : 'Falta preencher eventos e arrecadação.',
-    isFinite(r.metaReserva) ? `Hoje o dinheiro livre cobre ${dec1(r.mesesCobertos)} mês(es) de eventos. A meta soma dívidas de eventos, eventos ainda não avisados, um colchão para meses ruins e uma perda total do veículo mais caro. O gráfico na aba Resultado mostra cada parte.` : '',
+    isFinite(r.metaReserva) ? `Hoje o dinheiro livre cobre ${dec1(r.mesesCobertos)} mês(es) de eventos. A SUSEP exige os eventos devidos e os ainda não avisados. O recomendado soma a isso uma perda total da maior cobertura ou dois meses ruins, o que for maior.` : '',
     isFinite(r.guardarMes) && r.guardarMes > 0 ? 'Transferência automática para uma conta separada, todo mês, sem mexer.' : '',
     `<div class="bar" aria-hidden="true"><i style="width:${isFinite(r.coberturaRes)?Math.round(r.coberturaRes*100):0}%"></i></div>`));
   C.push(card(r.tInad, gt('inadimplencia', 'Inadimplência'), pct(r.inad,0),
@@ -2707,6 +2712,7 @@ function renderPlano(r){
   if(falta('sistema')) f3.push(task('sistema','Adotar um sistema de gestão','Que gere relatório do rateio, histórico de eventos, balancetes e DRE.'));
   if(r.tConc === 'bad' || r.tConc === 'warn') f3.push(task('limite','Colocar limite de FIPE no regulamento','Evita que um veículo caro sozinho estoure o mês.'));
   if(cam === 'contratar' && isFinite(r.cobRepasse) && r.cobRepasse < 1) f3.push(task('estrutura','Ajustar a estrutura da associação ao repasse','Ver quais funções passam para a administradora e o que sai da folha. Negociar o repasse mínimo por placa.'));
+  if(r.passaTeto) f3.push(task('retencao','Negociar limite de retenção e seguro para os veículos de maior valor',`Depois da mudança, o fundo do grupo tem teto de uns ${brlShort(r.tetoG)}. A parte de uma perda total que passar disso precisa de seguro ou resseguro, não de rateio extra.`));
   if(cam === 'contratar') f3.push(task('negociar','Negociar o contrato com a administradora escolhida','Taxa por escrito, quanto fica para a associação, onde fica o dinheiro do grupo, como trocar de administradora. Leve a um advogado antes de assinar.'));
   if(cam === 'propria') f3.push(task('montar','Montar a estrutura e juntar o capital','Diretoria qualificada, atuário, contador, ouvidor, auditoria, controles internos e o capital exigido.'));
   if(cam === 'cooperativa') f3.push(task('coop','Montar o projeto da cooperativa','Estatuto, capital, plano de negócios e pedido à SUSEP.'));
