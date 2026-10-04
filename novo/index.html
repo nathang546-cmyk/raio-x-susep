@@ -1214,6 +1214,8 @@ footer.sitefoot{background:#12131C;border-top:1px solid rgba(255,255,255,.06)}
 #view-inicio{margin-top:-64px}
 body[data-view="inicio"] .hero{padding-top:160px}
 .gh-logo-cor{display:none}
+.sitehead.escuro{background:rgba(18,19,28,.9);border-bottom-color:rgba(255,255,255,.08);backdrop-filter:saturate(1.4) blur(12px);-webkit-backdrop-filter:saturate(1.4) blur(12px)}
+@media (max-width:640px){.lp-dark{width:100%!important;border-radius:0!important}}
 .sitehead.claro{background:rgba(255,255,255,.9);border-bottom-color:var(--line);backdrop-filter:saturate(1.4) blur(12px);-webkit-backdrop-filter:saturate(1.4) blur(12px)}
 .sitehead.claro .sh-title{color:var(--ink)}
 .sitehead.claro .sh-title em{color:#11A594}
@@ -1567,7 +1569,7 @@ body[data-view="inicio"] .hero{padding-top:160px}
         <p class="pill-k">Por que agora</p>
         <h2>O prazo já está correndo</h2>
         <p class="tl-count" id="tlCount">Faltam <b>19 meses</b> para o prazo final de 07/05/2028</p>
-        <p>Quem chegar com os números em ordem escolhe a administradora. Quem deixar para depois aceita o que sobrar.</p>
+        <p>Quem chegar com os números em ordem escolhe a administradora. Quem deixar para a última hora negocia com pressa e com menos opções.</p>
       </div>
       <ol class="tl rv" id="tl">
         <li data-d="2025-07-15"><span>15/07/2025</span><b>Fim do cadastro na SUSEP</b><small>Quem não se cadastrou não pode operar</small></li>
@@ -3930,7 +3932,17 @@ window.addEventListener('scroll', () => { if(viewAtual === 'resultado') marcarJo
 function corTopo(){
   const h = document.querySelector('.sitehead'), hero = document.querySelector('.hero');
   const sobreHero = viewAtual === 'inicio' && hero && hero.getBoundingClientRect().bottom > 64;
-  h.classList.toggle('claro', !sobreHero);
+  // seção escura de ponta a ponta passando por baixo do topo
+  const sobreEscuro = !sobreHero && viewAtual === 'inicio' && [...document.querySelectorAll('.lp-dark')].some(s => {
+    const b = s.getBoundingClientRect(); return b.top < 64 && b.bottom > 64 && b.width >= window.innerWidth - 2;
+  });
+  h.classList.toggle('claro', !sobreHero && !sobreEscuro);
+  h.classList.toggle('escuro', sobreEscuro);
+  // barra do navegador no celular acompanha o topo
+  let m = document.querySelector('meta[name="theme-color"]');
+  if(!m){ m = document.createElement('meta'); m.name = 'theme-color'; document.head.appendChild(m); }
+  const cor = sobreHero || sobreEscuro ? '#12131C' : '#FFFFFF';
+  if(m.content !== cor) m.content = cor;
 }
 function irPara(h, empurrar){
   const alvo = ALIAS[h] !== undefined ? ALIAS[h] : h;
