@@ -1233,7 +1233,17 @@ body[data-view="inicio"] .fab-help{display:none!important}
 footer.sitefoot{background:#12131C;border-top:1px solid rgba(255,255,255,.06)}
 .sitehead{background:transparent;border-bottom:1px solid transparent;box-shadow:none;backdrop-filter:none;-webkit-backdrop-filter:none;transition:background .25s,border-color .25s}
 .sh-in{min-height:64px;padding-block:0}
-#view-inicio{margin-top:-64px}
+#view-inicio{margin-top:calc(-1 * var(--sh-h,64px))}
+/* topo no tamanho do site da GestiHub (80px), compacto no celular */
+:root{--sh-h:80px}
+.sh-in{min-height:var(--sh-h)!important}
+.sh-title{font-size:24px!important}
+.sh-sep{height:28px!important}
+.sh-by{font-size:14px!important}
+.sh-by img{height:18px!important}
+.sh-brand{gap:16px!important}
+.sh-cta{font-size:16px!important;padding:8px 24px!important;border-radius:999px!important;min-height:42px;line-height:1.5!important}
+@media (max-width:560px){:root{--sh-h:64px}.sh-title{font-size:18px!important}.sh-sep{height:22px!important}.sh-by{font-size:11px!important}.sh-by img{height:12px!important}.sh-brand{gap:10px!important}.sh-cta{font-size:14px!important;padding:8px 16px!important;min-height:38px}}
 body[data-view="inicio"] .hero{padding-top:160px}
 .gh-logo-cor{display:none}
 .sitehead.escuro{background:rgba(18,19,28,.9);border-bottom-color:rgba(255,255,255,.08);backdrop-filter:saturate(1.4) blur(12px);-webkit-backdrop-filter:saturate(1.4) blur(12px)}
@@ -1555,8 +1565,8 @@ body[data-view="inicio"] .hero>.hero-in{width:100%}
 .caminho-sel .choice input:checked+label span{display:block}
 .mais{display:grid;gap:14px}
 .mais>.det .det-body{padding-top:8px}
-#view-resultado .results>section,#view-resultado>section{scroll-margin-top:80px}
-[id]{scroll-margin-top:80px}
+#view-resultado .results>section,#view-resultado>section{scroll-margin-top:96px}
+[id]{scroll-margin-top:96px}
 
 .sitefoot{background:#0F111A;color:#8C94A3;padding-block:40px;border:0;margin-top:0}
 .sf-in{display:grid;grid-template-columns:minmax(0,1fr);gap:24px}
@@ -4085,10 +4095,11 @@ function marcarJornada(){
 window.addEventListener('scroll', () => { if(viewAtual === 'resultado') marcarJornada(); corTopo(); }, {passive:true});
 function corTopo(){
   const h = document.querySelector('.sitehead'), hero = document.querySelector('.hero');
-  const sobreHero = viewAtual === 'inicio' && hero && hero.getBoundingClientRect().bottom > 64;
+  const alt = h.offsetHeight || 64;
+  const sobreHero = viewAtual === 'inicio' && hero && hero.getBoundingClientRect().bottom > alt;
   // seção escura de ponta a ponta passando por baixo do topo
   const sobreEscuro = !sobreHero && viewAtual === 'inicio' && [...document.querySelectorAll('.lp-dark')].some(s => {
-    const b = s.getBoundingClientRect(); return b.top < 64 && b.bottom > 64 && b.width >= window.innerWidth - 2;
+    const b = s.getBoundingClientRect(); return b.top < alt && b.bottom > alt && b.width >= window.innerWidth - 2;
   });
   h.classList.toggle('claro', !sobreHero && !sobreEscuro);
   h.classList.toggle('escuro', sobreEscuro);
