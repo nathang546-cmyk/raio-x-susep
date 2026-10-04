@@ -1571,6 +1571,12 @@ body[data-view="inicio"] .hero{padding-top:160px}
 @media (prefers-reduced-motion:reduce){.det[open]>.det-body,#tip:not([hidden]){animation:none}}
 
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+.opc{font-style:normal;font-weight:400;color:var(--muted);font-size:.85em}
+.lead-pos{display:grid;gap:12px;margin-top:4px;padding:16px 18px;border-radius:14px;background:var(--accent-soft);border:1px solid color-mix(in srgb,var(--accent) 30%,var(--line))}
+.lead-pos p{margin:0;font-size:.95rem;line-height:1.5}
+.lead-wa{display:inline-flex;align-items:center;justify-content:center;gap:10px;background:#25D366!important;border-color:#25D366!important;color:#FFFFFF!important;text-decoration:none}
+.lead-wa:hover{background:#1EBE5D!important}
+.lead-wa svg{width:22px;height:22px}
 </style>
 
 <a class="skip" href="#conteudo">Pular para o conteúdo</a>
@@ -1692,7 +1698,7 @@ body[data-view="inicio"] .hero{padding-top:160px}
       <details><summary>Até quando a associação tem que se adequar?</summary><p>O prazo para apresentar o contrato com uma administradora autorizada é 07/05/2028 (Resolução CNSP 491/2026). Se as primeiras autorizações saírem tarde, o prazo passa a ser 6 meses depois delas. A opção de encerrar as atividades vence por volta de 1º/11/2026.</p></details>
       <details><summary>Por que a associação precisa ter reserva?</summary><p>Para nunca precisar de rateio extra. O mínimo da SUSEP só cobre os eventos já devidos; com só ele, uma perda total vira centenas de reais por placa. A reserva certa paga os meses ruins e uma perda total da maior cobertura, e as administradoras devem pedir mais que o mínimo para receber o grupo.</p></details>
       <details><summary>O boleto vai mudar todo mês?</summary><p>Depende do contrato. Se a estabilização ficar perto do custo médio dos eventos, o boleto fica fixo e o rateio só entra quando a reserva não dá conta. A ferramenta mostra os dois jeitos lado a lado.</p></details>
-      <details><summary>Onde ficam os meus dados?</summary><p>Só no navegador do seu aparelho. Nada é enviado para a GestiHub nem para ninguém, a não ser que você mesmo mande pelo WhatsApp ou pelo formulário de reunião.</p></details>
+      <details><summary>Onde ficam os meus dados?</summary><p>Os números do Raio-X ficam só no navegador do seu aparelho e não são enviados para ninguém. Se você pedir uma reunião, a GestiHub recebe apenas o seu nome, WhatsApp e associação, para falar com você.</p></details>
       <details><summary>A ferramenta substitui atuário, advogado ou contador?</summary><p>Não. Ela organiza os números e mostra o caminho. O cálculo oficial do rateio é feito pela administradora, com o atuário.</p></details>
     </div>
   </section>
@@ -2283,20 +2289,17 @@ body[data-view="inicio"] .hero{padding-top:160px}
     <div class="ajuda-head">
       <img src="https://www.gestihub.com.br/Logo/GestiHub-branco.svg" alt="GestiHub" width="94" height="16">
       <h2 id="ajudaTit">Agende uma reunião com um especialista</h2>
-      <p>Deixe seus dados e a GestiHub entra em contato para marcar a reunião. O seu Raio-X vai junto, para a conversa já começar pelos seus números.</p>
+      <p>Deixe seu nome e WhatsApp. Um especialista chama você para marcar. Gratuita, online e sem compromisso.</p>
     </div>
     <form class="lead-form" id="leadForm" novalidate autocomplete="on">
       <div class="lead-grid">
         <div class="field"><label for="leadNome">Seu nome</label><div class="input compact text"><input id="leadNome" autocomplete="name" placeholder="Ex.: Carlos"></div></div>
         <div class="field"><label for="leadTel">WhatsApp ou telefone</label><div class="input compact"><input id="leadTel" type="tel" inputmode="tel" autocomplete="tel-national" placeholder="(11) 91234-5678" maxlength="22"></div></div>
-        <div class="field"><label for="leadCargo">Cargo</label><div class="input compact"><select id="leadCargo"><option value="">Escolha</option><option>Presidente</option><option>Diretor(a)</option><option>Gerente</option><option>Financeiro</option><option>Consultor(a)</option><option>Outro</option></select></div></div>
-        <div class="field"><label for="leadAssoc">Associação</label><div class="input compact text"><input id="leadAssoc" autocomplete="organization"></div></div>
-        <div class="field" style="grid-column:1/-1"><label for="leadCidade">Cidade e estado</label><div class="input compact text"><input id="leadCidade" autocomplete="address-level2" placeholder="Ex.: Belo Horizonte/MG"></div></div>
+        <div class="field" style="grid-column:1/-1"><label for="leadAssoc">Associação <i class="opc">(opcional)</i></label><div class="input compact text"><input id="leadAssoc" autocomplete="organization"></div></div>
       </div>
-      <label class="check"><input type="checkbox" id="leadOk"> <span>Autorizo a GestiHub a entrar em contato comigo e a receber o resumo do meu Raio-X. <a href="https://www.gestihub.com.br/politica-de-privacidade.html" target="_blank" rel="noopener">Política de privacidade</a></span></label>
-      <div class="copyrow lead-acts"><button type="button" class="btn big" id="leadEnviar" hidden>Solicitar contato</button><button type="button" class="btn big" id="leadWa">Quero uma reunião</button><span class="err" id="leadErr" aria-live="polite"></span></div>
-      <p class="hint" id="leadComo">Seus dados vão só para a GestiHub. A reunião é gratuita e online.</p>
-      <p class="ok-msg lead-ok" id="leadDone" hidden></p>
+      <div class="copyrow lead-acts"><button type="button" class="btn big" id="leadEnviar">Quero uma reunião</button><span class="err" id="leadErr" aria-live="polite"></span></div>
+      <p class="hint" id="leadComo">Ao pedir, você autoriza a GestiHub a falar com você. <a href="https://www.gestihub.com.br/politica-de-privacidade.html" target="_blank" rel="noopener">Política de privacidade</a></p>
+      <div class="lead-pos" id="leadDone" hidden><p id="leadDoneTxt"></p><a class="btn big lead-wa" id="leadWa" href="#" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12.04 2a9.9 9.9 0 0 0-8.5 14.96L2 22l5.17-1.5A9.9 9.9 0 1 0 12.04 2Zm5.4 13.98c-.23.64-1.33 1.24-1.84 1.3-.47.06-1.07.08-1.72-.11-.4-.12-.9-.29-1.56-.57-2.74-1.18-4.53-3.94-4.67-4.12-.13-.18-1.11-1.48-1.11-2.82s.7-2 .95-2.27c.25-.27.55-.34.73-.34h.52c.17 0 .4-.06.62.48.23.55.78 1.9.85 2.04.07.14.11.3.02.48-.09.18-.14.3-.27.46-.14.16-.29.36-.41.48-.14.14-.28.29-.12.56.16.27.71 1.17 1.52 1.9 1.05.93 1.93 1.22 2.2 1.36.27.14.43.11.59-.07.16-.18.68-.79.86-1.06.18-.27.36-.23.61-.14.25.09 1.59.75 1.86.89.27.14.45.2.52.32.07.11.07.66-.16 1.3Z"/></svg>Mandar mensagem no WhatsApp</a></div>
       <details class="more" hidden><summary>Ver ou copiar a mensagem</summary><div><textarea id="leadMsg" readonly aria-label="Mensagem para a GestiHub"></textarea><div class="copyrow"><button type="button" class="btn small" id="leadCopy">Copiar mensagem</button><span class="ok-msg" id="leadCopyMsg" aria-live="polite"></span></div></div></details>
     </form>
   </div>
@@ -3701,7 +3704,7 @@ let ajudaCtx = 'resultado do diagnóstico';
 function leadMsg(){
   const r = R;
   const tel = $('leadTel').value.trim();
-  const nome = $('leadNome').value.trim(), cargo = $('leadCargo').value, assoc = $('leadAssoc').value.trim() || $('nome').value.trim(), cid = $('leadCidade').value.trim();
+  const campo = (id => { const el = $(id); return el ? String(el.value || '').trim() : ''; }), nome = campo('leadNome'), cargo = campo('leadCargo'), assoc = campo('leadAssoc') || campo('nome'), cid = campo('leadCidade');
   const linhas = [
     'Olá, GestiHub! Usei o Raio-X SUSEP e quero agendar uma reunião com um especialista.',
     '',
@@ -3726,13 +3729,12 @@ function leadUpd(){
   if(!$('leadAssoc').value) $('leadAssoc').placeholder = $('nome').value || 'Nome da associação';
   const m = leadMsg();
   $('leadMsg').value = m;
-  $('leadWa').href = waLink(m);
 }
 document.querySelectorAll('[data-ghlink]').forEach(a => a.href = ghUrl(a.dataset.ghlink));
 function abrirAjuda(ctx){
   ajudaCtx = ctx || 'site';
   $('ajuda').hidden = false; document.body.classList.add('modal-on');
-  $('leadDone').hidden = true; $('leadErr').textContent = '';
+  $('leadDone').hidden = true; $('leadErr').textContent = ''; if($('leadEnviar').textContent !== 'Pedido enviado ✓') $('leadEnviar').disabled = false;
   leadUpd(); hideTip();
   setTimeout(() => $('leadNome').focus(), 30);
 }
@@ -3766,13 +3768,16 @@ $('leadForm').addEventListener('input', leadUpd);
 $('leadForm').addEventListener('change', leadUpd);
 $('leadForm').addEventListener('submit', e => e.preventDefault());
 /* Envio do pedido de reunião.
-   CRM: formulário público do CRM da GestiHub. Com o slug preenchido, aparece o botão "Solicitar contato",
-   que manda o lead direto para o CRM. Sem o slug, fica só o WhatsApp. */
-const CRM_FORM = {api: 'https://app.gestihub.com.br/api/crm/forms/public/', slug: ''};
+   "Quero uma reunião" registra o pedido no CRM da GestiHub (formulário público do CRM, com o slug abaixo)
+   e depois oferece o WhatsApp com uma frase curta pronta. Sem o slug, vai direto para o passo do WhatsApp. */
+// eventos de marketing: só no site da GestiHub, depois do consentimento; nunca leva números do Raio-X
+const marca = (evento, rotulo) => { try{ window.gestiHubTracking?.trackPageEvent?.(evento, rotulo); }catch(e){} };
+const CRM_FORM = {api: 'https://api.gestihub.com.br/api/crm/forms/public/', slug: ''};
 const crmAtivo = () => !!CRM_FORM.slug;
-function enviarLead(msg){
-  window.open(waLink(msg), '_blank', 'noopener');
-  return {pronto:false, aviso:'Abrimos o WhatsApp da GestiHub com o seu pedido. Toque em enviar lá para concluir: um especialista responde para marcar a reunião.'};
+// frase curta para o WhatsApp (o detalhe fica no CRM)
+function leadFrase(){
+  const campo = (id => { const el = $(id); return el ? String(el.value || '').trim() : ''; }), nome = campo('leadNome'), cargo = campo('leadCargo'), assoc = campo('leadAssoc') || campo('nome'), cid = campo('leadCidade');
+  return 'Olá, GestiHub! Acabei de pedir uma reunião pelo Raio-X SUSEP. Sou ' + nome + (cargo ? ', ' + cargo.toLowerCase() : '') + (assoc ? ' da ' + assoc : '') + (cid ? ' (' + cid + ')' : '') + '.';
 }
 // lê os campos do formulário do CRM e preenche cada um pelo tipo ou pelo nome
 async function enviarCRM(d){
@@ -3797,40 +3802,40 @@ async function enviarCRM(d){
   return r.json();
 }
 function leadValida(){
-  const semNome = !$('leadNome').value.trim(), semTel = !telValido($('leadTel').value), semOk = !$('leadOk').checked;
-  if(semNome || semTel || semOk){
-    $('leadErr').textContent = semNome ? 'Escreva o seu nome.' : semTel ? 'Escreva o seu telefone com DDD.' : 'Marque a autorização para enviar.';
-    (semNome ? $('leadNome') : semTel ? $('leadTel') : $('leadOk')).focus();
+  const semNome = !$('leadNome').value.trim(), semTel = !telValido($('leadTel').value);
+  if(semNome || semTel){
+    $('leadErr').textContent = semNome ? 'Escreva o seu nome.' : 'Escreva o seu WhatsApp com DDD.';
+    (semNome ? $('leadNome') : $('leadTel')).focus();
     return false;
   }
   $('leadErr').textContent = ''; leadUpd(); return true;
 }
-// com o CRM ligado: "Solicitar contato" é o botão principal e o WhatsApp vira a segunda opção
-if(crmAtivo()){
-  $('leadEnviar').hidden = false;
-  $('leadWa').textContent = 'Prefiro chamar no WhatsApp'; $('leadWa').classList.add('ghost');
-  $('leadComo').textContent = 'Ao solicitar, seus dados vão para a GestiHub e um especialista liga ou chama no WhatsApp para marcar a reunião. Gratuita e online.';
+function leadPos(registrado){
+  $('leadDoneTxt').innerHTML = registrado
+    ? '<b>Pedido recebido!</b> Um especialista da GestiHub vai entrar em contato pelo telefone informado. Se quiser adiantar, mande uma mensagem:'
+    : '<b>Falta só um passo.</b> Mande a mensagem pronta para a GestiHub no WhatsApp e um especialista responde para marcar a reunião.';
+  $('leadWa').href = waLink(leadFrase());
+  $('leadDone').hidden = false;
+  $('leadDone').scrollIntoView({block: 'nearest', behavior: reduzMovT ? 'auto' : 'smooth'});
 }
+const reduzMovT = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
 $('leadEnviar').addEventListener('click', async () => {
   if(!leadValida()) return;
-  const b = $('leadEnviar'), antes = b.textContent; b.disabled = true; b.textContent = 'Enviando…';
+  const b = $('leadEnviar'), antes = b.textContent;
+  if(!crmAtivo()){ leadPos(false); return; }
+  b.disabled = true; b.textContent = 'Enviando…';
   const quando = new Date().toLocaleString('pt-BR');
   try{
-    await enviarCRM({nome: $('leadNome').value.trim(), tel: $('leadTel').value.trim(), cargo: $('leadCargo').value, assoc: ($('leadAssoc').value || $('nome').value || '').trim(), cidade: $('leadCidade').value.trim(),
-      msg: $('leadMsg').value + '\n\nAutorizou o contato e o envio do resumo em ' + quando + ' (Raio-X SUSEP, ' + (ajudaCtx || 'site') + ').'});
-    $('leadDone').textContent = 'Pedido recebido! Um especialista da GestiHub vai entrar em contato pelo telefone informado para marcar a reunião.';
+    const campo = (id => { const el = $(id); return el ? String(el.value || '').trim() : ''; });
+    await enviarCRM({nome: campo('leadNome'), tel: campo('leadTel'), cargo: '', assoc: campo('leadAssoc') || campo('nome'), cidade: '',
+      msg: 'Pediu reunião pelo Raio-X SUSEP (' + (ajudaCtx || 'site') + ') em ' + quando + '. Ao enviar, autorizou o contato da GestiHub.'});
     b.textContent = 'Pedido enviado ✓';
+    marca('raiox_reuniao', 'Raio-X SUSEP · ' + (ajudaCtx || 'site'));
+    leadPos(true);
   }catch(e){
-    $('leadDone').textContent = 'Não conseguimos enviar agora. Toque em "Prefiro chamar no WhatsApp" para falar com a gente na hora.';
     b.textContent = antes; b.disabled = false;
+    leadPos(false);
   }
-  $('leadDone').hidden = false;
-});
-$('leadWa').addEventListener('click', e => {
-  if(!leadValida()){ e.preventDefault(); return; }
-  const res = enviarLead($('leadMsg').value);
-  $('leadDone').textContent = res.pronto ? 'Pedido recebido! Um especialista vai entrar em contato pelo telefone informado para marcar a reunião.' : res.aviso;
-  $('leadDone').hidden = false;
 });
 $('leadCopy').addEventListener('click', () => copiar($('leadMsg'), $('leadCopyMsg')));
 
@@ -4053,6 +4058,7 @@ function showView(v){
   document.body.dataset.view = v;
   hideTip();
   if(R) render();
+  if(v === 'resultado' && R && !R.incompleto && !window.__marcouRes){ window.__marcouRes = true; marca('raiox_resultado', modoP === 'exemplo' ? 'exemplo ' + exN + ' placas' : 'números próprios'); }
   marcarJornada();
   corTopo();
   lembrar();
@@ -4373,6 +4379,7 @@ async function entregarRelatorio(botao, gera, ext, tipo, pronto){
       setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 1500);
     }
     botao.textContent = pronto;
+    marca('raiox_relatorio', ext);
   }catch(e){ botao.textContent = 'Não deu para gerar. Tente de novo'; }
   setTimeout(() => { botao.textContent = antes; botao.disabled = false; }, 2500);
 }
