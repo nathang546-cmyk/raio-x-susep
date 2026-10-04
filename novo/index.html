@@ -1296,6 +1296,39 @@ body[data-view="inicio"] .hero{padding-top:160px}
 .hm-faixa em{font-style:normal;color:var(--muted);font-size:.78rem;line-height:1.35}
 .hm-faixa .hf-rec b{color:var(--accent)}
 @media (max-width:640px){.hm-faixa{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}.hm-faixa .hf-k{grid-column:1/-1}}
+.rx-frase{margin:0;padding:4px 0 4px 18px;border-left:4px solid var(--accent);font:600 clamp(1.25rem,2.4vw,1.6rem)/1.3 var(--f-display);color:var(--ink);letter-spacing:-.01em}
+.rx-res{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:18px 0}
+.rxr{display:grid;gap:4px;padding:2px 22px;border-left:1px solid var(--line);min-width:0}
+.rxr:first-child{border-left:0}
+.rxr-k{font:700 .72rem var(--f-body);text-transform:uppercase;letter-spacing:.1em;color:var(--muted)}
+.rxr b{font:700 clamp(1.35rem,2.6vw,1.8rem)/1.15 var(--f-display);color:var(--ink);letter-spacing:-.01em}
+.rxr small{font-size:.82rem;color:var(--muted);line-height:1.35}
+.rx-bol{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:20px 22px;display:grid;gap:14px}
+.rxb-h{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:6px 16px}
+.rxb-k{font:700 .78rem var(--f-body);text-transform:uppercase;letter-spacing:.1em;color:var(--accent)}
+.rxb-tot{font-size:.9rem;color:var(--muted)}
+.rxb-tot b{color:var(--ink);font-size:1rem}
+.rxb-bar{display:flex;gap:4px;height:14px}
+.rxb-bar i{display:block;height:100%}
+.rxb-bar i:first-child{border-radius:7px 0 0 7px}
+.rxb-bar i:last-child{border-radius:0 7px 7px 0}
+.rxb-leg{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px 22px}
+.rxb-leg li{display:grid;grid-template-columns:12px minmax(0,1fr);column-gap:10px;row-gap:2px;align-items:center;align-content:start}
+.rxb-leg li>i{width:12px;height:12px;border-radius:3px}
+.rxb-n{font-size:.88rem;color:var(--muted)}
+.rxb-leg li>b{grid-column:2;font:700 1.3rem var(--f-display);color:var(--ink)}
+.rxb-leg li>small{grid-column:2;font-size:.8rem;color:var(--muted);line-height:1.35}
+.rxb-tipos{display:flex;flex-wrap:wrap;align-items:center;gap:8px 18px;padding-top:12px;border-top:1px solid var(--line);font-size:.88rem;color:var(--muted)}
+.rxb-tk{font:700 .72rem var(--f-body);text-transform:uppercase;letter-spacing:.1em}
+.rxb-tipos b{color:var(--ink)}
+.rxb-nota{margin:0;font-size:.78rem;color:var(--muted)}
+@media (max-width:760px){
+  .rx-res{grid-template-columns:repeat(2,minmax(0,1fr));padding:4px 0}
+  .rxr{padding:14px 16px;border-left:0;border-top:1px solid var(--line)}
+  .rxr:nth-child(-n+2){border-top:0}
+  .rxr:nth-child(even){border-left:1px solid var(--line)}
+  .rxb-leg{grid-template-columns:minmax(0,1fr)}
+}
 .hm-como{background:#12131C;color:#AEB6C4;border-radius:20px;padding:18px 22px;display:grid;gap:12px}
 .hm-como-k{font:700 .8rem var(--f-display);text-transform:uppercase;letter-spacing:.08em;color:#39D0B8}
 .hm-como ol{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;counter-reset:hc}
@@ -2866,6 +2899,12 @@ function renderHead(r){
     const lin = (rot, val, sub, st) => `<li class="hm-l${st ? ' ' + st : ''}"><span class="hm-r">${rot}</span><span class="hm-v"><span class="hm-vv">${val}</span><small>${sub || '&nbsp;'}</small></span></li>`;
     const ic = okk => okk ? '<i class="hm-ok" aria-label="em dia">✓</i>' : '';
     const nEx = r.docsFalta.length;
+    const kpi = (rot, val, sub) => `<div class="rxr"><span class="rxr-k">${rot}</span><b>${val}</b><small>${sub}</small></div>`;
+    const partesB = [
+      ['Taxa administrativa', r.admR, '#2B3140', 'Mantém a administração. Vai para a administradora.'],
+      ['Rateio', r.rateioR, '#0B7F72', 'Paga os eventos do mês. Vai para o grupo.'],
+      ['Estabilização', r.estabR, '#7FD3C5', guarda ? 'Forma a reserva até a meta. Depois, o boleto baixa.' : 'Pequena folga: a reserva já está na meta.']
+    ];
     const faltas = [guarda ? brlShort(r.faltaReserva) + ' de reserva' : '', dif <= r.ticket * .03 ? '' : brl(dif, true) + ' por placa na mensalidade', papOk ? '' : nEx + (nEx > 1 ? ' exigências pendentes' : ' exigência pendente')].filter(Boolean);
     const ctaTit = faltas.length ? (faltas.length === 1 && !papOk && nEx === 1 ? 'Falta ' : 'Faltam ') + (faltas.length > 1 ? faltas.slice(0, -1).join(', ') + ' e ' + faltas.at(-1) : faltas[0]) + '.' : 'A associação está no caminho. Falta escolher bem a administradora.';
     const vale = [
@@ -2887,29 +2926,22 @@ function renderHead(r){
         </div>
         <div class="rxh-nota"><span class="ring-big" style="--p:${r.score};--rc:${corN(r.score)}"><b>${r.score}</b><small>de 100</small></span><span class="rxh-st">${r.statusTxt}</span></div>
       </div>
-      <div class="hm">
-        <article class="hm-c hm-hoje">
-          <h3><span class="hm-tag">Hoje</span></h3>
-          <ul>
-            ${lin('Reserva para eventos', brlShort(r.reserva), 'guardada hoje', resOk ? 'ok' : 'falta')}
-            ${lin('Mensalidade média', brl(r.ticket, true), 'cobrada hoje', mensOk ? 'ok' : 'falta')}
-            ${lin('Exigências cumpridas', r.docsSim + ' de ' + DOCS.length, papOk ? 'tudo em ordem' : r.docsFalta.length + ' pendentes', papOk ? 'ok' : 'falta')}
-            ${lin('Administradora', 'Sem contrato', 'nenhuma autorizada ainda', 'falta')}
-          </ul>
-        </article>
-        <span class="hm-seta" aria-hidden="true">→</span>
-        <article class="hm-c hm-meta">
-          <h3><span class="hm-tag">Em 07/05/2028</span></h3>
-          <ul>
-            ${lin('Reserva para eventos', ic(resOk) + brlShort(r.metaReserva), resOk ? 'já atingida' : 'faltam ' + brlShort(r.faltaReserva))}
-            ${lin('Mensalidade média', ic(mensOk) + (mensOk ? brl(r.ticket, true) : brl(r.ticketCerto, true)), mensOk ? 'já cobre o mínimo de ' + brl(r.ticketCerto, true) : 'mais ' + brl(dif, true) + ' por placa')}
-            ${lin('Exigências cumpridas', ic(papOk) + DOCS.length + ' de ' + DOCS.length, papOk ? 'tudo em ordem' : 'faltam ' + r.docsFalta.length)}
-            ${lin('Administradora', 'Contrato assinado', 'com empresa autorizada pela SUSEP')}
-          </ul>
-        </article>
+      <p class="rx-frase">${ctaTit}</p>
+      <div class="rx-res">
+        ${kpi('Meta de reserva', brlShort(r.metaReserva), guarda ? 'hoje ' + brlShort(r.reserva) + ' · faltam ' + brlShort(r.faltaReserva) : 'meta já atingida')}
+        ${kpi('Guardar por mês', guarda ? brlShort(r.guardarMes) : 'R$ 0', guarda ? brl(r.guardarMes / (r.pagantes || 1), true) + ' por placa, por ' + N + ' meses' : 'só manter a reserva')}
+        ${kpi('Boleto médio certo', brl(r.ticketCerto, true), mensOk ? 'hoje ' + brl(r.ticket, true) + ': já cobre' : 'hoje ' + brl(r.ticket, true) + ': mais ' + brl(dif, true))}
+        ${kpi('Exigências', r.docsSim + ' de ' + DOCS.length, papOk ? 'tudo em ordem' : nEx + ' pendentes')}
       </div>
+      <section class="rx-bol" aria-label="O boleto no modelo novo">
+        <div class="rxb-h"><span class="rxb-k">O boleto no modelo novo</span><span class="rxb-tot">Boleto médio certo <b>${brl(r.ticketCerto, true)}</b> · hoje ${brl(r.ticket, true)}</span></div>
+        <div class="rxb-bar" aria-hidden="true">${partesB.map(x => `<i style="flex:${Math.max(.01, x[1]).toFixed(2)} 1 0;background:${x[2]}"></i>`).join('')}</div>
+        <ul class="rxb-leg">${partesB.map(x => `<li><i style="background:${x[2]}"></i><span class="rxb-n">${x[0]}</span><b>${brl(x[1], true)}</b><small>${x[3]}</small></li>`).join('')}</ul>
+        ${r.ativos.length > 1 ? `<div class="rxb-tipos"><span class="rxb-tk">Por tipo de veículo</span>${r.ativos.map(t => `<span><b>${brl(t.boleto, true)}</b> ${t.n.toLowerCase()}</span>`).join('')}</div>` : ''}
+        <p class="rxb-nota">Valores médios por placa. A SUSEP exige o boleto separado nessas 3 partes (Res. CNSP 491, art. 70).</p>
+      </section>
       <div class="hm-como">
-        <span class="hm-como-k">Como chegar</span>
+        <span class="hm-como-k">Próximos passos</span>
         <ol>
           <li><b>${guarda ? 'Guardar ' + brlShort(r.guardarMes) + ' por mês' : 'Manter a reserva'}</b><span>${guarda ? brl(r.guardarMes / (r.pagantes || 1), true) + ' por placa, nos ' + N + ' meses que faltam' : 'Ela já cobre a meta'}</span></li>
           <li><b>${mensOk ? 'Separar o boleto em 3 partes' : 'Ajustar a mensalidade'}</b><span>${mensOk ? 'Taxa, rateio e estabilização, como a SUSEP exige' : 'Mais ' + brl(dif, true) + ' por placa, conforme o veículo'}</span></li>
@@ -2920,7 +2952,7 @@ function renderHead(r){
       <div class="rx-cta">
         <div class="rx-cta-t">
           <span class="rx-cta-k">A GestiHub leva a sua associação até lá</span>
-          <b>${ctaTit}</b>
+          <b>Quer ajuda para cumprir este plano?</b>
           <ul class="rx-cta-l">${vale.map(v => `<li><b>${v[0]}</b><span>${v[1]}</span></li>`).join('')}</ul>
         </div>
         <div class="rx-cta-b"><button type="button" class="btn big" data-ajuda="resultado: como chegar">Quero uma reunião</button><small>30 minutos com um especialista</small></div>
@@ -4109,7 +4141,7 @@ async function desenhaRelatorio(escala){
   // dados
   const nomeA = ($('nome').value || '').trim() || 'Sua associação';
   const guarda = r.guardarMes > .5, dif = r.ticketCerto - r.ticket, mensOk = dif <= .5;
-  const frase = (document.querySelector('.rx-cta-t b') || {}).textContent || '';
+  const frase = (document.querySelector('.rx-frase') || {}).textContent || '';
   const passos = [...document.querySelectorAll('.hm-como li b')].slice(0, 3).map(b => b.textContent);
   const quando = new Date().toLocaleDateString('pt-BR', {month: 'long', year: 'numeric'});
   const corN = n => n >= 75 ? '#16A06A' : n >= 50 ? '#C98A12' : '#C8402A';
