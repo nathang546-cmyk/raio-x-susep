@@ -1875,7 +1875,7 @@ body[data-view="inicio"] .hero{padding-top:160px}
     <div class="rkpis" id="rhKpis"></div>
     <div class="rh-acts">
       <a class="btn small btn-wa" id="rhWa" href="https://wa.me/" target="_blank" rel="noopener">Mandar o resumo no WhatsApp</a>
-      <button type="button" class="btn small ghost" id="rhPrint">Imprimir ou salvar PDF</button>
+      <button type="button" class="btn small ghost" id="rhPrint">Baixar resumo em imagem</button>
       <a class="btn small ghost" href="#diagnostico">Editar respostas</a>
     </div>
   </section>
@@ -3505,7 +3505,7 @@ function renderPlano(r){
   $('timeline').innerHTML = P.filter(p => p.L.length).map((p, i) => `
     <div class="phase">
       <div class="when"><b>${mesesTxt(p.a, p.b)}</b><span>${p.a === p.b ? mesLabel(p.a-1+off) : mesLabel(p.a-1+off) + ' a ' + mesLabel(p.b-1+off)}</span></div>
-      <div class="phase-body"><details class="phase-d"><summary><h3>${p.h}</h3><span class="cnt">${p.L.length} tarefas</span></summary><ul class="tasks">${p.L.join('')}</ul></details></div>
+      <div class="phase-body"><details class="phase-d"${i === 0 ? " open" : ""}><summary><h3>${p.h}</h3><span class="cnt">${p.L.length} tarefas</span></summary><ul class="tasks">${p.L.join('')}</ul></details></div>
     </div>`).join('') + `
     <div class="phase final">
       <div class="when"><b>07/05/2028</b><span>prazo da regra</span></div>
@@ -4081,7 +4081,133 @@ $('stNext').addEventListener('click', () => passo < STEPS.length ? showStep(pass
   els.forEach(e => io.observe(e));
 })();
 $('heroEx').addEventListener('click', () => { $('btnExemplo').click(); irPara('resultado'); });
-$('rhPrint').addEventListener('click', () => window.print());
+// resumo do resultado em imagem (1080 x 1400), para mandar à diretoria ou no WhatsApp
+async function resumoImagem(){
+  const r = R; if(!r || r.incompleto) return null;
+  try{ await Promise.all(['700 48px Poppins', '600 28px Poppins', '400 26px "Public Sans"', '600 26px "Public Sans"', '700 26px "Public Sans"'].map(f => document.fonts.load(f))); }catch(e){}
+  const W = 1080, H = 1400, c = document.createElement('canvas'); c.width = W; c.height = H;
+  const g = c.getContext('2d');
+  const VERDE = '#11A594', VERDE2 = '#0B7F72', CLARO = '#39D0B8', TINTA = '#12131C', CINZA = '#5B6472', LINHA = '#E3E8EE', FUNDO = '#F4F7F8', VERM = '#D9482B', OK = '#16A06A';
+  const fP = (w, s) => `${w} ${s}px Poppins, "Segoe UI", sans-serif`, fB = (w, s) => `${w} ${s}px "Public Sans", "Segoe UI", sans-serif`;
+  const caixa = (x, y, w, h, rad, cor, borda) => { g.beginPath(); if(g.roundRect) g.roundRect(x, y, w, h, rad); else g.rect(x, y, w, h); if(cor){ g.fillStyle = cor; g.fill(); } if(borda){ g.lineWidth = 2; g.strokeStyle = borda; g.stroke(); } };
+  const txt = (s, x, y, font, cor, al) => { g.font = font; g.fillStyle = cor; g.textAlign = al || 'left'; g.fillText(s, x, y); return g.measureText(s).width; };
+  const corta = (s, font, maxW) => { g.font = font; if(g.measureText(s).width <= maxW) return s; while(s.length > 3 && g.measureText(s + '…').width > maxW) s = s.slice(0, -1); return s + '…'; };
+  const quebra = (s, x, y, maxW, lh, font, cor, maxL) => {
+    g.font = font; g.fillStyle = cor; g.textAlign = 'left';
+    const ws = String(s).split(' '); let l = '', n = 0;
+    for(const w of ws){ const t = l ? l + ' ' + w : w; if(g.measureText(t).width > maxW && l){ if(n === (maxL || 3) - 1){ g.fillText(corta(l + ' ' + w, font, maxW), x, y + n * lh); return n + 1; } g.fillText(l, x, y + n * lh); n++; l = w; } else l = t; }
+    if(l){ g.fillText(l, x, y + n * lh); n++; } return n;
+  };
+  const espaco = v => { try{ g.letterSpacing = v; }catch(e){} };
+  const logo = async sel => { const el = document.querySelector(sel); if(!el) return null; const im = new Image(); im.src = el.src; try{ await im.decode(); }catch(e){ return null; } return im; };
+  const [logoB, logoC] = await Promise.all([logo('.gh-logo'), logo('.gh-logo-cor')]);
+
+  // dados
+  const nomeA = ($('nome').value || '').trim() || 'Sua associação';
+  const guarda = r.guardarMes > .5, dif = r.ticketCerto - r.ticket, mensOk = dif <= .5, papOk = !r.docsFalta.length, resOk = !guarda;
+  const verd = (document.querySelector('.rxh-verd') || {}).innerText || r.statusTxt || '';
+  const passos = [...document.querySelectorAll('.hm-como li')].map(li => [(li.querySelector('b') || {}).textContent || '', (li.querySelector('span') || {}).textContent || '']);
+  const corN = n => n >= 75 ? OK : n >= 50 ? '#D99A1E' : VERM;
+
+  // fundo e topo
+  g.fillStyle = FUNDO; g.fillRect(0, 0, W, H);
+  g.fillStyle = TINTA; g.fillRect(0, 0, W, 140);
+  let gr = g.createRadialGradient(W, 0, 0, W, 0, 560); gr.addColorStop(0, 'rgba(57,208,184,.32)'); gr.addColorStop(1, 'rgba(57,208,184,0)'); g.fillStyle = gr; g.fillRect(0, 0, W, 140);
+  let x = 60; x += txt('Raio-', x, 86, fP(700, 40), '#FFFFFF'); x += txt('X', x, 86, fP(700, 40), CLARO); x += txt(' SUSEP', x, 86, fP(700, 40), '#FFFFFF');
+  g.fillStyle = 'rgba(255,255,255,.25)'; g.fillRect(x + 22, 52, 2, 46);
+  txt('por', x + 46, 84, fB(400, 22), '#AEB6C4');
+  if(logoB){ const lh = 30, lw = logoB.naturalWidth * lh / logoB.naturalHeight; g.drawImage(logoB, x + 88, 59, lw, lh); }
+  const quando = new Date().toLocaleDateString('pt-BR', {month: 'long', year: 'numeric'});
+  txt('Diagnóstico de ' + quando, W - 60, 84, fB(400, 22), '#AEB6C4', 'right');
+
+  // cartão da associação
+  caixa(40, 172, 1000, 236, 28, '#FFFFFF', LINHA);
+  espaco('3px'); txt('RESULTADO DO DIAGNÓSTICO', 80, 226, fB(700, 20), VERDE2); espaco('0px');
+  txt(corta(nomeA, fP(700, 46), 700), 80, 282, fP(700, 46), TINTA);
+  quebra(verd, 80, 324, 700, 34, fB(400, 25), CINZA, 2);
+  // nota
+  const cx = 920, cy = 290, rad = 74;
+  g.lineWidth = 16; g.lineCap = 'round';
+  g.beginPath(); g.arc(cx, cy, rad, 0, Math.PI * 2); g.strokeStyle = '#E8ECEF'; g.stroke();
+  g.beginPath(); g.arc(cx, cy, rad, -Math.PI / 2, -Math.PI / 2 + Math.PI * 2 * Math.max(.02, r.score / 100)); g.strokeStyle = corN(r.score); g.stroke();
+  txt(String(r.score), cx, cy + 14, fP(700, 50), TINTA, 'center');
+  txt('de 100', cx, cy + 42, fB(400, 18), CINZA, 'center');
+  txt(r.statusTxt || '', cx, 394, fB(700, 18), TINTA, 'center');
+
+  // números da associação
+  const chips = [int(r.placas) + ' placas', brlShort(r.receitaMes) + ' de faturamento por mês', pct(r.sin, 0) + ' vai para eventos'];
+  let px = 40;
+  chips.forEach(ch => { g.font = fB(600, 22); const w = g.measureText(ch).width + 40; caixa(px, 432, w, 50, 25, '#FFFFFF', LINHA); txt(ch, px + 20, 465, fB(600, 22), TINTA); px += w + 12; });
+
+  // hoje x meta
+  const colW = 470, y0 = 512, ch = 330;
+  caixa(40, y0, colW, ch, 26, '#FFFFFF', LINHA);
+  caixa(570, y0, colW, ch, 26, '#FFFFFF', VERDE);
+  caixa(70, y0 + 28, 104, 40, 20, '#EEF1F4'); espaco('2px'); txt('HOJE', 122, y0 + 55, fB(700, 18), CINZA, 'center'); espaco('0px');
+  caixa(600, y0 + 28, 210, 40, 20, VERDE); espaco('2px'); txt('EM 07/05/2028', 705, y0 + 55, fB(700, 18), '#FFFFFF', 'center'); espaco('0px');
+  const linhas = [
+    ['Reserva', brlShort(r.reserva), resOk ? OK : VERM, brlShort(r.metaReserva), resOk ? 'já atingida' : 'faltam ' + brlShort(r.faltaReserva)],
+    ['Mensalidade', brl(r.ticket, true), mensOk ? OK : VERM, brl(mensOk ? r.ticket : r.ticketCerto, true), mensOk ? 'já cobre o mínimo' : 'mais ' + brl(dif, true) + ' por placa'],
+    ['Exigências', r.docsSim + ' de ' + DOCS.length, papOk ? OK : VERM, DOCS.length + ' de ' + DOCS.length, papOk ? 'tudo em ordem' : 'faltam ' + r.docsFalta.length],
+    ['Administradora', 'Sem contrato', VERM, 'Contrato assinado', 'autorizada pela SUSEP']
+  ];
+  linhas.forEach((l, i) => {
+    const y = y0 + 112 + i * 58;
+    if(i){ g.fillStyle = LINHA; g.fillRect(70, y - 34, colW - 60, 2); g.fillRect(600, y - 34, colW - 60, 2); }
+    txt(l[0], 70, y, fB(400, 22), CINZA);
+    txt(l[1], 40 + colW - 30, y, fP(700, 26), l[2], 'right');
+    txt(l[0], 600, y, fB(400, 22), CINZA);
+    txt(l[3], 570 + colW - 30, y - 4, fP(700, i === 3 ? 22 : 26), VERDE2, 'right');
+    txt(l[4], 570 + colW - 30, y + 18, fB(400, 15), CINZA, 'right');
+  });
+  g.beginPath(); g.arc(540, y0 + ch / 2, 26, 0, Math.PI * 2); g.fillStyle = VERDE; g.fill();
+  txt('→', 540, y0 + ch / 2 + 10, fP(700, 28), '#FFFFFF', 'center');
+
+  // como chegar
+  const yc = 856;
+  caixa(40, yc, 1000, 276, 26, '#FFFFFF', LINHA);
+  espaco('3px'); txt('COMO CHEGAR', 80, yc + 48, fB(700, 20), VERDE2); espaco('0px');
+  passos.slice(0, 4).forEach((p, i) => {
+    const bx = 80 + (i % 2) * 480, by = yc + 86 + Math.floor(i / 2) * 98;
+    caixa(bx, by - 4, 40, 40, 12, '#E7F6F3'); txt(String(i + 1), bx + 20, by + 24, fP(700, 22), VERDE2, 'center');
+    txt(corta(p[0], fP(600, 23), 380), bx + 58, by + 16, fP(600, 23), TINTA);
+    quebra(p[1], bx + 58, by + 42, 390, 23, fB(400, 18), CINZA, 2);
+  });
+
+  // chamada da GestiHub
+  const yf = 1150;
+  gr = g.createLinearGradient(0, yf, W, H); gr.addColorStop(0, VERDE2); gr.addColorStop(1, VERDE);
+  g.fillStyle = gr; g.fillRect(0, yf, W, H - yf);
+  txt('Quer ajuda para cumprir esse plano?', 60, yf + 64, fP(700, 34), '#FFFFFF');
+  quebra('A GestiHub organiza a reserva, o boleto e as exigências com a sua associação, até a administradora.', 60, yf + 104, 640, 30, fB(400, 22), 'rgba(255,255,255,.88)', 2);
+  caixa(60, yf + 138, 330, 44, 22, 'rgba(255,255,255,.16)');
+  txt('WhatsApp (11) 5178-5642', 225, yf + 167, fB(700, 20), '#FFFFFF', 'center');
+  txt('gestihub.com.br', 414, yf + 167, fB(600, 20), '#FFFFFF');
+  const lg = logoC || logoB; if(lg){ const lh = 34, lw = lg.naturalWidth * lh / lg.naturalHeight; caixa(W - 60 - lw - 40, yf + 30, lw + 40, lh + 28, (lh + 28) / 2, '#FFFFFF'); g.drawImage(lg, W - 60 - lw - 20, yf + 44, lw, lh); }
+  txt('Simulação feita no Raio-X SUSEP. Não substitui advogado, contador ou atuário.', 60, H - 26, fB(400, 15), 'rgba(255,255,255,.7)');
+
+  return new Promise(ok => c.toBlob(b => ok(b), 'image/png'));
+}
+$('rhPrint').addEventListener('click', async () => {
+  const b = $('rhPrint'), antes = b.textContent;
+  b.disabled = true; b.textContent = 'Gerando a imagem…';
+  try{
+    const blob = await resumoImagem(); if(!blob) throw new Error('sem resultado');
+    const nomeA = ($('nome').value || '').trim() || 'associacao';
+    const arq = 'raio-x-susep-' + nomeA.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') + '.png';
+    const file = new File([blob], arq, {type: 'image/png'});
+    const toque = window.matchMedia && matchMedia('(pointer: coarse)').matches;
+    if(toque && navigator.canShare && navigator.canShare({files: [file]})){
+      try{ await navigator.share({files: [file], title: 'Raio-X SUSEP'}); }catch(e){}
+    } else {
+      const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = arq;
+      document.body.appendChild(a); a.click();
+      setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 1500);
+    }
+    b.textContent = 'Imagem pronta ✓';
+  }catch(e){ b.textContent = 'Não deu para gerar. Tente de novo'; }
+  setTimeout(() => { b.textContent = antes; b.disabled = false; }, 2500);
+});
 // o caminho agora fica no plano, fora do formulário
 document.querySelectorAll('input[name="caminho"]').forEach(x => x.addEventListener('change', () => { markMine(); render(); }));
 // quem sai do exemplo para calcular começa com o formulário vazio
