@@ -1330,6 +1330,18 @@ body[data-view="inicio"] .hero{padding-top:160px}
   .rxb-leg{grid-template-columns:minmax(0,1fr)}
 }
 #rhKpis.rkpis{gap:32px}
+#rhKpis .rx-cta{background:radial-gradient(700px 320px at 100% 0,rgba(57,208,184,.2),transparent 60%),#12131C!important;border:0!important;box-shadow:0 18px 40px -24px rgba(18,19,28,.6)}
+#rhKpis .rx-cta-k{color:#39D0B8}
+#rhKpis .rx-cta-t>b{color:#FFFFFF;font-size:1.3rem}
+#rhKpis .rx-cta-l li{background:rgba(255,255,255,.05)!important;border-color:rgba(255,255,255,.1)!important}
+#rhKpis .rx-cta-l li::before{background:#11A594!important}
+#rhKpis .rx-cta-l li b{color:#FFFFFF!important}
+#rhKpis .rx-cta-l li span{color:#AEB6C4!important}
+#rhKpis .rx-cta-b .btn{background:#11A594;border-color:#11A594;color:#FFFFFF;box-shadow:0 10px 24px -10px rgba(17,165,148,.9)}
+#rhKpis .rx-cta-b .btn:hover{background:#0B7F72;border-color:#0B7F72}
+#rhKpis .rx-cta-b small{color:#8C94A3}
+.rxr small{line-height:1.55!important}
+.rxr small b{font:700 .82rem/1.55 var(--f-body)!important;color:var(--ink)!important;letter-spacing:0!important}
 #rhKpis .rx-frase{margin:8px 0 -6px}
 #rhKpis .rx-res{padding:26px 0}
 #rhKpis .rxr{gap:6px;padding:2px 28px}
@@ -2937,10 +2949,10 @@ function renderHead(r){
       </div>
       <p class="rx-frase">${ctaTit}</p>
       <div class="rx-res">
-        ${kpi('Meta de reserva', brlShort(r.metaReserva), guarda ? 'hoje ' + brlShort(r.reserva) + ' · faltam ' + brlShort(r.faltaReserva) : 'meta já atingida')}
-        ${kpi('Guardar por mês', guarda ? brlShort(r.guardarMes) : 'R$ 0', guarda ? brl(r.guardarMes / (r.pagantes || 1), true) + ' por placa, por ' + N + ' meses' : 'só manter a reserva')}
-        ${kpi('Boleto médio certo', brl(r.ticketCerto, true), mensOk ? 'hoje ' + brl(r.ticket, true) + ': já cobre' : 'hoje ' + brl(r.ticket, true) + ': mais ' + brl(dif, true))}
-        ${kpi('Exigências', r.docsSim + ' de ' + DOCS.length, papOk ? 'tudo em ordem' : nEx + ' pendentes')}
+        ${kpi('Meta de reserva', brlShort(r.metaReserva), 'Reserva hoje: <b>' + brlShort(r.reserva) + '</b><br>' + (guarda ? 'Faltam: <b>' + brlShort(r.faltaReserva) + '</b>' : 'Meta já atingida'))}
+        ${kpi('Guardar por mês', guarda ? brlShort(r.guardarMes) : 'R$ 0', guarda ? 'Por placa: <b>' + brl(r.guardarMes / (r.pagantes || 1), true) + '</b><br>Prazo: <b>' + N + ' meses</b>' : 'Só manter a reserva')}
+        ${kpi('Boleto médio certo', brl(r.ticketCerto, true), 'Cobrado hoje: <b>' + brl(r.ticket, true) + '</b><br>' + (mensOk ? 'Já cobre o valor certo' : 'Diferença: <b>+' + brl(dif, true) + '</b> por placa'))}
+        ${kpi('Exigências', r.docsSim + ' de ' + DOCS.length, 'Cumpridas: <b>' + r.docsSim + '</b><br>' + (papOk ? 'Tudo em ordem' : 'Pendentes: <b>' + nEx + '</b>'))}
       </div>
       <section class="rx-bol" aria-label="O boleto no modelo novo">
         <div class="rxb-h"><span class="rxb-k">O boleto no modelo novo</span><span class="rxb-tot">Boleto médio certo <b>${brl(r.ticketCerto, true)}</b> · hoje ${brl(r.ticket, true)}</span></div>
@@ -4179,10 +4191,10 @@ async function desenhaRelatorio(escala){
   secao('RESUMO', 510);
   const col = CW / 4;
   const kpis = [
-    ['META DE RESERVA', brlShort(r.metaReserva), guarda ? `hoje ${brlShort(r.reserva)}` : 'meta já atingida'],
-    ['GUARDAR POR MÊS', guarda ? brlShort(r.guardarMes) : 'R$ 0', guarda ? `até 07/05/2028` : 'só manter a reserva'],
-    ['BOLETO MÉDIO CERTO', brl(r.ticketCerto, true), mensOk ? `hoje ${brl(r.ticket, true)}: já cobre` : `hoje ${brl(r.ticket, true)}`],
-    ['EXIGÊNCIAS', `${r.docsSim} de ${DOCS.length}`, r.docsFalta.length ? `${r.docsFalta.length} pendentes` : 'tudo em ordem']
+    ['META DE RESERVA', brlShort(r.metaReserva), guarda ? `Reserva hoje: ${brlShort(r.reserva)}` : 'Meta já atingida'],
+    ['GUARDAR POR MÊS', guarda ? brlShort(r.guardarMes) : 'R$ 0', guarda ? `Por placa: ${brl(r.guardarMes / (r.pagantes || 1), true)}` : 'Só manter a reserva'],
+    ['BOLETO MÉDIO CERTO', brl(r.ticketCerto, true), `Cobrado hoje: ${brl(r.ticket, true)}`],
+    ['EXIGÊNCIAS', `${r.docsSim} de ${DOCS.length}`, r.docsFalta.length ? `Pendentes: ${r.docsFalta.length}` : 'Tudo em ordem']
   ];
   kpis.forEach((k, i) => {
     const x = M + i * col + (i ? 28 : 0);
