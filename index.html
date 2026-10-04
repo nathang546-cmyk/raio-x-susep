@@ -1553,7 +1553,7 @@ body.modal-on{overflow:hidden}
         <div class="field" style="grid-column:1/-1"><label for="leadCidade">Cidade e estado</label><div class="input compact text"><input id="leadCidade" autocomplete="address-level2" placeholder="Ex.: Belo Horizonte/MG"></div></div>
       </div>
       <label class="check"><input type="checkbox" id="leadOk"> <span>Autorizo a GestiHub a entrar em contato comigo e a receber o resumo do meu Raio-X. <a href="https://www.gestihub.com.br/politica-de-privacidade.html" target="_blank" rel="noopener">Política de privacidade</a></span></label>
-      <div class="copyrow"><button type="button" class="btn big" id="leadWa">Quero uma reunião</button><span class="err" id="leadErr" aria-live="polite"></span></div>
+      <div class="copyrow lead-acts"><button type="button" class="btn big" id="leadEnviar" hidden>Solicitar contato</button><button type="button" class="btn big" id="leadWa">Quero uma reunião</button><span class="err" id="leadErr" aria-live="polite"></span></div>
       <p class="hint" id="leadComo">Seus dados vão só para a GestiHub. A reunião é gratuita e online.</p>
       <p class="ok-msg lead-ok" id="leadDone" hidden></p>
       <details class="more" hidden><summary>Ver ou copiar a mensagem</summary><div><textarea id="leadMsg" readonly aria-label="Mensagem para a GestiHub"></textarea><div class="copyrow"><button type="button" class="btn small" id="leadCopy">Copiar mensagem</button><span class="ok-msg" id="leadCopyMsg" aria-live="polite"></span></div></div></details>
@@ -2919,23 +2919,68 @@ $('leadForm').addEventListener('input', leadUpd);
 $('leadForm').addEventListener('change', leadUpd);
 $('leadForm').addEventListener('submit', e => e.preventDefault());
 /* Envio do pedido de reunião.
-   Hoje: abre o WhatsApp da GestiHub com o pedido pronto.
-   Próximo passo: trocar o corpo desta função por um envio direto ao CRM da GestiHub (fetch/POST) e
-   mostrar a confirmação "Pedido recebido" sem depender do WhatsApp. */
+   CRM: formulário público do CRM da GestiHub. Com o slug preenchido, aparece o botão "Solicitar contato",
+   que manda o lead direto para o CRM. Sem o slug, fica só o WhatsApp. */
+const CRM_FORM = {api: 'https://app.gestihub.com.br/api/crm/forms/public/', slug: ''};
+const crmAtivo = () => !!CRM_FORM.slug;
 function enviarLead(msg){
   window.open(waLink(msg), '_blank', 'noopener');
   return {pronto:false, aviso:'Abrimos o WhatsApp da GestiHub com o seu pedido. Toque em enviar lá para concluir: um especialista responde para marcar a reunião.'};
 }
-$('leadWa').addEventListener('click', e => {
+// lê os campos do formulário do CRM e preenche cada um pelo tipo ou pelo nome
+async function enviarCRM(d){
+  const base = CRM_FORM.api + encodeURIComponent(CRM_FORM.slug);
+  const fr = await fetch(base, {headers: {Accept: 'application/json'}});
+  if(!fr.ok) throw new Error('formulário indisponível');
+  const form = await fr.json(), values = {};
+  const sa = s => String(s || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+  (form.fields || []).forEach(f => {
+    const l = sa(f.label);
+    const v = f.type === 'checkbox' ? (/autoriz|consent|aceit|lgpd/.test(l) ? true : '')
+      : /cargo/.test(l) ? d.cargo
+      : /cidade|estado|uf/.test(l) ? d.cidade
+      : f.mapping === 'company' || /associa|empresa/.test(l) ? d.assoc
+      : f.mapping === 'phone' || /telefone|whats|celular/.test(l) ? d.tel
+      : f.mapping === 'contact' || /nome/.test(l) ? d.nome
+      : f.mapping === 'message' || /mensagem|resumo|raio|observa/.test(l) ? d.msg : '';
+    if(v !== '') values[f.id] = v;
+  });
+  const r = await fetch(base + '/submissions', {method: 'POST', headers: {'Content-Type': 'application/json', Accept: 'application/json'}, body: JSON.stringify({values, website: ''})});
+  if(!r.ok){ let m = ''; try{ m = (await r.json()).message; }catch(e){} throw new Error(m || 'envio recusado'); }
+  return r.json();
+}
+function leadValida(){
   const semNome = !$('leadNome').value.trim(), semTel = !telValido($('leadTel').value), semOk = !$('leadOk').checked;
   if(semNome || semTel || semOk){
-    e.preventDefault();
     $('leadErr').textContent = semNome ? 'Escreva o seu nome.' : semTel ? 'Escreva o seu telefone com DDD.' : 'Marque a autorização para enviar.';
     (semNome ? $('leadNome') : semTel ? $('leadTel') : $('leadOk')).focus();
-    return;
+    return false;
   }
-  $('leadErr').textContent = '';
-  leadUpd();
+  $('leadErr').textContent = ''; leadUpd(); return true;
+}
+// com o CRM ligado: "Solicitar contato" é o botão principal e o WhatsApp vira a segunda opção
+if(crmAtivo()){
+  $('leadEnviar').hidden = false;
+  $('leadWa').textContent = 'Prefiro chamar no WhatsApp'; $('leadWa').classList.add('ghost');
+  $('leadComo').textContent = 'Ao solicitar, seus dados vão para a GestiHub e um especialista liga ou chama no WhatsApp para marcar a reunião. Gratuita e online.';
+}
+$('leadEnviar').addEventListener('click', async () => {
+  if(!leadValida()) return;
+  const b = $('leadEnviar'), antes = b.textContent; b.disabled = true; b.textContent = 'Enviando…';
+  const quando = new Date().toLocaleString('pt-BR');
+  try{
+    await enviarCRM({nome: $('leadNome').value.trim(), tel: $('leadTel').value.trim(), cargo: $('leadCargo').value, assoc: ($('leadAssoc').value || $('nome').value || '').trim(), cidade: $('leadCidade').value.trim(),
+      msg: $('leadMsg').value + '\n\nAutorizou o contato e o envio do resumo em ' + quando + ' (Raio-X SUSEP, ' + (ajudaCtx || 'site') + ').'});
+    $('leadDone').textContent = 'Pedido recebido! Um especialista da GestiHub vai entrar em contato pelo telefone informado para marcar a reunião.';
+    b.textContent = 'Pedido enviado ✓';
+  }catch(e){
+    $('leadDone').textContent = 'Não conseguimos enviar agora. Toque em "Prefiro chamar no WhatsApp" para falar com a gente na hora.';
+    b.textContent = antes; b.disabled = false;
+  }
+  $('leadDone').hidden = false;
+});
+$('leadWa').addEventListener('click', e => {
+  if(!leadValida()){ e.preventDefault(); return; }
   const res = enviarLead($('leadMsg').value);
   $('leadDone').textContent = res.pronto ? 'Pedido recebido! Um especialista vai entrar em contato pelo telefone informado para marcar a reunião.' : res.aviso;
   $('leadDone').hidden = false;
