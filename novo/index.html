@@ -1045,7 +1045,14 @@ body[data-view="inicio"] .fab-help{display:none!important}
 @media (prefers-reduced-motion:reduce){.hu-dot{animation:none}}
 .hero-q{display:inline-flex;align-items:center;gap:10px;margin:0;padding:8px 16px 8px 12px;border-radius:999px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);color:#D6DCE5;font:500 .95rem var(--f-body)}
 .hq-dot{flex:none;width:8px;height:8px;border-radius:50%;background:#F3B451;box-shadow:0 0 0 3px rgba(243,180,81,.18)}
-#heroQ{display:inline-block;transition:opacity .35s,transform .35s}
+#heroQ{display:inline-block;transition:opacity .35s,transform .35s;white-space:nowrap}
+.hero-q{box-sizing:border-box;max-width:100%;overflow:hidden;transition:width .4s cubic-bezier(.2,.8,.2,1)}
+.stackbar i{transition:flex .65s cubic-bezier(.2,.8,.2,1)}
+#bxArea.redesenha{animation:areaIn .8s cubic-bezier(.2,.8,.2,1)}
+@keyframes areaIn{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0 0 0 0)}}
+@property --p{syntax:'<number>';inherits:true;initial-value:0}
+#bxRing{transition:--p .65s cubic-bezier(.2,.8,.2,1)}
+@media (prefers-reduced-motion:reduce){.hero-q,.stackbar i,#bxRing{transition:none}#bxArea.redesenha{animation:none}}
 #heroQ.sai{opacity:0;transform:translateY(-6px)}
 .bx-q{display:flex;align-items:flex-start;gap:8px;margin:0;font-weight:600;font-style:italic;color:var(--ink);font-size:.95rem}
 .bx-q::before{content:"";flex:none;width:8px;height:8px;margin-top:.45em;border-radius:50%;background:#F3B451;box-shadow:0 0 0 3px rgba(243,180,81,.18)}
@@ -3961,7 +3968,7 @@ usarExemplo(1000);
 document.addEventListener('click', e => {
   const b = e.target.closest && e.target.closest('.exsize button'); if(!b) return;
   usarExemplo(+b.dataset.n);
-  if(window.pintaCapa) pintaCapa();
+  if(window.pintaCapa) pintaCapa(true);
   if(b.closest('[data-exsize="resultado"]') && modoP === 'exemplo') $('btnExemplo').click();
 });
 // quem chega pelo "Calcular agora" não vê a faixa do exemplo: ela só aparece com o exemplo aberto ou com números já preenchidos
@@ -4079,12 +4086,22 @@ $('stNext').addEventListener('click', () => passo < STEPS.length ? showStep(pass
 /* capa: exemplo ao vivo, gráficos, linha do tempo e animação ao rolar */
 (function capa(){
   const corNota = n => n >= 75 ? '#16A06A' : n >= 50 ? '#D99A1E' : '#D9482B';
-  function pintaCapa(){ try{
+  // números contam até o valor novo quando a pessoa troca o tamanho do exemplo
+  const animNum = (el, de, para, fmt) => {
+    if(!el) return; if(reduzMov || !isFinite(de) || de === para){ el.textContent = fmt(para); return; }
+    const t0 = performance.now(), ms = 650;
+    const passo = t => { const k = Math.min(1, (t - t0) / ms), e = 1 - Math.pow(1 - k, 3); el.textContent = fmt(de + (para - de) * e); if(k < 1) requestAnimationFrame(passo); };
+    requestAnimationFrame(passo);
+  };
+  let antes = null;
+  function pintaCapa(animar){ try{
     const x = calc(EXEMPLO);
+    const ant = animar ? antes : null;
+    antes = {meta: x.metaReserva, guardar: x.guardarMes, boleto: x.ticketCerto, nota: x.score};
     $('bxRing').style.setProperty('--p', x.score); $('bxRing').style.setProperty('--rc', corNota(x.score));
     // 01: reserva crescendo até a meta
-    $('bxMeta').textContent = brlShort(x.metaReserva);
-    $('bxGuardar').textContent = brlShort(x.guardarMes);
+    animNum($('bxMeta'), ant ? ant.meta : NaN, x.metaReserva, brlShort);
+    animNum($('bxGuardar'), ant ? ant.guardar : NaN, x.guardarMes, brlShort);
     const N = REG.horizonte, W = 320, H = 120, top = x.metaReserva * 1.12;
     const px = k => (k / N * W).toFixed(1), py = v => (H - v / top * H).toFixed(1);
     const pts = Array.from({length:N + 1}, (_, k) => px(k) + ',' + py(x.reserva + x.guardarMes * k));
@@ -4092,16 +4109,20 @@ $('stNext').addEventListener('click', () => passo < STEPS.length ? showStep(pass
       <line x1="0" x2="${W}" y1="${py(x.metaReserva)}" y2="${py(x.metaReserva)}" style="stroke:var(--muted)" stroke-width="1.5" stroke-dasharray="5 5" vector-effect="non-scaling-stroke"/>
       <polygon points="0,${H} ${pts.join(' ')} ${W},${H}" fill="url(#gArea)"/>
       <polyline points="${pts.join(' ')}" fill="none" style="stroke:var(--accent)" stroke-width="3" stroke-linecap="round" vector-effect="non-scaling-stroke"/>`;
+    if(animar && !reduzMov){ const a = $('bxArea'); a.classList.remove('redesenha'); void a.getBoundingClientRect(); a.classList.add('redesenha'); }
     // 02: as 3 partes do boleto
     const partes = [['Taxa administrativa', x.admR, '--s-adm'], ['Rateio', x.rateioR, '--s-ev'], ['Estabilização', x.estabR, '--s-res']];
-    $('bxBoleto').textContent = brl(x.ticketCerto, true);
-    $('bxStack').innerHTML = partes.map(p => `<i style="flex:${p[1].toFixed(2)} 1 0;background:var(${p[2]})"></i>`).join('');
+    animNum($('bxBoleto'), ant ? ant.boleto : NaN, x.ticketCerto, v => brl(v, true));
+    // as barras deslizam para o tamanho novo
+    const barras = $('bxStack').children;
+    if(barras.length === partes.length) partes.forEach((p, i) => barras[i].style.flex = p[1].toFixed(2) + ' 1 0');
+    else $('bxStack').innerHTML = partes.map(p => `<i style="flex:${p[1].toFixed(2)} 1 0;background:var(${p[2]})"></i>`).join('');
     $('bxStackLeg').innerHTML = partes.map(p => `<li><i style="background:var(${p[2]})"></i>${p[0]}<b>${brl(p[1], true)}</b></li>`).join('');
     // 03: fases do plano com os meses que faltam hoje
     const FZ = fasesPlano(REG.horizonte);
     document.querySelectorAll('#bxFases li span').forEach((sp, i) => sp.textContent = mesesTxt(FZ[i].a, FZ[i].b));
     // +: nota e prioridades
-    $('bxNota').textContent = x.score;
+    animNum($('bxNota'), ant ? ant.nota : NaN, x.score, v => String(Math.round(v)));
     $('bxSin').textContent = pct(x.sin, 0); $('bxInad').textContent = pct(x.inad, 0); $('bxQb').textContent = isFinite(x.qb) ? x.qb + '/100' : '–';
     const pr = prioridades(x).slice(0, 3);
     if(pr.length) $('bxPrio').innerHTML = pr.map(p => `<li>${p.t}</li>`).join('');
@@ -4115,8 +4136,16 @@ $('stNext').addEventListener('click', () => passo < STEPS.length ? showStep(pass
     let hq = 0;
     setInterval(() => {
       if(document.hidden || $('view-inicio').hidden) return;
-      const el = $('heroQ'); el.classList.add('sai');
-      setTimeout(() => { hq = (hq + 1) % HQ.length; el.textContent = HQ[hq]; el.classList.remove('sai'); }, 350);
+      const el = $('heroQ'), box = el.parentElement;
+      box.style.width = box.getBoundingClientRect().width + 'px';
+      el.classList.add('sai');
+      setTimeout(() => {
+        hq = (hq + 1) % HQ.length; el.textContent = HQ[hq];
+        const de = box.style.width; box.style.width = 'auto';
+        const para = box.getBoundingClientRect().width + 'px';
+        box.style.width = de; void box.getBoundingClientRect();
+        box.style.width = para; el.classList.remove('sai');
+      }, 350);
     }, 3200);
   }
   $('heroFalta').textContent = df <= 0 ? 'O prazo chegou.' : mf >= 2 ? `Faltam ${mf} meses.` : `Faltam ${df} dias.`;
