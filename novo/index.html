@@ -1251,6 +1251,11 @@ body[data-view="inicio"] .hero{padding-top:160px}
 .rh-ex-tag{background:#12131C;color:#39D0B8;font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:5px 11px;border-radius:999px}
 .rh-ex-txt{flex:1;min-width:180px;color:var(--muted);font-size:.93rem}
 .rh-ex .btn{margin-left:auto}
+.rh-ex{display:grid!important;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:12px 16px!important;padding:10px 12px!important}
+.rh-ex-mid{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;min-width:0}
+.rh-ex .btn{margin-left:0!important;white-space:nowrap}
+@media (max-width:900px){.rh-ex{grid-template-columns:auto minmax(0,1fr)!important}.rh-ex .btn{grid-column:1/-1;justify-self:start}}
+@media (max-width:560px){.rh-ex{grid-template-columns:minmax(0,1fr)!important;justify-items:start}.rh-ex-mid{width:100%}.rh-ex .btn{width:100%;justify-content:center;justify-self:stretch}}
 @media (max-width:560px){.rh-ex .btn{flex:1 1 100%}}
 .rh-top{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap}
 .rh-top h1{font:700 clamp(1.7rem,3.6vw,2.4rem)/1.15 var(--f-display);margin-top:4px}
@@ -1858,7 +1863,7 @@ body[data-view="inicio"] .hero{padding-top:160px}
 
 <div class="wrap results view" id="view-resultado" data-view="resultado" hidden>
   <section class="rhead" id="resultado-topo">
-    <div class="rh-ex" id="rhEx" hidden><span class="rh-ex-tag">Exemplo</span><span class="rh-ex-txt">Associação fictícia com</span><div class="exsize" role="radiogroup" aria-label="Tamanho da associação do exemplo" data-exsize="resultado"><button type="button" role="radio" data-n="500" aria-checked="false">500</button><button type="button" role="radio" data-n="1000" aria-checked="true">1.000</button><button type="button" role="radio" data-n="2000" aria-checked="false">2.000</button><button type="button" role="radio" data-n="5000" aria-checked="false">5.000</button><span>placas</span></div><span class="rh-ex-txt rh-ex-fat">e <b class="exFat">R$ 128 mil</b> de faturamento por mês.</span><a class="btn small" href="#diagnostico" id="rhMeus">Simular com os meus números →</a></div>
+    <div class="rh-ex" id="rhEx" hidden><span class="rh-ex-tag">Exemplo</span><div class="rh-ex-mid"><span class="rh-ex-txt">Associação com</span><div class="exsize" role="radiogroup" aria-label="Tamanho da associação do exemplo" data-exsize="resultado"><button type="button" role="radio" data-n="500" aria-checked="false">500</button><button type="button" role="radio" data-n="1000" aria-checked="true">1.000</button><button type="button" role="radio" data-n="2000" aria-checked="false">2.000</button><button type="button" role="radio" data-n="5000" aria-checked="false">5.000</button><span>placas</span></div><span class="rh-ex-txt rh-ex-fat">e <b class="exFat">R$ 128 mil</b> de faturamento por mês.</span></div><a class="btn small" href="#diagnostico" id="rhMeus">Simular com os meus números →</a></div>
     <div class="rh-top">
       <div>
         <p class="kicker">Resultado do diagnóstico</p>
