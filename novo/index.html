@@ -2295,7 +2295,8 @@ body[data-view="inicio"] .hero{padding-top:160px}
       <div class="lead-grid">
         <div class="field"><label for="leadNome">Seu nome</label><div class="input compact text"><input id="leadNome" autocomplete="name" placeholder="Ex.: Carlos"></div></div>
         <div class="field"><label for="leadTel">WhatsApp ou telefone</label><div class="input compact"><input id="leadTel" type="tel" inputmode="tel" autocomplete="tel-national" placeholder="(11) 91234-5678" maxlength="22"></div></div>
-        <div class="field" style="grid-column:1/-1"><label for="leadAssoc">Associação <i class="opc">(opcional)</i></label><div class="input compact text"><input id="leadAssoc" autocomplete="organization"></div></div>
+        <div class="field"><label for="leadCargo">Cargo <i class="opc">(opcional)</i></label><div class="input compact"><select id="leadCargo"><option value="">Escolha</option><option>Presidente</option><option>Diretor(a)</option><option>Gerente</option><option>Financeiro</option><option>Consultor(a)</option><option>Outro</option></select></div></div>
+        <div class="field"><label for="leadAssoc">Associação <i class="opc">(opcional)</i></label><div class="input compact text"><input id="leadAssoc" autocomplete="organization"></div></div>
       </div>
       <div class="copyrow lead-acts"><button type="button" class="btn big" id="leadEnviar">Quero uma reunião</button><span class="err" id="leadErr" aria-live="polite"></span></div>
       <p class="hint" id="leadComo">Ao pedir, você autoriza a GestiHub a falar com você. <a href="https://www.gestihub.com.br/politica-de-privacidade.html" target="_blank" rel="noopener">Política de privacidade</a></p>
@@ -3827,7 +3828,7 @@ $('leadEnviar').addEventListener('click', async () => {
   const quando = new Date().toLocaleString('pt-BR');
   try{
     const campo = (id => { const el = $(id); return el ? String(el.value || '').trim() : ''; });
-    await enviarCRM({nome: campo('leadNome'), tel: campo('leadTel'), cargo: '', assoc: campo('leadAssoc') || campo('nome'), cidade: '',
+    await enviarCRM({nome: campo('leadNome'), tel: campo('leadTel'), cargo: campo('leadCargo'), assoc: campo('leadAssoc') || campo('nome'), cidade: '',
       msg: 'Pediu reunião pelo Raio-X SUSEP (' + (ajudaCtx || 'site') + ') em ' + quando + '. Ao enviar, autorizou o contato da GestiHub.'});
     b.textContent = 'Pedido enviado ✓';
     marca('raiox_reuniao', 'Raio-X SUSEP · ' + (ajudaCtx || 'site'));
