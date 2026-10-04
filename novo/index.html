@@ -4081,11 +4081,11 @@ $('stNext').addEventListener('click', () => passo < STEPS.length ? showStep(pass
   els.forEach(e => io.observe(e));
 })();
 $('heroEx').addEventListener('click', () => { $('btnExemplo').click(); irPara('resultado'); });
-// relatório do resultado em imagem (página tamanho A4, 1240 x 1754), para mandar à diretoria ou no WhatsApp
+// relatório do resultado em imagem (1240 x 1460), enxuto: frase, 4 números, boleto novo, próximos passos e contato
 async function resumoImagem(){
   const r = R; if(!r || r.incompleto) return null;
   try{ await Promise.all(['700 48px Poppins', '600 28px Poppins', '400 26px "Public Sans"', '600 26px "Public Sans"', '700 26px "Public Sans"'].map(f => document.fonts.load(f))); }catch(e){}
-  const W = 1240, H = 1754, M = 90, CW = W - 2 * M, c = document.createElement('canvas'); c.width = W; c.height = H;
+  const W = 1240, H = 1460, M = 90, CW = W - 2 * M, c = document.createElement('canvas'); c.width = W; c.height = H;
   const g = c.getContext('2d');
   const TINTA = '#12131C', CINZA = '#5B6472', CLARO = '#8C94A3', LINHA = '#E3E8EE', VERDE = '#0B7F72', VERDE_C = '#39D0B8';
   const fP = (w, s) => `${w} ${s}px Poppins, "Segoe UI", sans-serif`, fB = (w, s) => `${w} ${s}px "Public Sans", "Segoe UI", sans-serif`;
@@ -4107,11 +4107,8 @@ async function resumoImagem(){
   // dados
   const nomeA = ($('nome').value || '').trim() || 'Sua associação';
   const guarda = r.guardarMes > .5, dif = r.ticketCerto - r.ticket, mensOk = dif <= .5;
-  const verd = (document.querySelector('.rxh-verd') || {}).innerText || '';
-  const fases = [...document.querySelectorAll('#timeline .phase:not(.final)')].map(ph => ({
-    m: (ph.querySelector('.when b') || {}).textContent || '', p: (ph.querySelector('.when span') || {}).textContent || '',
-    h: (ph.querySelector('h3') || {}).textContent || '', n: (ph.querySelector('.cnt') || {}).textContent || ''}));
-  let prio = []; try{ prio = prioridades(r).slice(0, 3); }catch(e){}
+  const frase = (document.querySelector('.rx-cta-t b') || {}).textContent || '';
+  const passos = [...document.querySelectorAll('.hm-como li b')].slice(0, 3).map(b => b.textContent);
   const quando = new Date().toLocaleDateString('pt-BR', {month: 'long', year: 'numeric'});
   const corN = n => n >= 75 ? '#16A06A' : n >= 50 ? '#C98A12' : '#C8402A';
 
@@ -4123,86 +4120,68 @@ async function resumoImagem(){
   g.fillStyle = TINTA; g.fillRect(M, 116, CW, 3);
 
   // associação e nota
-  txt(corta(nomeA, fP(700, 54), 780), M, 200, fP(700, 54), TINTA);
-  txt('Adequação à LC 213/2025 e à Res. CNSP 491/2026 · ' + quando, M, 244, fB(400, 21), CINZA);
-  txt(corta(`${int(r.placas)} placas · ${brlShort(r.receitaMes)} de faturamento por mês · ${pct(r.sin, 0)} vai para eventos`, fB(400, 21), 760), M, 280, fB(400, 21), CINZA);
+  txt(corta(nomeA, fP(700, 54), 780), M, 206, fP(700, 54), TINTA);
+  txt('Diagnóstico de ' + quando, M, 250, fB(400, 22), CINZA);
   g.font = fB(700, 17); espaco('2.5px'); const wRot = g.measureText('NOTA DE PREPARO').width; espaco('0px');
   rotulo('NOTA DE PREPARO', W - M - wRot, 160);
   const wN = txt('/100', W - M, 246, fP(600, 26), CLARO, 'right');
   txt(String(r.score), W - M - wN - 6, 246, fP(700, 84), corN(r.score), 'right');
-  txt(r.statusTxt || '', W - M, 280, fB(700, 21), TINTA, 'right');
+  txt(r.statusTxt || '', W - M, 282, fB(700, 21), TINTA, 'right');
 
-  // veredito
-  g.fillStyle = VERDE; g.fillRect(M, 318, 5, 76);
-  quebra(verd, M + 28, 348, CW - 40, 34, fB(400, 25), TINTA, 2);
+  // a frase
+  const nl = quebra(frase, M + 30, 370, CW - 60, 44, fP(600, 34), TINTA, 2);
+  g.fillStyle = VERDE; g.fillRect(M, 334, 5, 50 + (nl - 1) * 44);
 
-  // resumo em 4 números
-  secao('RESUMO', 470);
+  // 4 números
+  secao('RESUMO', 510);
   const col = CW / 4;
   const kpis = [
-    ['META DE RESERVA', brlShort(r.metaReserva), guarda ? `hoje ${brlShort(r.reserva)} · faltam ${brlShort(r.faltaReserva)}` : 'meta já atingida'],
-    ['GUARDAR POR MÊS', guarda ? brlShort(r.guardarMes) : 'R$ 0', guarda ? `${brl(r.guardarMes / (r.pagantes || 1), true)} por placa, por ${REG.horizonte} meses` : 'só manter a reserva'],
-    ['BOLETO MÉDIO CERTO', brl(r.ticketCerto, true), mensOk ? `hoje ${brl(r.ticket, true)}: já cobre` : `hoje ${brl(r.ticket, true)}: mais ${brl(dif, true)}`],
-    ['EXIGÊNCIAS', `${r.docsSim} de ${DOCS.length}`, r.docsFalta.length ? `${r.docsFalta.length} pendentes para a administradora` : 'tudo em ordem']
+    ['META DE RESERVA', brlShort(r.metaReserva), guarda ? `hoje ${brlShort(r.reserva)}` : 'meta já atingida'],
+    ['GUARDAR POR MÊS', guarda ? brlShort(r.guardarMes) : 'R$ 0', guarda ? `até 07/05/2028` : 'só manter a reserva'],
+    ['BOLETO MÉDIO CERTO', brl(r.ticketCerto, true), mensOk ? `hoje ${brl(r.ticket, true)}: já cobre` : `hoje ${brl(r.ticket, true)}`],
+    ['EXIGÊNCIAS', `${r.docsSim} de ${DOCS.length}`, r.docsFalta.length ? `${r.docsFalta.length} pendentes` : 'tudo em ordem']
   ];
   kpis.forEach((k, i) => {
     const x = M + i * col + (i ? 28 : 0);
-    if(i){ g.fillStyle = LINHA; g.fillRect(M + i * col, 506, 2, 150); }
-    rotulo(k[0], x, 530);
-    txt(corta(k[1], fP(700, 42), col - 40), x, 592, fP(700, 42), TINTA);
-    quebra(k[2], x, 630, col - 44, 26, fB(400, 19), CINZA, 2);
+    if(i){ g.fillStyle = LINHA; g.fillRect(M + i * col, 546, 2, 130); }
+    rotulo(k[0], x, 570);
+    txt(corta(k[1], fP(700, 44), col - 40), x, 634, fP(700, 44), TINTA);
+    txt(corta(k[2], fB(400, 20), col - 40), x, 670, fB(400, 20), CINZA);
   });
 
-  // boleto em 3 partes
-  secao('O BOLETO NO MODELO NOVO', 740);
+  // o boleto novo
+  secao('O BOLETO NO MODELO NOVO', 770);
   const partes = [['Taxa administrativa', r.admR, '#2B3140'], ['Rateio · eventos do mês', r.rateioR, VERDE], ['Estabilização · forma a reserva', r.estabR, '#7FD3C5']];
   const tot = partes.reduce((s, p) => s + Math.max(0, p[1]), 0) || 1;
   let bx = M;
   partes.forEach((p, i) => {
     const w = Math.max(6, CW * Math.max(0, p[1]) / tot) - (i < 2 ? 4 : 0);
-    g.beginPath(); if(g.roundRect) g.roundRect(bx, 776, w, 26, i === 0 ? [13, 0, 0, 13] : i === 2 ? [0, 13, 13, 0] : 0); else g.rect(bx, 776, w, 26); g.fillStyle = p[2]; g.fill();
+    g.beginPath(); if(g.roundRect) g.roundRect(bx, 806, w, 26, i === 0 ? [13, 0, 0, 13] : i === 2 ? [0, 13, 13, 0] : 0); else g.rect(bx, 806, w, 26); g.fillStyle = p[2]; g.fill();
     bx += w + 4;
   });
   partes.forEach((p, i) => {
     const x = M + i * (CW / 3);
-    g.fillStyle = p[2]; g.fillRect(x, 838, 14, 14);
-    txt(p[0], x + 26, 852, fB(400, 20), CINZA);
-    txt(brl(p[1], true), x + 26, 888, fP(700, 28), TINTA);
-  });
-  txt('Valores médios por placa, separados em 3 partes como exige a Res. CNSP 491 (art. 70).', M, 932, fB(400, 18), CLARO);
-
-  // plano
-  secao('PLANO ATÉ 07/05/2028', 1010);
-  const fc = CW / Math.max(1, fases.length);
-  g.fillStyle = LINHA; g.fillRect(M + 8, 1058, CW - 16, 2);
-  fases.forEach((f, i) => {
-    const x = M + i * fc;
-    g.beginPath(); g.arc(x + 9, 1059, 9, 0, Math.PI * 2); g.fillStyle = i === 0 ? VERDE : '#FFFFFF'; g.fill(); g.lineWidth = 3; g.strokeStyle = VERDE; g.stroke();
-    if(i === 0){ espaco('2px'); txt('COMECE AQUI', x + 30, 1066, fB(700, 15), VERDE); espaco('0px'); }
-    txt(f.m, x, 1112, fB(700, 21), VERDE);
-    txt(f.p, x, 1140, fB(400, 18), CLARO);
-    const nl = quebra(f.h, x, 1182, fc - 30, 30, fP(600, 24), TINTA, 2);
-    txt(f.n, x, 1182 + nl * 30 + 4, fB(400, 18), CINZA);
+    g.fillStyle = p[2]; g.fillRect(x, 868, 14, 14);
+    txt(p[0], x + 26, 882, fB(400, 20), CINZA);
+    txt(brl(p[1], true), x + 26, 920, fP(700, 30), TINTA);
   });
 
-  // por onde começar
-  secao('POR ONDE COMEÇAR', 1300);
-  prio.forEach((p, i) => {
-    const y = 1348 + i * 68;
-    txt(String(i + 1).padStart(2, '0'), M, y, fP(700, 24), VERDE);
-    txt(corta(p.t, fP(600, 23), CW - 56), M + 56, y, fP(600, 23), TINTA);
-    txt(corta(p.d, fB(400, 19), CW - 56), M + 56, y + 28, fB(400, 19), CINZA);
+  // próximos passos
+  secao('PRÓXIMOS PASSOS', 1020);
+  passos.forEach((p, i) => {
+    const y = 1078 + i * 56;
+    txt(String(i + 1).padStart(2, '0'), M, y, fP(700, 26), VERDE);
+    txt(corta(p, fP(600, 26), CW - 60), M + 60, y, fP(600, 26), TINTA);
   });
-  txt('Simulação feita com os números informados no Raio-X SUSEP. Não substitui advogado, contador ou atuário.', M, 1556, fB(400, 16), CLARO);
+  txt('Simulação feita com os números informados no Raio-X SUSEP. Não substitui advogado, contador ou atuário.', M, 1268, fB(400, 16), CLARO);
 
   // rodapé
-  const yf = 1584;
+  const yf = 1300;
   g.fillStyle = TINTA; g.fillRect(0, yf, W, H - yf);
-  txt('Quer ajuda para cumprir este plano?', M, yf + 62, fP(700, 32), '#FFFFFF');
-  txt('Um especialista da GestiHub monta o passo a passo com a sua diretoria.', M, yf + 100, fB(400, 21), '#AEB6C4');
-  const w1 = txt('WhatsApp (11) 5178-5642', M, yf + 140, fB(700, 21), VERDE_C);
-  txt('·   gestihub.com.br', M + w1 + 14, yf + 140, fB(600, 21), '#FFFFFF');
-  desenhaLogo(logoB, W - M, yf + 64, 40);
+  txt('Quer ajuda para cumprir este plano?', M, yf + 66, fP(700, 32), '#FFFFFF');
+  const w1 = txt('WhatsApp (11) 5178-5642', M, yf + 110, fB(700, 22), VERDE_C);
+  txt('·   gestihub.com.br', M + w1 + 14, yf + 110, fB(600, 22), '#FFFFFF');
+  desenhaLogo(logoB, W - M, yf + 58, 40);
   return new Promise(ok => c.toBlob(b => ok(b), 'image/png'));
 }
 $('rhPrint').addEventListener('click', async () => {
