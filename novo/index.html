@@ -1203,6 +1203,10 @@ body[data-view="inicio"] .fab-help{display:none!important}
 .faq summary::after{content:"";position:absolute;right:0;top:50%;width:24px;height:24px;margin-top:-12px;border-radius:50%;background:var(--accent-soft) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 7v10M7 12h10' stroke='%230B7F72' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E") center/18px no-repeat;transition:transform .2s}
 .faq details[open] summary::after{transform:rotate(45deg)}
 .faq details p{padding-bottom:20px;color:var(--muted)}
+.faq summary::after{transition:transform .3s cubic-bezier(.2,.8,.2,1),background-color .2s}
+.faq details[open]>p{animation:faqAbre .35s cubic-bezier(.2,.8,.2,1)}
+@keyframes faqAbre{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.faq details[open]>p{animation:none}}
 
 .lp-final-wrap{padding-block:96px}
 .lp-final{position:relative;overflow:hidden;background:#12131C;color:#AEB6C4;border-radius:28px;padding:64px 28px;text-align:center;display:grid;gap:16px;justify-items:center;isolation:isolate}
@@ -1589,7 +1593,6 @@ body[data-view="inicio"] .hero{padding-top:160px}
 
   <section class="wrap lp-sec" id="respostas">
     <div class="lp-head rv">
-      <p class="pill-k">O que você recebe</p>
       <h2>As respostas que a diretoria precisa ter antes de 2028</h2>
       <p>Tudo calculado com os números da sua associação. Escolha um exemplo do tamanho da sua:</p>
       <div class="exsize" role="radiogroup" aria-label="Tamanho da associação do exemplo" data-exsize="capa"><button type="button" role="radio" data-n="500" aria-checked="false">500</button><button type="button" role="radio" data-n="1000" aria-checked="true">1.000</button><button type="button" role="radio" data-n="2000" aria-checked="false">2.000</button><button type="button" role="radio" data-n="5000" aria-checked="false">5.000</button><span>placas</span></div>
@@ -1677,7 +1680,7 @@ body[data-view="inicio"] .hero{padding-top:160px}
       <details><summary>Até quando a associação tem que se adequar?</summary><p>O prazo para apresentar o contrato com uma administradora autorizada é 07/05/2028 (Resolução CNSP 491/2026). Se as primeiras autorizações saírem tarde, o prazo passa a ser 6 meses depois delas. A opção de encerrar as atividades vence por volta de 1º/11/2026.</p></details>
       <details><summary>Por que a associação precisa ter reserva?</summary><p>Para nunca precisar de rateio extra. O mínimo da SUSEP só cobre os eventos já devidos; com só ele, uma perda total vira centenas de reais por placa. A reserva certa paga os meses ruins e uma perda total da maior cobertura, e as administradoras devem pedir mais que o mínimo para receber o grupo.</p></details>
       <details><summary>O boleto vai mudar todo mês?</summary><p>Depende do contrato. Se a estabilização ficar perto do custo médio dos eventos, o boleto fica fixo e o rateio só entra quando a reserva não dá conta. A ferramenta mostra os dois jeitos lado a lado.</p></details>
-      <details><summary>Onde ficam os meus dados?</summary><p>Só no navegador do seu aparelho. Nada é enviado para a GestiHub nem para ninguém, a não ser que você mesmo mande pelo WhatsApp.</p></details>
+      <details><summary>Onde ficam os meus dados?</summary><p>Só no navegador do seu aparelho. Nada é enviado para a GestiHub nem para ninguém, a não ser que você mesmo mande pelo WhatsApp ou pelo formulário de reunião.</p></details>
       <details><summary>A ferramenta substitui atuário, advogado ou contador?</summary><p>Não. Ela organiza os números e mostra o caminho. O cálculo oficial do rateio é feito pela administradora, com o atuário.</p></details>
     </div>
   </section>
