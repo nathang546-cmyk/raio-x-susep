@@ -2910,9 +2910,9 @@ function renderHead(r){
     const nEx = r.docsFalta.length;
     const kpi = (rot, val, sub) => `<div class="rxr"><span class="rxr-k">${rot}</span><b>${val}</b><small>${sub}</small></div>`;
     const partesB = [
-      ['Taxa administrativa', r.admR, '#2B3140', 'Mantém a administração. Vai para a administradora.'],
-      ['Rateio', r.rateioR, '#0B7F72', 'Paga os eventos do mês. Vai para o grupo.'],
-      ['Estabilização', r.estabR, '#7FD3C5', guarda ? 'Forma a reserva até a meta. Depois, o boleto baixa.' : 'Pequena folga: a reserva já está na meta.']
+      ['Taxa administrativa', r.admR, '#2B3140', 'Paga a estrutura. A administradora fica com a parte dela e repassa o resto para a associação.'],
+      ['Rateio', r.rateioR, '#0B7F72', 'Paga os eventos do mês. Fica no grupo dos associados.'],
+      ['Estabilização', r.estabR, '#7FD3C5', guarda ? 'Forma a reserva do grupo até a meta. Depois, o boleto baixa.' : 'Pequena folga no grupo: a reserva já está na meta.']
     ];
     const faltas = [guarda ? brlShort(r.faltaReserva) + ' de reserva' : '', dif <= r.ticket * .03 ? '' : brl(dif, true) + ' por placa na mensalidade', papOk ? '' : nEx + (nEx > 1 ? ' exigências pendentes' : ' exigência pendente')].filter(Boolean);
     const ctaTit = faltas.length ? (faltas.length === 1 && !papOk && nEx === 1 ? 'Falta ' : 'Faltam ') + (faltas.length > 1 ? faltas.slice(0, -1).join(', ') + ' e ' + faltas.at(-1) : faltas[0]) + '.' : 'A associação está no caminho. Falta escolher bem a administradora.';
