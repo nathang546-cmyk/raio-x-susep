@@ -2734,7 +2734,7 @@ function renderPlano(r){
   $('timeline').innerHTML = P.filter(p => p.L.length).map((p, i) => `
     <div class="phase">
       <div class="when"><b>${mesesTxt(p.a, p.b)}</b><span>${p.a === p.b ? mesLabel(p.a-1+off) : mesLabel(p.a-1+off) + ' a ' + mesLabel(p.b-1+off)}</span></div>
-      <div class="phase-body"><details class="phase-d"><summary><h3>${p.h}</h3><span class="cnt">${p.L.length} tarefas</span></summary><ul class="tasks">${p.L.join('')}</ul></details></div>
+      <div class="phase-body"><details class="phase-d"${i === 0 ? " open" : ""}><summary><h3>${p.h}</h3><span class="cnt">${p.L.length} tarefas</span></summary><ul class="tasks">${p.L.join('')}</ul></details></div>
     </div>`).join('') + `
     <div class="phase final">
       <div class="when"><b>07/05/2028</b><span>prazo da regra</span></div>
