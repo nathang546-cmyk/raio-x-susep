@@ -1617,8 +1617,8 @@ body[data-view="inicio"] .hero>.hero-in{width:100%}
           <a class="btn big btn-glow" href="#diagnostico" id="heroGo">Simular agora <span aria-hidden="true">→</span></a>
           <button type="button" class="btn big ghost-light" id="heroEx">Ver um exemplo</button>
         </div>
-        <ul class="hero-trust"><li>Grátis</li><li>Sem cadastro</li><li>Seus dados não são enviados a ninguém</li></ul>
-        <button type="button" class="hero-urg" data-ajuda="capa: prazo"><span class="hu-dot" aria-hidden="true"></span><span class="hu-txt"><b id="heroFalta">Faltam 19 meses.</b> Não deixe para a última hora, pode não dar tempo.</span><span class="hu-cta">Fale com um especialista <span aria-hidden="true">→</span></span></button>
+        <ul class="hero-trust"><li>Grátis</li><li>Sem cadastro</li><li>Nada é enviado sem você pedir</li></ul>
+        <button type="button" class="hero-urg" data-ajuda="capa: prazo"><span class="hu-dot" aria-hidden="true"></span><span class="hu-txt"><b id="heroFalta">Faltam 581 dias.</b> Não deixe para a última hora, pode não dar tempo.</span><span class="hu-cta">Fale com um especialista <span aria-hidden="true">→</span></span></button>
         <p class="hero-resume" id="heroResume" hidden>Você já começou um diagnóstico neste aparelho. <a href="#resultado">Ver meu resultado →</a></p>
       </div>
 
@@ -1714,7 +1714,7 @@ body[data-view="inicio"] .hero>.hero-in{width:100%}
       <details><summary>Até quando a associação tem que se adequar?</summary><p>O prazo para apresentar o contrato com uma administradora autorizada é 07/05/2028 (Resolução CNSP 491/2026). Se as primeiras autorizações saírem tarde, o prazo passa a ser 6 meses depois delas. A opção de encerrar as atividades vence por volta de 1º/11/2026.</p></details>
       <details><summary>Por que a associação precisa ter reserva?</summary><p>Para nunca precisar de rateio extra. O mínimo da SUSEP só cobre os eventos já devidos; com só ele, uma perda total vira centenas de reais por placa. A reserva certa paga os meses ruins e uma perda total da maior cobertura, e as administradoras devem pedir mais que o mínimo para receber o grupo.</p></details>
       <details><summary>O boleto vai mudar todo mês?</summary><p>Depende do contrato. Se a estabilização ficar perto do custo médio dos eventos, o boleto fica fixo e o rateio só entra quando a reserva não dá conta. A ferramenta mostra os dois jeitos lado a lado.</p></details>
-      <details><summary>Onde ficam os meus dados?</summary><p>Os números do Raio-X ficam só no navegador do seu aparelho e não são enviados para ninguém. Se você pedir uma reunião, a GestiHub recebe apenas o seu nome, WhatsApp e associação, para falar com você.</p></details>
+      <details><summary>Onde ficam os meus dados?</summary><p>Os números do Raio-X ficam no navegador do seu aparelho. Eles só vão para a GestiHub se você pedir uma reunião: aí vão junto com o seu nome e WhatsApp, para o especialista já chegar preparado.</p></details>
       <details><summary>A ferramenta substitui atuário, advogado ou contador?</summary><p>Não. Ela organiza os números e mostra o caminho. O cálculo oficial do rateio é feito pela administradora, com o atuário.</p></details>
     </div>
   </section>
@@ -2315,7 +2315,7 @@ body[data-view="inicio"] .hero>.hero-in{width:100%}
         <div class="field"><label for="leadAssoc">Associação <i class="opc">(opcional)</i></label><div class="input compact text"><input id="leadAssoc" autocomplete="organization"></div></div>
       </div>
       <div class="copyrow lead-acts"><button type="button" class="btn big" id="leadEnviar">Quero uma reunião</button><span class="err" id="leadErr" aria-live="polite"></span></div>
-      <p class="hint" id="leadComo">Ao pedir, você autoriza a GestiHub a falar com você. <a href="https://www.gestihub.com.br/politica-de-privacidade.html" target="_blank" rel="noopener">Política de privacidade</a></p>
+      <p class="hint" id="leadComo">Ao clicar, um especialista da GestiHub chama você no WhatsApp para combinar o melhor horário. <a href="https://www.gestihub.com.br/politica-de-privacidade.html" target="_blank" rel="noopener">Política de privacidade</a></p>
       <div class="lead-pos" id="leadDone" hidden><p id="leadDoneTxt"></p><a class="btn big lead-wa" id="leadWa" href="#" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12.04 2a9.9 9.9 0 0 0-8.5 14.96L2 22l5.17-1.5A9.9 9.9 0 1 0 12.04 2Zm5.4 13.98c-.23.64-1.33 1.24-1.84 1.3-.47.06-1.07.08-1.72-.11-.4-.12-.9-.29-1.56-.57-2.74-1.18-4.53-3.94-4.67-4.12-.13-.18-1.11-1.48-1.11-2.82s.7-2 .95-2.27c.25-.27.55-.34.73-.34h.52c.17 0 .4-.06.62.48.23.55.78 1.9.85 2.04.07.14.11.3.02.48-.09.18-.14.3-.27.46-.14.16-.29.36-.41.48-.14.14-.28.29-.12.56.16.27.71 1.17 1.52 1.9 1.05.93 1.93 1.22 2.2 1.36.27.14.43.11.59-.07.16-.18.68-.79.86-1.06.18-.27.36-.23.61-.14.25.09 1.59.75 1.86.89.27.14.45.2.52.32.07.11.07.66-.16 1.3Z"/></svg>Mandar mensagem no WhatsApp</a></div>
       <details class="more" hidden><summary>Ver ou copiar a mensagem</summary><div><textarea id="leadMsg" readonly aria-label="Mensagem para a GestiHub"></textarea><div class="copyrow"><button type="button" class="btn small" id="leadCopy">Copiar mensagem</button><span class="ok-msg" id="leadCopyMsg" aria-live="polite"></span></div></div></details>
     </form>
@@ -3742,6 +3742,10 @@ function leadMsg(){
   return linhas.join('\n');
 }
 function leadUpd(){
+  if($('leadComo')){
+    const vai = crmAtivo() && modoP === 'meu' && R && !R.incompleto;
+    $('leadComo').innerHTML = 'Ao clicar, um especialista da GestiHub chama você no WhatsApp para combinar o melhor horário' + (vai ? ', já com os números da sua simulação em mãos' : '') + '. <a href="https://www.gestihub.com.br/politica-de-privacidade.html" target="_blank" rel="noopener">Política de privacidade</a>';
+  }
   if(!$('leadMsg')) return;
   if(!$('leadAssoc').value) $('leadAssoc').placeholder = $('nome').value || 'Nome da associação';
   const m = leadMsg();
@@ -3811,12 +3815,31 @@ async function enviarCRM(d){
       : f.mapping === 'company' || /associa|empresa/.test(l) ? d.assoc
       : f.mapping === 'phone' || /telefone|whats|celular/.test(l) ? d.tel
       : f.mapping === 'contact' || /nome/.test(l) ? d.nome
-      : f.mapping === 'message' || /mensagem|resumo|raio|observa/.test(l) ? d.msg : '';
-    if(v !== '') values[f.id] = v;
+      : /raio|simula/.test(l) ? d.raiox
+      : f.mapping === 'message' || /mensagem|observa/.test(l) ? d.msg : '';
+    if(v !== '' && v != null) values[f.id] = v;
   });
   const r = await fetch(base + '/submissions', {method: 'POST', headers: {'Content-Type': 'application/json', Accept: 'application/json'}, body: JSON.stringify({values, website: ''})});
   if(!r.ok){ let m = ''; try{ m = (await r.json()).message; }catch(e){} throw new Error(m || 'envio recusado'); }
   return r.json();
+}
+function raioxDados(){
+  const r = R;
+  if(modoP !== 'meu' || !r || r.incompleto) return '';
+  const n = (v, d) => isFinite(v) ? Math.round(v * Math.pow(10, d || 0)) / Math.pow(10, d || 0) : undefined;
+  const tipo = k => (r.ativos || []).find(a => a.k === k || (a.n || '').toLowerCase().startsWith(k));
+  const passos = [...document.querySelectorAll('.hm-como li b')].map(b => b.textContent.trim()).filter(Boolean);
+  const dados = {
+    v: 1, geradoEm: new Date().toISOString(),
+    associacao: ($('nome').value || '').trim() || undefined,
+    placas: {total: n(r.placas), carros: n(tipo('carro') && tipo('carro').placas), motos: n(tipo('moto') && tipo('moto').placas), pesados: n(tipo('caminh') && tipo('caminh').placas)},
+    faturamentoMes: n(r.receitaMes), sinistralidade: n(r.sin, 3), inadimplencia: n(r.inad, 3), eventosMes: n(r.eventosMes),
+    reserva: {hoje: n(r.reserva), meta: n(r.metaReserva), falta: n(r.faltaReserva), guardarMes: n(r.guardarMes), porPlaca: n(r.guardarMes / (r.pagantes || 1), 2), meses: REG.horizonte},
+    boleto: {hoje: n(r.ticket, 2), certo: n(r.ticketCerto, 2), taxaAdm: n(r.admR, 2), rateio: n(r.rateioR, 2), estabilizacao: n(r.estabR, 2)},
+    exigencias: {cumpridas: r.docsSim, total: DOCS.length, pendentes: (r.docsFalta || []).map(d => d.t)},
+    nota: r.score, status: r.statusTxt, proximosPassos: passos
+  };
+  return JSON.stringify(dados);
 }
 function leadValida(){
   const semNome = !$('leadNome').value.trim(), semTel = !telValido($('leadTel').value);
@@ -3844,8 +3867,9 @@ $('leadEnviar').addEventListener('click', async () => {
   const quando = new Date().toLocaleString('pt-BR');
   try{
     const campo = (id => { const el = $(id); return el ? String(el.value || '').trim() : ''; });
-    await enviarCRM({nome: campo('leadNome'), tel: campo('leadTel'), cargo: campo('leadCargo'), assoc: campo('leadAssoc') || campo('nome'), cidade: '',
-      msg: 'Pediu reunião pelo Raio-X SUSEP (' + (ajudaCtx || 'site') + ') em ' + quando + '. Ao enviar, autorizou o contato da GestiHub.'});
+    const raiox = raioxDados();
+    await enviarCRM({nome: campo('leadNome'), tel: campo('leadTel'), cargo: campo('leadCargo'), assoc: campo('leadAssoc') || campo('nome'), cidade: '', raiox,
+      msg: 'Pediu reunião pelo Raio-X SUSEP (' + (ajudaCtx || 'site') + ') em ' + quando + '. Ao enviar, autorizou o contato da GestiHub' + (raiox ? ' e o envio dos números da simulação (veja em Documentos).' : '. Não enviou números (viu só o exemplo ou não terminou a simulação).')});
     b.textContent = 'Pedido enviado ✓';
     marca('raiox_reuniao', 'Raio-X SUSEP · ' + (ajudaCtx || 'site'));
     leadPos(true);
@@ -4232,7 +4256,8 @@ $('stNext').addEventListener('click', () => passo < STEPS.length ? showStep(pass
       }, 350);
     }, 3200);
   }
-  $('heroFalta').textContent = df <= 0 ? 'O prazo chegou.' : mf >= 2 ? `Faltam ${mf} meses.` : `Faltam ${df} dias.`;
+  // capa: contagem em dias, recalculada pela data de quem abre a página
+  $('heroFalta').textContent = df <= 0 ? 'O prazo chegou.' : df === 1 ? 'Falta 1 dia.' : `Faltam ${df.toLocaleString('pt-BR')} dias.`;
   $('tlCount').innerHTML = df <= 0 ? 'O prazo final de <b>07/05/2028</b> chegou' : mf >= 2 ? `Faltam <b>${mf} meses</b> para o prazo final de 07/05/2028` : `Faltam <b>${df} dias</b> para o prazo final de 07/05/2028`;
   // linha do tempo: o que já passou e o próximo marco
   const hoje = new Date(); let prox = null;
