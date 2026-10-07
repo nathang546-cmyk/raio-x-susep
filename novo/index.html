@@ -1713,7 +1713,7 @@ body[data-view="inicio"] .hero>.hero-in{width:100%}
       <details><summary>O que muda para as associações de proteção veicular?</summary><p>A Lei Complementar 213/2025 colocou a proteção veicular sob a fiscalização da SUSEP. As associações cadastradas precisam passar a operar com uma administradora autorizada. O dinheiro dos associados fica num grupo com CNPJ próprio, separado da associação.</p></details>
       <details><summary>Até quando a associação tem que se adequar?</summary><p>O prazo para apresentar o contrato com uma administradora autorizada é 07/05/2028 (Resolução CNSP 491/2026). Se as primeiras autorizações saírem tarde, o prazo passa a ser 6 meses depois delas. A opção de encerrar as atividades vence por volta de 1º/11/2026.</p></details>
       <details><summary>Por que a associação precisa ter reserva?</summary><p>Para nunca precisar de rateio extra. O mínimo da SUSEP só cobre os eventos já devidos; com só ele, uma perda total vira centenas de reais por placa. A reserva certa paga os meses ruins e uma perda total da maior cobertura, e as administradoras devem pedir mais que o mínimo para receber o grupo.</p></details>
-      <details><summary>O boleto vai mudar todo mês?</summary><p>Depende do contrato. Se a estabilização ficar perto do custo médio dos eventos, o boleto fica fixo e o rateio só entra quando a reserva não dá conta. A ferramenta mostra os dois jeitos lado a lado.</p></details>
+      <details><summary>O boleto vai mudar todo mês?</summary><p>Só a parte do rateio, que acompanha o custo dos eventos de cada período. A taxa de administração e a estabilização ficam iguais todo mês, e a reserva formada pela estabilização segura os meses ruins.</p></details>
       <details><summary>Onde ficam os meus dados?</summary><p>Os números do Raio-X ficam no navegador do seu aparelho. Eles só vão para a GestiHub se você pedir uma reunião: aí vão junto com o seu nome e WhatsApp, para o especialista já chegar preparado.</p></details>
       <details><summary>A ferramenta substitui atuário, advogado ou contador?</summary><p>Não. Ela organiza os números e mostra o caminho. O cálculo oficial do rateio é feito pela administradora, com o atuário.</p></details>
     </div>
@@ -2013,24 +2013,15 @@ body[data-view="inicio"] .hero>.hero-in{width:100%}
 
   <section id="aprofundar" class="mais">
     <div class="sec-head"><p class="kicker">Quer se aprofundar?</p><h2>Tudo o que está por trás do resultado</h2><p>Abra só o que interessar.</p></div>
-    <details class="det" id="dBol"><summary><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2h12v20l-3-2-3 2-3-2-3 2V2z"/><path d="M9 7h6M9 11h6M9 15h4"/></svg><span class="det-a">O boleto em detalhe</span><span class="det-f">Fechar</span><small>boleto fixo ou que varia, os próximos 12 meses, quando o boleto tem que baixar e o valor por tipo de veículo</small></summary><div class="det-body">
+    <details class="det" id="dBol"><summary><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2h12v20l-3-2-3 2-3-2-3 2V2z"/><path d="M9 7h6M9 11h6M9 15h4"/></svg><span class="det-a">O boleto em detalhe</span><span class="det-f">Fechar</span><small>as 3 partes que a SUSEP exige, os próximos 12 meses, quando a estabilização tem que baixar e o valor por tipo de veículo</small></summary><div class="det-body">
     <section id="rateio">
-      <div class="sec-head"><p class="kicker">Boleto e rateio</p><h2>Como fica o boleto do jeito certo</h2><p>O boleto vem em 3 partes. Cada um paga conforme o valor e o risco do veículo.</p></div>
-      <div class="modsel">
-        <p class="modsel-q">Como a estabilização vai ser usada? <button type="button" class="info" data-g="estabilizacao" aria-label="O que é estabilização?">i</button></p>
-        <div class="choices" role="radiogroup" aria-label="Modelo de boleto">
-          <div class="choice"><input type="radio" name="modelo" id="mod_fixo" value="fixo" checked><label for="mod_fixo"><b>Boleto fixo</b><span>A estabilização cobre o custo médio dos eventos. O rateio só entra se a reserva não der conta. Quando a reserva enche, o boleto baixa.</span></label></div>
-          <div class="choice"><input type="radio" name="modelo" id="mod_var" value="variavel"><label for="mod_var"><b>Boleto que varia</b><span>A estabilização é pequena. O rateio cobra o custo real de cada período, então o boleto sobe e desce.</span></label></div>
-        </div>
-        <p class="hint">As duas formas cumprem a regra. Na média do ano, o associado paga o mesmo. Muda o quanto o boleto varia.</p>
-      </div>
+      <div class="sec-head"><p class="kicker">Boleto e rateio</p><h2>Como fica o boleto do jeito certo</h2><p>A SUSEP exige o boleto com 3 partes separadas: taxa de administração, rateio do período e estabilização (Res. CNSP 491, art. 70). Cada um paga conforme o valor e o risco do veículo.</p></div>
       <div class="formula" id="formula"></div>
       <div class="vizgrid">
         <article class="viz wide" id="vzDoze"></article>
         <article class="viz wide" id="vzFaixa"></article>
         <article class="viz wide" id="vzTipos"></article>
       </div>
-      <div id="models" style="margin-top:16px"></div>
     </section>
     </div></details>
     <details class="det" id="detalhes">
@@ -2079,14 +2070,14 @@ body[data-view="inicio"] .hero>.hero-in{width:100%}
     <section id="repasse">
       <div class="sec-head"><p class="kicker">A associação no modelo novo</p><h2>Quanto a associação precisa receber para sobreviver</h2><p>A associação só recebe o que estiver escrito no contrato com a administradora.</p></div>
       <div class="propsim" id="propSim">
-        <p class="propsim-h"><b>Simule a proposta da administradora</b><span>Serve para ver se o que volta para a associação paga a estrutura que ela vai manter. Use os números da proposta que você recebeu. Sem proposta, deixe 25% de taxa e 80% de repasse: 5% do boleto fica com a administradora e 20% volta para a associação.</span></p>
+        <p class="propsim-h"><b>Simule a proposta da administradora</b><span>Serve para ver se o que volta para a associação paga a estrutura que ela vai manter. Use os números da proposta que você recebeu. Sem proposta, deixe em branco: abaixo aparece quanto a associação precisa receber de volta.</span></p>
         <div class="fields">
           <div class="field">
             <label for="taxaSim" data-lfor="taxaModo" data-pct="taxaSim" data-brl="taxaValor">Taxa da administradora <button type="button" class="info" data-g="administradora" aria-label="O que é administradora?">i</button></label>
             <p class="hint">A regra não tem teto nem percentual fixo.</p>
             <div class="input unit">
               <span class="pre" data-ufor="taxaModo" data-u="brl">R$</span>
-              <input id="taxaSim" inputmode="decimal" data-kind="pct" data-ufor="taxaModo" data-u="pct">
+              <input id="taxaSim" inputmode="decimal" data-kind="pct" data-ufor="taxaModo" data-u="pct" placeholder="da proposta">
               <input id="taxaValor" inputmode="decimal" data-kind="money" data-ufor="taxaModo" data-u="brl">
               <select id="taxaModo" class="usel" aria-label="Unidade: % ou R$" title="Trocar entre % e R$"><option value="pct">% do boleto</option><option value="brl">R$ por placa</option></select>
             </div>
@@ -2097,7 +2088,7 @@ body[data-view="inicio"] .hero>.hero-in{width:100%}
             <p class="hint">É a remuneração da associação. Tem que estar no contrato.</p>
             <div class="input unit">
               <span class="pre" data-ufor="repasseModo" data-u="brl">R$</span>
-              <input id="repasseSim" inputmode="decimal" data-kind="pct" data-ufor="repasseModo" data-u="pct">
+              <input id="repasseSim" inputmode="decimal" data-kind="pct" data-ufor="repasseModo" data-u="pct" placeholder="da proposta">
               <input id="repasseValor" inputmode="decimal" data-kind="money" data-ufor="repasseModo" data-u="brl">
               <select id="repasseModo" class="usel" aria-label="Unidade: % ou R$" title="Trocar entre % e R$"><option value="pct">% da taxa</option><option value="brl">R$ por placa</option></select>
             </div>
@@ -2114,7 +2105,7 @@ body[data-view="inicio"] .hero>.hero-in{width:100%}
       <div class="vizgrid"><article class="viz wide" id="vzRep"></article></div>
     </section>
     </div></details>
-    <details class="det" id="dEnt"><summary><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M8 6h8M8 11h2M14 11h2M8 15h2M14 15h2"/></svg><span class="det-a">Rateio e provisões explicados</span><span class="det-f">Fechar</span><small>como a conta do rateio é feita, boleto fixo ou que varia, PEL e PEONA</small></summary><div class="det-body">
+    <details class="det" id="dEnt"><summary><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M8 6h8M8 11h2M14 11h2M8 15h2M14 15h2"/></svg><span class="det-a">Rateio e provisões explicados</span><span class="det-f">Fechar</span><small>como a conta do rateio é feita, as 3 partes do boleto, PEL e PEONA</small></summary><div class="det-body">
   
     <section>
       <div class="sec-head"><p class="kicker">Rateio e provisões</p><h2>Como funcionam o rateio e as provisões na regra nova</h2><p>As duas coisas são exigidas pela Resolução CNSP 491/2026 para os grupos de proteção. Quem calcula é a administradora, com o atuário. A associação precisa entender para conferir as contas e chegar preparada.</p></div>
@@ -2179,19 +2170,18 @@ body[data-view="inicio"] .hero>.hero-in{width:100%}
     </section>
   
     <section id="ent-modelos">
-      <div class="sec-head"><p class="kicker">Parte 1 · continuação</p><h2>Boleto fixo ou boleto que varia</h2><p>A regra deixa o contrato decidir o tamanho da estabilização. É esse número que decide se o boleto do associado vai mudar todo mês.</p></div>
+      <div class="sec-head"><p class="kicker">Parte 1 · continuação</p><h2>O boleto em 3 partes</h2><p>É o padrão que a SUSEP exige: as 3 partes aparecem separadas no boleto, cada uma com o seu valor (Res. CNSP 491, art. 70).</p></div>
       <div class="vizgrid" style="margin-top:0">
-        <article class="viz"><h3>Exemplo: 10 associados</h3>
-          <p>O rateio é sempre <b>o custo do período menos a estabilização que já entrou</b> (art. 69). Nunca é o custo inteiro de novo.</p>
-          <div class="cmp10">
-            <div class="cmp10-h"><span>Custo do período</span><span>Boleto fixo<small>estabilização R$ 100</small></span><span>Boleto que varia<small>estabilização R$ 10</small></span></div>
-            <div><span>R$ 800</span><span><b>R$ 100</b><small>Sobram R$ 200 para a reserva do grupo</small></span><span><b>R$ 80</b><small>R$ 10 + R$ 70 de rateio</small></span></div>
-            <div><span>R$ 1.000</span><span><b>R$ 100</b><small>Rateio R$ 0</small></span><span><b>R$ 100</b><small>R$ 10 + R$ 90 de rateio</small></span></div>
-            <div><span>R$ 1.200</span><span><b>R$ 100</b><small>Faltam R$ 200: saem da reserva. Sem reserva, R$ 20 de rateio extra no boleto seguinte</small></span><span><b>R$ 120</b><small>R$ 10 + R$ 110 de rateio</small></span></div>
-          </div>
-          <p class="note">Sem contar a taxa de administração, que é igual nos dois.</p>
+        <article class="viz"><h3>O que é cada parte</h3>
+          <ul class="ent-rules">
+            <li><div><b>Taxa de administração:</b> paga a administradora, que repassa à associação o que estiver no contrato. A taxa de quem não paga não pode ser jogada para os outros.</div><span>art. 70, § 2º</span></li>
+            <li><div><b>Rateio do período:</b> o custo dos eventos do período, dividido entre os associados conforme o valor e o risco de cada veículo. Vai para a conta do grupo.</div><span>art. 70, II</span></li>
+            <li><div><b>Estabilização:</b> valor mensal definido no contrato. Também vai para a conta do grupo e forma a reserva que segura os meses ruins.</div><span>art. 70, III</span></li>
+            <li>Assistência contratada à parte (guincho, carro reserva) aparece em linha separada. <span>art. 70, § 4º</span></li>
+          </ul>
+          <p class="note">O rateio acompanha o custo de cada período. A taxa e a estabilização ficam iguais todo mês.</p>
         </article>
-        <article class="viz"><h3>Quando o boleto fixo tem que baixar</h3>
+        <article class="viz"><h3>Quando a estabilização tem que baixar</h3>
           <p>Meça a reserva em <b>meses de contribuição</b>: reserva livre ÷ o que entra para o grupo em um mês.</p>
           <div class="faixa" aria-hidden="true"><i class="z1"></i><i class="z2"></i><i class="z3"></i><i class="z4"></i></div>
           <div class="faixa-lbl"><span>Baixa<small>menos de 1 mês</small></span><span>Boa<small>1 a 2 meses</small></span><span>Planejar baixar<small>2 a 3 meses</small></span><span>Tem que baixar<small>mais de 3 meses</small></span></div>
@@ -2201,10 +2191,9 @@ body[data-view="inicio"] .hero>.hero-in{width:100%}
             <li>Abaixo de 1 mês: não baixe. Se faltar, entra rateio extra.</li>
             <li>A reserva só pode ser usada para segurar o rateio. <span>art. 69, § 7º</span></li>
           </ul>
-          <p class="note">Só o teto de 3 meses é regra. As outras faixas são sugestão. A conta com os seus números está na aba Boleto e simulações.</p>
+          <p class="note">Só o teto de 3 meses é regra. As outras faixas são sugestão.</p>
         </article>
       </div>
-      <div class="ent-q" style="margin-top:16px"><b>A pergunta para fazer à administradora:</b> “Como vocês vão calcular a estabilização?” Se ela ficar perto do custo médio, o boleto fica fixo. Se ficar baixa, o rateio vira a parte grande e o boleto varia todo mês.</div>
     </section>
   
     <section id="ent-prov">
@@ -2361,7 +2350,7 @@ const GLOS = {
   inadimplencia:{t:'Inadimplência', d:'É a parte dos associados que não pagou o boleto: uma inadimplência de 8% significa que 8 de cada 100 não pagaram.'},
   fipe:{t:'FIPE', d:'É a tabela com o preço médio de mercado de cada veículo, usada como base para definir quanto cada associado paga.'},
   rateio:{t:'Rateio', d:'É a divisão, entre todos os associados do grupo, do custo dos eventos do período.'},
-  estabilizacao:{t:'Estabilização', d:'É um valor fixo, definido no contrato, cobrado todo mês e depositado na conta do grupo para formar a reserva. Quando ele fica perto do custo médio dos eventos, o boleto se mantém fixo e o rateio só entra se faltar dinheiro.'},
+  estabilizacao:{t:'Estabilização', d:'É um valor fixo, definido no contrato, cobrado todo mês e depositado na conta do grupo para formar a reserva. A reserva segura os meses ruins, para o rateio não estourar.'},
   pel:{t:'PEL · eventos a pagar', d:'A Provisão de Eventos a Liquidar é o dinheiro separado para eventos já avisados que ainda não foram pagos, como um carro na oficina esperando pagamento.'},
   peona:{t:'PEONA · eventos não avisados', d:'A Provisão de Eventos Ocorridos e Não Avisados é o dinheiro separado para eventos que já aconteceram, mas que o associado ainda não comunicou, como uma batida no dia 30 avisada só no dia 5.'},
   provisao:{t:'Provisão', d:'É o dinheiro separado para pagar eventos que já aconteceram. Por isso não é sobra: ele já tem destino.'},
@@ -2415,7 +2404,7 @@ const EXEMPLO = {
   ticket:'139', admPct:'62', inad:'8', eventos12:'364.600', recup12:'19.000', receita12:'1.440.000', qtdEventos:'52', sinDireto:'', anoMedio:'2014', pctRastreador:'35', pctVistoria:'80', pctApp:'12', cancel12:'135',
   mes_0:'25.050', mes_1:'32.100', mes_2:'23.150', mes_3:'38.100', mes_4:'27.500', mes_5:'26.100', mes_6:'46.550', mes_7:'23.950', mes_8:'29.650', mes_9:'33.750', mes_10:'26.400', mes_11:'32.300',
   reserva:'67.500', pendentes:'13.000', nivelRes:'auto', rateioModo:'misto', contaSep:'nao', caminho:'contratar',
-  taxaSim:'25', repasseSim:'80', custoAssoc:'', modelo:'fixo',
+  taxaSim:'', repasseSim:'', custoAssoc:'', modelo:'regra',
   docs:{susep:'sim',estatuto:'nao',atas:'sim',regulamento:'sim',coberturas:'ns',base:'sim',historico:'ns',processos:'nao',contabil:'sim',vendedores:'nao',prestacao:'nao',reclamacao:'nao',lgpd:'nao',sistema:'sim'}
 };
 
@@ -2532,7 +2521,7 @@ let isExample = true;
 let doneTasks = {};
 let R = null;   // último resultado calculado
 function save(){ try{ localStorage.setItem(KEY, JSON.stringify({s:readState(), ex:isExample, done:doneTasks})); }catch(e){} }
-function load(){ try{ const raw = localStorage.getItem(KEY); if(raw) return JSON.parse(raw); }catch(e){} return null; }
+function load(){ try{ const raw = localStorage.getItem(KEY); if(raw){ const v = JSON.parse(raw); if(v && v.s && v.s.taxaSim === '25' && v.s.repasseSim === '80' && !v.s.taxaValor && !v.s.repasseValor){ v.s.taxaSim = ''; v.s.repasseSim = ''; } return v; } }catch(e){} return null; }
 
 /* ======================= CÁLCULO ======================= */
 function calc(s){
@@ -2568,8 +2557,8 @@ function calc(s){
   r.sinDireto = num(s.sinDireto);
   r.reserva = isFinite(num(s.reserva)) ? num(s.reserva) : 0;
   r.pendentes = isFinite(num(s.pendentes)) ? num(s.pendentes) : 0;
-  r.x = isFinite(num(s.taxaSim)) ? Math.min(num(s.taxaSim), 80)/100 : 0.25;
-  r.rep = isFinite(num(s.repasseSim)) ? Math.min(num(s.repasseSim), 100)/100 : 0.80;
+  r.x = isFinite(num(s.taxaSim)) ? Math.min(num(s.taxaSim), 80)/100 : NaN;   // taxa da proposta da administradora (sem padrão inventado)
+  r.rep = isFinite(num(s.repasseSim)) ? Math.min(num(s.repasseSim), 100)/100 : NaN;
 
   // mês a mês
   r.meses = Array.from({length:12}, (_,i) => num(s['mes_'+i]));
@@ -2626,7 +2615,7 @@ function calc(s){
   } else { r.minReserva = r.grave = r.maxReserva = NaN; r.naoAvisados = r.colchao = r.metaReserva = r.faltaReserva = r.guardarMes = r.mesesCobertos = r.coberturaRes = r.tetoRegra = NaN; r.ptRes = 0; }
   r.tRes = !isFinite(r.coberturaRes) ? 'none' : r.coberturaRes >= .9 ? 'ok' : r.coberturaRes >= .4 ? 'warn' : 'bad';
 
-  r.modelo = s.modelo === 'variavel' ? 'variavel' : 'fixo';
+  r.modelo = 'regra';   // padrão SUSEP: as 3 partes separadas no boleto
   // boleto em 3 partes, por placa que paga (Res. CNSP 491, art. 70)
   if(ok(r.pagantes) && isFinite(r.eventosMes) && isFinite(r.a) && ok(r.ticket)){
     r.admR = r.a * r.ticket;
@@ -2640,10 +2629,11 @@ function calc(s){
       r.novoTaxaR = Math.max(0, num(s.taxaValor));
       r.novoBoleto = r.grupoR + r.novoTaxaR;
       r.x = r.novoTaxaR / r.novoBoleto;
-    } else {
+    } else if(isFinite(r.x)){
       r.novoBoleto = r.grupoR / (1 - r.x);
       r.novoTaxaR = r.novoBoleto * r.x;
-    }
+    } else r.novoBoleto = r.novoTaxaR = r.x = NaN;
+    r.temProposta = isFinite(r.novoTaxaR);
     r.taxaMesNova = r.novoTaxaR * r.pagantes;
     // por tipo de veículo
     const todosEv = ativos.length > 1 && ativos.every(t => ok(t.ev));
@@ -2673,7 +2663,7 @@ function calc(s){
     if(r.repModo === 'brl' && isFinite(num(s.repasseValor))){
       r.repPlaca = Math.min(Math.max(0, num(s.repasseValor)), r.novoTaxaR);
       r.rep = r.novoTaxaR > 0 ? r.repPlaca / r.novoTaxaR : 0;
-    } else r.repPlaca = r.novoTaxaR * r.rep;
+    } else r.repPlaca = isFinite(r.rep) ? r.novoTaxaR * r.rep : NaN;
     r.repasseMes = r.repPlaca * r.pagantes;
     r.custoAssoc = ok(num(s.custoAssoc)) ? num(s.custoAssoc) : r.admMes;
     r.custoInformado = ok(num(s.custoAssoc));
@@ -3032,15 +3022,14 @@ function renderHead(r){
     $('prioMais').hidden = pr.length <= 3;
     $('prioMais').innerHTML = pr.length > 3 ? `Depois disso, mais ${pr.length - 3} ${pr.length - 3 === 1 ? 'ponto' : 'pontos'} para ajustar. <a href="#plano">Ver no plano →</a>` : '';
     // boleto resumido
-    const fx = r.modelo === 'fixo';
     if(isFinite(r.ticketCerto)){
-      const a = r.admR, c = fx ? 0 : r.rateioR, e = fx ? r.estabFixa : r.estabR;
+      const a = r.admR, c = r.rateioR, e = r.estabR;
       $('bolResumo').innerHTML = `
-        <div class="bol-top"><div><span class="kc-k">Boleto médio por placa</span><b class="bol-v">${brl(r.ticketCerto, true)}</b></div><span class="bol-mod">${fx ? 'Boleto fixo' : 'Boleto que varia'}</span></div>
+        <div class="bol-top"><div><span class="kc-k">Boleto médio por placa</span><b class="bol-v">${brl(r.ticketCerto, true)}</b></div><span class="bol-mod">Padrão SUSEP</span></div>
         ${segBoleto(a, c, e, 'Administração', r.ticketCerto)}
-        ${legBoleto(a, c, e, 'Administração', fx)}
+        ${legBoleto(a, c, e, 'Administração')}
         ${r.ativos.length > 1 ? `<div class="bol-tipos">${r.ativos.map(t => `<div><span>${t.n}</span><b>${brl(t.boleto, true)}</b><small>${int(t.placas)} placas</small></div>`).join('')}</div>` : ''}
-        <p class="bol-more">${fx ? 'No boleto fixo, a estabilização cobre o custo médio dos eventos e o rateio só entra se a reserva não der conta.' : 'No boleto que varia, o rateio cobra o custo real de cada período.'} <a href="#dBol">Ver o boleto em detalhe →</a></p>`;
+        <p class="bol-more">As 3 partes vêm separadas no boleto, como a SUSEP exige. O rateio acompanha os eventos de cada período. <a href="#dBol">Ver o boleto em detalhe →</a></p>`;
     }
   }
   const txt = $('resumo').value;
@@ -3150,7 +3139,7 @@ function renderR3(r){
       <span class="r3-n">1</span>
       <p class="r3-k">Cobrar, em média, por placa</p>
       <p class="r3-v">${brl(r.ticketCerto, true)}<small> por mês</small></p>
-      <p class="r3-s">${dif > 0.5 ? `Hoje são ${brl(r.ticket, true)}. Faltam <b>${brl(dif, true)}</b> por placa.` : `Hoje são ${brl(r.ticket, true)}. Já está cobrindo.`}${r.modelo === 'fixo' ? ' No boleto fixo, o valor não muda todo mês.' : ' O rateio muda todo mês.'}</p>
+      <p class="r3-s">${dif > 0.5 ? `Hoje são ${brl(r.ticket, true)}. Faltam <b>${brl(dif, true)}</b> por placa.` : `Hoje são ${brl(r.ticket, true)}. Já está cobrindo.`} A parte do rateio acompanha os eventos de cada período.</p>
     </article>
     <article class="r3-item tone-${r.tRes}">
       <span class="r3-n">2</span>
@@ -3278,7 +3267,7 @@ function caminhoCard(r){
     'Procure advogado já. Pare de aceitar novos associados, pague os eventos em aberto e preste contas.');
 }
 
-const legBoleto = (a, b, c, la, fixo) => `<div class="legend">${sw('--s-adm', la, brl(a,true))}${sw('--s-ev', gt('rateio', 'Rateio'), fixo ? 'R$ 0 · só se faltar' : brl(b,true))}${sw('--s-res', gt('estabilizacao', fixo ? 'Estabilização fixa' : 'Estabilização'), brl(c,true))}</div>`;
+const legBoleto = (a, b, c, la) => `<div class="legend">${sw('--s-adm', la, brl(a,true))}${sw('--s-ev', gt('rateio', 'Rateio'), brl(b,true))}${sw('--s-res', gt('estabilizacao', 'Estabilização'), brl(c,true))}</div>`;
 const destBoleto = (adm, assoc, grupo) => `<div class="destline"><span class="dl-k">Para onde vai cada parte</span><div class="dl-items">${adm > .005 ? `<div><i class="d-adm"></i><small>Administradora</small><b>${brl(adm,true)}</b></div>` : ''}<div><i class="d-assoc"></i><small>Associação</small><b>${brl(assoc,true)}</b></div><div><i class="d-grupo"></i><small>Conta do grupo</small><b>${brl(grupo,true)}</b></div></div></div>`;
 const segBoleto = (a, b, c, la, tot) => hstack([{v:a, c:'--s-adm', tip:`${brl(a,true)}\n${la}`}, {v:b, c:'--s-ev', tip:`${brl(b,true)}\nRateio dos eventos`}, {v:c, c:'--s-res', tip:`${brl(c,true)}\nEstabilização (reserva)`}], tot);
 
@@ -3288,35 +3277,36 @@ function renderRateio(r){
     F.innerHTML = '<p>Preencha placas, mensalidade, parte da administração e eventos para ver a conta.</p>';
     T.innerHTML = '<div><h3>Boleto por tipo de veículo</h3></div><div class="empty">Preencha os passos 1 a 3.</div>';
   } else {
-    const mx = Math.max(r.ticketCerto, r.novoBoleto);
-    const fx = r.modelo === 'fixo';
+    const mx = r.temProposta ? Math.max(r.ticketCerto, r.novoBoleto) : r.ticketCerto;
     F.innerHTML = `
       <div class="compare">
         <div>
           <div class="boleto-h"><b>Boleto médio certo, com a estrutura de hoje</b><span class="tot">${brl(r.ticketCerto,true)}</span></div>
-          ${segBoleto(r.admR, fx ? 0 : r.rateioR, fx ? r.estabFixa : r.estabR, 'Administração', mx)}
-          ${legBoleto(r.admR, fx ? 0 : r.rateioR, fx ? r.estabFixa : r.estabR, 'Administração', fx)}
+          ${segBoleto(r.admR, r.rateioR, r.estabR, 'Administração', mx)}
+          ${legBoleto(r.admR, r.rateioR, r.estabR, 'Administração')}
           ${destBoleto(0, r.admR, r.grupoR)}
           <p class="hint">Hoje vocês cobram ${brl(r.ticket,true)}.</p>
         </div>
-        <div>
+        ${r.temProposta ? `<div>
           <div class="boleto-h"><b>Com administradora: taxa de ${pct(r.x,0)}</b><span class="tot">${brl(r.novoBoleto,true)}</span></div>
-          ${segBoleto(r.novoTaxaR, fx ? 0 : r.rateioR, fx ? r.estabFixa : r.estabR, 'Taxa', mx)}
-          ${legBoleto(r.novoTaxaR, fx ? 0 : r.rateioR, fx ? r.estabFixa : r.estabR, 'Taxa', fx)}
+          ${segBoleto(r.novoTaxaR, r.rateioR, r.estabR, 'Taxa', mx)}
+          ${legBoleto(r.novoTaxaR, r.rateioR, r.estabR, 'Taxa')}
           ${destBoleto(r.novoTaxaR - r.repPlaca, r.repPlaca, r.grupoR)}
           <p class="hint">Da taxa de ${brl(r.novoTaxaR,true)}, a administradora fica com ${brl(r.novoTaxaR - r.repPlaca,true)} por placa e ${brl(r.repPlaca,true)} voltam para a conta da associação. Rateio e estabilização vão para a conta do grupo. Troque os valores em “A associação no modelo novo”, mais abaixo.</p>
-        </div>
+        </div>` : `<div>
+          <div class="boleto-h"><b>Com administradora</b></div>
+          <p class="read">A taxa sai da proposta da administradora: a regra não tem teto nem percentual fixo. Quando receber uma proposta, coloque a taxa e o repasse em “A associação no modelo novo”, mais abaixo, e o boleto aparece aqui.</p>
+          ${isFinite(r.repMinPlaca) ? `<p class="hint">Para pagar a estrutura de hoje, a associação precisa receber de volta pelo menos <b>${brl(r.repMinPlaca,true)}</b> por placa.</p>` : ''}
+        </div>`}
       </div>
       <details class="more"><summary>Como a conta é feita</summary><div>
         <ol class="calc">
           <li><b>Custo dos eventos por mês:</b> ${r.sinFonte === 'informado' ? `${pct(r.sin)} × ${brl(r.receitaMes)} arrecadados` : `(${brl(r.eventos12)} pagos − ${brl(r.recup12)} que voltaram) ÷ 12`} = <b>${brl(r.eventosMes)}</b></li>
           <li><b>Placas que pagam:</b> ${int(r.placas)} × ${pct(1 - r.inad,0)} = <b>${int(r.pagantes)}</b></li>
-          <li><b>${fx ? 'Custo médio por placa' : 'Rateio'}:</b> ${brl(r.eventosMes)} ÷ ${int(r.pagantes)} = <b>${brl(r.rateioR,true)}</b></li>
+          <li><b>Rateio:</b> ${brl(r.eventosMes)} ÷ ${int(r.pagantes)} = <b>${brl(r.rateioR,true)}</b></li>
           <li><b>Administração:</b> ${pct(r.a,0)} × ${brl(r.ticket,true)} = <b>${brl(r.admR,true)}</b></li>
-          <li><b>${fx ? 'Parte para a reserva' : 'Estabilização'}:</b> ${r.guardarMes / r.pagantes >= r.rateioR * REG.folga ? `falta guardar ${brl(r.faltaReserva)} ÷ ${REG.horizonte} meses ÷ ${int(r.pagantes)} placas` : `mínimo de 5% do rateio`} = <b>${brl(r.estabR,true)}</b></li>
-          ${fx ? `<li><b>Estabilização fixa:</b> ${brl(r.rateioR,true)} + ${brl(r.estabR,true)} = <b>${brl(r.estabFixa,true)}</b></li>
-          <li><b>Rateio do período:</b> R$ 0 enquanto a estabilização e a reserva cobrirem. Se faltar, a diferença vira rateio extra no boleto seguinte.</li>
-          <li><b>Boleto:</b> ${brl(r.admR,true)} + ${brl(r.estabFixa,true)} = <b>${brl(r.ticketCerto,true)}</b></li>` : `<li><b>Boleto:</b> ${brl(r.admR,true)} + ${brl(r.rateioR,true)} + ${brl(r.estabR,true)} = <b>${brl(r.ticketCerto,true)}</b></li>`}
+          <li><b>Estabilização:</b> ${r.guardarMes / r.pagantes >= r.rateioR * REG.folga ? `falta guardar ${brl(r.faltaReserva)} ÷ ${REG.horizonte} meses ÷ ${int(r.pagantes)} placas` : `mínimo de 5% do rateio`} = <b>${brl(r.estabR,true)}</b></li>
+          <li><b>Boleto:</b> ${brl(r.admR,true)} + ${brl(r.rateioR,true)} + ${brl(r.estabR,true)} = <b>${brl(r.ticketCerto,true)}</b></li>
         </ol>
         <p class="note">Na regra oficial, o rateio é o custo real de cada período de até 3 meses, calculado pelo atuário. Aqui usamos a média de 12 meses para planejar. A regra não tem teto para a taxa de administração e não fala em 20%.</p>
       </div></details>`;
@@ -3332,11 +3322,11 @@ function renderRateio(r){
       <div class="rows">${at.map(t => `<div class="rowbar"><span class="rl"><b>${t.n}</b><br><span class="hint">${int(t.placas)} placas</span></span>
         <div class="track stack" style="width:${(t.boleto / mxT * 100).toFixed(1)}%">
           <i style="flex:${r.admR} 1 0;background:var(--s-adm)" tabindex="0" data-tip="${brl(r.admR,true)}&#10;Administração · ${t.n}"></i>
-          ${fx ? '' : `<i style="flex:${t.rateio} 1 0;background:var(--s-ev)" tabindex="0" data-tip="${brl(t.rateio,true)}&#10;Rateio · ${t.n}"></i>`}
-          <i style="flex:${fx ? t.estabF : t.estab} 1 0;background:var(--s-res)" tabindex="0" data-tip="${brl(fx ? t.estabF : t.estab,true)}&#10;Estabilização · ${t.n}"></i>
+          <i style="flex:${t.rateio} 1 0;background:var(--s-ev)" tabindex="0" data-tip="${brl(t.rateio,true)}&#10;Rateio · ${t.n}"></i>
+          <i style="flex:${t.estab} 1 0;background:var(--s-res)" tabindex="0" data-tip="${brl(t.estab,true)}&#10;Estabilização · ${t.n}"></i>
         </div><span class="rv">${brl(t.boleto,true)}</span></div>`).join('')}</div>
       ${poucos.length ? `<p class="note">${poucos.map(t => t.n).join(' e ')}: com menos de 300 placas, um ano bom ou ruim muda muito o número. Peça para o atuário confirmar.</p>` : ''}
-      <details class="tbl"><summary>Ver em tabela</summary><div class="tblwrap"><table><thead><tr><th>Tipo</th><th>Placas</th><th>Parte dos eventos</th><th>Administração</th><th>Rateio</th><th>Estabilização</th><th>Boleto</th></tr></thead><tbody>${at.map(t => `<tr><td>${t.n}</td><td>${int(t.placas)}</td><td>${pct(t.share,0)}</td><td>${brl(r.admR,true)}</td><td>${fx ? 'R$ 0' : brl(t.rateio,true)}</td><td>${brl(fx ? t.estabF : t.estab,true)}</td><td><b>${brl(t.boleto,true)}</b></td></tr>`).join('')}</tbody></table></div></details>
+      <details class="tbl"><summary>Ver em tabela</summary><div class="tblwrap"><table><thead><tr><th>Tipo</th><th>Placas</th><th>Parte dos eventos</th><th>Administração</th><th>Rateio</th><th>Estabilização</th><th>Boleto</th></tr></thead><tbody>${at.map(t => `<tr><td>${t.n}</td><td>${int(t.placas)}</td><td>${pct(t.share,0)}</td><td>${brl(r.admR,true)}</td><td>${brl(t.rateio,true)}</td><td>${brl(t.estab,true)}</td><td><b>${brl(t.boleto,true)}</b></td></tr>`).join('')}</tbody></table></div></details>
       <div class="onecar">
         <div class="field"><label for="ocTipo" class="hint">Calcular para um veículo: tipo</label><div class="input compact"><select id="ocTipo">${at.map(t => `<option value="${t.id}">${t.n}</option>`).join('')}</select></div></div>
         <div class="field"><label for="ocFipe" class="hint">FIPE deste veículo</label><div class="input compact"><span class="pre">R$</span><input id="ocFipe" inputmode="decimal" data-kind="money"></div></div>
@@ -3359,19 +3349,9 @@ function renderRateio(r){
     $('ocFipe').addEventListener('blur', e => fmtField(e.target));
     oc();
   }
-  const hoje = {fixo:'fixo', fixoReserva:'fixo', variavel:'variavel', misto:'variavel', regra:'regra'}[r.rateioModo];
-  const M = [
-    {id:'fixo', h:'Valor fixo, sem apurar o custo real', tone:'bad', tag:'Não vale na regra nova', p:['O associado paga sempre o mesmo, e a conta real dos eventos não é apurada.','Mês ruim vira dívida com oficina e fila de indenização.','A lei manda ratear as despesas reais do período, e o contrato tem que avisar que o valor pode subir.']},
-    {id:'variavel', h:'Só rateio depois (pós-pago puro)', tone:'warn', tag:'Incompleto', p:['Divide a conta depois que os eventos aconteceram.','O boleto muda muito de um mês para outro e a inadimplência sobe.','A regra nova exige também a contribuição de estabilização, fixa, todo mês.']},
-    {id:'regra', h:'Boleto em 3 partes', tone:'ok', tag:'É o que a regra exige', p:['<b>Taxa de administração:</b> a administradora fica com um valor por placa e o restante volta para a associação, como estiver no contrato. Não entra no rateio. A taxa de quem não paga não pode ser jogada para os outros.','<b>Rateio:</b> custo real dos eventos, apurado a cada período de até 3 meses, com relatório do atuário.','<b>Estabilização:</b> valor fixo mensal, definido no contrato. Sobra vira patrimônio do grupo; falta é coberta por ele.','A estabilização pode ficar perto do custo médio (boleto fixo) ou ser pequena (boleto que varia). As duas formas valem.','Cada um paga conforme o valor protegido e o risco do seu veículo.','Quem sai paga só o período em que ficou e recebe a sua parte do patrimônio em até 20 dias.']}
-  ];
-  $('models').innerHTML = '<details class="more"><summary>Os 3 jeitos de cobrar: qual a regra aceita</summary><div class="models">' + M.map(m => `<article class="model tone-${m.tone} ${m.id==='regra'?'rec':''}">
-    <span class="tag">${m.tag}</span>
-    <h3>${m.h}</h3><ul>${m.p.map(x=>`<li>${x}</li>`).join('')}</ul>
-    ${m.id===hoje ? '<p class="yours">← É o mais parecido com o que vocês fazem hoje.</p>' : ''}</article>`).join('') + '</div></details>';
 }
 
-/* ---------- boleto fixo x boleto que varia ---------- */
+/* ---------- boleto em 3 partes mês a mês ---------- */
 const ILUSTR = [0.9, 1.08, 0.84, 1.22, 0.97, 0.93, 1.42, 0.86, 1.03, 1.14, 0.95, 1.06];
 function sim12(r){
   const real = r.mesesN === 12;
@@ -3381,9 +3361,11 @@ function sim12(r){
   const P = r.pagantes, normal = r.rateioR * (1 + REG.folga);
   const alvo = Math.min(Math.max(r.metaReserva - r.pendentes, 0), 2.5 * r.contribGrupoMes);   // meta, sem chegar perto do teto
   let res = r.livre, extra = 0, estab = r.estabFixa, baixou = 0, teto = 0;
-  const V = [], F = [], RES = [], EX = [];
+  const V = [], F = [], RES = [], EX = [], RV = [];
+  let resV = r.livre;
   custo.forEach((c, k) => {
     V.push(r.admR + c / P + r.estabR);
+    resV += r.estabR * P; RV.push(resV);
     F.push(r.admR + estab + extra); EX.push(extra);
     res += (estab + extra) * P - c;
     RES.push(res);
@@ -3391,7 +3373,7 @@ function sim12(r){
     if(res > r.tetoG){ estab = Math.max(0, r.rateioR - (res - r.tetoG) / P / 3); teto = teto || k + 2; }
     else if(res >= alvo && estab > normal + .005){ estab = normal; baixou = baixou || k + 2; }
   });
-  return {real, custo, V, F, RES, EX, baixou: baixou <= 12 ? baixou : 0, teto: teto <= 12 ? teto : 0, nExtra: EX.filter(x => x > .005).length};
+  return {real, custo, V, F, RES, EX, RV, baixou: baixou <= 12 ? baixou : 0, teto: teto <= 12 ? teto : 0, nExtra: EX.filter(x => x > .005).length};
 }
 function faixaRes(m){
   if(!isFinite(m)) return null;
@@ -3408,15 +3390,9 @@ function chartDoze(r){
     fx.innerHTML = '<div><h3>Quando o boleto tem que baixar</h3></div><div class="empty">Preencha os passos 1 a 4.</div>';
     return;
   }
-  const o = sim12(r), fixo = r.modelo === 'fixo';
+  const o = sim12(r);
   const vMin = Math.min(...o.V), vMax = Math.max(...o.V);
-  const fMax = Math.max(...o.F);
-  const S = [
-    {n:'Boleto que varia', c:'--s-ev', vals:o.V, on:!fixo},
-    {n:'Boleto fixo', c:'--s-res', vals:o.F, on:fixo}
-  ];
-  const all = o.V.concat(o.F);
-  const lo0 = Math.min(...all) * .9, hi0 = Math.max(...all) * 1.04;
+  const lo0 = vMin * .9, hi0 = vMax * 1.04;
   const step = niceStep((hi0 - lo0) / 4);
   const lo = Math.floor(lo0 / step) * step, hi = Math.ceil(hi0 / step) * step;
   const W = chartWidth(el), H = 250, m = {l:56, r:16, t:16, b:28};
@@ -3425,28 +3401,27 @@ function chartDoze(r){
   let g = '';
   for(let v = lo; v <= hi + .001; v += step){ g += `<line x1="${m.l}" x2="${W - m.r}" y1="${y(v).toFixed(1)}" y2="${y(v).toFixed(1)}" stroke="var(--grid)" stroke-width="1"/><text x="${m.l - 8}" y="${(y(v) + 4).toFixed(1)}" text-anchor="end">${brl(v)}</text>`; }
   for(let k = 0; k < N; k++) if(W > 480 || k % 2 === 0) g += `<text x="${x(k).toFixed(1)}" y="${H - 8}" text-anchor="middle">${k + 1}</text>`;
-  const lines = S.map(s => `<path d="${s.vals.map((v, k) => (k ? 'L' : 'M') + x(k).toFixed(1) + ' ' + y(v).toFixed(1)).join('')}" fill="none" stroke="var(${s.c})" stroke-width="${s.on ? 3 : 2}" ${s.on ? '' : 'stroke-dasharray="5 4"'} stroke-linejoin="round" stroke-linecap="round"/>`).join('');
-  const dots = o.F.map((v, k) => o.EX[k] > .005 ? `<circle cx="${x(k).toFixed(1)}" cy="${y(v).toFixed(1)}" r="5" fill="var(--bad)" stroke="var(--surface)" stroke-width="2"/>` : '').join('');
-  const tf = r.admR + r.estabFixa;
+  const line = `<path d="${o.V.map((v, k) => (k ? 'L' : 'M') + x(k).toFixed(1) + ' ' + y(v).toFixed(1)).join('')}" fill="none" stroke="var(--s-ev)" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>`;
+  const fim = o.RV[11];
   el.innerHTML = `<div><h3>O boleto nos próximos 12 meses</h3></div>
     <div class="tiles">
-      ${tileHTML('Boleto que varia', `${brl(vMin)} a ${brl(vMax)}`, `muda <b>${brl(vMax - vMin)}</b> entre o melhor e o pior mês`, fixo ? '' : 'warn')}
-      ${tileHTML('Boleto fixo', brl(tf, true), o.nExtra ? `rateio extra em <b>${o.nExtra} mês(es)</b>, no pior chega a ${brl(fMax)}` : '<b>sem rateio extra</b> no ano', fixo ? (o.nExtra ? 'warn' : 'ok') : '')}
-      ${tileHTML('Reserva livre no fim do ano', brlShort(o.RES[11]), `no boleto fixo · teto da regra ${brlShort(r.tetoG)}`, o.RES[11] < 0 ? 'bad' : o.RES[11] > r.tetoG ? 'warn' : 'ok')}
+      ${tileHTML('Boleto médio', brl(r.ticketCerto, true), 'administração + rateio + estabilização')}
+      ${tileHTML('Do melhor ao pior mês', `${brl(vMin)} a ${brl(vMax)}`, `só a parte do rateio muda: <b>${brl(vMax - vMin)}</b> de diferença`, vMax - vMin > .15 * r.ticketCerto ? 'warn' : 'ok')}
+      ${tileHTML('Reserva livre no fim do ano', brlShort(fim), `teto da regra ${brlShort(r.tetoG)}`, fim > r.tetoG ? 'warn' : 'ok')}
     </div>
-    <p class="read">${o.real ? 'Usando os 12 meses de eventos que você preencheu.' : 'Sem os 12 meses preenchidos no passo 3, usei uma variação de exemplo, com um mês ruim no meio do ano.'} O valor médio é o mesmo nos dois modelos. ${o.nExtra ? `No boleto fixo, a reserva de hoje não segurou ${o.nExtra === 1 ? 'um mês' : o.nExtra + ' meses'} (ponto vermelho): nesse caso entra rateio extra no boleto seguinte.` : 'No boleto fixo, a reserva absorveu os meses ruins e o associado pagou sempre o mesmo.'}${o.baixou ? ` A partir do mês ${o.baixou}, a reserva chega na meta e o boleto fixo <b>baixa para ${brl(r.ticketManut, true)}</b>.` : ''}${o.teto ? ` No mês ${o.teto}, a reserva passa do teto e a estabilização tem que diminuir.` : ''}</p>
-    <div class="legend">${S.map(s => `<span><i class="ln" style="border-color:var(${s.c})${s.on ? '' : ';border-top-style:dashed'}"></i>${s.n}${s.on ? ' <b>(o seu)</b>' : ''}</span>`).join('')}<span><i class="sw" style="background:var(--bad);border-radius:50%"></i>Mês com rateio extra</span></div>
-    <div class="chart"><svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" role="img" aria-label="Boleto mês a mês: boleto fixo comparado com boleto que varia">${g}${lines}${dots}
+    <p class="read">${o.real ? 'Usando os 12 meses de eventos que você preencheu.' : 'Sem os 12 meses preenchidos no passo 3, usei uma variação de exemplo, com um mês ruim no meio do ano.'} A taxa de administração e a estabilização são as mesmas todo mês. O rateio acompanha o custo dos eventos do período, e a reserva formada pela estabilização existe para segurar os meses ruins.${fim > r.tetoG ? ' No fim do ano, a reserva passa do teto: aí a estabilização tem que diminuir.' : ''}</p>
+    <div class="legend"><span><i class="ln" style="border-color:var(--s-ev)"></i>Boleto em 3 partes, mês a mês</span></div>
+    <div class="chart"><svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" role="img" aria-label="Boleto em 3 partes mês a mês">${g}${line}
       <line id="dozeX" x1="0" x2="0" y1="${m.t}" y2="${m.t + ih}" stroke="var(--ink)" stroke-width="1" visibility="hidden"/>
       <rect id="dozeHit" x="${m.l}" y="${m.t}" width="${iw}" height="${ih}" fill="transparent"/></svg></div>
-    <details class="tbl"><summary>Ver em tabela</summary><div class="tblwrap"><table><thead><tr><th>Mês</th><th>Custo dos eventos</th><th>Boleto que varia</th><th>Boleto fixo</th><th>Reserva livre (fixo)</th></tr></thead><tbody>${o.custo.map((c, k) => `<tr><td>${k + 1}</td><td>${brl(c)}</td><td>${brl(o.V[k], true)}</td><td>${brl(o.F[k], true)}${o.EX[k] > .005 ? ` <small>(${brl(o.EX[k], true)} extra)</small>` : ''}</td><td>${brl(o.RES[k])}</td></tr>`).join('')}</tbody></table></div></details>
-    <p class="note">Simulação para planejar, com a estrutura de hoje. No contrato, quem define o valor da estabilização é a administradora, com o atuário. Pergunte a ela como vai calcular.</p>`;
+    <details class="tbl"><summary>Ver em tabela</summary><div class="tblwrap"><table><thead><tr><th>Mês</th><th>Custo dos eventos</th><th>Rateio por placa</th><th>Boleto</th><th>Reserva livre</th></tr></thead><tbody>${o.custo.map((c, k) => `<tr><td>${k + 1}</td><td>${brl(c)}</td><td>${brl(c / r.pagantes, true)}</td><td>${brl(o.V[k], true)}</td><td>${brl(o.RV[k])}</td></tr>`).join('')}</tbody></table></div></details>
+    <p class="note">Simulação para planejar, com a estrutura de hoje. No contrato, quem define o valor da estabilização e o período do rateio é a administradora, com o atuário.</p>`;
   const hit = $('dozeHit'), cx = $('dozeX');
   const move = e => {
     const b = hit.getBoundingClientRect();
     const k = Math.max(0, Math.min(N - 1, Math.floor((e.clientX - b.left) / b.width * N)));
     cx.setAttribute('x1', x(k)); cx.setAttribute('x2', x(k)); cx.setAttribute('visibility', 'visible');
-    showTip(`Mês ${k + 1}\n${brl(o.V[k], true)} · boleto que varia\n${brl(o.F[k], true)} · boleto fixo${o.EX[k] > .005 ? ' (com rateio extra)' : ''}`, e.clientX, e.clientY);
+    showTip(`Mês ${k + 1}\n${brl(o.V[k], true)} · boleto\n${brl(o.custo[k] / r.pagantes, true)} · rateio por placa`, e.clientX, e.clientY);
   };
   hit.addEventListener('pointermove', move);
   hit.addEventListener('pointerdown', move);
@@ -3503,7 +3478,18 @@ function renderSim(){
 /* ---------- repasse ---------- */
 function renderRepasse(r){
   const Tl = $('repTiles'), V = $('vzRep');
-  if(!isFinite(r.repasseMes)){ Tl.innerHTML = ''; V.innerHTML = '<div><h3>Repasse e estrutura</h3></div><div class="empty">Preencha os passos 1 a 3.</div>'; return; }
+  if(!isFinite(r.ticketCerto)){ Tl.innerHTML = ''; V.innerHTML = '<div><h3>Repasse e estrutura</h3></div><div class="empty">Preencha os passos 1 a 3.</div>'; return; }
+  if(!isFinite(r.repasseMes)){
+    Tl.innerHTML = [
+      tileHTML('Hoje fica com a administração', brlShort(r.admMes), `${pct(r.a,0)} do faturamento`),
+      tileHTML('Estrutura da associação', brlShort(r.custoAssoc), r.custoInformado ? 'por mês, como você informou' : 'por mês, igual ao gasto de hoje'),
+      tileHTML('Precisa voltar para a associação', brl(r.repMinPlaca, true), 'por placa pagante, por mês', 'warn')
+    ].join('');
+    V.innerHTML = `<div><h3>Quanto a associação precisa receber de volta</h3></div>
+      <p class="read">${r.temProposta ? 'Falta o repasse da proposta: quanto da taxa volta para a associação.' : 'Ainda sem proposta de administradora.'} Para manter a estrutura de <b>${brlShort(r.custoAssoc)} por mês</b>, o contrato tem que devolver pelo menos <b>${brl(r.repMinPlaca,true)} por placa pagante</b>. Leve esse número para a negociação.</p>
+      <details class="more"><summary>O que a regra diz</summary><div><p class="note">Pela regra, a associação só pode receber o que estiver discriminado no contrato com a administradora (Res. CNSP 491, art. 56). Nada de comissão por fora. A regra não fixa a taxa da administradora: ela vem da proposta. E a administradora assume funções que hoje custam dinheiro para a associação (atuário, contabilidade do grupo, regulação de eventos, relação com a SUSEP): veja o que sai da sua folha antes de fazer a conta.</p></div></details>`;
+    return;
+  }
   const dif = r.repasseMes - r.custoAssoc;
   const t = r.cobRepasse >= 1 ? 'ok' : r.cobRepasse >= .7 ? 'warn' : 'bad';
   Tl.innerHTML = [
@@ -3619,14 +3605,14 @@ function tplTexto(qual){
       'Alteração do estatuto social: critérios de constituição dos grupos de proteção patrimonial mutualista e competência para escolher e substituir a administradora.',
       reaj ? `Reajuste da contribuição mensal média de ${brl(r.ticket,true)} para ${brl(r.ticketCerto,true)}, com valores por tipo de veículo, a partir de __/__/____.` : null,
       isFinite(r.guardarMes) && r.guardarMes > 0 ? `Fundo de reserva: meta de ${brlShort(r.metaReserva)} e aporte mensal de ${brlShort(r.guardarMes)} por ${REG.horizonte} meses, em conta bancária separada.` : null,
-      r.modelo === 'fixo' ? 'Separação do boleto em três partes (administração, rateio e estabilização), com estabilização fixa no valor do custo médio dos eventos e rateio somente quando a reserva do grupo não cobrir o período.' : 'Separação do boleto em três partes: administração, rateio do custo real de cada período e estabilização.',
+      'Separação do boleto em três partes, como exige a Resolução CNSP nº 491/2026 (art. 70): taxa de administração, rateio do período e estabilização.',
       'Critérios para a escolha da administradora autorizada pela SUSEP (prazo legal: 07/05/2028).',
       'Assuntos gerais.'
     ].filter(Boolean);
     return `EDITAL DE CONVOCAÇÃO\nASSEMBLEIA GERAL EXTRAORDINÁRIA\n\n${nome}\n\nFicam convocados os associados para a Assembleia Geral Extraordinária, a realizar-se em __/__/____, às __h__ em primeira convocação e às __h__ em segunda convocação, em [ENDEREÇO OU LINK], com a seguinte ordem do dia:\n\n${itens.map((t,i) => `${i+1}. ${t}`).join('\n')}\n\n[CIDADE], __ de __________ de ____.\n\n[NOME DO PRESIDENTE]\nPresidente\n\n(Confira no estatuto o prazo e a forma de convocação antes de publicar.)`;
   }
   if(qual === 'comunicado'){
-    return `COMUNICADO AOS ASSOCIADOS\n${nome}\n\nPrezado associado,\n\nA partir de __/__/____, a sua contribuição mensal vai mudar.${reaj ? ` Na média da associação, ela passa de ${brl(r.ticket,true)} para ${brl(r.ticketCerto,true)}. O valor de cada um depende do tipo e do valor do veículo.` : ''}\n\nPor que muda:\n• De cada R$ 100 que a associação recebe, ${brl(r.sin*100,true)} vão para pagar eventos (consertos, roubos, furtos e perdas totais).\n• Precisamos formar uma reserva de ${brlShort(r.metaReserva)} para garantir o pagamento dos eventos mesmo nos meses ruins.\n• A Lei Complementar nº 213/2025 e a Resolução CNSP nº 491/2026 exigem que as associações se adequem até 07/05/2028.\n\nComo vai vir o seu boleto (valores médios):\n• Administração: ${brl(r.admR,true)}\n${r.modelo === 'fixo' ? `• Estabilização (valor fixo, cobre o custo médio dos eventos e forma a reserva do grupo): ${brl(r.estabFixa,true)}\n• Rateio: R$ 0,00 nos meses normais\n\nO rateio só é cobrado se os eventos de um período passarem do valor arrecadado e a reserva do grupo não for suficiente. Quando a reserva passar do limite da regra, o valor da estabilização diminui.` : `• Rateio dos eventos: ${brl(r.rateioR,true)}\n• Estabilização (reserva): ${brl(r.estabR,true)}\n\nO valor do rateio pode variar, para mais ou para menos, conforme os eventos do período.`}\nA proteção patrimonial mutualista não é seguro.\n\nA mudança foi aprovada na assembleia de __/__/____. A prestação de contas fica disponível em [ONDE].\n\nDúvidas: [TELEFONE / WHATSAPP].\n\nA Diretoria`;
+    return `COMUNICADO AOS ASSOCIADOS\n${nome}\n\nPrezado associado,\n\nA partir de __/__/____, a sua contribuição mensal vai mudar.${reaj ? ` Na média da associação, ela passa de ${brl(r.ticket,true)} para ${brl(r.ticketCerto,true)}. O valor de cada um depende do tipo e do valor do veículo.` : ''}\n\nPor que muda:\n• De cada R$ 100 que a associação recebe, ${brl(r.sin*100,true)} vão para pagar eventos (consertos, roubos, furtos e perdas totais).\n• Precisamos formar uma reserva de ${brlShort(r.metaReserva)} para garantir o pagamento dos eventos mesmo nos meses ruins.\n• A Lei Complementar nº 213/2025 e a Resolução CNSP nº 491/2026 exigem que as associações se adequem até 07/05/2028.\n\nComo vai vir o seu boleto (valores médios):\n• Administração: ${brl(r.admR,true)}\n• Rateio dos eventos: ${brl(r.rateioR,true)}\n• Estabilização (reserva): ${brl(r.estabR,true)}\n\nO valor do rateio pode variar, para mais ou para menos, conforme os eventos do período.\nA proteção patrimonial mutualista não é seguro.\n\nA mudança foi aprovada na assembleia de __/__/____. A prestação de contas fica disponível em [ONDE].\n\nDúvidas: [TELEFONE / WHATSAPP].\n\nA Diretoria`;
   }
   return `MODELO DE CLÁUSULAS PARA O ESTATUTO\n(exigência do art. 88-E, § 1º, do Decreto-Lei nº 73/1966, incluído pela Lei Complementar nº 213/2025)\n\nArt. __. A Associação poderá constituir grupos de proteção patrimonial mutualista, formados exclusivamente por seus associados, nos termos da Lei Complementar nº 213/2025 e das normas do CNSP e da SUSEP.\n\n§ 1º Cada grupo será constituído por decisão da [ASSEMBLEIA GERAL / DIRETORIA], observados os seguintes critérios:\nI – tipo de bem protegido;\nII – área de atuação;\nIII – quantidade mínima de participantes definida em nota técnica atuarial.\n\n§ 2º Cada grupo terá patrimônio próprio, separado do patrimônio da Associação, da administradora, dos participantes e dos demais grupos.\n\nArt. __. Compete à Assembleia Geral, pelo voto de [MAIORIA SIMPLES / DOIS TERÇOS] dos associados presentes, escolher e substituir a administradora de operações de proteção patrimonial mutualista, que deverá ser autorizada pela SUSEP.\n\n§ 1º A escolha observará, no mínimo:\nI – a autorização vigente da administradora na SUSEP;\nII – a taxa de administração e a remuneração da Associação, discriminadas em contrato;\nIII – as condições de substituição da administradora e de transferência dos dados dos participantes.\n\n§ 2º A Associação atuará como mandatária dos grupos perante a administradora, e o interesse do grupo prevalecerá sobre o da Associação.\n\n§ 3º É vedado aos administradores, gestores e empregados da Associação, e a seus parentes até o segundo grau, participar do capital da administradora contratada.\n\n(Rascunho para o advogado da associação adaptar. A alteração precisa ser aprovada em assembleia, registrada em cartório e atualizada no cadastro da SUSEP.)`;
 }
@@ -3642,9 +3628,9 @@ function renderResumo(s, r, pr){
     `Sinistralidade: ${pct(r.sin)} (limite ${pct(r.limite,0)})`,
     `Por mês: entra ${brlShort(r.receitaMes)}, eventos ${brlShort(r.eventosMes)}, administração ${brlShort(r.admMes)}, ${r.sobraMes < 0 ? 'falta' : 'sobra'} ${brlShort(Math.abs(r.sobraMes))}`,
     `Boleto médio hoje: ${brl(r.ticket,true)} | certo: ${brl(r.ticketCerto,true)}`,
-    `Modelo: ${r.modelo === 'fixo' ? 'boleto fixo (estabilização cobre o custo médio, rateio só se faltar)' : 'boleto que varia (rateio do custo real)'}`,
+    `Boleto: 3 partes separadas (administração, rateio do período e estabilização)`,
     ...(r.ativos.length > 1 && isFinite(r.ticketCerto) ? [`Por tipo: ${r.ativos.map(t => t.n + ' ' + brl(t.boleto,true)).join(' | ')}`] : []),
-    `Com administradora a ${pct(r.x,0)}: ${brl(r.novoBoleto,true)} (repasse cobre ${pct(r.cobRepasse,0)} da estrutura)`,
+    ...(isFinite(r.cobRepasse) ? [`Com a proposta da administradora (taxa de ${pct(r.x,0)}): ${brl(r.novoBoleto,true)} (repasse cobre ${pct(r.cobRepasse,0)} da estrutura)`] : isFinite(r.repMinPlaca) ? [`Repasse mínimo para pagar a estrutura: ${brl(r.repMinPlaca,true)} por placa`] : []),
     `Reserva: ${brlShort(r.reserva)} de ${brlShort(r.metaReserva)} → guardar ${brlShort(r.guardarMes)}/mês por ${REG.horizonte} meses`,
     `Inadimplência: ${pct(r.inad,0)}`,
     `Exigências cumpridas: ${r.docsSim} de ${DOCS.length}`,
@@ -3743,7 +3729,7 @@ function leadMsg(){
 }
 function leadUpd(){
   if($('leadComo')){
-    const vai = crmAtivo() && modoP === 'meu' && R && !R.incompleto;
+    const vai = modoP === 'meu' && R && !R.incompleto;
     $('leadComo').innerHTML = 'Ao clicar, um especialista da GestiHub chama você no WhatsApp para combinar o melhor horário' + (vai ? ', já com os números da sua simulação em mãos' : '') + '. <a href="https://www.gestihub.com.br/politica-de-privacidade.html" target="_blank" rel="noopener">Política de privacidade</a>';
   }
   if(!$('leadMsg')) return;
@@ -3789,37 +3775,20 @@ $('leadForm').addEventListener('input', leadUpd);
 $('leadForm').addEventListener('change', leadUpd);
 $('leadForm').addEventListener('submit', e => e.preventDefault());
 /* Envio do pedido de reunião.
-   "Quero uma reunião" registra o pedido no CRM da GestiHub (formulário público do CRM, com o slug abaixo)
-   e depois oferece o WhatsApp com uma frase curta pronta. Sem o slug, vai direto para o passo do WhatsApp. */
+   "Quero uma reunião" grava o pedido no painel da GestiHub (Clientes, etiqueta Associação, com o Raio-X
+   em Documentos) e depois oferece o WhatsApp com uma frase curta pronta. Se o envio falhar, vai direto
+   para o passo do WhatsApp. */
 // eventos de marketing: só no site da GestiHub, depois do consentimento; nunca leva números do Raio-X
 const marca = (evento, rotulo) => { try{ window.gestiHubTracking?.trackPageEvent?.(evento, rotulo); }catch(e){} };
-const CRM_FORM = {api: 'https://api.gestihub.com.br/api/crm/forms/public/', slug: ''};
-const crmAtivo = () => !!CRM_FORM.slug;
-// frase curta para o WhatsApp (o detalhe fica no CRM)
+const PEDIDOS_API = 'https://api.gestihub.com.br/api/associacoes/pedidos';
+// frase curta para o WhatsApp (o detalhe fica no painel)
 function leadFrase(){
   const campo = (id => { const el = $(id); return el ? String(el.value || '').trim() : ''; }), nome = campo('leadNome'), cargo = campo('leadCargo'), assoc = campo('leadAssoc') || campo('nome'), cid = campo('leadCidade');
   return 'Olá, GestiHub! Acabei de pedir uma reunião pelo Raio-X SUSEP. Sou ' + nome + (cargo ? ', ' + cargo.toLowerCase() : '') + (assoc ? ' da ' + assoc : '') + (cid ? ' (' + cid + ')' : '') + '.';
 }
-// lê os campos do formulário do CRM e preenche cada um pelo tipo ou pelo nome
-async function enviarCRM(d){
-  const base = CRM_FORM.api + encodeURIComponent(CRM_FORM.slug);
-  const fr = await fetch(base, {headers: {Accept: 'application/json'}});
-  if(!fr.ok) throw new Error('formulário indisponível');
-  const form = await fr.json(), values = {};
-  const sa = s => String(s || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
-  (form.fields || []).forEach(f => {
-    const l = sa(f.label);
-    const v = f.type === 'checkbox' ? (/autoriz|consent|aceit|lgpd/.test(l) ? true : '')
-      : /cargo/.test(l) ? d.cargo
-      : /cidade|estado|uf/.test(l) ? d.cidade
-      : f.mapping === 'company' || /associa|empresa/.test(l) ? d.assoc
-      : f.mapping === 'phone' || /telefone|whats|celular/.test(l) ? d.tel
-      : f.mapping === 'contact' || /nome/.test(l) ? d.nome
-      : /raio|simula/.test(l) ? d.raiox
-      : f.mapping === 'message' || /mensagem|observa/.test(l) ? d.msg : '';
-    if(v !== '' && v != null) values[f.id] = v;
-  });
-  const r = await fetch(base + '/submissions', {method: 'POST', headers: {'Content-Type': 'application/json', Accept: 'application/json'}, body: JSON.stringify({values, website: ''})});
+async function enviarPedido(d){
+  const r = await fetch(PEDIDOS_API, {method: 'POST', headers: {'Content-Type': 'application/json', Accept: 'application/json'},
+    body: JSON.stringify({nome: d.nome, telefone: d.tel, cargo: d.cargo, associacao: d.assoc, contexto: d.ctx, raiox: d.raiox || undefined, website: ''})});
   if(!r.ok){ let m = ''; try{ m = (await r.json()).message; }catch(e){} throw new Error(m || 'envio recusado'); }
   return r.json();
 }
@@ -3862,14 +3831,10 @@ const reduzMovT = window.matchMedia && matchMedia('(prefers-reduced-motion: redu
 $('leadEnviar').addEventListener('click', async () => {
   if(!leadValida()) return;
   const b = $('leadEnviar'), antes = b.textContent;
-  if(!crmAtivo()){ leadPos(false); return; }
   b.disabled = true; b.textContent = 'Enviando…';
-  const quando = new Date().toLocaleString('pt-BR');
   try{
     const campo = (id => { const el = $(id); return el ? String(el.value || '').trim() : ''; });
-    const raiox = raioxDados();
-    await enviarCRM({nome: campo('leadNome'), tel: campo('leadTel'), cargo: campo('leadCargo'), assoc: campo('leadAssoc') || campo('nome'), cidade: '', raiox,
-      msg: 'Pediu reunião pelo Raio-X SUSEP (' + (ajudaCtx || 'site') + ') em ' + quando + '. Ao enviar, autorizou o contato da GestiHub' + (raiox ? ' e o envio dos números da simulação (veja em Documentos).' : '. Não enviou números (viu só o exemplo ou não terminou a simulação).')});
+    await enviarPedido({nome: campo('leadNome'), tel: campo('leadTel'), cargo: campo('leadCargo'), assoc: campo('leadAssoc') || campo('nome'), ctx: ajudaCtx || 'site', raiox: raioxDados()});
     b.textContent = 'Pedido enviado ✓';
     marca('raiox_reuniao', 'Raio-X SUSEP · ' + (ajudaCtx || 'site'));
     leadPos(true);
@@ -3976,7 +3941,7 @@ $('propSim').addEventListener('change', () => { markMine(); render(); });
 $('propSim').addEventListener('focusout', e => { if(e.target.matches('input[data-kind]')) fmtField(e.target); });
 document.querySelectorAll('input[name="tpl"]').forEach(x => x.addEventListener('change', renderTpl));
 
-const VAZIO_P = {docs:{}, taxaSim:'25', repasseSim:'80', nivelRes:'auto', modelo:'fixo'};
+const VAZIO_P = {docs:{}, taxaSim:'', repasseSim:'', nivelRes:'auto', modelo:'regra'};
 function limparP(){
   writeState(VAZIO_P); doneTasks = {};
   ['hArrecMes','hPlacasMes'].forEach(id => $(id).value = '');
@@ -4457,5 +4422,4 @@ document.querySelectorAll('input[name="caminho"]').forEach(x => x.addEventListen
 })();
 </script>
 
-</body>
-</html>
+</body></html>
